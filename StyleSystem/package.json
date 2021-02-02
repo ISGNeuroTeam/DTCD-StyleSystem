@@ -1,11 +1,11 @@
 {
-  "name": "StyleSystem",
-  "version": "1.0.0",
+  "name": "style-system",
+  "version": "0.1.0",
   "description": "StyleSystem",
   "main": "index.js",
   "private": "true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "rollup -c",
     "dev": "rollup -cw"
   },
@@ -13,6 +13,7 @@
   "author": "",
   "license": "",
   "devDependencies": {
+    "jest": "^26.6.3",
     "rollup": "^2.33.1"
   }
 }
