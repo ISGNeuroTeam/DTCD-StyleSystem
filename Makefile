@@ -47,6 +47,7 @@ clean:
 	$(SET_VERSION)
 	$(SET_PROJECT_NAME)
 	rm -rf build ./$(PROJECT_NAME)/dist ./$(PROJECT_NAME)/node_modules/ ./*-lock.* ./$(PROJECT_NAME)/*-lock.* $(PROJECT_NAME)-*.tar.gz \
+	./node_modules
 
 test: $(PROJECT_NAME)/node_modules
 	# required section
