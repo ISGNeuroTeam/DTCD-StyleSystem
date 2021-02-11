@@ -1,8 +1,4 @@
-import {
-  InteractionSystemAdapter,
-  EventSystemAdapter,
-  SystemPlugin,
-} from './../../../DTCD-SDK/index';
+import { InteractionSystemAdapter, EventSystemAdapter, SystemPlugin } from '../../DTCD-SDK/index';
 
 export class StyleSystem extends SystemPlugin {
   static getRegistrationMeta() {
