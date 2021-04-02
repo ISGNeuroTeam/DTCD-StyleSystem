@@ -1,4 +1,9 @@
-import { InteractionSystemAdapter, EventSystemAdapter, SystemPlugin } from '../../DTCD-SDK/index';
+import {
+  InteractionSystemAdapter,
+  EventSystemAdapter,
+  SystemPlugin,
+  LogSystemAdapter,
+} from '../../DTCD-SDK/index';
 
 export class StyleSystem extends SystemPlugin {
   static getRegistrationMeta() {
@@ -17,34 +22,51 @@ export class StyleSystem extends SystemPlugin {
     this.guid = guid;
     this.interactionSystem = new InteractionSystemAdapter();
     this.eventSystem = new EventSystemAdapter();
-    this.currentThemeName = 'light';
+    this.logSystem = new LogSystemAdapter(guid, 'StyleSystem');
   }
 
   async init() {
-    const { data } = await this.interactionSystem.GETRequest('/get-design-objects');
-    this.themes = data;
+    this.logSystem.info('Initializing system');
+    try {
+      this.logSystem.debug('Requesting design object from endpoint /get-design-objects');
+      const { data } = await this.interactionSystem.GETRequest('/get-design-objects');
+      this.logSystem.debug('Setting themes received from server in system');
+      this.themes = data;
+      this.logSystem.debug(`Setting ${this.themes[0].name} as default theme in system`);
+      this.currentThemeName = this.themes[0].name;
+      this.logSystem.info('System inited successfully');
+    } catch (err) {
+      this.logSystem.fatal(
+        `'${err.name}' occured while fetching desing object.${err.message}, ${err.stack}`
+      );
+    }
   }
 
   setTheme(name) {
+    this.logSystem.debug(`setTheme method called with argument ${name}`);
     if (typeof name === 'string') {
       const theme = this.themes.find(theme => theme.name === name);
       if (theme) {
         this.currentThemeName = name;
+        this.logSystem.info(`New theme '${name}' set in system`);
         this.eventSystem.createAndPublish(this.guid, 'ThemeUpdate');
       } else {
-        console.error(`Theme: ${name} doesn't exist`);
+        this.logSystem.warn(`Theme '${name}' doesn't exist in system!`);
         throw new Error('Theme not found!');
       }
     } else {
+      this.logSystem.debug(`argument type of '${name}' is not string `);
       throw new Error('Wrong argument type!');
     }
   }
 
   getThemes() {
+    this.logSystem.info(`Returning all themes stored in system`);
     return this.themes;
   }
 
   getCurrentTheme() {
+    this.logSystem.info(`Returning current theme of application`);
     return this.themes.find(theme => theme.name === this.currentThemeName);
   }
 
@@ -55,10 +77,14 @@ export class StyleSystem extends SystemPlugin {
           const newPrefix = `${prefix}-${key}`;
           setVariables(obj[key], newPrefix);
         } else {
+          this.logSystem.debug(`setting '${prefix}-${key}' variable value to '${obj[key]}'`);
           element.style.setProperty(`${prefix}-${key}`, obj[key]);
         }
       });
     }
     setVariables(obj.styleVariables, startPrefix);
+    this.logSystem.info(
+      `CSS variables from theme '${this.currentThemeName}' are installed for element ${element}`
+    );
   }
 }
