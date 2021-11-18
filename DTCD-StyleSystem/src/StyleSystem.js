@@ -29,7 +29,9 @@ export class StyleSystem extends SystemPlugin {
     this.logSystem.info('Initializing system');
     try {
       this.logSystem.debug('Requesting design object from endpoint /get-design-objects');
-      const { data } = await this.interactionSystem.GETRequest('/get-design-objects');
+      const { data } = await this.interactionSystem.GETRequest(
+        '/mock_server/v1/get-design-objects'
+      );
       this.logSystem.debug('Setting themes received from server in system');
       this.themes = data;
       this.logSystem.debug(`Setting ${this.themes[0].name} as default theme in system`);
