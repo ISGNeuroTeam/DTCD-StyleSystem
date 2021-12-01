@@ -73,7 +73,7 @@ export class StyleSystem extends SystemPlugin {
   }
 
   setVariablesToElement(element, obj, startPrefix = '-') {
-    function setVariables(obj, prefix) {
+    const setVariables = (obj, prefix) => {
       Object.keys(obj).forEach(key => {
         if (typeof obj[key] === 'object') {
           const newPrefix = `${prefix}-${key}`;

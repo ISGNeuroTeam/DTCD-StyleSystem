@@ -2,16 +2,15 @@ const watch = Boolean(process.env.ROLLUP_WATCH);
 
 const pluginName = 'StyleSystem';
 
-const output = watch
-  ? `./../../DTCD/server/plugins/DTCD-${pluginName}/DTCD-${pluginName}.js`
-  : `./build/${pluginName}.js`;
+const outputFile = `${pluginName}.js`;
+const outputDirectory = watch ? `./../../DTCD/server/plugins/DTCD-${pluginName}` : `./build`;
 
 const plugins = [];
 
 export default {
   input: `./src/${pluginName}.js`,
   output: {
-    file: output,
+    file: `${outputDirectory}/${outputFile}`,
     format: 'esm',
     sourcemap: false,
   },

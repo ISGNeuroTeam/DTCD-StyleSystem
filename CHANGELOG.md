@@ -10,15 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - init hook to get themes from server
+- manifest file for dependencies
 
 ### Changed
 
 - _getThemes_ method just returns theme object and no longer requesys themes from server
 - deployment section in [README.md](Readme.md)
+- SDK version to 0116
 
 ### Fixed
 
 - rollup build path for development
+- setVariables function in setVariablesToElement method
+- rollup building directory path
 
 ## [0.2.0] - 2021-02-11
 
