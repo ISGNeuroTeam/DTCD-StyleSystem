@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - init hook to get themes from server
 - manifest file for dependencies
+- BaseButton custom component
 
 ### Changed
 

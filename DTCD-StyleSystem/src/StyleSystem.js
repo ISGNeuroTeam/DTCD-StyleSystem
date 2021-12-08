@@ -5,6 +5,8 @@ import {
   LogSystemAdapter,
 } from '../../DTCD-SDK/index';
 
+import baseComponentList from './base-components/components';
+
 export class StyleSystem extends SystemPlugin {
   static getRegistrationMeta() {
     return {
@@ -27,6 +29,12 @@ export class StyleSystem extends SystemPlugin {
 
   async init() {
     this.logSystem.info('Initializing system');
+
+    baseComponentList.forEach(component => {
+      const { name, baseClass } = component;
+      window.customElements.define(name, baseClass);
+    });
+
     try {
       this.logSystem.debug('Requesting design object from endpoint /get-design-objects');
       const { data } = await this.interactionSystem.GETRequest(
