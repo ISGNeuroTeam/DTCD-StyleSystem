@@ -1,0 +1,102 @@
+<style>
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  #headerContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 12px;
+    border: 2px solid;
+    border-color: var(--border);
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: normal;
+    resize: vertical;
+    background-color: var(--background_main) !important;
+    cursor: pointer;
+    user-select: none;
+
+    /* by size (middle)*/
+    height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  #header {
+    color: var(--text_secondary);
+  }
+
+  #dropDownIcon {
+    justify-self: end;
+  }
+
+  #optionsList {
+    display: none;
+    position: absolute;
+    width: 100%;
+
+    /* by size (middle)*/
+    margin-top: 45px;
+  }
+
+  #optionsList[active] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::slotted(*[slot='item']) {
+    width: 100%;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid;
+    border-color: var(--border);
+    box-sizing: border-box;
+    outline: none;
+    color: var(--text_secondary);
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: normal;
+    resize: vertical;
+    background-color: var(--background_main);
+    user-select: none;
+
+    /* by size (middle)*/
+    height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  #label{
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  #errorMessage{
+    margin-top: 4px;
+  }
+</style>
+<div class="container">
+  <label id="label"></label>
+  <div id="headerContainer">
+    <div id="header"></div>
+    <div id="dropDownIcon"></div>
+  </div>
+  <div id="optionsList">
+    <slot name="item"></slot>
+  </div>
+  <label id="errorMessage"></label>
+</div>

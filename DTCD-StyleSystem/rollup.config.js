@@ -9,7 +9,7 @@ const outputDirectory = watch ? `./../../DTCD/server/plugins/DTCD-${pluginName}`
 
 const plugins = [
   html({
-    include: '**/*.html',
+    include: ['**/*.html', '**/*.svg'],
   }),
 ];
 

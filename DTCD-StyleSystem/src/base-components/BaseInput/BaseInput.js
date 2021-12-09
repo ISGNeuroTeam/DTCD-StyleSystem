@@ -1,6 +1,6 @@
 import html from './BaseInput.html';
 
-export default class FormField extends HTMLElement {
+export default class BaseInput extends HTMLElement {
   #internalInput;
   #label;
   #errorMessage;
