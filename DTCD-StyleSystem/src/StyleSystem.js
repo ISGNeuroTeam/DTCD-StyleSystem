@@ -5,6 +5,7 @@ import {
   LogSystemAdapter,
 } from '../../DTCD-SDK/index';
 
+import './../fonts/fonts.css';
 import baseComponentList from './base-components/components';
 
 export class StyleSystem extends SystemPlugin {
