@@ -1,10 +1,12 @@
 define ANNOUNCE_BODY
-Required section:
- build - build project into build directory, with configuration file and environment
- clean - clean all addition file, build directory and output archive file
- test - run all tests
- pack - make output archive
-Addition section:
+Required sections:
+	build - build project into ./build directory, with configuration file and environment
+	clean - clean all addition files, build directory and output archive file
+	test - run all tests
+	pack - make output archive
+Addition sections:
+	dependencies - download project dependencies to the ./$(PROJECT_NAME)/node_modules directory
+	sdk - download SDK directory to the root
 endef
 
 PROJECT_NAME = DTCD-StyleSystem
@@ -19,11 +21,11 @@ SET_PACK_NAME = $(eval PACK_NAME=$(PROJECT_NAME)-$(VERSION)-$(BRANCH).tar.gz)
 
 DEV_STORAGE = https://storage.dev.isgneuro.com/repository/components
 DTCD_SDK = DTCD-SDK
-DTCD_SDK_URL = $(DEV_STORAGE)/$(DTCD_SDK)/$(DTCD_SDK)-0.1.1-develop-0116.tar.gz
+DTCD_SDK_URL = $(DEV_STORAGE)/$(DTCD_SDK)/$(DTCD_SDK)-0.1.1-develop-0115.tar.gz
 
 .SILENT:
 
-COMPONENTS: sdk
+COMPONENTS: sdk 
 
 export ANNOUNCE_BODY
 
@@ -60,7 +62,6 @@ clean:
 	rm -rf ./$(DTCD_SDK)/
 	rm -rf ./$(PROJECT_NAME)/node_modules/
 	rm -rf ./$(PROJECT_NAME)/*-lock.*
-	rm -rf ./$(PROJECT_NAME)/dependencies/*.js
 	echo Cleaning completed.
 	# required section
 
@@ -98,3 +99,4 @@ sdk:
 
 dev: build
 	cp -rf ./build/$(PROJECT_NAME) ./../DTCD/server/plugins
+	npm run dev --prefix ./$(PROJECT_NAME)

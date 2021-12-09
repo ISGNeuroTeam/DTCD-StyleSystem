@@ -91,7 +91,7 @@ export class StyleSystem extends SystemPlugin {
           element.style.setProperty(`${prefix}-${key}`, obj[key]);
         }
       });
-    }
+    };
     setVariables(obj.styleVariables, startPrefix);
     this.logSystem.info(
       `CSS variables from theme '${this.currentThemeName}' are installed for element ${element}`
