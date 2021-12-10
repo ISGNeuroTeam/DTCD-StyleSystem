@@ -1,0 +1,57 @@
+<style>
+input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+input + label {
+  --color: rgba(5, 121, 246, 1);
+}
+
+input + label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #51515C;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Proxima Nova';
+  letter-spacing: .25px;
+}
+
+input + label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #C6C6D4;
+  border-radius: 4.44px;
+  margin-right: 8px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+  transition: .3s;
+}
+
+input:checked + label::before {
+  border-color: var(--color);
+  background-color: var(--color);
+}
+
+input:disabled + label {
+  cursor: default;
+}
+
+input:disabled + label::before {
+  border-color: #C6C6D4 !important;
+  background-color: #C6C6D4 !important;
+}
+</style>
+
+<div>
+  <input id="check" type="checkbox" value="">
+  <label for="check"></label>
+</div>

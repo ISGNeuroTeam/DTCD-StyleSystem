@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseButton custom component
 - Proxima Nova font
 - BaseTextarea custom component
+- BaseCheckbox custom component
 
 ### Changed
 
