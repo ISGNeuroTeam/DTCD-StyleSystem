@@ -107,7 +107,7 @@ export default class BaseSelect extends HTMLElement {
         const sizes = ['small', 'middle', 'big'];
 
         if (attrName === 'size' && sizes.includes(newValue)) {
-          const { classList } = this.#header;
+          const { classList } = this;
 
           for (const item of classList) {
             if (item.startsWith('size-')) {
@@ -129,6 +129,13 @@ export default class BaseSelect extends HTMLElement {
 
       case 'value':
         this.#value = newValue;
+        this.#header.innerHTML = newValue;
+        this.#optionsList.querySelectorAll('[slot="item"]').forEach(el => {
+          const itemValue = el.getAttribute('value');
+          if (itemValue === newValue) {
+            this.#header.innerHTML = el.innerHTML;
+          }
+        });
         this.#header.dispatchEvent(new Event('input'));
         break;
 

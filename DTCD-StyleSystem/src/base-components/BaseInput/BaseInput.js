@@ -4,9 +4,10 @@ export default class BaseInput extends HTMLElement {
   #internalInput;
   #label;
   #errorMessage;
+  #errorMessageText;
 
   static get observedAttributes() {
-    return ['placeholder', 'value', 'disabled', 'label', 'size', 'required'];
+    return ['placeholder', 'value', 'type', 'disabled', 'label', 'size', 'required'];
   }
 
   constructor() {
@@ -31,9 +32,13 @@ export default class BaseInput extends HTMLElement {
   validate() {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.#internalInput.value === '') {
-      return (this.invalid = true);
-    }
-    return (this.invalid = false);
+      this.invalid = true;
+      this.#errorMessageText = 'Обязательное поле*';
+    } else if (typeof this.validation !== 'undefined') {
+      const { isValid, message } = this.validation(this.#internalInput.value);
+      this.invalid = !isValid;
+      this.#errorMessageText = message;
+    } else this.invalid = false;
   }
 
   connectedCallback() {
@@ -41,18 +46,18 @@ export default class BaseInput extends HTMLElement {
 
     this.#internalInput.addEventListener('input', e => {
       this.validate();
-      if (!this.invalid) this.value = e.target.value;
+      this.value = e.target.value;
     });
 
     this.#internalInput.addEventListener('blur', () => {
-      if (this.required) {
+      if (this.required || this.validation) {
         const color = this.invalid ? 'var(--danger)' : 'var(--success)';
 
         this.#internalInput.style.borderColor = color;
         this.#label.style.color = color;
 
         this.#errorMessage.style.color = color;
-        this.#errorMessage.innerHTML = this.invalid ? 'Это обязательное поле*' : '';
+        this.#errorMessage.innerHTML = this.invalid ? this.#errorMessageText : '';
       }
     });
   }
@@ -68,6 +73,10 @@ export default class BaseInput extends HTMLElement {
         else this.#internalInput.removeAttribute('disabled');
         break;
 
+      case 'type':
+        this.#internalInput.setAttribute('type', newValue);
+        break;
+
       case 'label':
         this.#label.innerHTML = newValue;
         break;
@@ -75,7 +84,7 @@ export default class BaseInput extends HTMLElement {
       case 'size':
         const sizes = ['small', 'middle', 'big'];
 
-        if (attrName === 'size' && sizes.includes(newValue)) {
+        if (sizes.includes(newValue)) {
           const { classList } = this.#internalInput;
 
           for (const item of classList) {
@@ -89,8 +98,10 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'value':
+        this.#internalInput.setAttribute('value', newValue);
         this.#internalInput.value = newValue;
         this.#internalInput.dispatchEvent(new Event('input'));
+        this.value = newValue;
         break;
 
       default:
