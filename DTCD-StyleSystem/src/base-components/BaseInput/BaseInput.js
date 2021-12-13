@@ -7,7 +7,7 @@ export default class BaseInput extends HTMLElement {
   #errorMessageText;
 
   static get observedAttributes() {
-    return ['placeholder', 'value', 'type', 'disabled', 'label', 'size', 'required'];
+    return ['placeholder', 'type', 'disabled', 'label', 'size', 'required'];
   }
 
   constructor() {
@@ -47,6 +47,12 @@ export default class BaseInput extends HTMLElement {
     this.#internalInput.addEventListener('input', e => {
       this.validate();
       this.value = e.target.value;
+    });
+
+    this.addEventListener('input', e => {
+      this.validate();
+      this.value = e.target.value;
+      this.#internalInput.value = e.target.value;
     });
 
     this.#internalInput.addEventListener('blur', () => {
@@ -95,13 +101,6 @@ export default class BaseInput extends HTMLElement {
           }
           classList.add(`size-${newValue}`);
         }
-        break;
-
-      case 'value':
-        this.#internalInput.setAttribute('value', newValue);
-        this.#internalInput.value = newValue;
-        this.#internalInput.dispatchEvent(new Event('input'));
-        this.value = newValue;
         break;
 
       default:
