@@ -14,23 +14,33 @@ export default class BaseCheckbox extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.checkbox = this.shadowRoot.querySelector('input');
+    this.icon = this.shadowRoot.querySelector('.icon');
 
     this.checkChangeHandler = e => {
       this.dispatchEvent(new Event('input', { bubbles: true }));
     };
 
-    this.changeHandler = e => {
+    this.inputHandler = e => {
       e.value = this.checkbox.checked;
       this.value = this.checkbox.checked;
     };
 
+    this.iconClickHandler = e => {
+      if (!this.disabled) {
+        this.checkbox.checked = !this.checkbox.checked;
+        this.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    };
+
     this.checkbox.addEventListener('change', this.checkChangeHandler);
-    this.addEventListener('input', this.changeHandler);
+    this.icon.addEventListener('click', this.iconClickHandler);
+    this.addEventListener('input', this.inputHandler);
   }
 
   disconnectedCallback() {
     this.checkbox.removeEventListener('change', this.checkChangeHandler);
-    this.removeEventListener('change', this.changeHandler);
+    this.icon.removeEventListener('click', this.iconClickHandler);
+    this.removeEventListener('change', this.inputHandler);
   }
 
   get checked() {
