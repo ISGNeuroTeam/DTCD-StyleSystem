@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - manifest file for dependencies
 - BaseButton custom component
 - Proxima Nova font
+- BaseTextarea custom component
+- BaseCheckbox custom component
+- BaseSwitch custom component
+- BaseColorPicker custom component
 
 ### Changed
 
