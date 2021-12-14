@@ -25,6 +25,15 @@ export default class BaseInput extends HTMLElement {
     this.#errorMessage = this.shadowRoot.querySelector('#errorMessage');
   }
 
+  set value(val) {
+    this.#internalInput.value = val;
+    this.validate();
+  }
+
+  get value() {
+    return this.#internalInput.value;
+  }
+
   get required() {
     return this.hasAttribute('required');
   }
@@ -47,12 +56,6 @@ export default class BaseInput extends HTMLElement {
     this.#internalInput.addEventListener('input', e => {
       this.validate();
       this.value = e.target.value;
-    });
-
-    this.addEventListener('input', e => {
-      this.validate();
-      this.value = e.target.value;
-      this.#internalInput.value = e.target.value;
     });
 
     this.#internalInput.addEventListener('blur', () => {

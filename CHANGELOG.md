@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseTextarea custom component
 - BaseCheckbox custom component
 - BaseSwitch custom component
-- BaseColorPicker custom component
+- BaseColorPicker custom
+- BaseInput value setter and getter
 
 ### Changed
 
