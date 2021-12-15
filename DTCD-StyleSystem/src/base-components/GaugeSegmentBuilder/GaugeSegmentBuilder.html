@@ -1,0 +1,66 @@
+<style>
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.segments {
+  display: flex;
+  align-items: center;
+}
+
+.segments .divider {
+  display: block;
+  margin: 0 6px;
+  width: 14px;
+  border: 1px solid #C6C6D4;
+}
+
+.segments .input {
+  width: 80px;
+}
+
+.delete-btn {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: rgba(255, 59, 48, 0.24);
+  transition: .3s;
+}
+
+.delete-btn:hover {
+  fill: rgba(255, 59, 48, 1);
+}
+
+.add-btn {
+  cursor: pointer;
+  color: #0579F6;
+  font-size: 13px;
+  font-family: 'Proxima Nova';
+  letter-spacing: auto;
+}
+</style>
+
+<div class="container">
+  <div class="list">
+    <!-- <div class="row">
+      <div class="segments">
+        <base-input class="input" size="middle" type="number"></base-input>
+        <span class="divider"></span>
+        <base-input class="input" size="middle" type="number"></base-input>
+      </div>
+      <base-color-picker></base-color-picker>
+      <div class="delete-btn">
+        <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.1667 12.6667H4.33333C3.689 12.6667 3.16667 12.1443 3.16667 11.5V3.91667H2V2.75H4.33333V2.16667C4.33333 1.52233 4.85567 1 5.5 1H9C9.64433 1 10.1667 1.52233 10.1667 2.16667V2.75H12.5V3.91667H11.3333V11.5C11.3333 12.1443 10.811 12.6667 10.1667 12.6667ZM4.33333 3.91667V11.5H10.1667V3.91667H4.33333ZM5.5 2.16667V2.75H9V2.16667H5.5ZM9 10.3333H7.83333V5.08333H9V10.3333ZM6.66667 10.3333H5.5V5.08333H6.66667V10.3333Z"/>
+        </svg>
+      </div>
+    </div> -->
+  </div>
+  <div class="add-btn">+ Добавить диапазон</div>
+</div>
