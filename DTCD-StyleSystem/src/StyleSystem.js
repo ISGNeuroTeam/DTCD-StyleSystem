@@ -33,6 +33,7 @@ export class StyleSystem extends SystemPlugin {
 
     baseComponentList.forEach(component => {
       const { name, baseClass } = component;
+      baseClass.guid = this.guid;
       window.customElements.define(name, baseClass);
     });
 

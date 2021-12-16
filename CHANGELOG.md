@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseSwitch custom component
 - BaseColorPicker custom
 - BaseInput value setter and getter
+- DataSourceSelect
 
 ### Changed
 

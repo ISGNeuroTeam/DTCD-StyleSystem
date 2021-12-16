@@ -6,6 +6,7 @@ import BaseColorPicker from './BaseColorPicker/BaseColorPicker';
 import BaseInput from './BaseInput/BaseInput';
 import BaseSelect from './BaseSelect/BaseSelect';
 import GaugeSegmentBuilder from './GaugeSegmentBuilder/GaugeSegmentBuilder';
+import DataSourceSelect from './DataSourceSelect/DataSourceSelect';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -15,5 +16,6 @@ export default [
   { name: 'base-color-picker', baseClass: BaseColorPicker },
   { name: 'base-input', baseClass: BaseInput },
   { name: 'base-select', baseClass: BaseSelect },
+  { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
 ];

@@ -9,6 +9,7 @@ export default class BaseSelect extends HTMLElement {
   #optionsList;
   #iconEl;
   #label;
+  #value;
 
   static get observedAttributes() {
     return ['placeholder', 'value', 'disabled', 'label', 'size', 'required'];
@@ -39,8 +40,13 @@ export default class BaseSelect extends HTMLElement {
     return this.hasAttribute('required');
   }
 
-  set #value(newValue) {
-    this.value = newValue;
+  get value() {
+    return this.#value;
+  }
+
+  set value(newValue) {
+    this.#value = newValue;
+    this.#header.innerHTML = newValue;
     this.validate();
     this.dispatchEvent(new Event('input'));
   }
@@ -80,6 +86,7 @@ export default class BaseSelect extends HTMLElement {
           this.#headerContainer.style.borderColor = color;
 
           this.#errorMessage.style.color = color;
+          this.#errorMessage.classList.add('active');
           this.#errorMessage.innerHTML = this.invalid ? 'Это обязательное поле*' : '';
         }
         document.removeEventListener('click', toZipOptionsListCallback);
@@ -90,7 +97,7 @@ export default class BaseSelect extends HTMLElement {
     this.querySelectorAll('[slot="item"]').forEach(option => {
       option.addEventListener('click', evt => {
         this.#header.innerHTML = evt.target.innerHTML;
-        this.#value = evt.target.getAttribute('value');
+        this.value = evt.target.getAttribute('value');
       });
     });
     this.validate();
@@ -128,7 +135,7 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'value':
-        this.#value = newValue;
+        this.value = newValue;
         this.#header.innerHTML = newValue;
         this.#optionsList.querySelectorAll('[slot="item"]').forEach(el => {
           const itemValue = el.getAttribute('value');
