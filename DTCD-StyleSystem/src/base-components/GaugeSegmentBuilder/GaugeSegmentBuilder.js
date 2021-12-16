@@ -7,7 +7,6 @@ const proxySegmentsHandler = {
   },
 
   set(target, prop, value) {
-    // console.log(`${prop} => ${value}`);
     target[prop] = value;
     return true;
   },
@@ -18,7 +17,6 @@ export default class BaseTextarea extends HTMLElement {
   #addBtn;
   #addBtnClickHandler;
   #rowList;
-  #inputListener;
   #segments;
   #proxySegments;
 
@@ -41,20 +39,15 @@ export default class BaseTextarea extends HTMLElement {
     this.#segments = [];
     this.#proxySegments = new Proxy(this.#segments, proxySegmentsHandler);
 
-    this.#addBtnClickHandler = () => this.createRow();
-    this.#inputListener = () => {
-      // console.log('inputListener');
+    this.#addBtnClickHandler = () => {
+      this.createNewRow();
+      this.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    this.addEventListener('input', this.#inputListener);
     this.#addBtn.addEventListener('click', this.#addBtnClickHandler);
   }
 
-  connectedCallback() {
-  }
-
   disconnectedCallback() {
-    this.removeEventListener('input', this.#inputListener);
     this.#addBtn.removeEventListener('click', this.#addBtnClickHandler);
   }
 
@@ -64,129 +57,131 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
-  createSegmentsFromValue() {
-    this.#proxySegments.forEach((s, i) => this.createRow(s, true, i));
-  }
+  createNewRow(newSegmentData = null) {
+    const lastSegment = this.getLastSegment();
+    const newRange = [0, 0];
 
-  createRow(segment = {}, isCreatedFromValue = false, segmentID = null) {
-    if (isCreatedFromValue) {
-      const { range, color } = segment;
-
-      const row = document.createElement('div');
-      row.className = 'row';
-
-      const segments = this.createSegments(range, segmentID);
-      const colorPicker = this.createColorPicker(color);
-      const deleteBtn = this.createDeleteBtn();
-
-      row.appendChild(segments);
-      row.appendChild(colorPicker);
-      row.appendChild(deleteBtn);
-
-      this.#rowList.appendChild(row);
-    } else {
-      const { range = [0, 0], color = '#555' } = this.getLastSegment();
-      const lastRow = this.getLastRow();
-
-
-      const lastRowInputs = !lastRow ? [] : lastRow.querySelectorAll('.input');
-
-      const [lastInputStart, lastInputEnd] = lastRowInputs;
-
-      const lastInputStartVal = lastInputStart ? lastInputStart.value : 0;
-      const lastInputEndVal = lastInputStart ? lastInputEnd.value : 0;
-
-      const newRange = [lastInputEndVal, lastInputEndVal];
-
-      const row = document.createElement('div');
-      row.className = 'row';
-
-      const newLength = this.#proxySegments.push({ color,range: newRange });
-
-      const segments = this.createSegments(newRange, newLength - 1);
-      const colorPicker = this.createColorPicker(color);
-      const deleteBtn = this.createDeleteBtn();
-
-      row.appendChild(segments);
-      row.appendChild(colorPicker);
-      row.appendChild(deleteBtn);
-
-      this.#rowList.appendChild(row);
+    if (lastSegment) {
+      const lastRangeEnd = lastSegment.range[1];
+      newRange[0] = lastRangeEnd;
+      newRange[1] = lastRangeEnd;
     }
-  }
 
-  getLastRow() {
-    const rows = this.#rowList.querySelectorAll('.row');
-    return rows.length > 0 ? rows[rows.length - 1] : null;
+    const range = newSegmentData ? newSegmentData.range : newRange;
+    const color = newSegmentData ? newSegmentData.color: '#555';
+
+    this.#proxySegments.push({ color, range });
+    const curSegmentID = this.#proxySegments.length - 1;
+
+    const segments = this.createSegmentsElement(range, curSegmentID);
+
+    const colorPicker = this.createColorPickerElement(color, curSegmentID);
+    colorPicker.addEventListener('input', e => {
+      const segment = this.#proxySegments[curSegmentID];
+      segment.color = e.target.value;
+      this.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    const deleteBtn = this.createDeleteBtnElement(curSegmentID);
+    deleteBtn.segmentID = curSegmentID;
+    deleteBtn.addEventListener('click', () => {
+      this.value = this.#proxySegments.filter((s, i) => i !== deleteBtn.segmentID);
+      this.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    row.appendChild(segments);
+    row.appendChild(colorPicker);
+    row.appendChild(deleteBtn);
+    this.#rowList.appendChild(row);
   }
 
   getLastSegment() {
     const length = this.#proxySegments.length;
-    return length > 0 ? this.#proxySegments[length - 1] : {};
+    return length > 0 ? this.#proxySegments[length - 1] : null;
   }
 
-  createSegments(range = [0, 1], segmentID = null) {
+  createSegmentsElement(range = [0, 0], segmentID) {
+    const curSegment = this.#proxySegments[segmentID];
     const [startVal, endVal] = range;
+
+    const startInput = this.createInputElement();
+    startInput.value = startVal;
+    startInput.addEventListener('input', e => {
+      curSegment.range[0] = Number(e.target.value);
+    });
+
+    const endInput = this.createInputElement();
+    endInput.value = endVal;
+    endInput.addEventListener('input', e => {
+      curSegment.range[1] = Number(e.target.value);
+    });
+
+    startInput.validation = (val) => {
+      if (val > curSegment.range[1]) {
+        return { isValid: false, message: 'Начало диапазона больше конца' };
+      }
+      return { isValid: true };
+    };
+
+    endInput.validation = (val) => {
+      if (val < curSegment.range[0]) {
+        return { isValid: false, message: 'Начало диапазона больше конца' };
+      }
+      return { isValid: true };
+    };
+
+    if (segmentID >= 1) {
+      const prevSegment = this.#proxySegments[segmentID - 1];
+      const prevSegmentEndInput = prevSegment.inputs[1];
+
+      startInput.addEventListener('input', e => {
+        const value = Number(e.target.value);
+        prevSegment.range[1] = value;
+        prevSegmentEndInput.value = value;
+      });
+
+      prevSegmentEndInput.addEventListener('input', e => {
+        const value = Number(e.target.value);
+        startInput.value = value;
+        curSegment.range[0] = value;
+      });
+    }
+
+    this.#proxySegments[segmentID].inputs = [startInput, endInput];
 
     const segments = document.createElement('div');
     segments.className = 'segments';
 
-    const segmentStart = this.createInput();
-    segmentStart.value = startVal;
-
-    const segmentEnd = this.createInput();
-    segmentEnd.value = endVal;
-
-
-    if (segmentID !== null) {
-      const segmentLength = this.#proxySegments.length;
-
-      let startHandler = () => {};
-      let endHandler = () => {};
-      let prevEndInputHandler = () => {};
-
-      if (segmentID >= 1) {
-        const prevInput = this.#proxySegments[segmentID - 1].inputs[1];
-        startHandler = e => { prevInput.value = e.target.value; };
-        prevInput.addEventListener('input', e => { segmentStart.value = e.target.value; });
-      }
-
-      segmentStart.addEventListener('input', startHandler);
-      segmentEnd.addEventListener('input', endHandler);
-
-      this.#proxySegments[segmentID].inputs = [segmentStart, segmentEnd ];
-    }
-
     const divider = document.createElement('span');
     divider.className = 'divider';
 
-    segments.appendChild(segmentStart);
+    segments.appendChild(startInput);
     segments.appendChild(divider);
-    segments.appendChild(segmentEnd);
+    segments.appendChild(endInput);
 
     return segments;
   }
 
-  createInput() {
+  createInputElement() {
     const input = document.createElement('base-input');
     input.setAttribute('type', 'number');
     input.className = 'input';
     return input;
   }
 
-  createColorPicker(color = '#555') {
+  createColorPickerElement(color) {
     const picker = document.createElement('base-color-picker');
     picker.setAttribute('value', color);
     return picker;
   }
 
-  createDeleteBtn() {
+  createDeleteBtnElement() {
     const btn = document.createElement('div');
     btn.innerHTML = deleteIcon;
     btn.className = 'delete-btn';
-    btn.addEventListener('click', e => {
-      btn.closest('.row').remove();
-    });
     return btn;
   }
 
@@ -196,16 +191,14 @@ export default class BaseTextarea extends HTMLElement {
     );
   }
 
-  set value(val) {
-    if (Array.isArray(val)) {
-      this.#segments = val;
-      this.#proxySegments = new Proxy(this.#segments, proxySegmentsHandler);
+  set value(newValue) {
+    if (Array.isArray(newValue)) {
       this.clearRowListNodes();
-      this.createSegmentsFromValue();
+      this.#segments = [];
+      this.#proxySegments = new Proxy(this.#segments, proxySegmentsHandler);
+      newValue.forEach(v => this.createNewRow(v));
+      this.dispatchEvent(new Event('input', { bubbles: true }));
     }
-  }
-
-  attributeChangedCallback(attrName, oldValue, newValue) {
   }
 
 }
