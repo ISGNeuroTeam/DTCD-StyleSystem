@@ -48,6 +48,16 @@ export default class BaseInput extends HTMLElement {
       this.invalid = !isValid;
       this.#errorMessageText = message;
     } else this.invalid = false;
+
+    if (this.invalid) {
+      const color = 'var(--danger)';
+
+      this.#internalInput.style.borderColor = color;
+      this.#label.style.color = color;
+
+      this.#errorMessage.style.color = color;
+      this.#errorMessage.innerHTML = this.invalid ? this.#errorMessageText : '';
+    }
   }
 
   connectedCallback() {
@@ -58,17 +68,7 @@ export default class BaseInput extends HTMLElement {
       this.value = e.target.value;
     });
 
-    this.#internalInput.addEventListener('blur', () => {
-      if (this.required || this.validation) {
-        const color = this.invalid ? 'var(--danger)' : 'var(--success)';
-
-        this.#internalInput.style.borderColor = color;
-        this.#label.style.color = color;
-
-        this.#errorMessage.style.color = color;
-        this.#errorMessage.innerHTML = this.invalid ? this.#errorMessageText : '';
-      }
-    });
+    this.#internalInput.addEventListener('blur', () => {});
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
