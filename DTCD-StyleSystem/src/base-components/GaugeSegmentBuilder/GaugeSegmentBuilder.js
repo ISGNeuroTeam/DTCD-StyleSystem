@@ -134,7 +134,7 @@ export default class BaseTextarea extends HTMLElement {
 
     endInput.validation = val => {
       if (val < curSegment.range[0]) {
-        return { isValid: false, message: 'Начало диапазона больше конца' };
+        return { isValid: false, message: 'Конец диапазона меньше начала' };
       }
       return { isValid: true };
     };

@@ -12,7 +12,6 @@ export default class DataSourceSelect extends HTMLElement {
   #createDSBtn;
   #selectDSContainer;
   #selectDS;
-  #value;
 
   static get observedAttributes() {
     return ['placeholder', 'value', 'disabled', 'label', 'size', 'required'];
@@ -31,8 +30,8 @@ export default class DataSourceSelect extends HTMLElement {
       mode: 'open',
     }).appendChild(template.content.cloneNode(true));
 
-    this.#createDSBtn = this.shadowRoot.querySelector('#createDataSourceButton');
     this.#selectDSContainer = this.shadowRoot.querySelector('#selectDataSourceContainer');
+    this.#createDSBtn = this.shadowRoot.querySelector('#createDataSourceButton');
     this.#renderSelect();
   }
 
@@ -41,13 +40,13 @@ export default class DataSourceSelect extends HTMLElement {
   }
 
   get value() {
-    return this.#value;
+    return this.#selectDS.value;
   }
 
   set value(newValue) {
-    this.#value = newValue;
-    this.dispatchEvent(new Event('input'));
+    this.#selectDS.value = newValue;
     this.validate();
+    this.dispatchEvent(new Event('input'));
   }
 
   validate() {
@@ -73,22 +72,8 @@ export default class DataSourceSelect extends HTMLElement {
     this.#selectDS.addEventListener('input', e => (this.value = e.target.value));
     this.#selectDSContainer.appendChild(this.#selectDS);
   }
-  disconnectedCallback() {
-    const workspaceSystemInstance = this.#workspaceSystem.getSystem('WorkspaceSystem');
-    const workspaceSystemGUID = workspaceSystemInstance.getGUID(workspaceSystemInstance);
-
-    this.#eventSystem.removeCustomAction('updateDataSourceList');
-    this.#eventSystem.unsubscribe(
-      workspaceSystemGUID,
-      'CloseModal',
-      undefined,
-      'updateDataSourceList'
-    );
-  }
 
   connectedCallback() {
-    this.#renderSelect();
-
     const dataSourceSystemInstance = this.#dataSourceSystem.getSystem('DataSourceSystem');
     const dataSourceSystemGUID = dataSourceSystemInstance.getGUID(dataSourceSystemInstance);
     this.#createDSBtn.addEventListener('click', e => {
@@ -126,6 +111,19 @@ export default class DataSourceSelect extends HTMLElement {
     );
 
     this.#workspaceSystem.closeModal();
+  }
+
+  disconnectedCallback() {
+    const workspaceSystemInstance = this.#workspaceSystem.getSystem('WorkspaceSystem');
+    const workspaceSystemGUID = workspaceSystemInstance.getGUID(workspaceSystemInstance);
+
+    this.#eventSystem.removeCustomAction('updateDataSourceList');
+    this.#eventSystem.unsubscribe(
+      workspaceSystemGUID,
+      'CloseModal',
+      undefined,
+      'updateDataSourceList'
+    );
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -170,7 +168,6 @@ export default class DataSourceSelect extends HTMLElement {
 
       case 'value':
         this.value = newValue;
-        this.#selectDS.value = newValue;
         break;
 
       default:

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseColorPicker custom
 - BaseInput value setter and getter
 - DataSourceSelect
+- GaugeSegmentBuilder
 
 ### Changed
 
