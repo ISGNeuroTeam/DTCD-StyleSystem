@@ -29,7 +29,7 @@ export default class BaseInput extends HTMLElement {
     this.#internalInput.style.borderColor = newVal ? 'var(--danger)' : 'var(--border)';
     this.#label.style.color = newVal ? 'var(--danger)' : 'var(--text_main)';
 
-    this.#errorMessage.style.color = newVal ? 'var(--danger)' : 'var(--text_main)';
+    this.#errorMessage.style.color = newVal ? 'var(--danger)' : 'var(--text_secondary)';
     this.#errorMessage.innerHTML = newVal && this.#errorMessageText ? this.#errorMessageText : '';
   }
 
