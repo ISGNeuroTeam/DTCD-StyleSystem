@@ -13,7 +13,6 @@ const proxySegmentsHandler = {
 };
 
 export default class BaseTextarea extends HTMLElement {
-
   #addBtn;
   #addBtnClickHandler;
   #rowList;
@@ -42,13 +41,18 @@ export default class BaseTextarea extends HTMLElement {
     this.#addBtnClickHandler = () => {
       this.createNewRow();
       this.dispatchEvent(new Event('input', { bubbles: true }));
-    }
+    };
 
     this.#addBtn.addEventListener('click', this.#addBtnClickHandler);
   }
 
+  connectedCallback() {
+    this.addEventListener('input', this.validate);
+  }
+
   disconnectedCallback() {
     this.#addBtn.removeEventListener('click', this.#addBtnClickHandler);
+    this.removeEventListener('input', this.validate);
   }
 
   clearRowListNodes() {
@@ -68,7 +72,7 @@ export default class BaseTextarea extends HTMLElement {
     }
 
     const range = newSegmentData ? newSegmentData.range : newRange;
-    const color = newSegmentData ? newSegmentData.color: '#555';
+    const color = newSegmentData ? newSegmentData.color : '#555';
 
     this.#proxySegments.push({ color, range });
     const curSegmentID = this.#proxySegments.length - 1;
@@ -111,22 +115,24 @@ export default class BaseTextarea extends HTMLElement {
     startInput.value = startVal;
     startInput.addEventListener('input', e => {
       curSegment.range[0] = Number(e.target.value);
+      this.dispatchEvent(new Event('input'));
     });
 
     const endInput = this.createInputElement();
     endInput.value = endVal;
     endInput.addEventListener('input', e => {
       curSegment.range[1] = Number(e.target.value);
+      this.dispatchEvent(new Event('input'));
     });
 
-    startInput.validation = (val) => {
+    startInput.validation = val => {
       if (val > curSegment.range[1]) {
         return { isValid: false, message: 'Начало диапазона больше конца' };
       }
       return { isValid: true };
     };
 
-    endInput.validation = (val) => {
+    endInput.validation = val => {
       if (val < curSegment.range[0]) {
         return { isValid: false, message: 'Начало диапазона больше конца' };
       }
@@ -186,9 +192,7 @@ export default class BaseTextarea extends HTMLElement {
   }
 
   get value() {
-    return this.#segments.map(
-      ({ range, color }) => ({ range, color })
-    );
+    return this.#segments.map(({ range, color }) => ({ range, color }));
   }
 
   set value(newValue) {
@@ -197,8 +201,14 @@ export default class BaseTextarea extends HTMLElement {
       this.#segments = [];
       this.#proxySegments = new Proxy(this.#segments, proxySegmentsHandler);
       newValue.forEach(v => this.createNewRow(v));
+      this.validate();
       this.dispatchEvent(new Event('input', { bubbles: true }));
     }
   }
 
+  validate() {
+    this.#segments.forEach(segment => {
+      segment.inputs.forEach(input => input.validate());
+    });
+  }
 }

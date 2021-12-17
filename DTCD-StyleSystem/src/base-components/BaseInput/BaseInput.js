@@ -25,6 +25,14 @@ export default class BaseInput extends HTMLElement {
     this.#errorMessage = this.shadowRoot.querySelector('#errorMessage');
   }
 
+  set invalid(newVal) {
+    this.#internalInput.style.borderColor = newVal ? 'var(--danger)' : 'var(--border)';
+    this.#label.style.color = newVal ? 'var(--danger)' : 'var(--text_main)';
+
+    this.#errorMessage.style.color = newVal ? 'var(--danger)' : 'var(--text_main)';
+    this.#errorMessage.innerHTML = newVal && this.#errorMessageText ? this.#errorMessageText : '';
+  }
+
   set value(val) {
     this.#internalInput.value = val;
     this.validate();
@@ -41,34 +49,19 @@ export default class BaseInput extends HTMLElement {
   validate() {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.#internalInput.value === '') {
-      this.invalid = true;
       this.#errorMessageText = 'Обязательное поле*';
+      this.invalid = true;
     } else if (typeof this.validation !== 'undefined') {
       const { isValid, message } = this.validation(this.#internalInput.value);
-      this.invalid = !isValid;
       this.#errorMessageText = message;
+      this.invalid = !isValid;
     } else this.invalid = false;
-
-    if (this.invalid) {
-      const color = 'var(--danger)';
-
-      this.#internalInput.style.borderColor = color;
-      this.#label.style.color = color;
-
-      this.#errorMessage.style.color = color;
-      this.#errorMessage.innerHTML = this.invalid ? this.#errorMessageText : '';
-    }
   }
 
   connectedCallback() {
-    this.validate();
-
     this.#internalInput.addEventListener('input', e => {
-      this.validate();
       this.value = e.target.value;
     });
-
-    this.#internalInput.addEventListener('blur', () => {});
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -84,6 +77,10 @@ export default class BaseInput extends HTMLElement {
 
       case 'type':
         this.#internalInput.setAttribute('type', newValue);
+        break;
+
+      case 'value':
+        this.value = newValue;
         break;
 
       case 'label':
