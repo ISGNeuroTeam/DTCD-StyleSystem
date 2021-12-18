@@ -33,13 +33,14 @@ export default class BaseInput extends HTMLElement {
     this.#errorMessage.innerHTML = newVal && this.#errorMessageText ? this.#errorMessageText : '';
   }
 
+  get value() {
+    return this.#internalInput.value;
+  }
+
   set value(val) {
     this.#internalInput.value = val;
     this.validate();
-  }
-
-  get value() {
-    return this.#internalInput.value;
+    this.dispatchEvent(new Event('input'));
   }
 
   get required() {

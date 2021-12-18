@@ -69,7 +69,7 @@ export default class DataSourceSelect extends HTMLElement {
       optionElement.setAttribute('slot', 'item');
       this.#selectDS.appendChild(optionElement);
     }
-    this.#selectDS.addEventListener('input', e => (this.value = e.target.value));
+    this.#selectDS.addEventListener('input', e => this.dispatchEvent(new Event('input')));
     this.#selectDSContainer.appendChild(this.#selectDS);
   }
 
@@ -84,7 +84,7 @@ export default class DataSourceSelect extends HTMLElement {
       (({ dataSource }) => {
         this.#workspaceSystem.closeModal();
         this.#renderSelect();
-        this.#selectDS.value = dataSource;
+        this.value = dataSource;
       }).bind(this)
     );
 
