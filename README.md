@@ -1,6 +1,7 @@
 # DTCD-StyleSystem
 
 Core system-plugin (part of DTCD-SDK) for changing appearance in [DTCD](https://github.com/ISGNeuroTeam/DTCD) application.
+P.S. In this plugin registered base web-components of system.
 
 ## Getting Started
 
