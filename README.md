@@ -1,4 +1,4 @@
-# StyleSystem
+# DTCD-StyleSystem
 
 Core system-plugin (part of DTCD-SDK) for changing appearance in [DTCD](https://github.com/ISGNeuroTeam/DTCD) application.
 
