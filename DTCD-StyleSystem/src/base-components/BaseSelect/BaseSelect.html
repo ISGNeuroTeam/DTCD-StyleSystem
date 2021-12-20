@@ -1,0 +1,139 @@
+<style>
+  .container {
+    width: 100%;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  #headerContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid;
+    border-color: var(--border);
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: normal;
+    resize: vertical;
+    background-color: var(--background_main) !important;
+    cursor: pointer;
+    user-select: none;
+
+    /* by size (middle)*/
+    height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  #headerContainer {
+    padding: 6px;
+    color: var(--text_secondary);
+  }
+
+  :host(.size-small) #headerContainer {
+    padding: 3px;
+    height: 20px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  :host(.size-big) #headerContainer {
+    padding: 8px;
+    height: 34px;
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  #optionsList {
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+
+    /* by size (middle)*/
+    margin-top: 45px;
+  }
+  :host(.size-small) #optionsList {
+    margin-top: 36.5px;
+  }
+  :host(.size-big) #optionsList {
+    margin-top: 51px;
+  }
+  #optionsList[active] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::slotted(*[slot='item']) {
+    width: 100%;
+    cursor: pointer;
+    background-color: var(--background_main);
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+    outline: none;
+    color: var(--text_secondary);
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: normal;
+    resize: vertical;
+    user-select: none;
+    top: -1px;
+    bottom: 1px;
+    padding-left: 12px;
+    padding-top: 6px;
+
+    /* by size (middle)*/
+    height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  :host(.size-small) ::slotted(*[slot='item']) {
+    height: 20px;
+    padding-top: 3px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  :host(.size-big) ::slotted(*[slot='item']) {
+    height: 34px;
+    font-size: 15px;
+    line-height: 18px;
+    padding-top: 8.5px;
+  }
+
+  label {
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+
+    color: var(--text_main);
+  }
+
+  #label {
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  #errorMessage:active {
+    padding-top: 4px;
+  }
+</style>
+<div class="container">
+  <label id="label"></label>
+  <div id="headerContainer">
+    <div id="header"></div>
+    <div id="dropDownIcon"></div>
+  </div>
+  <div id="optionsList">
+    <slot name="item"></slot>
+  </div>
+  <label id="errorMessage"></label>
+</div>

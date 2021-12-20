@@ -1,20 +1,29 @@
+import html from 'rollup-plugin-html';
+import styles from 'rollup-plugin-styles';
+
 const watch = Boolean(process.env.ROLLUP_WATCH);
 
 const pluginName = 'StyleSystem';
 
-const output = watch ? `./../../DTCD/server/plugins/${pluginName}.js` : `./dist/${pluginName}.js`;
+const outputFile = `${pluginName}.js`;
+const outputDirectory = watch ? `./../../DTCD/server/plugins/DTCD-${pluginName}` : `./build`;
 
-const plugins = [];
+const plugins = [
+  html({
+    include: ['**/*.html', '**/*.svg'],
+  }),
+  styles(),
+];
 
 export default {
-	input: `./src/${pluginName}.js`,
-	output: {
-		file: output,
-		format: 'esm',
-		sourcemap: false,
-	},
-	watch: {
-		include: ['./*/**'],
-	},
-	plugins,
+  input: `./src/${pluginName}.js`,
+  output: {
+    file: `${outputDirectory}/${outputFile}`,
+    format: 'esm',
+    sourcemap: false,
+  },
+  watch: {
+    include: ['./*/**'],
+  },
+  plugins,
 };

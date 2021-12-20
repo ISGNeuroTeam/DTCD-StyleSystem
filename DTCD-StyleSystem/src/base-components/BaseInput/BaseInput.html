@@ -1,0 +1,80 @@
+<style>
+  input {
+    width: 100%;
+    padding: 6px 12px;
+    border: 2px solid;
+    border-color: var(--border);
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: normal;
+    resize: vertical;
+    background-color: var(--border_12) !important;
+
+    /* by size (middle)*/
+    height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  input.size-small {
+    height: 20px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  input.size-middle {
+    font-weight: 600;
+  }
+
+  input.size-big {
+    height: 34px;
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  input::placeholder {
+    color: var(--text_secondary);
+  }
+
+  input:focus {
+    border: 2px solid var(--button_primary);
+  }
+
+  input:disabled {
+    color: var(--text_secondary) !important;
+    border: 2px solid;
+    background-color: var(--border_secondary) !important;
+    cursor: not-allowed;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+  }
+
+  #label {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+    margin-bottom: 4px;
+    color: var(--text_main);
+  }
+
+  #errorMessage {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+    margin-top: 4px;
+    color: var(--text_secondary);
+  }
+</style>
+<div class="container">
+  <label id="label" for="textField"></label>
+  <input id="textField" type="text" />
+  <label id="errorMessage"></label>
+</div>

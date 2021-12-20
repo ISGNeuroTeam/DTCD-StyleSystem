@@ -1,0 +1,53 @@
+<style>
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.segments {
+  display: flex;
+  align-items: start;
+}
+
+.segments .divider {
+  display: block;
+  margin: 0 6px;
+  width: 14px;
+  border-top: 2px solid #C6C6D4;
+  margin-top: 15px;
+}
+
+.segments .input {
+  width: 80px;
+}
+
+.delete-btn {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: rgba(255, 59, 48, 0.24);
+  transition: .3s;
+}
+
+.delete-btn:hover {
+  fill: rgba(255, 59, 48, 1);
+}
+
+.add-btn {
+  cursor: pointer;
+  color: #0579F6;
+  font-size: 13px;
+  font-family: 'Proxima Nova';
+  letter-spacing: auto;
+}
+</style>
+
+<div class="container">
+  <div class="list"></div>
+  <div class="add-btn">+ Добавить диапазон</div>
+</div>

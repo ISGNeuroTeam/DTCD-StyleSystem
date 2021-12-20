@@ -1,0 +1,64 @@
+<style>
+button {
+  --text-color: #FEFEFE;
+  --back-color: rgba(5, 121, 246, 1);
+  --hover-color: rgba(5, 121, 246, 0.86);
+  --active-color: rgba(5, 121, 246, 0.72);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: .3s;
+  letter-spacing: .25px;
+  background-color: var(--back-color);
+  color: var(--text-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+button:active {
+  background-color: var(--active-color);
+}
+
+button:disabled {
+  color: #938FA0 !important;
+  background-color: #C6C6D4 !important;
+}
+
+button.size-small {
+  border-radius: 4.66px;
+  font-size: 11px;
+  font-weight: 600px;
+  padding: 4px 13px;
+}
+
+button.size-middle {
+  border-radius: 6.22px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 18px;
+}
+
+button.size-big {
+  max-width: 240px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8.88px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 23px;
+}
+</style>
+
+<button
+  type="button"
+  class="btn size-middle"
+>
+  <slot>Кнопка</slot>
+</button>

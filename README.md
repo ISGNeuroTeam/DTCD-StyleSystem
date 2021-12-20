@@ -1,4 +1,4 @@
-# StyleSystem
+# DTCD-StyleSystem
 
 Core system-plugin (part of DTCD-SDK) for changing appearance in [DTCD](https://github.com/ISGNeuroTeam/DTCD) application.
 
@@ -41,8 +41,7 @@ make clear
 Create package, then move archive to _plugins_ folder on DTCD server and unarchive it with the following commands:
 
 ```
-tar -zxf DTCD-StyleSystem-*.tar.gz ./DTCD-StyleSystem/StyleSystem.js
-mv ./DTCD-StyleSystem/StyleSystem.js StyleSystem.js
+tar -zxf DTCD-StyleSystem-*.tar.gz
 ```
 
 ## Built With
