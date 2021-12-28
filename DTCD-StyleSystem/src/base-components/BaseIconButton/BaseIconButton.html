@@ -1,0 +1,70 @@
+<style>
+:host {
+  display: inline-block;
+}
+
+button {
+  --size: 40px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  border-radius: calc(var(--size) * 0.222);
+  outline: none;
+  transition: .3s;
+  background-color: var(--button_primary_12);
+}
+
+button ::slotted(*) {
+  fill: var(--button_primary) !important;
+  color: var(--button_primary) !important;
+}
+
+button.second {
+  background-color: var(--border_12);
+}
+
+button.second ::slotted(*) {
+  fill: var(--text_main) !important;
+  color: var(--text_main) !important;
+}
+
+button.red {
+  background-color: var(--danger_12);
+}
+
+button.red ::slotted(*) {
+  fill: var(--danger) !important;
+  color: var(--danger) !important;
+}
+
+button.green {
+  background-color: var(--success_12);
+}
+
+button.green ::slotted(*) {
+  fill: var(--success) !important;
+  color: var(--success) !important;
+}
+
+button:disabled {
+  cursor: default;
+  background-color: var(--border);
+}
+
+button:disabled ::slotted(*) {
+  fill: var(--text_secondary) !important;
+  color: var(--text_secondary) !important;
+}
+</style>
+
+<button type="button">
+  <slot></slot>
+</button>

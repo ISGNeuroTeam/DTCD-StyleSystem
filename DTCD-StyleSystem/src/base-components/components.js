@@ -9,6 +9,7 @@ import GaugeSegmentBuilder from './GaugeSegmentBuilder/GaugeSegmentBuilder';
 import DataSourceSelect from './DataSourceSelect/DataSourceSelect';
 import BaseLabel from './BaseLabel/BaseLabel';
 import BaseLink from './BaseLink/BaseLink';
+import BaseIconButton from './BaseIconButton/BaseIconButton';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -20,6 +21,7 @@ export default [
   { name: 'base-select', baseClass: BaseSelect },
   { name: 'base-label', baseClass: BaseLabel },
   { name: 'base-link', baseClass: BaseLink },
+  { name: 'base-icon-button', baseClass: BaseIconButton },
   { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
 ];
