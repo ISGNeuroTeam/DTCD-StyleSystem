@@ -45,8 +45,8 @@ export default class BaseSelect extends HTMLElement {
   }
 
   set value(newValue) {
+    this.#header.innerHTML = newValue
     this.#value = newValue;
-    this.#header.innerHTML = newValue;
     this.validate();
     this.dispatchEvent(new Event('input'));
   }
@@ -59,6 +59,18 @@ export default class BaseSelect extends HTMLElement {
     return (this.invalid = false);
   }
 
+  #optionClickCallback(evt) {
+    const selectedOptionEl = evt.target.closest('[slot="item"')
+    const selectEl = evt.target.closest('base-select')
+    if (typeof selectedOptionEl.value !== 'undefined') {
+      selectEl.value = selectedOptionEl.value
+    } else if (selectedOptionEl.hasAttribute('value')) {
+      selectEl.value = selectedOptionEl.getAttribute('value')
+    } else {
+      selectEl.value = selectedOptionEl.innerHTML
+    }
+  }
+
   connectedCallback() {
     const toZipOptionsListCallback = () => {
       this.#headerContainer.dispatchEvent(new Event('click'));
@@ -66,6 +78,7 @@ export default class BaseSelect extends HTMLElement {
 
     this.#headerContainer.addEventListener('click', e => {
       e.stopPropagation();
+
       if (this.#optionsList.getAttribute('active') === null) {
         // TO EXPAND
 
@@ -73,9 +86,14 @@ export default class BaseSelect extends HTMLElement {
         this.#headerContainer.style.borderColor = 'var(--button_primary)';
         document.addEventListener('click', toZipOptionsListCallback);
         this.#optionsList.setAttribute('active', true);
+
+        // Add option select listener
+        this.querySelectorAll('[slot="item"]').forEach(option => {
+          option.addEventListener('click', this.#optionClickCallback);
+        });
+
       } else {
         // TO ZIP
-
         this.validate();
         this.#headerContainer.style.borderColor = 'var(--border)';
         this.#iconEl.innerHTML = dropDownDefaultSvg;
@@ -91,15 +109,14 @@ export default class BaseSelect extends HTMLElement {
         }
         document.removeEventListener('click', toZipOptionsListCallback);
         this.#optionsList.removeAttribute('active');
+
+        // Remove option select listener
+        this.querySelectorAll('[slot="item"]').forEach(option => {
+          option.removeEventListener('click', this.#optionClickCallback);
+        });
       }
     });
 
-    this.querySelectorAll('[slot="item"]').forEach(option => {
-      option.addEventListener('click', evt => {
-        this.#header.innerHTML = evt.target.innerHTML;
-        this.value = evt.target.getAttribute('value');
-      });
-    });
     this.validate();
   }
 
@@ -136,14 +153,6 @@ export default class BaseSelect extends HTMLElement {
 
       case 'value':
         this.value = newValue;
-        this.#header.innerHTML = newValue;
-        this.#optionsList.querySelectorAll('[slot="item"]').forEach(el => {
-          const itemValue = el.getAttribute('value');
-          if (itemValue === newValue) {
-            this.#header.innerHTML = el.innerHTML;
-          }
-        });
-        this.#header.dispatchEvent(new Event('input'));
         break;
 
       default:
