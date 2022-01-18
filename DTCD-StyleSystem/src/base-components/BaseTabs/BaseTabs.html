@@ -1,0 +1,47 @@
+<style>
+:host {
+  width: 100%;
+  height: auto !important;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  background-color: var(--background_secondary);
+  border-radius: 4.44px;
+  padding: 0 2px;
+}
+
+nav .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  flex: 1 0;
+  border-radius: 3.55px;
+  cursor: pointer;
+  color: var(--text_main);
+  font-size: 13px;
+  font-family: 'Proxima Nova';
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+nav .tab[active] {
+  color: #fefefe;
+  background-color: var(--button_primary);
+}
+
+.panels {
+  padding-top: 10px;
+}
+</style>
+
+<div class="container">
+  <nav id="nav"></nav>
+  <div class="panels">
+    <slot name="tab"></slot>
+  </div>
+</div>
