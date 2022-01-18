@@ -12,6 +12,7 @@ import BaseLink from './BaseLink/BaseLink';
 import BaseIconButton from './BaseIconButton/BaseIconButton';
 import BaseChip from './BaseChip/BaseChip';
 import BaseTabs from './BaseTabs/BaseTabs';
+import BaseTooltip from './BaseTooltip/BaseTooltip';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -26,6 +27,7 @@ export default [
   { name: 'base-icon-button', baseClass: BaseIconButton },
   { name: 'base-chip', baseClass: BaseChip },
   { name: 'base-tabs', baseClass: BaseTabs },
+  { name: 'base-tooltip', baseClass: BaseTooltip },
   { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
 ];
