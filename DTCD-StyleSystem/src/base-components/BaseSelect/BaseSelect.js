@@ -5,14 +5,15 @@ import dropDownActiveSvg from './../icons/dropdown-active.svg';
 export default class BaseSelect extends HTMLElement {
   #headerContainer;
   #header;
-  #errorMessage;
   #optionsList;
   #iconEl;
+  #searchInput
   #label;
+  #errorMessage;
   #value;
 
   static get observedAttributes() {
-    return ['placeholder', 'value', 'disabled', 'label', 'size', 'required'];
+    return ['placeholder', 'value', 'required', 'disabled', 'label', 'size', "search"];
   }
 
   constructor() {
@@ -31,6 +32,7 @@ export default class BaseSelect extends HTMLElement {
 
     this.#iconEl = this.shadowRoot.querySelector('#dropDownIcon');
     this.#iconEl.innerHTML = dropDownDefaultSvg;
+    this.#searchInput = this.shadowRoot.querySelector("#searchInput")
 
     this.#label = this.shadowRoot.querySelector('#label');
     this.#errorMessage = this.shadowRoot.querySelector('#errorMessage');
@@ -46,6 +48,8 @@ export default class BaseSelect extends HTMLElement {
 
   set value(newValue) {
     this.#header.innerHTML = newValue
+    if (this.hasAttribute('search'))
+      this.#searchInput.placeholder = newValue
     this.#value = newValue;
     this.validate();
     this.dispatchEvent(new Event('input'));
@@ -92,6 +96,10 @@ export default class BaseSelect extends HTMLElement {
           option.addEventListener('click', this.#optionClickCallback);
         });
 
+        // Focus searchInput if it active
+        if (this.hasAttribute('search'))
+          this.#searchInput.focus()
+
       } else {
         // TO ZIP
         this.validate();
@@ -114,8 +122,24 @@ export default class BaseSelect extends HTMLElement {
         this.querySelectorAll('[slot="item"]').forEach(option => {
           option.removeEventListener('click', this.#optionClickCallback);
         });
+
+        // Unfocus searchInput if it active
+        if (this.hasAttribute('search')) {
+          this.#searchInput.blur()
+          this.#searchInput.value = ''
+        }
       }
     });
+
+    // Search input settings
+    this.#searchInput.addEventListener("input", (e) => {
+      const subString = e.target.value.toLowerCase()
+      this.querySelectorAll("[slot='item']").forEach(item => {
+        const target = typeof item.value !== 'undefined' ? item.value.toLowerCase() : item.textContent.toLowerCase();
+        item.style.display = target.includes(subString) ? 'block' : item.style.display = 'none';
+      })
+    })
+
 
     this.validate();
   }
@@ -149,6 +173,13 @@ export default class BaseSelect extends HTMLElement {
 
       case 'label':
         this.#label.innerHTML = newValue;
+        break;
+
+      case 'search':
+        if (this.hasAttribute("search")) {
+          this.#header.style.display = "none"
+          this.#searchInput.style.display = 'block'
+        }
         break;
 
       case 'value':

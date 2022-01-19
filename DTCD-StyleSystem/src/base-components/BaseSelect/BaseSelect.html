@@ -2,6 +2,7 @@
   .container {
     width: 100%;
     min-width: 150px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -52,25 +53,29 @@
   #optionsList {
     display: none;
     position: absolute;
-    width: 100%;
     z-index: 1000;
+    overflow-x: hidden;
+    max-height: 250px !important;
+    width: inherit;
 
     /* by size (middle)*/
-    margin-top: 45px;
+    margin-top: 28px;
   }
+
   :host(.size-small) #optionsList {
-    margin-top: 36.5px;
+    margin-top: 25px;
   }
   :host(.size-big) #optionsList {
-    margin-top: 51px;
+    margin-top: 34px;
   }
+
   #optionsList[active] {
     display: flex;
     flex-direction: column;
   }
 
   ::slotted(*[slot='item']) {
-    width: 100%;
+    width: 100% !important;
     cursor: pointer;
     background-color: var(--background_main);
     border: 1px solid var(--border);
@@ -107,28 +112,47 @@
     padding-top: 8.5px;
   }
 
-  label {
+  #searchInput{
+    box-sizing: border-box;
+    outline: none;
+    border: 0;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: normal;
+    resize: vertical;
+  }
+
+  #label {
     font-family: Proxima Nova;
     font-style: normal;
     font-weight: 600;
     font-size: 11px;
     line-height: 13px;
+    display: none;
 
     color: var(--text_main);
   }
 
-  #label {
+  #label:active {
     position: relative;
+    display: block;
     padding-bottom: 4px;
   }
 
+  #errorMessage {
+    display: none;
+  }
+
   #errorMessage:active {
+    display: block;
     padding-top: 4px;
   }
 </style>
+
 <div class="container">
   <label id="label"></label>
   <div id="headerContainer">
+    <input id="searchInput" style="display: none;"></input>
     <div id="header"></div>
     <div id="dropDownIcon"></div>
   </div>
