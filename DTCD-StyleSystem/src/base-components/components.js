@@ -13,6 +13,8 @@ import BaseIconButton from './BaseIconButton/BaseIconButton';
 import BaseChip from './BaseChip/BaseChip';
 import BaseTabs from './BaseTabs/BaseTabs';
 import BaseTooltip from './BaseTooltip/BaseTooltip';
+import BaseRadio from './BaseRadio/BaseRadio';
+import BaseRadioGroup from './BaseRadioGroup/BaseRadioGroup';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -28,6 +30,8 @@ export default [
   { name: 'base-chip', baseClass: BaseChip },
   { name: 'base-tabs', baseClass: BaseTabs },
   { name: 'base-tooltip', baseClass: BaseTooltip },
+  { name: 'base-radio', baseClass: BaseRadio },
+  { name: 'base-radio-group', baseClass: BaseRadioGroup },
   { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
 ];
