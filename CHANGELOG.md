@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseRadio and BaseRadioGroup custom components
 - BaseRange custom component
 
+### Changed
+
+- BaseButton styles and size logic
+
+### Removed
+
+- BaseButton `text-color`, `back-color`, `hover-color` and `active-color` attributes
+
 ## [0.3.1]
 
 ### Fixed

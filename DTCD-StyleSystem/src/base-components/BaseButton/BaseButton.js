@@ -2,15 +2,11 @@ import html from './BaseButton.html';
 
 export default class BaseButton extends HTMLElement {
 
+  #button;
+  #clickHandler;
+
   static get observedAttributes() {
-    return [
-      'size',
-      'disabled',
-      'back-color',
-      'text-color',
-      'hover-color',
-      'active-color',
-    ];
+    return ['disabled'];
   }
 
   constructor() {
@@ -22,16 +18,15 @@ export default class BaseButton extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.clickHandler = e => {
+    this.#button = this.shadowRoot.querySelector('button');
+
+    this.#clickHandler = e => {
       this.disabled && e.stopImmediatePropagation();
     };
 
-    this.addEventListener('click', this.clickHandler);
+    this.addEventListener('click', this.#clickHandler);
   }
 
-  disconnectedCallback() {
-    this.removeEventListener('click', this.clickHandler);
-  }
 
   get disabled() {
     return this.hasAttribute('disabled');
@@ -45,37 +40,13 @@ export default class BaseButton extends HTMLElement {
     }
   }
 
+  disconnectedCallback() {
+    this.removeEventListener('click', this.#clickHandler);
+  }
+
   attributeChangedCallback(attrName, oldValue, newValue) {
-    const button = this.shadowRoot.querySelector('button');
-
     if (attrName === 'disabled') {
-      button.disabled = this.disabled;
-    }
-
-    const colorAttrs = [
-      'back-color',
-      'text-color',
-      'hover-color',
-      'active-color',
-    ];
-
-    if (colorAttrs.includes(attrName)) {
-      button.style.setProperty(`--${attrName}`, newValue);
-    }
-
-    const sizes = ['small', 'middle', 'big'];
-
-    if (attrName === 'size' && sizes.includes(newValue)) {
-      const { classList } = button;
-
-      for (const item of classList) {
-        if (item.startsWith('size-')) {
-          classList.remove(item);
-          break;
-        }
-      }
-
-      classList.add(`size-${newValue}`);
+      this.#button.disabled = this.disabled;
     }
   }
 
