@@ -24,8 +24,10 @@ export class StyleSystem extends SystemPlugin {
     super();
     this.guid = guid;
     this.interactionSystem = new InteractionSystemAdapter();
-    this.eventSystem = new EventSystemAdapter();
+    this.eventSystem = new EventSystemAdapter(guid);
     this.logSystem = new LogSystemAdapter(guid, 'StyleSystem');
+
+    this.eventSystem.registerEvent('ThemeUpdate');
   }
 
   async init() {
@@ -61,7 +63,7 @@ export class StyleSystem extends SystemPlugin {
       if (theme) {
         this.currentThemeName = name;
         this.logSystem.info(`New theme '${name}' set in system`);
-        this.eventSystem.createAndPublish(this.guid, 'ThemeUpdate');
+        this.eventSystem.publishEvent('ThemeUpdate');
       } else {
         this.logSystem.warn(`Theme '${name}' doesn't exist in system!`);
         throw new Error('Theme not found!');
