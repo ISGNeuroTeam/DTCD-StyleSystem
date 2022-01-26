@@ -1,8 +1,12 @@
 import html from './BaseCheckbox.html';
 
 export default class BaseCheckbox extends HTMLElement {
+
+  #label;
+  #checkbox;
+
   static get observedAttributes() {
-    return ['color', 'label', 'checked', 'disabled'];
+    return ['label', 'checked', 'disabled'];
   }
 
   constructor() {
@@ -13,34 +17,19 @@ export default class BaseCheckbox extends HTMLElement {
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-    this.checkbox = this.shadowRoot.querySelector('input');
-    this.icon = this.shadowRoot.querySelector('.icon');
 
-    this.checkChangeHandler = e => {
-      this.dispatchEvent(new Event('input', { bubbles: true }));
-    };
+    this.#label = this.shadowRoot.querySelector('#label');
+    this.#checkbox = this.shadowRoot.querySelector('input');
 
-    this.inputHandler = e => {
-      e.value = this.checkbox.checked;
-      this.value = this.checkbox.checked;
-    };
-
-    this.iconClickHandler = e => {
-      if (!this.disabled) {
-        this.checkbox.checked = !this.checkbox.checked;
-        this.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    };
-
-    this.checkbox.addEventListener('change', this.checkChangeHandler);
-    this.icon.addEventListener('click', this.iconClickHandler);
-    this.addEventListener('input', this.inputHandler);
+    this.value = false;
   }
 
-  disconnectedCallback() {
-    this.checkbox.removeEventListener('change', this.checkChangeHandler);
-    this.icon.removeEventListener('click', this.iconClickHandler);
-    this.removeEventListener('change', this.inputHandler);
+  get value() {
+    return this.#checkbox.checked;
+  }
+
+  set value(val) {
+    this.#checkbox.checked = Boolean(val);
   }
 
   get checked() {
@@ -48,11 +37,8 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   set checked(value) {
-    if (value) {
-      this.setAttribute('checked', '');
-    } else {
-      this.removeAttribute('checked');
-    }
+    if (value) this.setAttribute('checked', '');
+    else this.removeAttribute('checked');
   }
 
   get disabled() {
@@ -60,30 +46,21 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   set disabled(value) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'color') {
-      this.shadowRoot.querySelector('label').style.setProperty(`--color`, newValue);
-    }
-
     if (attrName === 'label') {
-      const label = this.shadowRoot.querySelector('label');
-      const text = newValue ? newValue : '';
-      label.textContent = text;
+      this.#label.textContent = newValue ? newValue : '';
     }
 
     if (attrName === 'checked') {
-      this.checkbox.checked = this.checked;
+      this.#checkbox.checked = this.checked;
     }
 
     if (attrName === 'disabled') {
-      this.checkbox.disabled = this.disabled;
+      this.#checkbox.disabled = this.disabled;
     }
   }
 }

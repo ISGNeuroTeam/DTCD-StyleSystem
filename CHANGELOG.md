@@ -21,10 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - BaseButton styles and size logic
+- BaseCheckbox styles and inner logic
 
 ### Removed
 
 - BaseButton `text-color`, `back-color`, `hover-color` and `active-color` attributes
+- BaseCheckbox `color` attribute
 
 ## [0.3.1]
 
