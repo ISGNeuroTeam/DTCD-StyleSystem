@@ -15,6 +15,7 @@ import BaseTabs from './BaseTabs/BaseTabs';
 import BaseTooltip from './BaseTooltip/BaseTooltip';
 import BaseRadio from './BaseRadio/BaseRadio';
 import BaseRadioGroup from './BaseRadioGroup/BaseRadioGroup';
+import BaseRange from './BaseRange/BaseRange';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -32,6 +33,7 @@ export default [
   { name: 'base-tooltip', baseClass: BaseTooltip },
   { name: 'base-radio', baseClass: BaseRadio },
   { name: 'base-radio-group', baseClass: BaseRadioGroup },
+  { name: 'base-range', baseClass: BaseRange },
   { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
 ];
