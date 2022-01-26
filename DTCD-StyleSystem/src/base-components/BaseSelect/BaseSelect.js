@@ -5,14 +5,15 @@ import dropDownActiveSvg from './../icons/dropdown-active.svg';
 export default class BaseSelect extends HTMLElement {
   #headerContainer;
   #header;
-  #errorMessage;
   #optionsList;
   #iconEl;
+  #searchInput
   #label;
+  #errorMessage;
   #value;
 
   static get observedAttributes() {
-    return ['placeholder', 'value', 'disabled', 'label', 'size', 'required'];
+    return ['placeholder', 'value', 'required', 'disabled', 'label', 'size', "search"];
   }
 
   constructor() {
@@ -31,6 +32,7 @@ export default class BaseSelect extends HTMLElement {
 
     this.#iconEl = this.shadowRoot.querySelector('#dropDownIcon');
     this.#iconEl.innerHTML = dropDownDefaultSvg;
+    this.#searchInput = this.shadowRoot.querySelector("#searchInput")
 
     this.#label = this.shadowRoot.querySelector('#label');
     this.#errorMessage = this.shadowRoot.querySelector('#errorMessage');
@@ -45,8 +47,10 @@ export default class BaseSelect extends HTMLElement {
   }
 
   set value(newValue) {
+    this.#header.innerHTML = newValue
+    if (this.hasAttribute('search'))
+      this.#searchInput.placeholder = newValue
     this.#value = newValue;
-    this.#header.innerHTML = newValue;
     this.validate();
     this.dispatchEvent(new Event('input'));
   }
@@ -59,6 +63,18 @@ export default class BaseSelect extends HTMLElement {
     return (this.invalid = false);
   }
 
+  #optionClickCallback(evt) {
+    const selectedOptionEl = evt.target.closest('[slot="item"')
+    const selectEl = evt.target.closest('base-select')
+    if (typeof selectedOptionEl.value !== 'undefined') {
+      selectEl.value = selectedOptionEl.value
+    } else if (selectedOptionEl.hasAttribute('value')) {
+      selectEl.value = selectedOptionEl.getAttribute('value')
+    } else {
+      selectEl.value = selectedOptionEl.innerHTML
+    }
+  }
+
   connectedCallback() {
     const toZipOptionsListCallback = () => {
       this.#headerContainer.dispatchEvent(new Event('click'));
@@ -66,6 +82,7 @@ export default class BaseSelect extends HTMLElement {
 
     this.#headerContainer.addEventListener('click', e => {
       e.stopPropagation();
+
       if (this.#optionsList.getAttribute('active') === null) {
         // TO EXPAND
 
@@ -73,9 +90,18 @@ export default class BaseSelect extends HTMLElement {
         this.#headerContainer.style.borderColor = 'var(--button_primary)';
         document.addEventListener('click', toZipOptionsListCallback);
         this.#optionsList.setAttribute('active', true);
+
+        // Add option select listener
+        this.querySelectorAll('[slot="item"]').forEach(option => {
+          option.addEventListener('click', this.#optionClickCallback);
+        });
+
+        // Focus searchInput if it active
+        if (this.hasAttribute('search'))
+          this.#searchInput.focus()
+
       } else {
         // TO ZIP
-
         this.validate();
         this.#headerContainer.style.borderColor = 'var(--border)';
         this.#iconEl.innerHTML = dropDownDefaultSvg;
@@ -91,15 +117,30 @@ export default class BaseSelect extends HTMLElement {
         }
         document.removeEventListener('click', toZipOptionsListCallback);
         this.#optionsList.removeAttribute('active');
+
+        // Remove option select listener
+        this.querySelectorAll('[slot="item"]').forEach(option => {
+          option.removeEventListener('click', this.#optionClickCallback);
+        });
+
+        // Unfocus searchInput if it active
+        if (this.hasAttribute('search')) {
+          this.#searchInput.blur()
+          this.#searchInput.value = ''
+        }
       }
     });
 
-    this.querySelectorAll('[slot="item"]').forEach(option => {
-      option.addEventListener('click', evt => {
-        this.#header.innerHTML = evt.target.innerHTML;
-        this.value = evt.target.getAttribute('value');
-      });
-    });
+    // Search input settings
+    this.#searchInput.addEventListener("input", (e) => {
+      const subString = e.target.value.toLowerCase()
+      this.querySelectorAll("[slot='item']").forEach(item => {
+        const target = typeof item.value !== 'undefined' ? item.value.toLowerCase() : item.textContent.toLowerCase();
+        item.style.display = target.includes(subString) ? 'block' : item.style.display = 'none';
+      })
+    })
+
+
     this.validate();
   }
 
@@ -134,16 +175,15 @@ export default class BaseSelect extends HTMLElement {
         this.#label.innerHTML = newValue;
         break;
 
+      case 'search':
+        if (this.hasAttribute("search")) {
+          this.#header.style.display = "none"
+          this.#searchInput.style.display = 'block'
+        }
+        break;
+
       case 'value':
         this.value = newValue;
-        this.#header.innerHTML = newValue;
-        this.#optionsList.querySelectorAll('[slot="item"]').forEach(el => {
-          const itemValue = el.getAttribute('value');
-          if (itemValue === newValue) {
-            this.#header.innerHTML = el.innerHTML;
-          }
-        });
-        this.#header.dispatchEvent(new Event('input'));
         break;
 
       default:

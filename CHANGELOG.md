@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseLink custom component
 - BaseIconButton custom component
 - BaseChip custom component
+- BaseTabs custom component
+- BaseTooltip custom component
+- BaseRadio and BaseRadioGroup custom components
+- BaseRange custom component
 
 ## [0.3.1]
 

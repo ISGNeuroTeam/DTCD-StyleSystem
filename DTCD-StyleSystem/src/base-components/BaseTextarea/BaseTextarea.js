@@ -45,6 +45,10 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
+  get value(){
+    return this.textarea.value
+  }
+
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === 'width') {
       const width = parseFloat(newValue);
