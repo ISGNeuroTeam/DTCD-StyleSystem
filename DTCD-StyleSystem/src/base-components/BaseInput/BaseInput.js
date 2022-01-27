@@ -1,13 +1,15 @@
 import html from './BaseInput.html';
 
 export default class BaseInput extends HTMLElement {
+
   #internalInput;
+  #inputHandler;
   #label;
   #errorMessage;
   #errorMessageText;
 
   static get observedAttributes() {
-    return ['placeholder', 'type', 'disabled', 'label', 'size', 'required'];
+    return ['placeholder', 'type', 'disabled', 'label', 'required'];
   }
 
   constructor() {
@@ -16,13 +18,19 @@ export default class BaseInput extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = html;
 
-    this.attachShadow({
-      mode: 'open',
-    }).appendChild(template.content.cloneNode(true));
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.#internalInput = this.shadowRoot.querySelector('input');
     this.#label = this.shadowRoot.querySelector('#label');
     this.#errorMessage = this.shadowRoot.querySelector('#errorMessage');
+
+    this.#inputHandler = e => {
+      e.stopPropagation();
+      this.value = e.target.value;
+    };
+
+    this.#internalInput.addEventListener('input', this.#inputHandler);
   }
 
   set invalid(newVal) {
@@ -59,10 +67,8 @@ export default class BaseInput extends HTMLElement {
     } else this.invalid = false;
   }
 
-  connectedCallback() {
-    this.#internalInput.addEventListener('input', e => {
-      this.value = e.target.value;
-    });
+  disconnectedCallback() {
+    this.#internalInput.removeEventListener('input', this.#inputHandler);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -80,32 +86,13 @@ export default class BaseInput extends HTMLElement {
         this.#internalInput.setAttribute('type', newValue);
         break;
 
-      case 'value':
-        this.value = newValue;
-        break;
-
       case 'label':
         this.#label.innerHTML = newValue;
-        break;
-
-      case 'size':
-        const sizes = ['small', 'middle', 'big'];
-
-        if (sizes.includes(newValue)) {
-          const { classList } = this.#internalInput;
-
-          for (const item of classList) {
-            if (item.startsWith('size-')) {
-              classList.remove(item);
-              break;
-            }
-          }
-          classList.add(`size-${newValue}`);
-        }
         break;
 
       default:
         break;
     }
   }
+
 }

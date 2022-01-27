@@ -2,34 +2,28 @@
   input {
     width: 100%;
     padding: 6px 12px;
-    border: 2px solid;
-    border-color: var(--border);
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-radius: 4.44px;
     box-sizing: border-box;
     outline: none;
-    font-family: Proxima Nova;
+    font-family: 'Proxima Nova';
     font-style: normal;
-    font-weight: normal;
+    font-weight: 400;
     resize: vertical;
     background-color: var(--border_12) !important;
-
+    transition: border-color .3s, background-color .3s;
     /* by size (middle)*/
     height: 28px;
     font-size: 13px;
     line-height: 16px;
   }
 
-  input.size-small {
+  :host([size="small"]) input {
     height: 20px;
     font-size: 11px;
-    line-height: 16px;
   }
 
-  input.size-middle {
-    font-weight: 600;
-  }
-
-  input.size-big {
+  :host([size="big"]) input {
     height: 34px;
     font-size: 15px;
     line-height: 18px;
@@ -40,12 +34,11 @@
   }
 
   input:focus {
-    border: 2px solid var(--button_primary);
+    border-color: var(--button_primary);
   }
 
   input:disabled {
     color: var(--text_secondary) !important;
-    border: 2px solid;
     background-color: var(--border_secondary) !important;
     cursor: not-allowed;
   }
@@ -60,19 +53,24 @@
   #label {
     font-weight: 600;
     font-size: 11px;
+    font-family: 'Proxima Nova';
     line-height: 13px;
     margin-bottom: 4px;
     color: var(--text_main);
+    letter-spacing: .25px;
   }
 
   #errorMessage {
     font-weight: 600;
     font-size: 11px;
+    font-family: 'Proxima Nova';
     line-height: 13px;
     margin-top: 4px;
     color: var(--text_secondary);
+    letter-spacing: .25px;
   }
 </style>
+
 <div class="container">
   <label id="label" for="textField"></label>
   <input id="textField" type="text" />
