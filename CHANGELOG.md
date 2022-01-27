@@ -25,12 +25,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseChip styles
 - BaseInput styles
 - BaseSwitch styles and inner logic
+- BaseTextarea styles and inner logic
 
 ### Removed
 
 - BaseButton `text-color`, `back-color`, `hover-color` and `active-color` attributes
 - BaseCheckbox `color` attribute
 - BaseSwitch `color` attribute
+- BaseSwitch `width` attribute
 
 ## [0.3.1]
 

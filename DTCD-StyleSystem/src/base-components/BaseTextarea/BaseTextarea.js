@@ -2,14 +2,11 @@ import html from './BaseTextarea.html';
 
 export default class BaseTextarea extends HTMLElement {
 
+  #label;
+  #textarea;
+
   static get observedAttributes() {
-    return [
-      'width',
-      'label',
-      'value',
-      'disabled',
-      'placeholder',
-    ];
+    return ['label', 'value', 'disabled', 'placeholder'];
   }
 
   constructor() {
@@ -20,17 +17,9 @@ export default class BaseTextarea extends HTMLElement {
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-    this.textarea = this.shadowRoot.querySelector('textarea');
 
-    this.inputHandler = e => {
-      e.value = this.textarea.value
-    };
-
-    this.addEventListener('input', this.inputHandler);
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener('input', this.inputHandler);
+    this.#label = this.shadowRoot.querySelector('#label');
+    this.#textarea = this.shadowRoot.querySelector('#textarea');
   }
 
   get disabled() {
@@ -38,40 +27,34 @@ export default class BaseTextarea extends HTMLElement {
   }
 
   set disabled(value) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
   }
 
   get value(){
-    return this.textarea.value
+    return this.#textarea.value
+  }
+
+  set value(val) {
+    this.#textarea.value = val;
+    this.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'width') {
-      const width = parseFloat(newValue);
-      this.textarea.style.setProperty(`--width`, `${width}px`);
-    }
-
     if (attrName === 'label') {
-      const label = this.shadowRoot.querySelector('label');
-      const text = newValue ? newValue : '';
-      label.textContent = text;
+      this.#label.textContent = newValue ? newValue : '';
     }
 
     if (attrName === 'value') {
-      this.textarea.value = newValue;
-      this.dispatchEvent(new Event('input', { bubbles: true }));
+      this.value = newValue;
     }
 
     if (attrName === 'disabled') {
-      this.textarea.disabled = this.disabled;
+      this.#textarea.disabled = this.disabled;
     }
 
     if (attrName === 'placeholder') {
-      this.textarea.placeholder = newValue;
+      this.#textarea.placeholder = newValue;
     }
   }
 
