@@ -19,7 +19,7 @@ export default class BaseChip extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.#icon = this.shadowRoot.querySelector('.icon');
-    this.#iconClickHandler = () => this.dispatchEvent(new Event("remove")) || this.remove();
+    this.#iconClickHandler = () => this.dispatchEvent(new Event('remove'));
 
     this.#icon.addEventListener('click', this.#iconClickHandler);
   }
