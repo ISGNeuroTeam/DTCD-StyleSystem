@@ -2,12 +2,9 @@ import html from './BaseIconButton.html';
 
 export default class BaseIconButton extends HTMLElement {
 
-  #button;
   #colors = ['second', 'red', 'green'];
-
-  #clickHandler(e) {
-    this.disabled && e.stopImmediatePropagation();
-  }
+  #button;
+  #clickHandler;
 
   static get observedAttributes() {
     return ['size', 'color', 'disabled'];
@@ -24,11 +21,11 @@ export default class BaseIconButton extends HTMLElement {
 
     this.#button = this.shadowRoot.querySelector('button');
 
-    this.addEventListener('click', this.#clickHandler);
-  }
+    this.#clickHandler = e => {
+      this.disabled && e.stopImmediatePropagation();
+    };
 
-  disconnectedCallback() {
-    this.removeEventListener('click', this.#clickHandler);
+    this.addEventListener('click', this.#clickHandler);
   }
 
   get disabled() {
@@ -36,11 +33,12 @@ export default class BaseIconButton extends HTMLElement {
   }
 
   set disabled(value) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('click', this.#clickHandler);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {

@@ -1,13 +1,11 @@
 <style>
 :host {
   display: inline-block;
+  align-self: flex-start;
 }
 
 button {
   --size: 40px;
-}
-
-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,7 +53,7 @@ button.green ::slotted(*) {
 }
 
 button:disabled {
-  cursor: default;
+  cursor: not-allowed;
   background-color: var(--border);
 }
 
