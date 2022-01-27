@@ -180,6 +180,7 @@ export default class BaseTextarea extends HTMLElement {
 
   createColorPickerElement(color) {
     const picker = document.createElement('base-color-picker');
+    picker.className = 'color-picker';
     picker.setAttribute('value', color);
     return picker;
   }

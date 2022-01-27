@@ -1,4 +1,9 @@
 <style>
+:host {
+  display: inline-block;
+  align-self: flex-start;
+}
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -15,7 +20,7 @@
   display: block;
   margin: 0 6px;
   width: 14px;
-  border-top: 2px solid #C6C6D4;
+  border-top: 2px solid var(--border);
   margin-top: 15px;
 }
 
@@ -30,20 +35,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  fill: rgba(255, 59, 48, 0.24);
+  fill: var(--danger_24);
   transition: .3s;
 }
 
 .delete-btn:hover {
-  fill: rgba(255, 59, 48, 1);
+  fill: var(--danger);
 }
 
 .add-btn {
   cursor: pointer;
-  color: #0579F6;
+  color: var(--button_primary);
   font-size: 13px;
   font-family: 'Proxima Nova';
-  letter-spacing: auto;
+}
+
+.color-picker {
+  margin: 0 12px;
+  align-self: center;
 }
 </style>
 
