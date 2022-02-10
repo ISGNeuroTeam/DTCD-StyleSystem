@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseTooltip custom component
 - BaseRadio and BaseRadioGroup custom components
 - BaseRange custom component
+- version of core systems for adapters
 
 ### Changed
 
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseInput styles
 - BaseSwitch styles and inner logic
 - BaseTextarea styles and inner logic
+- build process in order to make directory name with current version of pluing
 
 ### Removed
 
