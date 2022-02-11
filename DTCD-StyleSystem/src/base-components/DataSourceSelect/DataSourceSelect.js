@@ -19,9 +19,9 @@ export default class DataSourceSelect extends HTMLElement {
 
   constructor() {
     super();
-    this.#dataSourceSystem = new DataSourceSystemAdapter();
-    this.#workspaceSystem = new WorkspaceSystemAdapter();
-    this.#eventSystem = new EventSystemAdapter(DataSourceSelect.guid);
+    this.#dataSourceSystem = new DataSourceSystemAdapter('0.1.0');
+    this.#workspaceSystem = new WorkspaceSystemAdapter('0.3.0');
+    this.#eventSystem = new EventSystemAdapter('0.3.0', DataSourceSelect.guid);
 
     const template = document.createElement('template');
     template.innerHTML = html;
@@ -74,7 +74,7 @@ export default class DataSourceSelect extends HTMLElement {
   }
 
   connectedCallback() {
-    const dataSourceSystemInstance = this.#dataSourceSystem.getSystem('DataSourceSystem');
+    const dataSourceSystemInstance = this.#dataSourceSystem.getSystem('DataSourceSystem', '0.1.0');
     const dataSourceSystemGUID = dataSourceSystemInstance.getGUID(dataSourceSystemInstance);
     this.#createDSBtn.addEventListener('click', e => {
       this.#workspaceSystem.openPanelInModal('DatasourcePanel');
@@ -114,7 +114,7 @@ export default class DataSourceSelect extends HTMLElement {
   }
 
   disconnectedCallback() {
-    const workspaceSystemInstance = this.#workspaceSystem.getSystem('WorkspaceSystem');
+    const workspaceSystemInstance = this.#workspaceSystem.getSystem('WorkspaceSystem', '0.3.0');
     const workspaceSystemGUID = workspaceSystemInstance.getGUID(workspaceSystemInstance);
 
     this.#eventSystem.removeCustomAction('updateDataSourceList');

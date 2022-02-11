@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseRadio and BaseRadioGroup custom components
 - BaseRange custom component
 - version of core systems for adapters
+- version of core systems for adapters in DataSourceSelect base component
 
 ### Changed
 
