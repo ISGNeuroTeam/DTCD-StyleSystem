@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseSwitch styles and inner logic
 - BaseTextarea styles and inner logic
 - build process in order to make directory name with current version of pluing
+- getting version for `getRegistrationMeta()` method from `package.json`
 
 ### Removed
 

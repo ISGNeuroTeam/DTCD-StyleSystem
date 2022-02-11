@@ -7,14 +7,15 @@ import {
 
 import './../fonts/fonts.css';
 import baseComponentList from './base-components/components';
+import { version } from './../package.json';
 
 export class StyleSystem extends SystemPlugin {
   static getRegistrationMeta() {
     return {
+      version,
       name: 'StyleSystem',
       type: 'core',
       title: 'Дизайн система',
-      version: '0.2.0',
       priority: 3,
       withDependencies: false,
     };
