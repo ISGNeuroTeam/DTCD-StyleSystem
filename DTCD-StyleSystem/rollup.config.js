@@ -9,10 +9,12 @@ const outputFile = `${pluginName}.js`;
 const outputDirectory = watch ? `./../../DTCD/server/plugins/DTCD-${pluginName}` : `./build`;
 
 const plugins = [
+  styles({
+    mode:['inject',()=>''],
+  }),
   html({
     include: ['**/*.html', '**/*.svg'],
   }),
-  styles(),
 ];
 
 export default {
