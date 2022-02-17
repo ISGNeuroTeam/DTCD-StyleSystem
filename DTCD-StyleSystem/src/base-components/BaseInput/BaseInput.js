@@ -9,7 +9,7 @@ export default class BaseInput extends HTMLElement {
   #errorMessageText;
 
   static get observedAttributes() {
-    return ['placeholder', 'type', 'disabled', 'label', 'required'];
+    return ['placeholder', 'type', 'disabled', 'label', 'required', 'value'];
   }
 
   constructor() {
@@ -88,6 +88,10 @@ export default class BaseInput extends HTMLElement {
 
       case 'label':
         this.#label.innerHTML = newValue;
+        break;
+
+      case 'value':
+        this.value = newValue;
         break;
 
       default:
