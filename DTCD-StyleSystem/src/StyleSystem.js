@@ -24,9 +24,9 @@ export class StyleSystem extends SystemPlugin {
   constructor(guid) {
     super();
     this.guid = guid;
-    this.interactionSystem = new InteractionSystemAdapter('0.3.1');
-    this.eventSystem = new EventSystemAdapter('0.3.0', guid);
-    this.logSystem = new LogSystemAdapter('0.4.0', guid, 'StyleSystem');
+    this.interactionSystem = new InteractionSystemAdapter('0.4.0');
+    this.eventSystem = new EventSystemAdapter('0.4.0', guid);
+    this.logSystem = new LogSystemAdapter('0.5.0', guid, 'StyleSystem');
 
     this.eventSystem.registerEvent('ThemeUpdate');
   }
