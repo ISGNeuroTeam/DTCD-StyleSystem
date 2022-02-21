@@ -14,6 +14,9 @@ const outputDirectory = watch
   : `./build`;
 
 const plugins = [
+  styles({
+    mode:['inject',()=>''],
+  }),
   html({
     include: ['**/*.html', '**/*.svg'],
   }),
