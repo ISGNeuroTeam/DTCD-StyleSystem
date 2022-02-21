@@ -1,14 +1,21 @@
 <style>
-div {
+:host {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.container {
   display: flex;
   flex-direction: column;
 }
 
 label {
-  color: #51515C;
+  color: var(--text_main);
   font-size: 11px;
+  font-weight: 600;
   font-family: 'Proxima Nova';
-  padding-bottom: 6px;
+  letter-spacing: .25px;
+  padding-bottom: 4px;
 }
 
 label:empty {
@@ -16,18 +23,14 @@ label:empty {
 }
 
 textarea {
-  --width: 255px;
-}
-
-textarea {
   box-sizing: border-box;
-  width: var(--width);
-  height: 76px;
-  border: 1px solid rgba(198, 198, 212, 1);
+  width: 100%;
+  min-height: 30px;
+  border: 1px solid var(--border);
   border-radius: 4.44px;
   outline: none;
-  background-color: rgba(198, 198, 212, 0.12);
-  color: rgba(147, 143, 160, 1);
+  background-color: var(--border_12);
+  color: var(--text_secondary);
   font-size: 13px;
   font-family: 'Proxima Nova';
   line-height: 15.83px;
@@ -37,15 +40,16 @@ textarea {
 }
 
 textarea:focus {
-  border-color: #0479f6;
+  border-color: var(--button_primary);
 }
 
 textarea:disabled {
-  background-color: rgba(198, 198, 212, 1);
+  cursor: not-allowed;
+  background-color: var(--border_secondary);
 }
 </style>
 
-<div>
-  <label for="ta"></label>
-  <textarea id="ta" value="" placeholder=""></textarea>
+<div class="container">
+  <label id="label" for="textarea"></label>
+  <textarea id="textarea" rows="4"></textarea>
 </div>

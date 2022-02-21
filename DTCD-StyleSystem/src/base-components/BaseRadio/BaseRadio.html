@@ -1,0 +1,73 @@
+<style>
+:host {
+  display: inline-block;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.radio, .label {
+  cursor: pointer;
+}
+
+.radio {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--background_main);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.radio::after {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--button_primary);
+  transform: scale(0);
+  transition: transform .3s;
+}
+
+.radio:checked {
+  border: 2px solid var(--button_primary);
+}
+
+.radio:checked::after {
+  transform: scale(1);
+}
+
+.label {
+  color: var(--text_main);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Proxima Nova';
+  letter-spacing: .25px;
+}
+
+:host([disabled]) {
+  opacity: .5;
+}
+
+:host([disabled]) .radio:not(:checked) {
+  background-color: var(--border);
+}
+
+:host([disabled]) .radio, :host([disabled]) .label {
+  cursor: not-allowed;
+}
+</style>
+
+<label class="container">
+  <input class="radio" id="radio" type="radio">
+  <span class="label"><slot></slot></span>
+</label>

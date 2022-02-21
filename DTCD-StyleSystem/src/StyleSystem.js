@@ -7,14 +7,15 @@ import {
 
 import './../fonts/fonts.css';
 import baseComponentList from './base-components/components';
+import { version } from './../package.json';
 
 export class StyleSystem extends SystemPlugin {
   static getRegistrationMeta() {
     return {
+      version,
       name: 'StyleSystem',
       type: 'core',
       title: 'Дизайн система',
-      version: '0.2.0',
       priority: 3,
       withDependencies: false,
     };
@@ -23,9 +24,11 @@ export class StyleSystem extends SystemPlugin {
   constructor(guid) {
     super();
     this.guid = guid;
-    this.interactionSystem = new InteractionSystemAdapter();
-    this.eventSystem = new EventSystemAdapter();
-    this.logSystem = new LogSystemAdapter(guid, 'StyleSystem');
+    this.interactionSystem = new InteractionSystemAdapter('0.4.0');
+    this.eventSystem = new EventSystemAdapter('0.4.0', guid);
+    this.logSystem = new LogSystemAdapter('0.5.0', guid, 'StyleSystem');
+
+    this.eventSystem.registerEvent('ThemeUpdate');
   }
 
   async init() {
@@ -61,7 +64,7 @@ export class StyleSystem extends SystemPlugin {
       if (theme) {
         this.currentThemeName = name;
         this.logSystem.info(`New theme '${name}' set in system`);
-        this.eventSystem.createAndPublish(this.guid, 'ThemeUpdate');
+        this.eventSystem.publishEvent('ThemeUpdate');
       } else {
         this.logSystem.warn(`Theme '${name}' doesn't exist in system!`);
         throw new Error('Theme not found!');

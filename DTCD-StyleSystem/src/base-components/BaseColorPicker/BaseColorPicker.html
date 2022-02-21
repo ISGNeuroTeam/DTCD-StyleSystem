@@ -1,11 +1,15 @@
 <style>
+:host {
+  display: inline-block;
+  align-self: flex-start;
+}
+
 .picker {
   box-sizing: border-box;
   display: flex;
   width: 44px;
   height: 24px;
-  background-color: #fff;
-  border: 1px solid #C6C6D4;
+  border: 1px solid var(--border);
   border-radius: 4.44px;
   cursor: pointer;
   position: relative;
@@ -15,8 +19,7 @@
   position: absolute;
   top: 26px;
   left: -1px;
-  background-color: #fff;
-  border: 1px solid #C6C6D4;
+  border: 1px solid var(--border);
   border-radius: 4.44px;
   width: 100%;
   max-height: 112px;
@@ -42,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(198, 198, 212, 0.12);
+  background-color: var(--border_12);
   width: 44px;
   height: 22px;
   padding: 0 4px;
@@ -54,8 +57,12 @@
   border-radius: 2px;
 }
 
+.picker.disabled {
+  cursor: not-allowed;
+}
+
 .picker.disabled .color-variant.preview {
-  background-color: #C6C6D4 !important;
+  background-color: var(--border) !important;
 }
 </style>
 
@@ -63,7 +70,7 @@
   <div class="color-list"></div>
   <div id="selected-color" class="color-variant preview">
     <div class="color-preview"></div>
-    <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="icon" width="16" height="16" viewBox="0 0 16 16">
       <path
         fill="#2E3A59"
         d="M7.99983 10.4754L12.0065 6.46872L11.0645 5.52539L7.99983 8.59206L4.93583 5.52539L3.99316 6.46806L7.99983 10.4754Z"

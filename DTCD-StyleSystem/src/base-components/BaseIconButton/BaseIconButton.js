@@ -1,12 +1,13 @@
-import html from './BaseButton.html';
+import html from './BaseIconButton.html';
 
-export default class BaseButton extends HTMLElement {
+export default class BaseIconButton extends HTMLElement {
 
+  #colors = ['second', 'red', 'green'];
   #button;
   #clickHandler;
 
   static get observedAttributes() {
-    return ['disabled'];
+    return ['size', 'color', 'disabled'];
   }
 
   constructor() {
@@ -27,17 +28,13 @@ export default class BaseButton extends HTMLElement {
     this.addEventListener('click', this.#clickHandler);
   }
 
-
   get disabled() {
     return this.hasAttribute('disabled');
   }
 
   set disabled(value) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
   }
 
   disconnectedCallback() {
@@ -45,8 +42,17 @@ export default class BaseButton extends HTMLElement {
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
+    if (attrName === 'size') {
+      return this.#button.style.setProperty(`--size`, newValue);
+    }
+
     if (attrName === 'disabled') {
-      this.#button.disabled = this.disabled;
+      return this.#button.disabled = this.disabled;
+    }
+
+    if (attrName === 'color') {
+      const className = this.#colors.includes(newValue) ? newValue : '';
+      return this.#button.className = className;
     }
   }
 

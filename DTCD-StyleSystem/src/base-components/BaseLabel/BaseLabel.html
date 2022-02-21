@@ -1,0 +1,41 @@
+<style>
+:host {
+  display: inline-block;
+}
+
+span {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 12px;
+  color: var(--title);
+  background-color: var(--background_secondary);
+  border-radius: 2px;
+  padding: 0px 4px;
+}
+
+span.accent {
+  color: var(--accent);
+  background-color: var(--accent_12);
+}
+
+span.warning {
+  color: var(--warning);
+  background-color: rgba(255, 204, 0, .12);
+}
+
+span.danger {
+  color: var(--danger);
+  background-color: var(--danger_12);
+}
+
+span.success {
+  color: var(--success);
+  background-color: var(--success_12);
+}
+</style>
+
+<span>
+  <slot>Label</slot>
+</span>

@@ -26,6 +26,13 @@ const colors = [
 ];
 
 export default class BaseColorPicker extends HTMLElement {
+
+  #picker;
+  #colorList;
+  #selectedPreview;
+  #colorListClickHandler;
+  #selectedPreviewClickHandler;
+
   static get observedAttributes() {
     return ['value', 'disabled'];
   }
@@ -39,53 +46,49 @@ export default class BaseColorPicker extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.picker = this.shadowRoot.querySelector('.picker');
-    this.colorList = this.shadowRoot.querySelector('.color-list');
-    this.selectedPreview = this.shadowRoot.querySelector('#selected-color');
+    this.#picker = this.shadowRoot.querySelector('.picker');
+    this.#colorList = this.shadowRoot.querySelector('.color-list');
+    this.#selectedPreview = this.shadowRoot.querySelector('#selected-color');
 
     this.value = '#252230';
 
-    this.colorListClickHandler = ({ target }) => {
+    this.#colorListClickHandler = ({ target }) => {
       const classes = ['color-variant', 'color-preview'];
 
       if (!classes.includes(target.className)) return;
 
       const color = target.getAttribute('data-color');
       this.value = color;
-      this.setSelectedColorBackground(color);
+      this.#setSelectedColorBackground(color);
       this.dispatchEvent(new Event('input', { bubbles: true }));
 
-      if (this.colorList.classList.contains('open')) this.toggleColorList();
+      if (this.#colorList.classList.contains('open')) this.#toggleColorList();
     };
 
-    this.selectedPreviewClickHandler = e => {
+    this.#selectedPreviewClickHandler = () => {
       if (!this.disabled) {
-        this.toggleColorList();
+        this.#toggleColorList();
       }
     };
 
-    this.addEventListener('change', e => {
-      e.value = this.value;
-    });
-
-    this.colorList.addEventListener('click', this.colorListClickHandler);
-    this.selectedPreview.addEventListener('click', this.selectedPreviewClickHandler);
+    this.#colorList.addEventListener('click', this.#colorListClickHandler);
+    this.#selectedPreview.addEventListener('click', this.#selectedPreviewClickHandler);
   }
 
-  connectedCallback() {
-    colors.forEach(c => this.addColorVariant(c.val));
+  get disabled() {
+    return this.hasAttribute('disabled');
   }
 
-  disconnectedCallback() {
-    this.colorList.removeEventListener('click', this.colorListClickHandler);
-    this.selectedPreview.removeEventListener('click', this.selectedPreviewClickHandler);
+  set disabled(value) {
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
   }
 
-  setSelectedColorBackground(color = '#252230') {
-    this.selectedPreview.querySelector('.color-preview').style.backgroundColor = color;
+  #setSelectedColorBackground(color = '#252230') {
+    this.#selectedPreview.querySelector('.color-preview').style.backgroundColor = color;
   }
 
-  addColorVariant(color) {
+  #addColorVariant(color) {
     const variant = document.createElement('div');
     variant.className = 'color-variant';
     variant.setAttribute('data-color', color);
@@ -96,37 +99,33 @@ export default class BaseColorPicker extends HTMLElement {
     preview.setAttribute('data-color', color);
 
     variant.appendChild(preview);
-    this.colorList.appendChild(variant);
+    this.#colorList.appendChild(variant);
   }
 
-  toggleColorList() {
-    this.colorList.classList.toggle('open');
+  #toggleColorList() {
+    this.#colorList.classList.toggle('open');
   }
 
-  get disabled() {
-    return this.hasAttribute('disabled');
+  connectedCallback() {
+    colors.forEach(c => this.#addColorVariant(c.val));
   }
 
-  set disabled(value) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+  disconnectedCallback() {
+    this.#colorList.removeEventListener('click', this.#colorListClickHandler);
+    this.#selectedPreview.removeEventListener('click', this.#selectedPreviewClickHandler);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === 'disabled') {
-      this.picker.classList.toggle('disabled');
+      this.#picker.classList.toggle('disabled');
       if (this.disabled) {
-        this.colorList.classList.remove('open');
+        this.#colorList.classList.remove('open');
       }
     }
 
     if (attrName === 'value') {
       this.value = newValue;
-      this.setSelectedColorBackground(newValue);
-      this.dispatchEvent(new Event('change', { bubbles: true }));
+      this.#setSelectedColorBackground(newValue);
     }
   }
 }

@@ -1,10 +1,12 @@
 <style>
-.switch {
-  --color: rgba(5, 121, 246, 1);
+:host {
+  display: inline-block;
+  align-self: flex-start;
 }
 
 .switch {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   position: relative;
   width: 34px;
   height: 20px;
@@ -16,9 +18,9 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
-  border: 1px solid rgba(198, 198, 212, 1);
+  border: 1px solid var(--border);
   border-radius: 18px;
-  background-color: #FEFEFE;
+  background-color: var(--background_main);
   transition: .3s;
 }
 
@@ -30,25 +32,29 @@
   left: 1px;
   width: 16px;
   height: 16px;
-  border: 0.5px solid #C6C6D4;
+  border: 0.5px solid var(--border);
   border-radius: 50%;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
-  background-color: #FEFEFE;
+  background-color: var(--background_main);
   transition: .3s;
 }
 
 input {
+  appearance: none;
   position: absolute;
+  margin: 0;
+  padding: 0;
   opacity: 0;
   z-index: -1;
 }
 
 input:checked + .slider {
-  background-color: var(--color);
+  background-color: var(--base-switch-color, var(--button_primary));
 }
 
 input:disabled + .slider {
-  background-color: #C6C6D4 !important;
+  cursor: not-allowed;
+  background-color: var(--border) ;
 }
 
 input:checked + .slider:before {
@@ -57,6 +63,6 @@ input:checked + .slider:before {
 </style>
 
 <label class="switch">
-  <input type="checkbox">
+  <input id="check" type="checkbox">
   <span class="slider"></span>
 </label>

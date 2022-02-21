@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0]
+
+### Added
+
+- BaseLabel custom component
+- BaseLink custom component
+- BaseIconButton custom component
+- BaseChip custom component
+- BaseTabs custom component
+- BaseTooltip custom component
+- BaseRadio and BaseRadioGroup custom components
+- BaseRange custom component
+- version of core systems for adapters
+- version of core systems for adapters in DataSourceSelect base component
+
+### Changed
+
+- BaseButton styles and size logic
+- BaseCheckbox styles and inner logic
+- BaseChip styles
+- BaseInput styles
+- BaseSwitch styles and inner logic
+- BaseTextarea styles and inner logic
+- build process in order to make directory name with current version of pluing
+- getting version for `getRegistrationMeta()` method from `package.json`
+
+### Removed
+
+- BaseButton `text-color`, `back-color`, `hover-color` and `active-color` attributes
+- BaseCheckbox `color` attribute
+- BaseSwitch `color` attribute
+- BaseSwitch `width` attribute
+
 ## [0.3.1]
 
 ### Fixed
