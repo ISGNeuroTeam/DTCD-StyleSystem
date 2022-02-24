@@ -1,0 +1,81 @@
+.container {
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  details.BaseExpander {
+    summary {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    .ContentWrapper {
+      padding: 8px 0;
+    }
+
+    ::slotted([slot="summary"]) {
+      margin-right: 16px;
+      flex-grow: 1;
+    }
+
+    .Icons {
+      display: flex;
+      align-items: center;
+  
+      ::slotted([slot="icon"]) {
+        margin-right: 16px;
+
+        & > * {
+          max-width: 22px;
+          max-height: 22px;
+        }
+      }
+  
+      ::slotted([slot="icon"]:hover) {
+        background-color: var(--border_secondary);
+      }
+    }
+  
+    .ArrowIcon {
+      flex: none;
+      max-width: 24px;
+      max-height: 24px;
+      transition: transform 0.3s;
+      transform: rotate(0deg);
+
+      path,
+      rect {
+        fill: var(--button_primary);
+      }
+    }
+
+    &[open] {
+      border: none;
+
+      summary ~ * {
+        animation: sweep .3s ease-in-out;
+      }
+    
+      .ArrowIcon {
+        transform: rotate(180deg);
+      }
+    }
+  
+    @keyframes sweep {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
