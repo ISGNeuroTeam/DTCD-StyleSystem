@@ -101,3 +101,9 @@ sdk:
 dev: build
 	cp -rf ./build/$(PROJECT_NAME)_$(VERSION) ./../DTCD/server/plugins
 	npm run dev --prefix ./$(PROJECT_NAME)
+
+storybook: build
+	npm run storybook --prefix ./$(PROJECT_NAME)
+
+build-storybook: build
+	npm run build-storybook --prefix ./$(PROJECT_NAME)

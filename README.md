@@ -49,6 +49,18 @@ tar -zxf DTCD-StyleSystem-*.tar.gz
 
 - [rollup](https://rollupjs.org/guide/en/) - Builder
 
+## Storybook
+
+### Run Storybook on dev mode
+```
+make storybook
+```
+
+### Build Storybook on production mode
+```
+make build-storybook
+```
+
 ## Contributing
 
 ## Versioning

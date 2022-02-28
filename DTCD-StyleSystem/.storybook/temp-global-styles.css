@@ -1,0 +1,75 @@
+@import '../fonts/fonts.css';
+
+:root {
+  --background_main: #FEFEFE;
+  --aero: #6290C3;
+  --background_secondary: #F4F4FA;
+  --navi: #454372;
+  --border: #C6C6D4;
+  --brown: #A2845E;
+  --border_secondary: #EBEBF3;
+  --orange: #FF9500;
+  --title: #252230;
+  --yellow: #FFCC00;
+  --text_main: #51515C;
+  --mint: #00C7BE;
+  --text_secondary: #938FA0;
+  --teal: #30B0C7;
+  --cyan: #32ADE6;
+  --success: #4CD964;
+  --indigo: #5856D6;
+  --warning: #F8B407;
+  --purple: #AF52DE;
+  --danger: #FF3B30;
+  --pink: #CD5D67;
+  --accent: #17569B;
+  --accent_12: rgba(23,86,155,.12);
+  --button_primary: #0579F6;
+  --button_primary_86: rgba(5,121,246,.86);
+  --button_primary_72: rgba(5,121,246,.72);
+  --button_primary_12: rgba(5,121,246,.12);
+  --button_primary_18: rgba(5,121,246,.18);
+  --button_primary_24: rgba(5,121,246,.24);
+  --success_12: rgba(76,217,100,.12);
+  --success_18: rgba(76,217,100,.18);
+  --success_24: rgba(76,217,100,.24);
+  --danger_12: rgba(255,59,48,.12);
+  --danger_18: rgba(255,59,48,.18);
+  --danger_24: rgba(255,59,48,.24);
+  --border_12: rgba(198,198,212,.12);
+  --border_18: rgba(198,198,212,.18);
+  --border_24: rgba(198,198,212,.24);
+  --header_background: #272A3A;
+  --header_content: #FFFFFF;
+  --main-bg-color-panel: #fff;
+  --secondary-bg-color-panel: #f5f5f5;
+  --text-color-light: #757575;
+  --text-color-dark: #212121;
+  --overlay-bg-color: #BDBDBD;
+  --divider: #b7b7b7;
+  --detail-hover: #e0e0e0;
+  --button-bg-color: #2196f3;
+  --button-text-color: #fff;
+  --button-border-color: #2196f3;
+  --button-hover-bg-color: #fff;
+  --button-hover-text-color: #2196f3;
+  --button-hover-border: #2196f3;
+  --button-focus-bg-color: #fff;
+  --button-focus-text-color: #2196f3;
+  --button-focus-border: #2196f3;
+  --button-active-bg-color: #fff;
+  --button-active-text-color: #2196f3;
+  --button-active-border: #2196f3;
+  --button-selected-hover-bg-color: #2196f3;
+  --button-selected-hover-text-color: #fff;
+  --button-selected-hover-border: #2196f3;
+}
+
+html {
+  font-family: 'Proxima Nova';
+}
+
+body {
+  margin: 0;
+  background-color: var(--background_secondary);
+}
