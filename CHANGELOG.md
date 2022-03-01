@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - version of core systems for adapters
 - version of core systems for adapters in DataSourceSelect base component
 - integration Storybook to project for UI-kit
+- BaseExpanderGroup stories
 
 ### Changed
 
@@ -32,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build process in order to make directory name with current version of pluing
 - getting version for `getRegistrationMeta()` method from `package.json`
 - added information about Storybook to README.md
+- BaseExpander stories
 
 ### Removed
 
