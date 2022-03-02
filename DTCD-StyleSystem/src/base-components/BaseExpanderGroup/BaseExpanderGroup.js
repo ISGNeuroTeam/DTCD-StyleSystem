@@ -28,7 +28,7 @@ export default class BaseExpanderGroup extends HTMLElement {
     this.#openedExpander = null;
 
     this.#getExpanders().forEach((expander) => {
-      if (expander.getAttribute('open')) {
+      if (expander.open) {
         this.#openedExpander = expander;
       }
       expander.addEventListener('click', this.#hideOtherExpanders);
@@ -41,7 +41,7 @@ export default class BaseExpanderGroup extends HTMLElement {
 
     this.#getExpanders().forEach((expander) => {
       if (expander !== this.#openedExpander) {
-        expander.removeAttribute('open');
+        expander.open = false;
       }
     });
   };
