@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - getting version for `getRegistrationMeta()` method from `package.json`
 - added information about Storybook to README.md
 - BaseExpander stories
+- BaseExpander and BaseExpanderGroup
 
 ### Removed
 

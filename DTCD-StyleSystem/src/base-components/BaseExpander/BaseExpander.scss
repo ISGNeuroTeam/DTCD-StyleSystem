@@ -18,7 +18,7 @@
     }
 
     .ContentWrapper {
-      padding: 8px 0;
+      padding-top: 8px;
     }
 
     ::slotted([slot="summary"]) {
@@ -64,17 +64,35 @@
         animation: sweep .3s ease-in-out;
       }
     
+      @keyframes sweep {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
       .ArrowIcon {
         transform: rotate(180deg);
       }
     }
-  
-    @keyframes sweep {
-      0% {
-        opacity: 0;
+    
+    &.with_border-bottom {
+      border-bottom: 2px solid var(--background_secondary);
+
+      summary {
+        padding: 12px;
       }
-      100% {
-        opacity: 1;
+
+      .ContentWrapper {
+        padding: 0 12px 12px;
+      }
+
+      &[open] {
+        summary {
+          padding-bottom: 8px;
+        }
       }
     }
   }

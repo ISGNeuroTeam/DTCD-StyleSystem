@@ -2,11 +2,12 @@ import html from './BaseExpander.html';
 import styles from './BaseExpander.scss';
 
 export default class BaseExpander extends HTMLElement {
-  #container
+  #container;
   #expander;
+  #theme = [];
 
   static get observedAttributes() {
-    return ['open'];
+    return ['open', 'theme'];
   }
 
   constructor() {
@@ -28,6 +29,30 @@ export default class BaseExpander extends HTMLElement {
     this.#expander.addEventListener('toggle', this.#expanderToggleHandler);
   }
 
+  get open() {
+    return this.hasAttribute('open');
+  }
+
+  set open(value) {
+    if (value) {
+      this.setAttribute('open', 'open');
+    } else {
+      this.removeAttribute('open');
+    }
+  }
+
+  get theme() {
+    return this.#theme;
+  }
+
+  set theme(value) {
+    if (value) {
+      this.setAttribute('theme', value.join(','));
+    } else {
+      this.removeAttribute('theme');
+    }
+  }
+
   connectedCallback() {
   }
 
@@ -38,18 +63,28 @@ export default class BaseExpander extends HTMLElement {
         else this.#expander.removeAttribute('open');
         break;
 
+      case 'theme':
+        if (newValue) {
+          this.#theme = newValue.split(',');
+        } else {
+          this.#theme = [];
+          this.removeAttribute('theme');
+        }
+        this.#setThemeClasses();
+        break;
+
       default:
         break;
     }
   }
 
   #expanderToggleHandler = (event) => {
-    const isExpanderOpened = event.currentTarget.hasAttribute('open');
+    this.open = event.currentTarget.hasAttribute('open') ? true : false;
+  }
 
-    if (isExpanderOpened) {
-      this.setAttribute('open', 'open');
-    } else {
-      this.removeAttribute('open');
+  #setThemeClasses() {
+    if (this.#theme.indexOf('with_border-bottom') != -1) {
+      this.#expander.classList.add('with_border-bottom');
     }
   }
 }

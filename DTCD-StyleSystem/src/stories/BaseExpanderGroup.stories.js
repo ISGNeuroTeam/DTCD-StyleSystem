@@ -17,12 +17,17 @@ window.customElements.define(NAME_COMPONENT, BaseExpanderGroup);
 const Template = (args) => {
   const {
     itemSlot = [],
+    themesOfExpanders,
   } = args;
 
   const expanderGroup = document.createElement(NAME_COMPONENT);
 
   itemSlot.forEach((slot) => {
     expanderGroup.innerHTML += slot;
+  });
+
+  expanderGroup.querySelectorAll('base-expander').forEach((expander) => {
+    expander.theme = themesOfExpanders;
   });
 
   return expanderGroup;
@@ -46,4 +51,5 @@ DefaultExpanderGroup.args = {
       Lorem ipsum dolor
     </base-expander>`,
   ],
+  themesOfExpanders: ['with_border-bottom'],
 };
