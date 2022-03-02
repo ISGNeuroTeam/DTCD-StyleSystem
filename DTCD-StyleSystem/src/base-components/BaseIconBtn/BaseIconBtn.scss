@@ -1,0 +1,20 @@
+:host {
+    display: inline-block;
+    align-self: flex-start;
+}
+button {
+    --size: 24px;
+    display: flex;
+    align-items: flex-start;
+    width: var(--size);
+    height: var(--size);
+    padding: 0 4px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background-color: var(--button_primary_12);
+}
+slot {
+    display: none;
+}
