@@ -2,7 +2,7 @@ import html from './BaseIconBtn.html';
 import styles from './BaseIconBtn.scss';
 
 export default class BaseIconBtn extends HTMLElement {
-
+        
   #button;
 
   constructor() {

@@ -15,15 +15,15 @@ const Template = (args) => {
     iconSlot,  
   } = args;
 
-  const expander = document.createElement(NAME_COMPONENT);
-  expander.innerHTML += buttonSlot;
-  expander.innerHTML += iconSlot;
+  const button = document.createElement(NAME_COMPONENT);
+  button.innerHTML += buttonSlot;
+  button.innerHTML += iconSlot;
 
-  return expander;
+  return button;
 };
 
-export const DefaultExpander = Template.bind({});
-DefaultExpander.args = {
+export const DefaultIconBtn = Template.bind({});
+DefaultIconBtn.args = {
   buttonSlot: '<button slot=""></button>',
   iconSlot: '',
 };
