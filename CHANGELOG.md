@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - version of core systems for adapters in DataSourceSelect base component
 - integration Storybook to project for UI-kit
 - BaseExpanderGroup stories
+- BaseHeading custom component
 
 ### Changed
 
