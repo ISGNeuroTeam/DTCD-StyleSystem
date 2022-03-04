@@ -106,7 +106,7 @@ export default class BaseButton extends HTMLElement {
       }
       case 'theme': {
         if (newValue) {
-          this.#theme = ['BaseButton', ...newValue.split(',')];
+          this.#theme = newValue.split(',');
         } else {
           this.#theme = [];
         }
@@ -133,16 +133,6 @@ export default class BaseButton extends HTMLElement {
   };
 
   #setThemeClasses() {
-    if (this.#theme.length) {
-      this.#button.classList.add('BaseButton');
-    }
-
-    if (this.#theme.indexOf('theme_blue') != -1) {
-      this.#button.classList.add('theme_blue');
-    } else {
-      this.#button.classList.remove('theme_blue');
-    }
-
     if (this.#theme.indexOf('theme_secondary') != -1) {
       this.#button.classList.add('theme_secondary');
     } else {
@@ -169,10 +159,6 @@ export default class BaseButton extends HTMLElement {
   }
 
   #setSizeClasses() {
-    if (this.#size) {
-      this.#button.classList.add('BaseButton');
-    }
-
     if (this.#size === 'big') {
       this.#button.classList.add('size_big');
     } else {

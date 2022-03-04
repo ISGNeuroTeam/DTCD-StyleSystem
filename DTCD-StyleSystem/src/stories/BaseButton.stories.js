@@ -13,13 +13,12 @@ export default {
       },
       options: [
         '<no modification>',
-        'theme_blue',
         'theme_secondary',
         'theme_green',
         'theme_blue-sec',
         'theme_red',
       ],
-      description: 'Configuration style component',
+      description: 'Configuration style component.',
     },
     type: { 
       control: {
@@ -38,7 +37,7 @@ export default {
         type: 'select',
       },
       options: [
-        '<no modification>',
+        '<default>',
         'big',
         'small',
       ],
@@ -49,7 +48,7 @@ export default {
         type: 'select',
       },
       options: [
-        '<no modification>',
+        '<default>',
         'full',
       ],
       description: 'Configuration width button in parent container.',
@@ -85,13 +84,13 @@ const Template = (args) => {
   button.disabled = disabled;
   button.type = type;
 
-  if (size === '<no modification>') {
+  if (size === '<default>') {
     button.size = '';
   } else {
     button.size = size;
   }
 
-  if (width === '<no modification>') {
+  if (width === '<default>') {
     button.width = '';
   } else {
     button.width = width;
