@@ -3,6 +3,11 @@
   align-self: flex-start;
 }
 
+:host([width="full"]) {
+  display: block;
+  width: 100%;
+}
+
 .BaseButton {
   display: inline-flex;
   align-items: center;
@@ -102,9 +107,4 @@
     padding: 4px 13px;
     border-radius: 4.66px;
   }
-}
-
-:host([width="full"]) {
-  display: block;
-  width: 100%;
 }
