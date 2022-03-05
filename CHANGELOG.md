@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - integration Storybook to project for UI-kit
 - BaseExpanderGroup stories
 - BaseHeading custom component
+- BaseInput stories in Storybook
 
 ### Changed
 
@@ -36,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added information about Storybook to README.md
 - BaseExpander stories
 - BaseExpander and BaseExpanderGroup
+- improved base styles of BaseInput and its API
 
 ### Removed
 
