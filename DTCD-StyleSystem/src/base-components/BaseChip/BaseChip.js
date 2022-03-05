@@ -35,4 +35,15 @@ export default class BaseChip extends HTMLElement {
     }
   }
 
+  get close() {
+    return this.getAttribute('close');
+  }
+
+  set close(value) {
+    if (value) {
+      this.setAttribute('close', value);
+    } else {
+      this.removeAttribute('close');
+    }
+  }
 }

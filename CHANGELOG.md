@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseHeading custom component
 - new styles of BaseButton
 - BaseButton stories in Storybook
+- BaseChip stories in Storybook
 
 ### Changed
 
@@ -41,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added BaseHeading to component list in 'components.js'
 - improved backward compatibility of BaseButton API
 - command "make clean", gitignore, Storybook config
+- improved BaseChip property "close"
 
 ### Removed
 
