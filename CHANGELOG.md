@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseExpander and BaseExpanderGroup
 - added BaseHeading to component list in 'components.js'
 - improved backward compatibility of BaseButton API
+- command "make clean", gitignore, Storybook config
 
 ### Removed
 

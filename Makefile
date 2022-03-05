@@ -63,6 +63,7 @@ clean:
 	rm -rf ./$(DTCD_SDK)/
 	rm -rf ./$(PROJECT_NAME)/node_modules/
 	rm -rf ./$(PROJECT_NAME)/*-lock.*
+	rm -rf ./$(PROJECT_NAME)/storybook-static
 	echo Cleaning completed.
 	# required section
 
