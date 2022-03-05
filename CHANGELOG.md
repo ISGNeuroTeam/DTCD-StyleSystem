@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseCheckbox `color` attribute
 - BaseSwitch `color` attribute
 - BaseSwitch `width` attribute
+- BaseHeading `tag` attribute in Storybook
 
 ## [0.3.1]
 
