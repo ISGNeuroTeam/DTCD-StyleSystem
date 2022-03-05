@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - integration Storybook to project for UI-kit
 - BaseExpanderGroup stories
 - BaseHeading custom component
+- new styles of BaseButton
+- BaseButton stories in Storybook
 
 ### Changed
 
@@ -36,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added information about Storybook to README.md
 - BaseExpander stories
 - BaseExpander and BaseExpanderGroup
+- added BaseHeading to component list in 'components.js'
+- improved backward compatibility of BaseButton API
 
 ### Removed
 
