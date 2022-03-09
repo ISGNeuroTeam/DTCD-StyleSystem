@@ -37,6 +37,24 @@ export default class BaseIconButton extends HTMLElement {
     else this.removeAttribute('disabled');
   }
 
+  get color() {
+    return this.getAttribute('color');
+  }
+
+  set color(value) {
+    if (value) this.setAttribute('color', value);
+    else this.removeAttribute('color');
+  }
+
+  get size() {
+    return this.getAttribute('size');
+  }
+
+  set size(value) {
+    if (value) this.setAttribute('size', value);
+    else this.removeAttribute('size');
+  }
+
   disconnectedCallback() {
     this.removeEventListener('click', this.#clickHandler);
   }
