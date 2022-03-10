@@ -31,13 +31,11 @@ window.customElements.define(NAME_COMPONENT, BaseHeading);
 
 const Template = (args) => {
   const {
-    tag,
     theme = [],
     defaultSlot,
   } = args;
 
   const heading = document.createElement(NAME_COMPONENT);
-  heading.tag = tag;
   heading.theme = theme.length ? theme : [];
   heading.innerHTML += defaultSlot;
 
