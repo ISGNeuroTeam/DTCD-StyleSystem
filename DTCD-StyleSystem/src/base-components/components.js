@@ -18,7 +18,6 @@ import BaseRadioGroup from './BaseRadioGroup/BaseRadioGroup';
 import BaseRange from './BaseRange/BaseRange';
 import BaseExpander from './BaseExpander/BaseExpander';
 import BaseExpanderGroup from './BaseExpanderGroup/BaseExpanderGroup';
-import BaseIconBtn from './BaseIconBtn/BaseIconBtn';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -41,5 +40,4 @@ export default [
   { name: 'base-expander-group', baseClass: BaseExpanderGroup },
   { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
-  { name: 'base-icon-btn', baseClass: BaseIconBtn },
 ];
