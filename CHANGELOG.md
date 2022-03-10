@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - improved backward compatibility of BaseButton API
 - command "make clean", gitignore, Storybook config
 - improved BaseChip property "close"
+- added new styles BaseIconButton and new API
 
 ### Removed
 

@@ -1,13 +1,15 @@
 import html from './BaseIconButton.html';
+import styles from './BaseIconButton.scss';
 
 export default class BaseIconButton extends HTMLElement {
 
-  #colors = ['second', 'red', 'green'];
   #button;
+  #theme = [];
+  #size;
   #clickHandler;
 
   static get observedAttributes() {
-    return ['size', 'color', 'disabled'];
+    return ['disabled', 'theme', 'size', 'type'];
   }
 
   constructor() {
@@ -25,6 +27,10 @@ export default class BaseIconButton extends HTMLElement {
       this.disabled && e.stopImmediatePropagation();
     };
 
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+
     this.addEventListener('click', this.#clickHandler);
   }
 
@@ -37,23 +43,112 @@ export default class BaseIconButton extends HTMLElement {
     else this.removeAttribute('disabled');
   }
 
+  get theme() {
+    return this.#theme;
+  }
+
+  set theme(value) {
+    if (value) {
+      if (Array.isArray(value)) {
+        this.setAttribute('theme', value.join(','));
+      } else {
+        this.setAttribute('theme', value);
+      }
+    } else {
+      this.removeAttribute('theme');
+    }
+  }
+
+  get type() {
+    return this.getAttribute('type');
+  }
+
+  set type(value) {
+    if (value) {
+      this.setAttribute('type', value);
+    } else {
+      this.removeAttribute('type');
+    }
+  }
+
+  get size() {
+    return this.getAttribute('size');
+  }
+
+  set size(value) {
+    if (value) {
+      this.setAttribute('size', value);
+    } else {
+      this.removeAttribute('size');
+    }
+  }
+
   disconnectedCallback() {
     this.removeEventListener('click', this.#clickHandler);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'size') {
-      return this.#button.style.setProperty(`--size`, newValue);
-    }
+    switch (attrName) {
+      case 'disabled': {
+        this.#button.disabled = this.disabled;
+        break;
+      }
+      case 'theme': {
+        if (newValue) {
+          this.#theme = newValue.split(',');
+        } else {
+          this.#theme = [];
+        }
+        this.#setThemeClasses();
+        break;
+      }
+      case 'type': {
+        this.#button.type = this.type;
+        break;
+      }
+      case 'size': {
+        this.#size = newValue ? newValue : undefined;
+        this.#setSizeClasses();
+        break;
+      }
 
-    if (attrName === 'disabled') {
-      return this.#button.disabled = this.disabled;
-    }
-
-    if (attrName === 'color') {
-      const className = this.#colors.includes(newValue) ? newValue : '';
-      return this.#button.className = className;
+      default:
+        break;
     }
   }
 
+
+  #setThemeClasses() {
+    if (this.#theme.indexOf('theme_secondary') != -1) {
+      this.#button.classList.add('theme_secondary');
+    } else {
+      this.#button.classList.remove('theme_secondary');
+    }
+
+    if (this.#theme.indexOf('theme_green') != -1) {
+      this.#button.classList.add('theme_green');
+    } else {
+      this.#button.classList.remove('theme_green');
+    }
+
+    if (this.#theme.indexOf('theme_red') != -1) {
+      this.#button.classList.add('theme_red');
+    } else {
+      this.#button.classList.remove('theme_red');
+    }
+  }
+
+  #setSizeClasses() {
+    if (this.#size === 'big') {
+      this.#button.classList.add('size_big');
+    } else {
+      this.#button.classList.remove('size_big');
+    }
+
+    if (this.#size === 'small') {
+      this.#button.classList.add('size_small');
+    } else {
+      this.#button.classList.remove('size_small');
+    }
+  }
 }
