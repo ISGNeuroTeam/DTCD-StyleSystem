@@ -20,6 +20,13 @@
   width: 28px;
   height: 28px;
   border-radius: 6.22px;
+  
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
 
   &:hover {
     background-color: var(--button_primary_18);
@@ -89,9 +96,8 @@
   }
 
   &.size_small {
-    width: 24px;
-    height: 24px;
-    font-size: 11px;
+    width: 21px;
+    height: 21px;
     padding: 4px;
     border-radius: 4.44px;
   }

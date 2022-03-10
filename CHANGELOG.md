@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build process in order to make directory name with current version of pluing
 - getting version for `getRegistrationMeta()` method from `package.json`
 - added information about Storybook to README.md
+- added new styles BaseIconButton and new API 
 
 ### Removed
 
