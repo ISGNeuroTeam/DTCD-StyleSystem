@@ -1,106 +1,98 @@
 :host {
-    display: inline-block;
-    align-self: flex-start;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.BaseIconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: .3s;
+  background-color: var(--button_primary_12);
+  vertical-align: middle;
+  color: var(--button_primary);
+  font-weight: 700;
+  fill: var(--button_primary);
+  width: 28px;
+  height: 28px;
+  border-radius: 6.22px;
+
+  &:hover {
+    background-color: var(--button_primary_18);
   }
   
-  .BaseIconButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    transition: .3s;
-    background-color: var(--button_primary_12);
-    vertical-align: middle;
-    color: var(--button_primary);
-    font-weight: 700;
-    fill: var(--button_primary);
-  
+  &:active {
+    background-color: var(--button_primary_24);
+  }
+
+  &.theme_secondary {
+    color: var(--text_main);
+    background-color: var(--border_12);
+    fill: var(--text_main);
+    
     &:hover {
-      background-color: var(--button_primary_18);
+      background-color: var(--border_18);
     }
     
     &:active {
-      background-color: var(--button_primary_24);
+      background-color: var(--border_24);
     }
-  
-    &.theme_blueSec {
-      color: var(--button_primary);
-      background-color: var(--button_primary_12);
-      fill: var(--button_primary) !important;
-      
-      &:hover {
-        background-color: var(--button_primary_18);
-      }
-      
-      &:active {
-        background-color: var(--button_primary_24);
-      }
+  }
+
+  &.theme_green {
+    color: var(--success);
+    background-color: var(--success_12);
+    fill: var(--success);
+    
+    &:hover {
+      background-color: var(--success_18);
     }
-    &.theme_secondary {
-      color: var(--text_main);
-      background-color: var(--border_12);
-      fill: var(--text_main) !important;
-      
-      &:hover {
-        background-color: var(--border_18);
-      }
-      
-      &:active {
-        background-color: var(--border_24);
-      }
+    
+    &:active {
+      background-color: var(--success_24);
     }
-  
-    &.theme_green {
-      color: var(--success);
-      background-color: var(--success_12);
-      fill: var(--success) !important;
-      
-      &:hover {
-        background-color: var(--success_18);
-      }
-      
-      &:active {
-        background-color: var(--success_24);
-      }
+  }
+
+  &.theme_red {
+    color: var(--danger);
+    background-color: var(--danger_12);
+    fill: var(--danger);
+    
+    &:hover {
+      background-color: var(--danger_18);
     }
-  
-    &.theme_red {
-      color: var(--danger);
-      background-color: var(--danger_12);
-      fill: var(--danger) !important;
-      
-      &:hover {
-        background-color: var(--danger_18);
-      }
-      
-      &:active {
-        background-color: var(--danger_24);
-      }
+    
+    &:active {
+      background-color: var(--danger_24);
     }
-    &:disabled {
-      &,
-      &:hover,
-      &:active {
-        cursor: not-allowed;
-        color: var(--text_secondary);
-        background-color: var(--border);
-        fill: var(--text_secondary) !important;
-      }
+  }
+
+  &:disabled {
+    &,
+    &:hover,
+    &:active {
+      cursor: not-allowed;
+      color: var(--text_secondary);
+      background-color: var(--border);
+      fill: var(--text_secondary);
     }
-    &.size_big {
-      width: 40px;
-      height: 40px;
-      border-radius: 8.88px;
-    }
-  
-    &.size_small {
-      width: 24px;
-      height: 24px;
-      font-size: 11px;
-      padding: 4px;
-      border-radius: 4.44px;
-    }
+  }
+
+  &.size_big {
+    width: 40px;
+    height: 40px;
+    border-radius: 8.88px;
+  }
+
+  &.size_small {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+    padding: 4px;
+    border-radius: 4.44px;
+  }
 }

@@ -1,6 +1,5 @@
 import BaseIconButton from '../base-components/BaseIconButton/BaseIconButton';
 
-
 export default {
   title: 'Example/BaseComponents/BaseIconButton',
   argTypes: {
@@ -16,7 +15,6 @@ export default {
         '<no modification>',
         'theme_secondary',
         'theme_green',
-        'theme_blue-sec',
         'theme_red',
       ],
       description: 'Configuration style component.',
@@ -89,7 +87,7 @@ export const ButtonIcon = Template.bind({});
 ButtonIcon.args = {
   defaultSlot: `<svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-    </svg>`,
+  </svg>`,
   theme: [],
   disabled: false,
   type: 'button',

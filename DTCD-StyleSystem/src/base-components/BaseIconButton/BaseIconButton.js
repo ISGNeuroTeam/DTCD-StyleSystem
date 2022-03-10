@@ -131,12 +131,6 @@ export default class BaseIconButton extends HTMLElement {
       this.#button.classList.remove('theme_green');
     }
 
-    if (this.#theme.indexOf('theme_blueSec') != -1) {
-      this.#button.classList.add('theme_blueSec');
-    } else {
-      this.#button.classList.remove('theme_blueSec');
-    }
-
     if (this.#theme.indexOf('theme_red') != -1) {
       this.#button.classList.add('theme_red');
     } else {
