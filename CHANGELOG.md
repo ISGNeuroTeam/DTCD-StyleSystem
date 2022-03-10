@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - new styles of BaseButton
 - BaseButton stories in Storybook
 - BaseChip stories in Storybook
+- BaseInput stories in Storybook
 
 ### Changed
 
@@ -44,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - command "make clean", gitignore, Storybook config
 - improved BaseChip property "close"
 - added new styles BaseIconButton and new API
+- improved base styles of BaseInput and its API
 
 ### Removed
 
