@@ -9,7 +9,7 @@ export default {
       },
       options: [
         '<no modification>',
-        'with-success-fill',
+        'withSuccessFill',
       ],
       description: 'Configuration style component.',
     },

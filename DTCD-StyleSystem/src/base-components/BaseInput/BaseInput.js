@@ -46,7 +46,10 @@ export default class BaseInput extends HTMLElement {
     this.#resetBtn = this.shadowRoot.querySelector('.StatusIcon.type_reset');
 
     this.#internalInput.addEventListener('input', this.#inputHandler);
-    this.#resetBtn.addEventListener('click', this.#clickResetBtnHandler);
+
+    if (this.#resetBtn) {
+      this.#resetBtn.addEventListener('click', this.#clickResetBtnHandler);
+    }
   }
 
   validate() {
@@ -116,10 +119,10 @@ export default class BaseInput extends HTMLElement {
 
   set invalid(newVal) {
     if (newVal) {
-      this.#baseInput.classList.remove('with-success-fill');
-      this.#baseInput.classList.add('with-error');
+      this.#baseInput.classList.remove('withSuccessFill');
+      this.#baseInput.classList.add('withError');
     } else {
-      this.#baseInput.classList.remove('with-error');
+      this.#baseInput.classList.remove('withError');
     }
 
     this.#message.innerHTML = newVal && this.#messageText ? this.#messageText : '';
@@ -250,16 +253,16 @@ export default class BaseInput extends HTMLElement {
   };
 
   #setThemeClasses() {
-    if (this.#theme.indexOf('with-success-fill') != -1) {
-      this.#baseInput.classList.add('with-success-fill');
+    if (this.#theme.indexOf('withSuccessFill') != -1) {
+      this.#baseInput.classList.add('withSuccessFill');
     } else {
-      this.#baseInput.classList.remove('with-success-fill');
+      this.#baseInput.classList.remove('withSuccessFill');
     }
 
-    if (this.#theme.indexOf('with-error') != -1) {
-      this.#baseInput.classList.add('with-error');
+    if (this.#theme.indexOf('withError') != -1) {
+      this.#baseInput.classList.add('withError');
     } else {
-      this.#baseInput.classList.remove('with-error');
+      this.#baseInput.classList.remove('withError');
     }
   }
 
