@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseButton stories in Storybook
 - BaseChip stories in Storybook
 - BaseInput stories in Storybook
+- animate error message of BaseInput
 
 ### Changed
 
