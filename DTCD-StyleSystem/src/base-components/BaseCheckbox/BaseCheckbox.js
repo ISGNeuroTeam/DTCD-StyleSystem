@@ -1,4 +1,5 @@
 import html from './BaseCheckbox.html';
+import styles from './BaseCheckbox.scss';
 
 export default class BaseCheckbox extends HTMLElement {
 
@@ -18,6 +19,10 @@ export default class BaseCheckbox extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+    
     this.#label = this.shadowRoot.querySelector('#label');
     this.#checkbox = this.shadowRoot.querySelector('input');
 
