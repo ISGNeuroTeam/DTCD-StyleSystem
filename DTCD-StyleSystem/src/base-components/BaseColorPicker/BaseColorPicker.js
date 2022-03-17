@@ -1,4 +1,5 @@
 import html from './BaseColorPicker.html';
+import styles from './BaseColorPicker.scss';
 
 const colors = [
   { name: 'title', val: 'rgba(37, 34, 48, 1)' },
@@ -46,14 +47,18 @@ export default class BaseColorPicker extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#picker = this.shadowRoot.querySelector('.picker');
-    this.#colorList = this.shadowRoot.querySelector('.color-list');
-    this.#selectedPreview = this.shadowRoot.querySelector('#selected-color');
+    this.#picker = this.shadowRoot.querySelector('.BaseColorPicker');
+    this.#colorList = this.shadowRoot.querySelector('.ColorList');
+    this.#selectedPreview = this.shadowRoot.querySelector('#Selected');
+
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
 
     this.value = '#252230';
 
     this.#colorListClickHandler = ({ target }) => {
-      const classes = ['color-variant', 'color-preview'];
+      const classes = ['SelectedColor', 'ColorPreview'];
 
       if (!classes.includes(target.className)) return;
 
@@ -85,21 +90,21 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   #setSelectedColorBackground(color = '#252230') {
-    this.#selectedPreview.querySelector('.color-preview').style.backgroundColor = color;
+    this.#selectedPreview.querySelector('.ColorPreview').style.backgroundColor = color;
   }
 
-  #addColorVariant(color) {
-    const variant = document.createElement('div');
-    variant.className = 'color-variant';
-    variant.setAttribute('data-color', color);
+  #addColorSelected(color) {
+    const selected = document.createElement('div');
+    selected.className = 'SelectedColor';
+    selected.setAttribute('data-color', color);
 
     const preview = document.createElement('div');
-    preview.className = 'color-preview';
+    preview.className = 'ColorPreview';
     preview.style.backgroundColor = color;
     preview.setAttribute('data-color', color);
 
-    variant.appendChild(preview);
-    this.#colorList.appendChild(variant);
+    selected.appendChild(preview);
+    this.#colorList.appendChild(selected);
   }
 
   #toggleColorList() {
@@ -107,7 +112,7 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   connectedCallback() {
-    colors.forEach(c => this.#addColorVariant(c.val));
+    colors.forEach(c => this.#addColorSelected(c.val));
   }
 
   disconnectedCallback() {

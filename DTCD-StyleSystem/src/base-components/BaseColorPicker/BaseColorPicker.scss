@@ -1,0 +1,71 @@
+:host {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.BaseColorPicker {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 4.44px;
+  cursor: pointer;
+  position: relative;
+
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  .ColorList {
+    position: absolute;
+    top: 26px;
+    left: -1px;
+    border: 1px solid var(--border);
+    border-radius: 4.44px;
+    width: 100%;
+    max-height: 112px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: -1;
+    opacity: 0;
+    visibility: hidden;
+
+    &.open {
+        z-index: 1;
+        opacity: 1;
+        visibility: visible;
+    }
+  }
+
+  .SelectedColor {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--border_12);
+    width: 44px;
+    height: 25.8px;
+    padding: 0 4px;
+
+    .ColorPreview {
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        background-color: var(--title);
+    }
+
+    .Icon {
+        transition: all ease .3s;
+    }
+  }
+ 
+}
+
+.ColorList.open + .SelectedColor .Icon {
+  transform: rotate(180deg);
+}
