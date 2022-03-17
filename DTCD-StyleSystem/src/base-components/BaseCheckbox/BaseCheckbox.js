@@ -23,8 +23,8 @@ export default class BaseCheckbox extends HTMLElement {
     this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
     
-    this.#label = this.shadowRoot.querySelector('#label');
-    this.#checkbox = this.shadowRoot.querySelector('input');
+    this.#label = this.shadowRoot.querySelector('.Label');
+    this.#checkbox = this.shadowRoot.querySelector('.Input');
 
     this.value = false;
   }
@@ -55,17 +55,34 @@ export default class BaseCheckbox extends HTMLElement {
     else this.removeAttribute('disabled');
   }
 
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    if (value) this.setAttribute('label', value);
+    else this.removeAttribute('label');
+  }
+
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'label') {
-      this.#label.textContent = newValue ? newValue : '';
-    }
+    switch (attrName) {
+      case 'label': {
+        this.#label.innerHTML = newValue ? newValue : '';
+        break;
+      }
+  
+      case 'checked': {
+        this.#checkbox.checked = this.checked;
+        break;
+      }
+  
+      case 'disabled': {
+        this.#checkbox.disabled = this.disabled;
+        break;
+      }
 
-    if (attrName === 'checked') {
-      this.#checkbox.checked = this.checked;
-    }
-
-    if (attrName === 'disabled') {
-      this.#checkbox.disabled = this.disabled;
+      default:
+        break;
     }
   }
 }

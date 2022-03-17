@@ -15,33 +15,28 @@
   }
 
   .Input {
-    appearance: none;
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
-    z-index: -1;
+    display: none;
 
-    &:checked + .Сheckbox {
-        border-color: var(--base-checkbox-color, var(--button_primary));
-        background-color: var(--base-checkbox-color, var(--button_primary));
-    }
+    &:checked ~ .Сheckbox {
+      border-color: var(--base-checkbox-color, var(--button_primary));
+      background-color: var(--base-checkbox-color, var(--button_primary));
 
-    &:disabled + .Сheckbox {
-        border-color: var(--base-checkbox-color, var(--border));
-        background-color: var(--base-checkbox-color, var(--border));
-    }
-
-    &:disabled + .Сheckbox * {
-        fill: #000;
-    }
-
-    &:checked + .Сheckbox .Icon {
+      .Icon {
         opacity: 1;
+      }
     }
-    
-    &:disabled:not(:checked) + .Сheckbox {
-        background-color: var(--border);
+
+    &:disabled {
+      & ~ .Сheckbox,
+      & ~ .Label {
+        border-color: var(--base-checkbox-color, var(--border_24));
+        background-color: var(--base-checkbox-color, var(--border_24));
+        cursor: not-allowed;
+      }
+
+      * {
+        fill: var(--border);
+      }
     }
   }
 
@@ -55,8 +50,7 @@
     cursor: pointer;
     border: 1px solid var(--border);
     border-radius: 4.44px;
-    margin-right: 8px;
-    transition: .3s;
+    transition: .2s;
     position: relative;
   
     .Icon {
@@ -66,19 +60,12 @@
   }
   
   .Label {
+    display: inline-block;
+    padding-left: 8px;
     cursor: pointer;
     color: var(--text_main);
     font-size: 13px;
     font-weight: 600;
-    font-family: 'Proxima Nova';
     letter-spacing: .25px;
   }
-}
-
-:host([disabled]) {
-  opacity: 0.24;
-}
-
-:host([disabled]) .Сheckbox, :host([disabled]) {
-  cursor: not-allowed;
 }

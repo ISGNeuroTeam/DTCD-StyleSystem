@@ -4,17 +4,8 @@ export default {
   title: 'Example/BaseComponents/BaseCheckbox',
   argTypes: {
     defaultSlot: { 
-        type: 'string',
-        description: 'Default slot',
-    },
-    theme: {
-      control: {
-        type: 'checkbox',
-      },
-      options: [
-        '<no modification>',
-      ],
-      description: 'Configuration style component.',
+      type: 'string',
+      description: 'Default slot',
     },
   },
 };
@@ -25,26 +16,20 @@ window.customElements.define(NAME_COMPONENT, BaseCheckbox);
 
 const Template = (args) => {
   const {
-    theme = [],
     type,
     disabled,
     checked,
     defaultSlot,
+    label,
   } = args;
 
   const checkbox = document.createElement(NAME_COMPONENT);
 
-  if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
-    checkbox.theme = [];
-  } else {
-    checkbox.theme = theme.length ? theme : [];
-  }
-
-  
   checkbox.innerHTML += defaultSlot;
   checkbox.checked = checked;
   checkbox.type = type;
   checkbox.disabled = disabled;
+  checkbox.label = label;
 
   return checkbox;
 };
