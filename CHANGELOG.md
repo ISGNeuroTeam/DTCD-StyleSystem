@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseChip stories in Storybook
 - BaseInput stories in Storybook
 - animate error message of BaseInput
+- BaseSelect stories in Storybook
+- BaseSelect new API
 
 ### Changed
 
@@ -47,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - improved BaseChip property "close"
 - added new styles BaseIconButton and new API
 - improved base styles of BaseInput and its API
+- improved view of "BaseSelect"
 
 ### Removed
 

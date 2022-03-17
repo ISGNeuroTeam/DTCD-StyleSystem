@@ -1,19 +1,27 @@
 import html from './BaseSelect.html';
-import dropDownDefaultSvg from './../icons/dropdown-default.svg';
-import dropDownActiveSvg from './../icons/dropdown-active.svg';
+import styles from './BaseSelect.scss';
 
 export default class BaseSelect extends HTMLElement {
+  #selectContainer;
   #headerContainer;
   #header;
-  #optionsList;
-  #iconEl;
-  #searchInput
+  #searchInput;
   #label;
   #errorMessage;
   #value;
+  #opened;
 
   static get observedAttributes() {
-    return ['placeholder', 'value', 'required', 'disabled', 'label', 'size', "search"];
+    return [
+      'placeholder',
+      'value',
+      'required',
+      'disabled',
+      'label',
+      'size',
+      'search',
+      'opened',
+    ];
   }
 
   constructor() {
@@ -26,20 +34,29 @@ export default class BaseSelect extends HTMLElement {
       mode: 'open',
     }).appendChild(template.content.cloneNode(true));
 
-    this.#header = this.shadowRoot.querySelector('#header');
-    this.#headerContainer = this.shadowRoot.querySelector('#headerContainer');
-    this.#optionsList = this.shadowRoot.querySelector('#optionsList');
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
 
-    this.#iconEl = this.shadowRoot.querySelector('#dropDownIcon');
-    this.#iconEl.innerHTML = dropDownDefaultSvg;
-    this.#searchInput = this.shadowRoot.querySelector("#searchInput")
+    this.#selectContainer = this.shadowRoot.querySelector('.BaseSelect');
+    this.#header = this.shadowRoot.querySelector('.SelectedValue');
+    this.#headerContainer = this.shadowRoot.querySelector('.FieldWrapper');
+    this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
 
-    this.#label = this.shadowRoot.querySelector('#label');
-    this.#errorMessage = this.shadowRoot.querySelector('#errorMessage');
+    this.#label = this.shadowRoot.querySelector('.Label');
+    this.#errorMessage = this.shadowRoot.querySelector('.Message');
   }
 
   get required() {
     return this.hasAttribute('required');
+  }
+
+  set required(newValue) {
+    if (newValue) {
+      this.setAttribute('required', true);
+    } else {
+      this.removeAttribute('required');
+    }
   }
 
   get value() {
@@ -47,12 +64,72 @@ export default class BaseSelect extends HTMLElement {
   }
 
   set value(newValue) {
-    this.#header.innerHTML = newValue
-    if (this.hasAttribute('search'))
-      this.#searchInput.placeholder = newValue
     this.#value = newValue;
+    this.#header.innerHTML = newValue;
+    this.#searchInput.setAttribute('placeholder', newValue);
+
     this.validate();
     this.dispatchEvent(new Event('input'));
+  }
+
+  get search() {
+    return this.hasAttribute('search');
+  }
+
+  set search(newValue) {
+    if (newValue) {
+      this.setAttribute('search', true);
+    } else {
+      this.removeAttribute('search');
+    }
+  }
+
+  get opened() {
+    return this.#opened;
+  }
+
+  set opened(newValue) {
+    if (newValue) {
+      this.setAttribute('opened', true);
+    } else {
+      this.removeAttribute('opened');
+    }
+  }
+
+  get size() {
+    return this.getAttribute('size');
+  }
+
+  set size(newValue) {
+    if (newValue) {
+      this.setAttribute('size', newValue);
+    } else {
+      this.removeAttribute('size');
+    }
+  }
+
+  get disabled() {
+    return this.hasAttribute('disabled');
+  }
+
+  set disabled(newValue) {
+    if (newValue) {
+      this.setAttribute('disabled', true);
+    } else {
+      this.removeAttribute('disabled');
+    }
+  }
+
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    if (value) {
+      this.#label.innerHTML = value;
+    } else {
+      this.#label.innerHTML = '<slot name="label"></slot>';
+    }
   }
 
   validate() {
@@ -63,107 +140,115 @@ export default class BaseSelect extends HTMLElement {
     return (this.invalid = false);
   }
 
-  #optionClickCallback(evt) {
-    const selectedOptionEl = evt.target.closest('[slot="item"')
-    const selectEl = evt.target.closest('base-select')
+  #optionClickCallback = (evt) => {
+    const selectedOptionEl = evt.target.closest('[slot="item"]');
+
     if (typeof selectedOptionEl.value !== 'undefined') {
-      selectEl.value = selectedOptionEl.value
+      this.value = selectedOptionEl.value;
     } else if (selectedOptionEl.hasAttribute('value')) {
-      selectEl.value = selectedOptionEl.getAttribute('value')
+      this.value = selectedOptionEl.getAttribute('value');
     } else {
-      selectEl.value = selectedOptionEl.innerHTML
+      this.value = selectedOptionEl.innerHTML;
+    }
+  }
+
+  #documentClickCallback = (evt) => {
+    if ( ! evt.target.closest('base-select')) {
+      this.toggle(false);
+    }
+  };
+
+  toggle = (doOpen) => {
+    if (doOpen !== undefined) {
+      if (!!doOpen === this.#opened) {
+        return;
+      }
+      this.#opened = !!doOpen;
+    } else {
+      this.#opened = !this.#opened;
+    }
+
+    if (this.#opened) {
+      // TO EXPAND
+      this.#selectContainer.classList.add('opened');
+      document.addEventListener('click', this.#documentClickCallback);
+
+      // Focus searchInput if it active
+      if (this.hasAttribute('search')) {
+        this.#searchInput.focus();
+      }
+    } else {
+      // TO ZIP
+      this.#selectContainer.classList.remove('opened');
+      this.validate();
+
+      if (this.required && this.invalid) {
+        this.#selectContainer.classList.add('withError');
+        this.#errorMessage.innerHTML = 'Это обязательное поле*';
+      } else {
+        this.#selectContainer.classList.remove('withError');
+        this.#errorMessage.innerHTML = '';
+      }
+
+      document.removeEventListener('click', this.#documentClickCallback);
+
+      // Unfocus searchInput if it active
+      if (this.hasAttribute('search')) {
+        this.#searchInput.blur();
+        this.#searchInput.value = '';
+      }
     }
   }
 
   connectedCallback() {
-    const toZipOptionsListCallback = () => {
-      this.#headerContainer.dispatchEvent(new Event('click'));
-    };
-
-    this.#headerContainer.addEventListener('click', e => {
-      e.stopPropagation();
-
-      if (this.#optionsList.getAttribute('active') === null) {
-        // TO EXPAND
-
-        this.#iconEl.innerHTML = dropDownActiveSvg;
-        this.#headerContainer.style.borderColor = 'var(--button_primary)';
-        document.addEventListener('click', toZipOptionsListCallback);
-        this.#optionsList.setAttribute('active', true);
-
-        // Add option select listener
-        this.querySelectorAll('[slot="item"]').forEach(option => {
-          option.addEventListener('click', this.#optionClickCallback);
-        });
-
-        // Focus searchInput if it active
-        if (this.hasAttribute('search'))
-          this.#searchInput.focus()
-
-      } else {
-        // TO ZIP
-        this.validate();
-        this.#headerContainer.style.borderColor = 'var(--border)';
-        this.#iconEl.innerHTML = dropDownDefaultSvg;
-
-        if (this.required) {
-          const color = this.invalid ? 'var(--danger)' : 'var(--border)';
-
-          this.#headerContainer.style.borderColor = color;
-
-          this.#errorMessage.style.color = color;
-          this.#errorMessage.classList.add('active');
-          this.#errorMessage.innerHTML = this.invalid ? 'Это обязательное поле*' : '';
-        }
-        document.removeEventListener('click', toZipOptionsListCallback);
-        this.#optionsList.removeAttribute('active');
-
-        // Remove option select listener
-        this.querySelectorAll('[slot="item"]').forEach(option => {
-          option.removeEventListener('click', this.#optionClickCallback);
-        });
-
-        // Unfocus searchInput if it active
-        if (this.hasAttribute('search')) {
-          this.#searchInput.blur()
-          this.#searchInput.value = ''
-        }
-      }
+    // Add option select listener
+    this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
+      optionItem.addEventListener('click', this.#optionClickCallback);
     });
 
-    // Search input settings
-    this.#searchInput.addEventListener("input", (e) => {
-      const subString = e.target.value.toLowerCase()
-      this.querySelectorAll("[slot='item']").forEach(item => {
+    this.#headerContainer.addEventListener('click', e => {
+      e.preventDefault();
+      this.toggle();
+    });
+
+    // Search items
+    this.#searchInput.addEventListener('input', (e) => {
+      const subString = e.target.value.toLowerCase();
+
+      this.querySelectorAll('[slot="item"]').forEach(item => {
         const target = typeof item.value !== 'undefined' ? item.value.toLowerCase() : item.textContent.toLowerCase();
-        item.style.display = target.includes(subString) ? 'block' : item.style.display = 'none';
-      })
-    })
+        item.style.display = target.includes(subString) ? '' : 'none';
+      });
+    });
 
-
-    this.validate();
+    // this.validate();
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled':
-        if (newValue) this.#header.setAttribute('disabled', '');
-        else this.#header.removeAttribute('disabled');
+        if (newValue) {
+          this.#searchInput.setAttribute('disabled', true);
+          this.#selectContainer.classList.add('disabled');
+        } else {
+          this.#searchInput.removeAttribute('disabled');
+          this.#selectContainer.classList.remove('disabled');
+        }
         break;
 
       case 'size':
-        const sizes = ['small', 'middle', 'big'];
+        const sizes = ['small', 'big'];
 
-        if (attrName === 'size' && sizes.includes(newValue)) {
-          const { classList } = this;
+        if (sizes.includes(newValue)) {
+          const { classList } = this.#selectContainer;
 
           for (const item of classList) {
-            if (item.startsWith('size-')) {
+            if (item.startsWith('size_')) {
               classList.remove(item);
               break;
             }
           }
-          classList.add(`size-${newValue}`);
+          classList.add(`size_${newValue}`);
         }
         break;
 
@@ -171,19 +256,28 @@ export default class BaseSelect extends HTMLElement {
         this.#header.innerHTML = newValue;
         break;
 
+      /**
+       * @deprecated
+       */
       case 'label':
         this.#label.innerHTML = newValue;
         break;
 
       case 'search':
-        if (this.hasAttribute("search")) {
-          this.#header.style.display = "none"
-          this.#searchInput.style.display = 'block'
+        if (this.hasAttribute('search')) {
+          this.#header.style.display = 'none';
+          this.#searchInput.style.display = '';
         }
         break;
 
       case 'value':
-        this.value = newValue;
+        if (oldValue !== newValue) {
+          this.value = newValue;
+        }
+        break;
+
+      case 'opened':
+        this.toggle(newValue ? true : false);
         break;
 
       default:
