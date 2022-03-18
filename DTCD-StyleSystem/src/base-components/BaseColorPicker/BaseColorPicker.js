@@ -33,6 +33,7 @@ export default class BaseColorPicker extends HTMLElement {
   #selectedPreview;
   #colorListClickHandler;
   #selectedPreviewClickHandler;
+  #value;
 
   static get observedAttributes() {
     return ['value', 'disabled'];
@@ -49,13 +50,13 @@ export default class BaseColorPicker extends HTMLElement {
 
     this.#picker = this.shadowRoot.querySelector('.BaseColorPicker');
     this.#colorList = this.shadowRoot.querySelector('.ColorList');
-    this.#selectedPreview = this.shadowRoot.querySelector('#Selected');
+    this.#selectedPreview = this.shadowRoot.querySelector('.Field');
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
 
-    this.value = '#252230';
+    this.#value = '#252230';
 
     this.#colorListClickHandler = ({ target }) => {
       const classes = ['SelectedColor', 'ColorPreview'];
@@ -63,16 +64,16 @@ export default class BaseColorPicker extends HTMLElement {
       if (!classes.includes(target.className)) return;
 
       const color = target.getAttribute('data-color');
-      this.value = color;
+      this.#value = color;
       this.#setSelectedColorBackground(color);
       this.dispatchEvent(new Event('input', { bubbles: true }));
 
-      if (this.#colorList.classList.contains('open')) this.#toggleColorList();
+      this.toggle(false);
     };
 
     this.#selectedPreviewClickHandler = () => {
       if (!this.disabled) {
-        this.#toggleColorList();
+        this.toggle();
       }
     };
 
@@ -87,6 +88,15 @@ export default class BaseColorPicker extends HTMLElement {
   set disabled(value) {
     if (value) this.setAttribute('disabled', '');
     else this.removeAttribute('disabled');
+  }
+
+  get value() {
+    return this.#value;
+  }
+
+  set value(value) {
+    if (value) this.setAttribute('value', value);
+    else this.removeAttribute('value');
   }
 
   #setSelectedColorBackground(color = '#252230') {
@@ -107,8 +117,17 @@ export default class BaseColorPicker extends HTMLElement {
     this.#colorList.appendChild(selected);
   }
 
-  #toggleColorList() {
-    this.#colorList.classList.toggle('open');
+  toggle(doOpen) {
+    if (doOpen == undefined) {
+      this.#picker.classList.toggle('opened');
+      return;
+    }
+
+    if (doOpen) {
+      this.#picker.classList.add('opened');
+    } else {
+      this.#picker.classList.remove('opened');
+    }
   }
 
   connectedCallback() {
@@ -124,12 +143,12 @@ export default class BaseColorPicker extends HTMLElement {
     if (attrName === 'disabled') {
       this.#picker.classList.toggle('disabled');
       if (this.disabled) {
-        this.#colorList.classList.remove('open');
+        this.#picker.classList.remove('opened');
       }
     }
 
     if (attrName === 'value') {
-      this.value = newValue;
+      this.#value = newValue;
       this.#setSelectedColorBackground(newValue);
     }
   }
