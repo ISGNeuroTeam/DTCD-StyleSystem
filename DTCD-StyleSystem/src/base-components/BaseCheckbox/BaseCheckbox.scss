@@ -34,8 +34,10 @@
         cursor: not-allowed;
       }
 
-      * {
-        fill: var(--border);
+      & ~ .Сheckbox {
+        .Icon {
+          fill: var(--border);
+        }
       }
     }
   }
