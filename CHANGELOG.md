@@ -9,10 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- integration Storybook to project for UI-kit
+- information about Storybook to README.md
+- BaseExpander and BaseExpanderGroup
+- BaseExpander stories
+- BaseExpanderGroup stories
+- BaseHeading custom component
+- new styles of BaseButton
+- BaseButton stories in Storybook
+- BaseChip stories in Storybook
+- BaseInput stories in Storybook
+- animate error message of BaseInput
+- BaseSelect stories in Storybook
+- BaseSelect new API
 - BaseCheckbox stories in Storybook
 
 ### Changed
 
+- added BaseHeading to component list in 'components.js'
+- improved backward compatibility of BaseButton API
+- command "make clean", gitignore, Storybook config
+- improved BaseChip property "close"
+- added new styles BaseIconButton and new API
+- improved base styles of BaseInput and its API
+- improved view of "BaseSelect"
 - styles of BaseCheckbox
 
 ## [0.4.0]
@@ -29,16 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseRange custom component
 - version of core systems for adapters
 - version of core systems for adapters in DataSourceSelect base component
-- integration Storybook to project for UI-kit
-- BaseExpanderGroup stories
-- BaseHeading custom component
-- new styles of BaseButton
-- BaseButton stories in Storybook
-- BaseChip stories in Storybook
-- BaseInput stories in Storybook
-- animate error message of BaseInput
-- BaseSelect stories in Storybook
-- BaseSelect new API
 
 ### Changed
 
@@ -50,16 +60,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseTextarea styles and inner logic
 - build process in order to make directory name with current version of pluing
 - getting version for `getRegistrationMeta()` method from `package.json`
-- added information about Storybook to README.md
-- BaseExpander stories
-- BaseExpander and BaseExpanderGroup
-- added BaseHeading to component list in 'components.js'
-- improved backward compatibility of BaseButton API
-- command "make clean", gitignore, Storybook config
-- improved BaseChip property "close"
-- added new styles BaseIconButton and new API
-- improved base styles of BaseInput and its API
-- improved view of "BaseSelect"
 
 ### Removed
 
@@ -67,7 +67,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseCheckbox `color` attribute
 - BaseSwitch `color` attribute
 - BaseSwitch `width` attribute
-- BaseHeading `tag` attribute in Storybook
 
 ## [0.3.1]
 
