@@ -3,11 +3,26 @@ import styles from './BaseTextarea.scss';
 
 export default class BaseTextarea extends HTMLElement {
 
+  #block;
   #label;
   #textarea;
+  #message;
+  #messageText;
+  #theme = [];
+  #size;
 
   static get observedAttributes() {
-    return ['label', 'value', 'disabled', 'placeholder'];
+    return [
+      'placeholder',
+      'disabled',
+      'label',
+      'required',
+      'value',
+      'theme',
+      'size',
+      'readonly',
+      'rows',
+    ];
   }
 
   constructor() {
@@ -23,43 +38,243 @@ export default class BaseTextarea extends HTMLElement {
     this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
 
+    this.#block = this.shadowRoot.querySelector('.BaseInput');
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#textarea = this.shadowRoot.querySelector('.Field');
+    this.#message = this.shadowRoot.querySelector('.Message');
+
+    this.#textarea.addEventListener('input', this.#inputHandler);
   }
 
-  get disabled() {
-    return this.hasAttribute('disabled');
+  validate() {
+    // TODO: HERE ADD VALIDATIONS
+    if (this.required && this.#textarea.value === '') {
+      this.#messageText = 'Обязательное поле*';
+      this.invalid = true;
+    } else if (typeof this.validation !== 'undefined') {
+      const { isValid, message } = this.validation(this.#textarea.value);
+      this.#messageText = message;
+      this.invalid = !isValid;
+    } else this.invalid = false;
   }
 
-  set disabled(value) {
-    if (value) this.setAttribute('disabled', '');
-    else this.removeAttribute('disabled');
+  disconnectedCallback() {
+    this.#textarea.removeEventListener('input', this.#inputHandler);
   }
 
-  get value(){
-    return this.#textarea.value
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    switch (attrName) {
+      case 'placeholder':
+        this.placeholder = newValue;
+        break;
+
+      case 'disabled':
+        this.disabled = newValue;
+        break;
+
+      case 'label':
+        this.label = newValue;
+        break;
+
+      case 'value':
+        this.value = newValue;
+        break;
+
+      case 'required':
+        this.required = newValue;
+        break;
+
+      case 'theme':
+        if (newValue) {
+          this.#theme = newValue.split(',');
+        } else {
+          this.#theme = [];
+        }
+        this.#setThemeClasses();
+        break;
+
+      case 'size':
+        this.#size = newValue ? newValue : undefined;
+        this.#setSizeClasses();
+        break;
+
+      case 'readonly':
+        this.readonly = readonly;
+        break;
+
+      case 'rows':
+        this.#textarea.rows = newValue;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  set invalid(newVal) {
+    if (newVal) {
+      this.#block.classList.remove('withSuccessFill');
+      this.#block.classList.add('withError');
+    } else {
+      this.#block.classList.remove('withError');
+    }
+
+    this.#message.innerHTML = newVal && this.#messageText ? this.#messageText : '';
+  }
+
+  get value() {
+    return this.#textarea.value;
   }
 
   set value(val) {
     this.#textarea.value = val;
-    this.dispatchEvent(new Event('input', { bubbles: true }));
+    this.validate();
+    this.dispatchEvent(new Event('input'));
   }
 
-  attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'label') {
-      this.#label.textContent = newValue ? newValue : '';
+  get required() {
+    return this.#textarea.hasAttribute('required');
+  }
+
+  set required(value) {
+    if (value) {
+      this.#textarea.setAttribute('required', 'required');
+    } else {
+      this.#textarea.removeAttribute('required');
+    }
+  }
+
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    if (value) {
+      this.#label.innerHTML = value;
+    } else {
+      this.#label.innerHTML = '<slot name="label"></slot>';
+    }
+  }
+
+  get disabled() {
+    return this.#textarea.hasAttribute('disabled');
+  }
+
+  set disabled(value) {
+    if (value) {
+      this.#textarea.setAttribute('disabled', 'disabled');
+      this.#block.classList.add('disabled');
+    } else {
+      this.#textarea.removeAttribute('disabled');
+      this.#block.classList.remove('disabled');
+    }
+  }
+
+  get readonly() {
+    return this.#textarea.hasAttribute('readonly');
+  }
+
+  set readonly(value) {
+    if (value) {
+      this.#textarea.setAttribute('readonly', 'readonly');
+      this.#block.classList.add('disabled');
+    } else {
+      this.#textarea.removeAttribute('readonly');
+      
+      if ( ! this.disabled) {
+        this.#block.classList.remove('disabled');
+      }
+    }
+  }
+
+  get placeholder() {
+    return this.#textarea.getAttribute('placeholder');
+  }
+
+  set placeholder(value) {
+    if (value) {
+      this.#textarea.setAttribute('placeholder', value);
+    } else {
+      this.#textarea.removeAttribute('placeholder');
+    }
+  }
+
+  get rows() {
+    return this.#textarea.getAttribute('rows');
+  }
+
+  set rows(value) {
+    if (value) {
+      this.#textarea.setAttribute('rows', value);
+    } else {
+      this.#textarea.removeAttribute('rows');
+    }
+  }
+
+  get theme() {
+    return this.#theme;
+  }
+
+  set theme(value) {
+    if (value) {
+      if (Array.isArray(value)) {
+        this.setAttribute('theme', value.join(','));
+      } else {
+        this.setAttribute('theme', value);
+      }
+    } else {
+      this.removeAttribute('theme');
+    }
+  }
+
+  get size() {
+    return this.getAttribute('size');
+  }
+
+  set size(value) {
+    if (value) {
+      this.setAttribute('size', value);
+    } else {
+      this.removeAttribute('size');
+    }
+  }
+
+  #inputHandler = (e) => {
+    e.stopPropagation();
+    this.value = e.target.value;
+  };
+
+  #setThemeClasses() {
+    if (this.#theme.indexOf('withSuccessFill') != -1) {
+      this.#block.classList.add('withSuccessFill');
+    } else {
+      this.#block.classList.remove('withSuccessFill');
     }
 
-    if (attrName === 'value') {
-      this.value = newValue;
+    if (this.#theme.indexOf('withError') != -1) {
+      this.#block.classList.add('withError');
+    } else {
+      this.#block.classList.remove('withError');
     }
 
-    if (attrName === 'disabled') {
-      this.#textarea.disabled = this.disabled;
+    if (this.#theme.indexOf('resize_off') != -1) {
+      this.#block.classList.add('resize_off');
+    } else {
+      this.#block.classList.remove('resize_off');
+    }
+  }
+
+  #setSizeClasses() {
+    if (this.#size === 'big') {
+      this.#block.classList.add('size_big');
+    } else {
+      this.#block.classList.remove('size_big');
     }
 
-    if (attrName === 'placeholder') {
-      this.#textarea.placeholder = newValue;
+    if (this.#size === 'small') {
+      this.#block.classList.add('size_small');
+    } else {
+      this.#block.classList.remove('size_small');
     }
   }
 

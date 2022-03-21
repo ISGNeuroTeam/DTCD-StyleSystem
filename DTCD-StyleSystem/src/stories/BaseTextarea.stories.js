@@ -10,8 +10,20 @@ export default {
       options: [
         '<no modification>',
         'withSuccessFill',
+        'resize_off',
       ],
       description: 'Configuration style component.',
+    },
+    size: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no-modification>',
+        'small',
+        'big',
+      ],
+      description: 'Select size textarea.',
     },
   },
 };
@@ -26,10 +38,12 @@ const Template = (args) => {
     placeholder,
     disabled,
     label,
+    size,
     required,
     value,
     readonly,
     labelSlot,
+    rows,
   } = args;
 
   const textarea = document.createElement(NAME_COMPONENT);
@@ -45,9 +59,11 @@ const Template = (args) => {
   textarea.placeholder = placeholder;
   textarea.disabled = disabled;
   textarea.label = label;
+  textarea.size = size;
   textarea.required = required;
   textarea.value = value;
   textarea.readonly = readonly;
+  textarea.rows = rows;
 
   return textarea;
 };
@@ -57,8 +73,9 @@ DefaultTextarea.args = {
   placeholder: 'placeholder',
   disabled: false,
   label: '',
+  labelSlot: '<span slot="label">Label slot</span>',
   required: false,
   value: '',
   readonly: false,
-  labelSlot: '<span slot="label">Label slot</span>',
+  rows: 4,
 };
