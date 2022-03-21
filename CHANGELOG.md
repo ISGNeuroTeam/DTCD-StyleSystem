@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseSelect stories in Storybook
 - BaseSelect new API
 - BaseCheckbox stories in Storybook
+- BaseColorPicker stories in Storybook
 
 ### Changed
 
@@ -34,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - improved base styles of BaseInput and its API
 - improved view of "BaseSelect"
 - styles of BaseCheckbox
+- styles of BaseColorPicker
 
 ## [0.4.0]
 
