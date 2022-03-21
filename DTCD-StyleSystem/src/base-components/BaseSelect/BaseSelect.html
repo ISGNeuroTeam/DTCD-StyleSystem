@@ -1,162 +1,22 @@
-<style>
-  .container {
-    width: 100%;
-    min-width: 150px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-
-  #headerContainer {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    border: 2px solid;
-    border-color: var(--border);
-    border-radius: 4px;
-    box-sizing: border-box;
-    outline: none;
-    font-family: Proxima Nova;
-    font-style: normal;
-    font-weight: normal;
-    resize: vertical;
-    background-color: var(--background_main) !important;
-    cursor: pointer;
-    user-select: none;
-
-    /* by size (middle)*/
-    min-height: 28px;
-    font-size: 13px;
-    line-height: 16px;
-  }
-
-  #headerContainer {
-    padding: 6px;
-    color: var(--text_secondary);
-  }
-
-  :host(.size-small) #headerContainer {
-    padding: 3px;
-    min-height: 20px;
-    font-size: 11px;
-    line-height: 13px;
-  }
-
-  :host(.size-big) #headerContainer {
-    padding: 8px;
-    min-height: 34px;
-    font-size: 15px;
-    line-height: 18px;
-  }
-
-  #optionsList {
-    display: none;
-    position: absolute;
-    z-index: 1000;
-    overflow-x: hidden;
-    max-height: 250px !important;
-    width: inherit;
-
-    /* by size (middle)*/
-    margin-top: 28px;
-  }
-
-  :host(.size-small) #optionsList {
-    margin-top: 25px;
-  }
-  :host(.size-big) #optionsList {
-    margin-top: 34px;
-  }
-
-  #optionsList[active] {
-    display: flex;
-    flex-direction: column;
-  }
-
-  ::slotted(*[slot='item']) {
-    width: 100% !important;
-    cursor: pointer;
-    background-color: var(--background_main);
-    border: 1px solid var(--border);
-    box-sizing: border-box;
-    outline: none;
-    color: var(--text_secondary);
-    font-family: Proxima Nova;
-    font-style: normal;
-    font-weight: normal;
-    resize: vertical;
-    user-select: none;
-    top: -1px;
-    bottom: 1px;
-    padding-left: 12px;
-    padding-top: 6px;
-
-    /* by size (middle)*/
-    height: 28px;
-    font-size: 13px;
-    line-height: 16px;
-  }
-
-  :host(.size-small) ::slotted(*[slot='item']) {
-    height: 20px;
-    padding-top: 3px;
-    font-size: 11px;
-    line-height: 13px;
-  }
-
-  :host(.size-big) ::slotted(*[slot='item']) {
-    height: 34px;
-    font-size: 15px;
-    line-height: 18px;
-    padding-top: 8.5px;
-  }
-
-  #searchInput{
-    box-sizing: border-box;
-    outline: none;
-    border: 0;
-    font-family: Proxima Nova;
-    font-style: normal;
-    font-weight: normal;
-    resize: vertical;
-  }
-
-  #label {
-    font-family: Proxima Nova;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 11px;
-    line-height: 13px;
-
-    color: var(--text_main);
-  }
-
-  #label:active {
-    position: relative;
-    display: block;
-    padding-bottom: 4px;
-  }
-
-  #errorMessage {
-    display: none;
-  }
-
-  #errorMessage:active {
-    display: block;
-    padding-top: 4px;
-  }
-</style>
-
-<div class="container">
-  <label id="label"></label>
-  <div id="headerContainer">
-    <input id="searchInput" style="display: none;"></input>
-    <div id="header"></div>
-    <div id="dropDownIcon"></div>
-  </div>
-  <div id="optionsList">
+<label class="BaseSelect">
+  <span class="Label">
+    <slot name="label"></slot>
+  </span>
+  <span class="FieldWrapper">
+    <span class="Field">
+      <input type="text" class="SearchInput" style="display: none;">
+      <span class="SelectedValue"></span>
+    </span>
+    <span class="IconArrow">
+      <slot name="icon-arrow">
+        <svg id="dropdown-default" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+          <path clip-rule="evenodd" d="M0.594727 3.90539L1.65539 2.84473L6.00006 7.1894L10.3447 2.84473L11.4054 3.90539L6.00006 9.31072L0.594727 3.90539Z" />
+        </svg>
+      </slot>
+    </span>
+  </span>
+  <div class="OptionList">
     <slot name="item"></slot>
   </div>
-  <label id="errorMessage"></label>
-</div>
+  <span class="Message"></span>
+</label>
