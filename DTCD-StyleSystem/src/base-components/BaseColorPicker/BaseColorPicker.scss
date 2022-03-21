@@ -35,7 +35,7 @@
       background-color: var(--title);
     }
 
-    .Icon {
+    .Arrow {
       transition: all ease .3s;
     }
   }
@@ -54,7 +54,7 @@
   }
 
   &.opened {
-    .Field .Icon {
+    .Field .Arrow {
       transform: rotate(180deg);
     }
 
