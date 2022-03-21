@@ -1,5 +1,5 @@
 <style>
-:host {
+/* :host {
   display: inline-block;
   align-self: flex-start;
 }
@@ -46,10 +46,16 @@ textarea:focus {
 textarea:disabled {
   cursor: not-allowed;
   background-color: var(--border_secondary);
-}
+} */
 </style>
 
-<div class="container">
-  <label id="label" for="textarea"></label>
-  <textarea id="textarea" rows="4"></textarea>
-</div>
+<label class="BaseInput">
+  <span class="Label">
+    <slot name="label"></slot>
+  </span>
+  <span class="FieldWrapper">
+    <textarea class="Field" rows="4"></textarea>
+  </span>
+  <span class="Message"></span>
+</label>
+

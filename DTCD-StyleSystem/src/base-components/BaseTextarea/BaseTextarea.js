@@ -1,4 +1,5 @@
 import html from './BaseTextarea.html';
+import styles from './BaseTextarea.scss';
 
 export default class BaseTextarea extends HTMLElement {
 
@@ -18,8 +19,12 @@ export default class BaseTextarea extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#label = this.shadowRoot.querySelector('#label');
-    this.#textarea = this.shadowRoot.querySelector('#textarea');
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+
+    this.#label = this.shadowRoot.querySelector('.Label');
+    this.#textarea = this.shadowRoot.querySelector('.Field');
   }
 
   get disabled() {
