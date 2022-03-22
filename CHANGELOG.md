@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - improved base styles of BaseInput and its API
 - improved view of "BaseSelect"
 - styles of BaseCheckbox
+- styles, scripts and API of BaseTextarea
 
 ## [0.4.0]
 
