@@ -245,22 +245,20 @@ export default class BaseTextarea extends HTMLElement {
   };
 
   #setThemeClasses() {
-    if (this.#theme.indexOf('withSuccessFill') != -1) {
-      this.#block.classList.add('withSuccessFill');
-    } else {
-      this.#block.classList.remove('withSuccessFill');
-    }
+    const allThemes = [
+      'withSuccessFill',
+      'withError',
+      'resize_off',
+    ];
 
-    if (this.#theme.indexOf('withError') != -1) {
-      this.#block.classList.add('withError');
-    } else {
-      this.#block.classList.remove('withError');
-    }
-
-    if (this.#theme.indexOf('resize_off') != -1) {
-      this.#block.classList.add('resize_off');
-    } else {
-      this.#block.classList.remove('resize_off');
+    const { classList } = this.#block;
+    
+    for (const theme of allThemes) {
+      if (this.#theme.indexOf(theme) != -1) {
+        classList.add(theme);
+      } else {
+        classList.remove(theme);
+      }
     }
   }
 
