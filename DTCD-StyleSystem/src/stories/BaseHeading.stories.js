@@ -13,12 +13,12 @@ export default {
       },
       options: [
         '<no modification>',
-        'theme_title-heavy',
-        'theme_title-light',
-        'theme_header-heavy',
-        'theme_header-light',
+        'theme_titleHeavy',
+        'theme_titleLight',
+        'theme_headerHeavy',
+        'theme_headerLight',
         'theme_subheader',
-        'theme_subheader-small',
+        'theme_subheaderSmall',
       ],
       description: 'Configuration view component',
     },
@@ -42,8 +42,8 @@ const Template = (args) => {
   return heading;
 };
 
-export const TitleHeavy = Template.bind({});
-TitleHeavy.args = {
+export const DefaultTitle = Template.bind({});
+DefaultTitle.args = {
   defaultSlot: '<h1>Base Heading</h1>',
   theme: [],
 };
