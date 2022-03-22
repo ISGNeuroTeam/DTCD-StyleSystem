@@ -10,7 +10,7 @@
     color: var(--title);
   }
 
-  &.theme_title-heavy {
+  &.theme_titleHeavy {
     ::slotted(*) {
       font-weight: 700;
       font-size: 56px;
@@ -19,7 +19,7 @@
     }
   }
   
-  &.theme_title-light {
+  &.theme_titleLight {
     ::slotted(*) {
       font-weight: 500;
       font-size: 56px;
@@ -28,7 +28,7 @@
     }
   }
 
-  &.theme_header-heavy {
+  &.theme_headerHeavy {
     ::slotted(*) {
       font-weight: 700;
       font-size: 42px;
@@ -37,7 +37,7 @@
     }
   }
 
-  &.theme_header-light {
+  &.theme_headerLight {
     ::slotted(*) {
       font-weight: 700;
       font-size: 42px;
@@ -55,7 +55,7 @@
     }
   }
 
-  &.theme_subheader-small {
+  &.theme_subheaderSmall {
     ::slotted(*) {
       font-weight: 600;
       font-size: 32px;

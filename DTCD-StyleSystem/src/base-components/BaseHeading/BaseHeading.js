@@ -59,23 +59,23 @@ export default class BaseHeading extends HTMLElement {
   }
   
   #setThemeClasses() {
-    if (this.#theme.indexOf('theme_title-heavy') != -1) {
-      this.#heading.classList.add('theme_title-heavy');
+    if (this.#theme.indexOf('theme_titleHeavy') != -1) {
+      this.#heading.classList.add('theme_titleHeavy');
     }
-    if (this.#theme.indexOf('theme_title-light') != -1) {
-      this.#heading.classList.add('theme_title-light');
+    if (this.#theme.indexOf('theme_titleLight') != -1) {
+      this.#heading.classList.add('theme_titleLight');
     }
-    if (this.#theme.indexOf('theme_header-heavy') != -1) {
-      this.#heading.classList.add('theme_header-heavy');
+    if (this.#theme.indexOf('theme_headerHeavy') != -1) {
+      this.#heading.classList.add('theme_headerHeavy');
     }
-    if (this.#theme.indexOf('theme_header-light') != -1) {
-      this.#heading.classList.add('theme_header-light');
+    if (this.#theme.indexOf('theme_headerLight') != -1) {
+      this.#heading.classList.add('theme_headerLight');
     }
     if (this.#theme.indexOf('theme_subheader') != -1) {
       this.#heading.classList.add('theme_subheader');
     }
-    if (this.#theme.indexOf('theme_subheader-small') != -1) {
-      this.#heading.classList.add('theme_subheader-small');
+    if (this.#theme.indexOf('theme_subheaderSmall') != -1) {
+      this.#heading.classList.add('theme_subheaderSmall');
     }
   }
 }
