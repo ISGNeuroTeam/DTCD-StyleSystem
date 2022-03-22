@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - styles of BaseCheckbox
 - styles of BaseColorPicker
 - styles, scripts and API of BaseTextarea
+- import of fonts and styles in Rollup
 
 ## [0.4.0]
 
