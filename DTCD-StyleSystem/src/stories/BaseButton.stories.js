@@ -15,7 +15,7 @@ export default {
         '<no modification>',
         'theme_secondary',
         'theme_green',
-        'theme_blue-sec',
+        'theme_blueSec',
         'theme_red',
       ],
       description: 'Configuration style component.',

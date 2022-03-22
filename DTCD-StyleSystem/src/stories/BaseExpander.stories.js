@@ -23,7 +23,7 @@ export default {
       },
       options: [
         '',
-        'with_border-bottom',
+        'with_borderBottom',
       ],
       description: 'Configuration view component',
     },
@@ -78,6 +78,6 @@ ExpanderWithBottomBorder.args = {
   summarySlot: '<div slot="summary">Expander with bottom border</div>',
   iconSlot: '',
   defaultSlot: 'Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?',
-  theme: ['with_border-bottom'],
+  theme: ['with_borderBottom'],
   open: false,
 };
