@@ -145,10 +145,10 @@ export default class BaseButton extends HTMLElement {
       this.#button.classList.remove('theme_green');
     }
 
-    if (this.#theme.indexOf('theme_blue-sec') != -1) {
-      this.#button.classList.add('theme_blue-sec');
+    if (this.#theme.indexOf('theme_blueSec') != -1) {
+      this.#button.classList.add('theme_blueSec');
     } else {
-      this.#button.classList.remove('theme_blue-sec');
+      this.#button.classList.remove('theme_blueSec');
     }
 
     if (this.#theme.indexOf('theme_red') != -1) {

@@ -2,7 +2,7 @@ import html from './BaseExpanderGroup.html';
 import styles from './BaseExpanderGroup.scss';
 
 export default class BaseExpanderGroup extends HTMLElement {
-  #container;
+
   #slot;
   #openedExpander;
 
@@ -15,9 +15,8 @@ export default class BaseExpanderGroup extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#container = this.shadowRoot.querySelector('.container');
     const style = document.createElement('style');
-    this.#container.appendChild(style);
+    this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
 
     this.#slot = this.shadowRoot.querySelector('slot');

@@ -2,7 +2,7 @@ import html from './BaseExpander.html';
 import styles from './BaseExpander.scss';
 
 export default class BaseExpander extends HTMLElement {
-  #container;
+
   #expander;
   #theme = [];
 
@@ -20,9 +20,8 @@ export default class BaseExpander extends HTMLElement {
       mode: 'open',
     }).appendChild(template.content.cloneNode(true));
 
-    this.#container = this.shadowRoot.querySelector('.container');
     const style = document.createElement('style');
-    this.#container.appendChild(style);
+    this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
 
     this.#expander = this.shadowRoot.querySelector('.BaseExpander');
@@ -83,8 +82,8 @@ export default class BaseExpander extends HTMLElement {
   }
 
   #setThemeClasses() {
-    if (this.#theme.indexOf('with_border-bottom') != -1) {
-      this.#expander.classList.add('with_border-bottom');
+    if (this.#theme.indexOf('with_borderBottom') != -1) {
+      this.#expander.classList.add('with_borderBottom');
     }
   }
 }

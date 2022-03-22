@@ -51,5 +51,5 @@ DefaultExpanderGroup.args = {
       Lorem ipsum dolor
     </base-expander>`,
   ],
-  themesOfExpanders: ['with_border-bottom'],
+  themesOfExpanders: ['with_borderBottom'],
 };
