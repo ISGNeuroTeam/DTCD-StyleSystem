@@ -59,23 +59,23 @@ export default class BaseHeading extends HTMLElement {
   }
   
   #setThemeClasses() {
-    if (this.#theme.indexOf('theme_titleHeavy') != -1) {
-      this.#heading.classList.add('theme_titleHeavy');
-    }
-    if (this.#theme.indexOf('theme_titleLight') != -1) {
-      this.#heading.classList.add('theme_titleLight');
-    }
-    if (this.#theme.indexOf('theme_headerHeavy') != -1) {
-      this.#heading.classList.add('theme_headerHeavy');
-    }
-    if (this.#theme.indexOf('theme_headerLight') != -1) {
-      this.#heading.classList.add('theme_headerLight');
-    }
-    if (this.#theme.indexOf('theme_subheader') != -1) {
-      this.#heading.classList.add('theme_subheader');
-    }
-    if (this.#theme.indexOf('theme_subheaderSmall') != -1) {
-      this.#heading.classList.add('theme_subheaderSmall');
+    const allThemes = [
+      'theme_titleHeavy',
+      'theme_titleLight',
+      'theme_headerHeavy',
+      'theme_headerLight',
+      'theme_subheader',
+      'theme_subheaderSmall',
+    ];
+
+    const { classList } = this.#heading;
+    
+    for (const theme of allThemes) {
+      if (this.#theme.indexOf(theme) != -1) {
+        classList.add(theme);
+      } else {
+        classList.remove(theme);
+      }
     }
   }
 }

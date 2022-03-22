@@ -82,8 +82,18 @@ export default class BaseExpander extends HTMLElement {
   }
 
   #setThemeClasses() {
-    if (this.#theme.indexOf('with_borderBottom') != -1) {
-      this.#expander.classList.add('with_borderBottom');
+    const allThemes = [
+      'with_borderBottom',
+    ];
+
+    const { classList } = this.#expander;
+    
+    for (const theme of allThemes) {
+      if (this.#theme.indexOf(theme) != -1) {
+        classList.add(theme);
+      } else {
+        classList.remove(theme);
+      }
     }
   }
 }

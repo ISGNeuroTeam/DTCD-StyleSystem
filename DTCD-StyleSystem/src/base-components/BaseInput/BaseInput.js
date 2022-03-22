@@ -253,16 +253,19 @@ export default class BaseInput extends HTMLElement {
   };
 
   #setThemeClasses() {
-    if (this.#theme.indexOf('withSuccessFill') != -1) {
-      this.#baseInput.classList.add('withSuccessFill');
-    } else {
-      this.#baseInput.classList.remove('withSuccessFill');
-    }
+    const allThemes = [
+      'withSuccessFill',
+      'withError',
+    ];
 
-    if (this.#theme.indexOf('withError') != -1) {
-      this.#baseInput.classList.add('withError');
-    } else {
-      this.#baseInput.classList.remove('withError');
+    const { classList } = this.#baseInput;
+    
+    for (const theme of allThemes) {
+      if (this.#theme.indexOf(theme) != -1) {
+        classList.add(theme);
+      } else {
+        classList.remove(theme);
+      }
     }
   }
 

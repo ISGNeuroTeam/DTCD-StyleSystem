@@ -133,28 +133,21 @@ export default class BaseButton extends HTMLElement {
   };
 
   #setThemeClasses() {
-    if (this.#theme.indexOf('theme_secondary') != -1) {
-      this.#button.classList.add('theme_secondary');
-    } else {
-      this.#button.classList.remove('theme_secondary');
-    }
+    const allThemes = [
+      'theme_secondary',
+      'theme_green',
+      'theme_blueSec',
+      'theme_red',
+    ];
 
-    if (this.#theme.indexOf('theme_green') != -1) {
-      this.#button.classList.add('theme_green');
-    } else {
-      this.#button.classList.remove('theme_green');
-    }
-
-    if (this.#theme.indexOf('theme_blueSec') != -1) {
-      this.#button.classList.add('theme_blueSec');
-    } else {
-      this.#button.classList.remove('theme_blueSec');
-    }
-
-    if (this.#theme.indexOf('theme_red') != -1) {
-      this.#button.classList.add('theme_red');
-    } else {
-      this.#button.classList.remove('theme_red');
+    const { classList } = this.#button;
+    
+    for (const theme of allThemes) {
+      if (this.#theme.indexOf(theme) != -1) {
+        classList.add(theme);
+      } else {
+        classList.remove(theme);
+      }
     }
   }
 
