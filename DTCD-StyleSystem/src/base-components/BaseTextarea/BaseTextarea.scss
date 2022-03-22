@@ -1,0 +1,17 @@
+@import '../BaseInput/BaseInput.scss';
+
+.BaseInput {
+  &,
+  &.size_big,
+  &.size_small {
+    textarea.Field {
+      height: auto;
+    }
+  }
+
+  &.resize_off {
+    textarea.Field {
+      resize: none;
+    }
+  }
+}
