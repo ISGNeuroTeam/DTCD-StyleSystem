@@ -161,7 +161,9 @@
 
   &.size_small {
     .Label {
-      margin-bottom: 2px;
+      ::slotted([slot="label"]) {
+        padding-bottom: 2px;
+      }
     }
 
     .StatusIcon {
