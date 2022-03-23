@@ -54,8 +54,6 @@ const Template = (args) => {
     textarea.theme = theme.length ? theme : [];
   }
 
-  textarea.innerHTML += labelSlot;
-
   textarea.placeholder = placeholder;
   textarea.disabled = disabled;
   textarea.label = label;
@@ -64,7 +62,9 @@ const Template = (args) => {
   textarea.value = value;
   textarea.readonly = readonly;
   textarea.rows = rows;
-
+  
+  textarea.innerHTML += labelSlot;
+  
   return textarea;
 };
 
