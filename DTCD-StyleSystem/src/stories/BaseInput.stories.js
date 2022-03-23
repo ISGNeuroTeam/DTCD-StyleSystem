@@ -84,8 +84,6 @@ const Template = (args) => {
     input.theme = theme.length ? theme : [];
   }
 
-  input.innerHTML += labelSlot;
-
   input.placeholder = placeholder;
   input.type = type;
   input.disabled = disabled;
@@ -94,7 +92,9 @@ const Template = (args) => {
   input.required = required;
   input.value = value;
   input.readonly = readonly;
-
+  
+  input.innerHTML += labelSlot;
+  
   return input;
 };
 

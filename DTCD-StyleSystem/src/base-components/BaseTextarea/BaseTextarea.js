@@ -149,10 +149,12 @@ export default class BaseTextarea extends HTMLElement {
   }
 
   set label(value) {
+    this.querySelectorAll('[slot="label"]').forEach((label) => {
+      label.remove();
+    });
+
     if (value) {
-      this.#label.innerHTML = value;
-    } else {
-      this.#label.innerHTML = '<slot name="label"></slot>';
+      this.innerHTML += `<span slot="label">${value}</span>`;
     }
   }
 

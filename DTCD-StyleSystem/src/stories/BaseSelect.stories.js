@@ -36,6 +36,7 @@ const Template = (args) => {
     opened,
     disabled,
     required,
+    labelSlot,
   } = args;
 
   const select = document.createElement(NAME_COMPONENT);
@@ -48,6 +49,8 @@ const Template = (args) => {
   select.disabled = disabled;
   select.required = required;
 
+  select.innerHTML += labelSlot;
+
   itemSlot.forEach((item) => {
     select.innerHTML += item;
   });
@@ -57,7 +60,7 @@ const Template = (args) => {
 
 export const DefaultSelect = Template.bind({});
 DefaultSelect.args = {
-  label: 'Default dropdown',
+  label: '',
   itemSlot: [
     '<div slot="item" value="1">Alfa (1)</div>',
     '<div slot="item" value="2">Bravo (2)</div>',
@@ -70,4 +73,5 @@ DefaultSelect.args = {
   value: '',
   disabled: false,
   required: false,
+  labelSlot: '<span slot="label">Default dropdown</span>',
 };
