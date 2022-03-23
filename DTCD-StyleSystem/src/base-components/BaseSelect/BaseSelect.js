@@ -155,7 +155,7 @@ export default class BaseSelect extends HTMLElement {
   }
 
   #documentClickCallback = (evt) => {
-    if ( ! evt.target.closest('base-select')) {
+    if ( ! this.contains(evt.target)) {
       this.toggle(false);
     }
   };
@@ -203,14 +203,21 @@ export default class BaseSelect extends HTMLElement {
   }
 
   connectedCallback() {
-    // Add option select listener
-    this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
-      optionItem.addEventListener('click', this.#optionClickCallback);
-    });
-
     this.#headerContainer.addEventListener('click', e => {
       e.preventDefault();
       this.toggle();
+
+      if (this.#opened) {
+        // Add option select listener
+        this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
+          optionItem.addEventListener('click', this.#optionClickCallback);
+        });
+      } else {
+        // Remove option select listener
+        this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
+          optionItem.removeEventListener('click', this.#optionClickCallback);
+        });
+      }
     });
 
     // Search items

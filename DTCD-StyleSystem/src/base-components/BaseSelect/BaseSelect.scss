@@ -90,7 +90,6 @@
     border: 1px solid var(--border);
     border-top: none;
     border-radius: 0 0 4.44px 4.44px;
-    overflow: hidden;
 
     ::slotted([slot="item"]) {
       width: 100%;
