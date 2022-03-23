@@ -17,6 +17,7 @@ export default {
         'theme_green',
         'theme_blueSec',
         'theme_red',
+        'theme_with-plus',
       ],
       description: 'Configuration style component.',
     },
@@ -39,6 +40,7 @@ export default {
       options: [
         '<default>',
         'big',
+        'middle',
         'small',
       ],
       description: 'Configuration size button.',

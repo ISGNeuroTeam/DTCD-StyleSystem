@@ -34,6 +34,12 @@
     background-color: var(--button_primary_72);
   }
 
+  & > .Icon {
+    display: none;
+    padding-right: 4px;
+    fill: var(--button_primary);
+  }
+
   &.theme_secondary {
     color: var(--text_main);
     background-color: var(--border_12);
@@ -86,6 +92,18 @@
     }
   }
 
+  &.theme_with-plus {
+    border: none;
+    color: var(--button_primary);
+    background-color: transparent;
+    padding: 0 !important;
+
+    & > .Icon {
+      display: block;
+      padding-bottom: 2px;
+    } 
+  }
+
   &:disabled {
     &,
     &:hover,
@@ -93,6 +111,14 @@
       cursor: not-allowed;
       color: var(--text_secondary);
       background-color: var(--border);
+    }
+
+    &.theme_with-plus {
+      background-color: transparent;
+      
+      & > .Icon {
+        fill: var(--text_secondary);
+      }
     }
   }
 
@@ -102,9 +128,17 @@
     border-radius: 8.88px;
   }
 
+  &.size_middle {
+    font-size: 13px;
+  }
+
   &.size_small {
     font-size: 11px;
     padding: 4px 13px;
     border-radius: 4.66px;
+
+    & > .Icon {
+      align-self: baseline;
+    }
   }
 }
