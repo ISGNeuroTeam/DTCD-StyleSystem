@@ -258,11 +258,8 @@ export default class BaseSelect extends HTMLElement {
         this.#header.innerHTML = newValue;
         break;
 
-      /**
-       * @deprecated
-       */
       case 'label':
-        this.#label.innerHTML = newValue;
+        this.label = newValue;
         break;
 
       case 'search':
