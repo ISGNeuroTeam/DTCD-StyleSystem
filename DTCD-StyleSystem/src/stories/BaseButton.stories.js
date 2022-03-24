@@ -17,7 +17,7 @@ export default {
         'theme_green',
         'theme_blueSec',
         'theme_red',
-        'theme_with-plus',
+        'theme_alfa',
       ],
       description: 'Configuration style component.',
     },
@@ -40,7 +40,6 @@ export default {
       options: [
         '<default>',
         'big',
-        'middle',
         'small',
       ],
       description: 'Configuration size button.',
@@ -72,7 +71,9 @@ const Template = (args) => {
     disabled,
     type,
     size,
-    width
+    width,
+    slotIconLeft,
+    slotIconRight,
   } = args;
 
   const button = document.createElement(NAME_COMPONENT);
@@ -98,6 +99,13 @@ const Template = (args) => {
     button.width = width;
   }
 
+  if (slotIconLeft) {
+    button.innerHTML += slotIconLeft;
+  }
+  if (slotIconRight) {
+    button.innerHTML += slotIconRight;
+  }
+
   button.innerHTML += defaultSlot;
 
   return button;
@@ -111,4 +119,18 @@ ButtonWithText.args = {
   type: 'button',
   size: '',
   width: '',
+};
+
+export const ButtonWithLeftIcon = Template.bind({});
+ButtonWithLeftIcon.args = {
+  defaultSlot: 'Add something',
+  theme: ['theme_alfa'],
+  disabled: false,
+  type: 'button',
+  size: '',
+  width: '',
+  slotIconLeft: `<svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+  </svg>`,
+  slotIconRight: '',
 };

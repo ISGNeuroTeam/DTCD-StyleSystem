@@ -138,7 +138,7 @@ export default class BaseButton extends HTMLElement {
       'theme_green',
       'theme_blueSec',
       'theme_red',
-      'theme_with-plus',
+      'theme_alfa',
     ];
 
     const { classList } = this.#button;
@@ -157,12 +157,6 @@ export default class BaseButton extends HTMLElement {
       this.#button.classList.add('size_big');
     } else {
       this.#button.classList.remove('size_big');
-    }
-
-    if (this.#size === 'middle') {
-      this.#button.classList.add('size_middle');
-    } else {
-      this.#button.classList.remove('size_middle');
     }
 
     if (this.#size === 'small') {
