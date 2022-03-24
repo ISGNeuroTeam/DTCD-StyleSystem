@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseSelect new API
 - BaseCheckbox stories in Storybook
 - BaseColorPicker stories in Storybook
+- BaseButton with icon
 
 ### Changed
 
