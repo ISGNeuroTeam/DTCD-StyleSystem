@@ -138,6 +138,7 @@ export default class BaseButton extends HTMLElement {
       'theme_green',
       'theme_blueSec',
       'theme_red',
+      'theme_alfa',
     ];
 
     const { classList } = this.#button;
