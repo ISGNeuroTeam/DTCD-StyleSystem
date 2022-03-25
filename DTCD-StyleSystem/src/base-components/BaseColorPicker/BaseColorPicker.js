@@ -34,9 +34,10 @@ export default class BaseColorPicker extends HTMLElement {
   #colorListClickHandler;
   #selectedPreviewClickHandler;
   #value;
+  #label;
 
   static get observedAttributes() {
-    return ['value', 'disabled'];
+    return ['value', 'disabled', 'label'];
   }
 
   constructor() {
@@ -51,6 +52,7 @@ export default class BaseColorPicker extends HTMLElement {
     this.#picker = this.shadowRoot.querySelector('.BaseColorPicker');
     this.#colorList = this.shadowRoot.querySelector('.ColorList');
     this.#selectedPreview = this.shadowRoot.querySelector('.Field');
+    this.#label = this.shadowRoot.querySelector('.Label');
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
@@ -97,6 +99,20 @@ export default class BaseColorPicker extends HTMLElement {
   set value(value) {
     if (value) this.setAttribute('value', value);
     else this.removeAttribute('value');
+  }
+
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    this.querySelectorAll('[slot="label"]').forEach((label) => {
+      label.remove();
+    });
+
+    if (value) {
+      this.innerHTML += `<span slot="label">${value}</span>`;
+    }
   }
 
   #setSelectedColorBackground(color = '#252230') {
@@ -150,6 +166,10 @@ export default class BaseColorPicker extends HTMLElement {
     if (attrName === 'value') {
       this.#value = newValue;
       this.#setSelectedColorBackground(newValue);
+    }
+
+    if (attrName === 'label') {
+      this.label = newValue;
     }
   }
 }
