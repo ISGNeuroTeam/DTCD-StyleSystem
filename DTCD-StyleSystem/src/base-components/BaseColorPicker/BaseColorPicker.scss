@@ -4,9 +4,7 @@
 }
 
 .BaseColorPicker {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 4.44px;
+  display: block;
   cursor: pointer;
   position: relative;
 
@@ -15,6 +13,25 @@
   *::after,
   *::before {
     box-sizing: border-box;
+  }
+
+  .Label {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1.18;
+    color: var(--text_main);
+    letter-spacing: .25px;
+    
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
+    }
+  }
+
+  .Field{
+    border: 1px solid var(--border);
+    border-radius: 4.44px;
   }
 
   .Field,
@@ -46,7 +63,7 @@
     left: -1px;
     border: 1px solid var(--border);
     border-radius: 4.44px;
-    width: 105%;
+    width: 90%;
     max-height: 112px;
     overflow-x: hidden;
     overflow-y: auto;
