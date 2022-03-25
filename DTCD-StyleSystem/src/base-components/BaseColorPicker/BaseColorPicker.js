@@ -167,5 +167,9 @@ export default class BaseColorPicker extends HTMLElement {
       this.#value = newValue;
       this.#setSelectedColorBackground(newValue);
     }
+
+    if (attrName === 'label') {
+      this.label = newValue;
+    }
   }
 }
