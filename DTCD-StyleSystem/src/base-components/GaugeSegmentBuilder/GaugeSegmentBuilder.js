@@ -1,5 +1,6 @@
 import html from './GaugeSegmentBuilder.html';
-import deleteIcon from './../icons/delete-icon.svg';
+//import deleteIcon from './../icons/delete-icon.svg';
+import styles from './GaugeSegmentBuilder.scss';
 
 const proxySegmentsHandler = {
   get(target, prop) {
@@ -32,8 +33,8 @@ export default class BaseTextarea extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#addBtn = this.shadowRoot.querySelector('.add-btn');
-    this.#rowList = this.shadowRoot.querySelector('.list');
+    this.#addBtn = this.shadowRoot.querySelector('.AddButton');
+    this.#rowList = this.shadowRoot.querySelector('.List');
 
     this.#segments = [];
     this.#proxySegments = new Proxy(this.#segments, proxySegmentsHandler);
@@ -42,6 +43,10 @@ export default class BaseTextarea extends HTMLElement {
       this.createNewRow();
       this.dispatchEvent(new Event('input', { bubbles: true }));
     };
+
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
 
     this.#addBtn.addEventListener('click', this.#addBtnClickHandler);
   }
