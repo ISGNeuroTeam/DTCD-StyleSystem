@@ -8,9 +8,6 @@
   font-family: 'Proxima Nova';
   font-weight: 600; 
 
-  .List {
-  }
-
   .FieldsRow {
     display: flex;
     align-items: start;
@@ -49,7 +46,7 @@
     cursor: pointer;
 
     .Icon {
-      &.notification {
+      &.type_notification {
         fill: var(--border);
 
         &:hover {
@@ -57,7 +54,7 @@
         }
       }
 
-      &.trash {
+      &.type_trash {
         fill: var(--danger_24);
 
         &:hover {

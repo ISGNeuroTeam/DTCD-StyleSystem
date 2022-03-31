@@ -1,5 +1,3 @@
-import deleteIcon from './../icons/delete-icon.svg';
-
 import html from './GaugeSegmentBuilder.html';
 import fieldsRowHtml from './FieldsRow.html';
 import styles from './GaugeSegmentBuilder.scss';
@@ -84,8 +82,9 @@ export default class BaseTextarea extends HTMLElement {
     this.#proxySegments.push({ color, range });
     const curSegmentID = this.#proxySegments.length - 1;
 
-    this.#rowList.innerHTML += fieldsRowHtml;
-    const newAddedRow = this.#rowList.querySelector('.FieldsRow-js:last-of-type');
+    const newAddedRow = document.createElement('div');
+          newAddedRow.className = 'FieldsRow';
+          newAddedRow.innerHTML = fieldsRowHtml;
 
     this.#updateRangeInputFields(newAddedRow, range, curSegmentID);
 
@@ -103,6 +102,8 @@ export default class BaseTextarea extends HTMLElement {
       this.value = this.#proxySegments.filter((s, i) => i !== deleteBtn.segmentID);
       this.dispatchEvent(new Event('input', { bubbles: true }));
     });
+
+    this.#rowList.appendChild(newAddedRow);
     
     return true;
   }
@@ -148,17 +149,26 @@ export default class BaseTextarea extends HTMLElement {
       const prevSegment = this.#proxySegments[segmentID - 1];
       const prevSegmentEndInput = prevSegment.inputs[1];
 
-      startInput.addEventListener('input', e => {
-        const value = Number(e.target.value);
+      const handleStartFieldInput = (event) => {
+        const value = Number(event.target.value);
         prevSegment.range[1] = value;
-        prevSegmentEndInput.value = value;
-      });
 
-      prevSegmentEndInput.addEventListener('input', e => {
-        const value = Number(e.target.value);
-        startInput.value = value;
+        prevSegmentEndInput.removeEventListener('input', handlePrevSegmentEndInput);
+        prevSegmentEndInput.value = value;
+        prevSegmentEndInput.addEventListener('input', handlePrevSegmentEndInput);
+      }
+
+      const handlePrevSegmentEndInput = (event) => {
+        const value = Number(event.target.value);
         curSegment.range[0] = value;
-      });
+
+        startInput.removeEventListener('input', handleStartFieldInput);
+        startInput.value = value;
+        startInput.addEventListener('input', handleStartFieldInput);
+      }
+
+      startInput.addEventListener('input', handleStartFieldInput);
+      prevSegmentEndInput.addEventListener('input', handlePrevSegmentEndInput);
     }
 
     this.#proxySegments[segmentID].inputs = [startInput, endInput];
