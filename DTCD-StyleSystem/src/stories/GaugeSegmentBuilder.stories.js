@@ -2,6 +2,23 @@ import GaugeSegmentBuilder from '../base-components/GaugeSegmentBuilder/GaugeSeg
 
 export default {
   title: 'Example/BaseComponents/GaugeSegmentBuilder',
+  argTypes: {
+    value: { 
+      type: 'array',
+      description: `Example: 
+        [
+          {
+            range: [0, 1],
+            color: 'red',
+          },
+          {
+            range: [1, 3],
+            color: 'black',
+          },
+        ]
+      `,
+    },
+  },
 };
 
 const NAME_COMPONENT = 'gauge-segment-builder';
@@ -10,16 +27,25 @@ window.customElements.define(NAME_COMPONENT, GaugeSegmentBuilder);
 
 const Template = (args) => {
   const {
-    iconSlot,
+    value,
   } = args;
 
-  const addBtn = document.createElement(NAME_COMPONENT);
-  addBtn.innerHTML = iconSlot;
+  const gaugeSegment = document.createElement(NAME_COMPONENT);
+  gaugeSegment.value = value;
 
-  return addBtn;
+  return gaugeSegment;
 };
 
-export const DefaultGaugeSegmentBuilder = Template.bind({});
-DefaultGaugeSegmentBuilder.args = {
-  iconSlot: '',
+export const DefaultGaugeSegment = Template.bind({});
+DefaultGaugeSegment.args = {
+  value: [
+    {
+      range: [0, 1],
+      color: 'red',
+    },
+    {
+      range: [1, 3],
+      color: 'black',
+    },
+  ],
 };

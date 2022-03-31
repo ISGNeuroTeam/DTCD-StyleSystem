@@ -96,7 +96,7 @@ export default class BaseTextarea extends HTMLElement {
       this.dispatchEvent(new Event('input', { bubbles: true }));
     });
 
-    const deleteBtn = newAddedRow.querySelector('.IconBtn_type_delete-js');
+    const deleteBtn = newAddedRow.querySelector('.IconBtn.type_delete-js');
     deleteBtn.segmentID = curSegmentID;
     deleteBtn.addEventListener('click', () => {
       this.value = this.#proxySegments.filter((s, i) => i !== deleteBtn.segmentID);
@@ -188,6 +188,8 @@ export default class BaseTextarea extends HTMLElement {
       newValue.forEach(v => this.createNewRow(v));
       this.validate();
       this.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      this.clearRowListNodes();
     }
   }
 

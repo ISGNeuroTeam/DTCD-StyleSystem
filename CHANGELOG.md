@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseColorPicker stories in Storybook
 - BaseButton with icon
 - Label in BaseColorPicker
+- GaugeSegmentBuilder stories in Storybook
 
 ### Changed
 
@@ -40,6 +41,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - styles of BaseColorPicker
 - styles, scripts and API of BaseTextarea
 - import of fonts and styles in Rollup
+- styles, script and layout of GaugeSegmentBuilder
+
+### Fixed
+
+- bug with infinite input recursion in range field (GaugeSegmentBuilder component)
 
 ## [0.4.0]
 

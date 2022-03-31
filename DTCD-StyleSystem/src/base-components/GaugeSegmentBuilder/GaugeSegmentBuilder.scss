@@ -40,26 +40,47 @@
   }
 
   .IconBtn {
+    display: inline-flex;
     border: none;
     background-color: transparent;
     padding: 0;
     cursor: pointer;
 
     .Icon {
-      &.type_notification {
-        fill: var(--border);
+      flex: none;
+    }
 
-        &:hover {
-          fill: var(--button_primary);
-        }
-      }
-
-      &.type_trash {
+    &.type_delete {
+      .Icon {
         fill: var(--danger_24);
 
         &:hover {
           fill: var(--danger);
         }
+      }
+    }
+  }
+
+  .IconCheckbox {
+    display: inline-flex;
+    cursor: pointer;
+
+    .Field {
+      display: none;
+
+      &:checked {
+        & ~ .Icon {
+          fill: var(--button_primary);
+        }
+      }
+    }
+
+    .Icon {
+      flex: none;
+      fill: var(--border);
+
+      &:hover {
+        fill: var(--button_primary_86);
       }
     }
   }
