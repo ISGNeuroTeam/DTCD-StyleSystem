@@ -19,7 +19,7 @@ const Template = (args) => {
   return addBtn;
 };
 
-export const DefaultTitle = Template.bind({});
-DefaultTitle.args = {
-    iconSlot: '',
+export const DefaultGaugeSegmentBuilder = Template.bind({});
+DefaultGaugeSegmentBuilder.args = {
+  iconSlot: '',
 };

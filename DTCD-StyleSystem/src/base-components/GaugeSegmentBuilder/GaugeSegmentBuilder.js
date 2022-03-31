@@ -1,5 +1,7 @@
+import deleteIcon from './../icons/delete-icon.svg';
+
 import html from './GaugeSegmentBuilder.html';
-//import deleteIcon from './../icons/delete-icon.svg';
+import fieldsRowHtml from './FieldsRow.html';
 import styles from './GaugeSegmentBuilder.scss';
 
 const proxySegmentsHandler = {
@@ -33,8 +35,8 @@ export default class BaseTextarea extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#addBtn = this.shadowRoot.querySelector('.AddButton');
-    this.#rowList = this.shadowRoot.querySelector('.List');
+    this.#addBtn = this.shadowRoot.querySelector('.AddButton-js');
+    this.#rowList = this.shadowRoot.querySelector('.List-js');
 
     this.#segments = [];
     this.#proxySegments = new Proxy(this.#segments, proxySegmentsHandler);
@@ -67,7 +69,7 @@ export default class BaseTextarea extends HTMLElement {
   }
 
   createNewRow(newSegmentData = null) {
-    const lastSegment = this.getLastSegment();
+    const lastSegment = this.#getLastSegment();
     const newRange = [0, 0];
 
     if (lastSegment) {
@@ -82,48 +84,46 @@ export default class BaseTextarea extends HTMLElement {
     this.#proxySegments.push({ color, range });
     const curSegmentID = this.#proxySegments.length - 1;
 
-    const segments = this.createSegmentsElement(range, curSegmentID);
+    this.#rowList.innerHTML += fieldsRowHtml;
+    const newAddedRow = this.#rowList.querySelector('.FieldsRow-js:last-of-type');
 
-    const colorPicker = this.createColorPickerElement(color, curSegmentID);
+    this.#updateRangeInputFields(newAddedRow, range, curSegmentID);
+
+    const colorPicker = newAddedRow.querySelector('.ColorPicker-js');
+    colorPicker.value = color;
     colorPicker.addEventListener('input', e => {
       const segment = this.#proxySegments[curSegmentID];
       segment.color = e.target.value;
       this.dispatchEvent(new Event('input', { bubbles: true }));
     });
 
-    const deleteBtn = this.createDeleteBtnElement(curSegmentID);
+    const deleteBtn = newAddedRow.querySelector('.IconBtn_type_delete-js');
     deleteBtn.segmentID = curSegmentID;
     deleteBtn.addEventListener('click', () => {
       this.value = this.#proxySegments.filter((s, i) => i !== deleteBtn.segmentID);
       this.dispatchEvent(new Event('input', { bubbles: true }));
     });
-
-    const row = document.createElement('div');
-    row.className = 'row';
-
-    row.appendChild(segments);
-    row.appendChild(colorPicker);
-    row.appendChild(deleteBtn);
-    this.#rowList.appendChild(row);
+    
+    return true;
   }
 
-  getLastSegment() {
+  #getLastSegment() {
     const length = this.#proxySegments.length;
     return length > 0 ? this.#proxySegments[length - 1] : null;
   }
 
-  createSegmentsElement(range = [0, 0], segmentID) {
+  #updateRangeInputFields(fieldsRow, range = [0, 0], segmentID) {
     const curSegment = this.#proxySegments[segmentID];
     const [startVal, endVal] = range;
 
-    const startInput = this.createInputElement();
+    const startInput = fieldsRow.querySelector('.FieldInput_type_start-js');
     startInput.value = startVal;
     startInput.addEventListener('input', e => {
       curSegment.range[0] = Number(e.target.value);
       this.dispatchEvent(new Event('input'));
     });
 
-    const endInput = this.createInputElement();
+    const endInput = fieldsRow.querySelector('.FieldInput_type_end-js');
     endInput.value = endVal;
     endInput.addEventListener('input', e => {
       curSegment.range[1] = Number(e.target.value);
@@ -163,38 +163,7 @@ export default class BaseTextarea extends HTMLElement {
 
     this.#proxySegments[segmentID].inputs = [startInput, endInput];
 
-    const segments = document.createElement('div');
-    segments.className = 'segments';
-
-    const divider = document.createElement('span');
-    divider.className = 'divider';
-
-    segments.appendChild(startInput);
-    segments.appendChild(divider);
-    segments.appendChild(endInput);
-
-    return segments;
-  }
-
-  createInputElement() {
-    const input = document.createElement('base-input');
-    input.setAttribute('type', 'number');
-    input.className = 'input';
-    return input;
-  }
-
-  createColorPickerElement(color) {
-    const picker = document.createElement('base-color-picker');
-    picker.className = 'color-picker';
-    picker.setAttribute('value', color);
-    return picker;
-  }
-
-  createDeleteBtnElement() {
-    const btn = document.createElement('div');
-    btn.innerHTML = deleteIcon;
-    btn.className = 'delete-btn';
-    return btn;
+    return true;
   }
 
   get value() {

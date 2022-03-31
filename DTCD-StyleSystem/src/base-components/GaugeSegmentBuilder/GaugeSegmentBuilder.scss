@@ -8,58 +8,60 @@
   font-family: 'Proxima Nova';
   font-weight: 600; 
 
-  .ElementsList {
+  .List {
+  }
 
-    .ElementsRow {
-      display: flex;
-      align-items: center;
-      padding-bottom: 10px;
+  .FieldsRow {
+    display: flex;
+    align-items: start;
+    padding-bottom: 10px;
+  }
 
-      .InputsWrapper {
-        display: flex;
-        align-items: start;
-        width: 100%;
+  .InputsWrapper {
+    display: flex;
+    align-items: start;
+    column-gap: 3px;
+    width: 100%;
+    margin-right: 20px;
 
-        .Divider {
-          display: block;
-          margin: 0 3px;
-          width: 29px;
-          border-top: 2px solid var(--border);
-          margin-top: 13px;
-        }
-        .FieldInput {
-          width: 100%;
+    .Divider {
+      display: block;
+      width: 29px;
+      border-top: 2px solid var(--border);
+      margin-top: 13px;
+    }
+    
+    .FieldInput {
+      width: 100%;
+    }
+  }
+
+  .ColorPickerBtnsWrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+  }
+
+  .IconBtn {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+
+    .Icon {
+      &.notification {
+        fill: var(--border);
+
+        &:hover {
+          fill: var(--button_primary);
         }
       }
 
-      .ColorPicker {
-        padding: 0 4px 0 20px;
-      }
+      &.trash {
+        fill: var(--danger_24);
 
-      .Icon {
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        padding: 0 5px 0 0;
-
-        &:last-child {
-          padding: 0;
-        }
-
-        &_notification {
-          fill: var(--border);
-
-          &:hover {
-            fill: var(--button_primary);
-          }
-        }
-
-        &_trash {
-          fill: var(--danger_24);
-
-          &:hover {
-            fill: var(--danger);
-          }
+        &:hover {
+          fill: var(--danger);
         }
       }
     }
