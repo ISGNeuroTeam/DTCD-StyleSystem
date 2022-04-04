@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - bug with infinite input recursion in range field (GaugeSegmentBuilder component)
+- opening BaseSelect and BaseColorPicker
 
 ## [0.4.0]
 
