@@ -4,6 +4,8 @@
 }
 
 .BaseColorPicker {
+  --border_radius: 4.44px;
+
   display: block;
   cursor: pointer;
   position: relative;
@@ -29,9 +31,14 @@
     }
   }
 
+  .Field,
+  .ColorList {
+    width: 44px;
+  }
+
   .Field{
     border: 1px solid var(--border);
-    border-radius: 4.44px;
+    border-radius: var(--border_radius);
   }
 
   .Field,
@@ -41,7 +48,6 @@
     align-items: center;
     justify-content: space-between;
     background-color: var(--border_12);
-    width: 44px;
     height: 28px;
     padding: 0 4px;
 
@@ -62,8 +68,8 @@
     top: 100%;
     left: 0;
     border: 1px solid var(--border);
-    border-radius: 4.44px;
-    width: 100%;
+    border-top: none;
+    border-radius: 0 0 var(--border_radius) var(--border_radius);
     max-height: 112px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -73,8 +79,13 @@
   }
 
   &.opened {
-    .Field .Arrow {
-      transform: rotate(180deg);
+    .Field {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .Arrow {
+        transform: rotate(180deg);
+      }
     }
 
     .ColorList {

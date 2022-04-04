@@ -32,9 +32,9 @@ export default class BaseColorPicker extends HTMLElement {
   #colorList;
   #selectedPreview;
   #colorListClickHandler;
-  #selectedPreviewClickHandler;
   #value;
   #label;
+  #opened = false;
 
   static get observedAttributes() {
     return ['value', 'disabled', 'label'];
@@ -73,12 +73,6 @@ export default class BaseColorPicker extends HTMLElement {
       this.toggle(false);
     };
 
-    this.#selectedPreviewClickHandler = () => {
-      if (!this.disabled) {
-        this.toggle();
-      }
-    };
-
     this.#colorList.addEventListener('click', this.#colorListClickHandler);
     this.#selectedPreview.addEventListener('click', this.#selectedPreviewClickHandler);
   }
@@ -115,34 +109,34 @@ export default class BaseColorPicker extends HTMLElement {
     }
   }
 
-  #setSelectedColorBackground(color = '#252230') {
-    this.#selectedPreview.querySelector('.ColorPreview').style.backgroundColor = color;
+  get opened() {
+    return this.#opened;
   }
 
-  #addColorSelected(color) {
-    const selected = document.createElement('div');
-    selected.className = 'SelectedColor';
-    selected.setAttribute('data-color', color);
-
-    const preview = document.createElement('div');
-    preview.className = 'ColorPreview';
-    preview.style.backgroundColor = color;
-    preview.setAttribute('data-color', color);
-
-    selected.appendChild(preview);
-    this.#colorList.appendChild(selected);
+  set opened(newValue) {
+    if (newValue) {
+      this.setAttribute('opened', true);
+    } else {
+      this.removeAttribute('opened');
+    }
   }
 
-  toggle(doOpen) {
-    if (doOpen == undefined) {
-      this.#picker.classList.toggle('opened');
-      return;
+  toggle = (doOpen) => {
+    if (doOpen !== undefined) {
+      if (!!doOpen === this.#opened) {
+        return;
+      }
+      this.#opened = !!doOpen;
+    } else {
+      this.#opened = !this.#opened;
     }
 
-    if (doOpen) {
+    if (this.#opened) {
       this.#picker.classList.add('opened');
+      document.addEventListener('click', this.#handleDocumentClick);
     } else {
       this.#picker.classList.remove('opened');
+      document.removeEventListener('click', this.#handleDocumentClick);
     }
   }
 
@@ -153,6 +147,7 @@ export default class BaseColorPicker extends HTMLElement {
   disconnectedCallback() {
     this.#colorList.removeEventListener('click', this.#colorListClickHandler);
     this.#selectedPreview.removeEventListener('click', this.#selectedPreviewClickHandler);
+    document.removeEventListener('click', this.#handleDocumentClick);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -171,5 +166,47 @@ export default class BaseColorPicker extends HTMLElement {
     if (attrName === 'label') {
       this.label = newValue;
     }
+
+    if (attrName === 'opened') {
+      this.toggle(newValue ? true : false);
+    }
+  }
+
+  #handleDocumentClick = (event) => {
+    let isPickerContainsOriginalTarget = false;
+    try {
+      isPickerContainsOriginalTarget = this.#picker.contains(event.originalTarget);
+    } catch (error) {}
+
+    let isComponentContainsTarget = this.contains(event.target);
+    const resultCondition = !isPickerContainsOriginalTarget && !isComponentContainsTarget;
+
+    if (resultCondition) {
+      this.toggle(false);
+    }
+  }
+
+  #selectedPreviewClickHandler = () => {
+    if (!this.disabled) {
+      this.toggle();
+    }
+  };
+
+  #setSelectedColorBackground(color = '#252230') {
+    this.#selectedPreview.querySelector('.ColorPreview').style.backgroundColor = color;
+  }
+
+  #addColorSelected(color) {
+    const selected = document.createElement('div');
+    selected.className = 'SelectedColor';
+    selected.setAttribute('data-color', color);
+
+    const preview = document.createElement('div');
+    preview.className = 'ColorPreview';
+    preview.style.backgroundColor = color;
+    preview.setAttribute('data-color', color);
+
+    selected.appendChild(preview);
+    this.#colorList.appendChild(selected);
   }
 }
