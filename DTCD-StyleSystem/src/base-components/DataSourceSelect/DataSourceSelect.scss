@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: end;
+    justify-content: space-around;
+  }
+  
+  .select {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .new_ds {
+    margin-top: 10px;
+  }
