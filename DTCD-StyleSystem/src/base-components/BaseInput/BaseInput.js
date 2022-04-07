@@ -46,6 +46,7 @@ export default class BaseInput extends HTMLElement {
     this.#resetBtn = this.shadowRoot.querySelector('.StatusIcon.type_reset');
 
     this.#internalInput.addEventListener('input', this.#inputHandler);
+    this.#internalInput.addEventListener('change', this.#handleInputChange);
 
     if (this.#resetBtn) {
       this.#resetBtn.addEventListener('click', this.#clickResetBtnHandler);
@@ -249,6 +250,10 @@ export default class BaseInput extends HTMLElement {
     e.stopPropagation();
     this.value = e.target.value;
   };
+
+  #handleInputChange = () => {
+    this.dispatchEvent(new Event('change'));
+  }
 
   #clickResetBtnHandler = (e) => {
     this.value = '';

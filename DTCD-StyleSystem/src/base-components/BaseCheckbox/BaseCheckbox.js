@@ -25,6 +25,8 @@ export default class BaseCheckbox extends HTMLElement {
     
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#checkbox = this.shadowRoot.querySelector('.Input');
+    
+    this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
 
     this.value = false;
   }
@@ -33,8 +35,13 @@ export default class BaseCheckbox extends HTMLElement {
     return this.#checkbox.checked;
   }
 
-  set value(val) {
-    this.#checkbox.checked = Boolean(val);
+  set value(newValue) {
+    const oldValue = this.value;
+    this.#checkbox.checked = Boolean(newValue);
+
+    if (oldValue !== Boolean(newValue)) {
+      this.dispatchEvent(new Event('change'));
+    }
   }
 
   get checked() {
@@ -42,7 +49,7 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   set checked(value) {
-    if (value) this.setAttribute('checked', '');
+    if (value) this.setAttribute('checked', true);
     else this.removeAttribute('checked');
   }
 
@@ -72,7 +79,7 @@ export default class BaseCheckbox extends HTMLElement {
       }
   
       case 'checked': {
-        this.#checkbox.checked = this.checked;
+        this.value = newValue ? true : false;
         break;
       }
   
@@ -84,5 +91,11 @@ export default class BaseCheckbox extends HTMLElement {
       default:
         break;
     }
+  }
+
+  #handleCheckboxChange = (event) => {
+    event.stopPropagation();
+    this.checked = event.target.checked;
+    this.dispatchEvent(new Event('change'));
   }
 }
