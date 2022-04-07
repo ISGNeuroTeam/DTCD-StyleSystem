@@ -1,15 +1,16 @@
-.container {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: end;
-    justify-content: space-around;
-  }
-  
-  .select {
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .new_ds {
-    margin-top: 10px;
-  }
+.DataSourceSelect {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  column-gap: 10px;
+}
+
+.DataSourceSelect > * {
+  flex: 1 1 10em;
+}
+
+.CreateSourseButton {
+  max-width: 65%;
+  padding-top: 17px;
+  height: 50%;
+}
