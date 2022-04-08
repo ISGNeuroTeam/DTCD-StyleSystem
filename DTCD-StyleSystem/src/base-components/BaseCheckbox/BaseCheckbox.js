@@ -27,8 +27,6 @@ export default class BaseCheckbox extends HTMLElement {
     this.#checkbox = this.shadowRoot.querySelector('.Input');
     
     this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
-
-    this.value = false;
   }
 
   get value() {

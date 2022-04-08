@@ -18,6 +18,7 @@ const Template = (args) => {
   const {
     disabled,
     checked,
+    value,
     defaultSlot,
   } = args;
 
@@ -26,6 +27,7 @@ const Template = (args) => {
   radio.innerHTML += defaultSlot;
   radio.checked = checked;
   radio.disabled = disabled;
+  radio.value = value;
 
   return radio;
 };
@@ -35,4 +37,5 @@ DefaultRadio.args = {
   disabled: false,
   defaultSlot: '',
   checked: false,
+  value: 'test',
 };

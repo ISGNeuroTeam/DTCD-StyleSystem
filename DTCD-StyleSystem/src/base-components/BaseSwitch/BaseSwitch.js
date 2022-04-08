@@ -18,16 +18,20 @@ export default class BaseSwitch extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.#checkbox = this.shadowRoot.querySelector('#check');
-
-    this.value = false;
+    this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
   }
 
   get value() {
     return this.#checkbox.checked;
   }
 
-  set value(val) {
-    this.#checkbox.checked = Boolean(val);
+  set value(newValue) {
+    const oldValue = this.value;
+    this.#checkbox.checked = Boolean(newValue);
+
+    if (oldValue !== Boolean(newValue)) {
+      this.dispatchEvent(new Event('change'));
+    }
   }
 
   get checked() {
@@ -35,7 +39,7 @@ export default class BaseSwitch extends HTMLElement {
   }
 
   set checked(value) {
-    if (value) this.setAttribute('checked', '');
+    if (value) this.setAttribute('checked', true);
     else this.removeAttribute('checked');
   }
 
@@ -50,11 +54,17 @@ export default class BaseSwitch extends HTMLElement {
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === 'checked') {
-      this.#checkbox.checked = this.checked;
+      this.value = newValue ? true : false;
     }
 
     if (attrName === 'disabled') {
       this.#checkbox.disabled = this.disabled;
     }
+  }
+
+  #handleCheckboxChange = (event) => {
+    event.stopPropagation();
+    this.checked = event.target.checked;
+    this.dispatchEvent(new Event('change'));
   }
 }

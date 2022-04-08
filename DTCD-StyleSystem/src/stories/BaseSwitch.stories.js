@@ -19,6 +19,9 @@ const Template = (args) => {
   baseSwitch.checked = checked;
   baseSwitch.disabled = disabled;
 
+  baseSwitch.addEventListener('input', () => {console.log('input')});
+  baseSwitch.addEventListener('change', () => {console.log('change')});
+
   return baseSwitch;
 };
 

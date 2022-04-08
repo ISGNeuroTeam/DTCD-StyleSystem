@@ -26,6 +26,10 @@ export default class BaseRadio extends HTMLElement {
       this.checked = true;
       this.dispatchEvent(new Event('input', { bubbles: true }));
     });
+
+    this.#radio.addEventListener('change', () => {
+      this.dispatchEvent(new Event('change'));
+    });
   }
 
   connectedCallback() {
