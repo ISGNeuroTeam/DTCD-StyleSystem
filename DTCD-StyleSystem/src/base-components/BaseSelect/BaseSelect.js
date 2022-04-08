@@ -154,8 +154,17 @@ export default class BaseSelect extends HTMLElement {
     }
   }
 
-  #documentClickCallback = (evt) => {
-    if ( ! this.contains(evt.target)) {
+  #documentClickCallback = (event) => {
+    // this condition is written to support nested web-components
+    let isSelectContainsOriginalTarget = false;
+    try {
+      isSelectContainsOriginalTarget = this.#selectContainer.contains(event.originalTarget);
+    } catch (error) {}
+
+    let isComponentContainsTarget = this.contains(event.target);
+    const resultCondition = !isSelectContainsOriginalTarget && !isComponentContainsTarget;
+
+    if (resultCondition) {
       this.toggle(false);
     }
   };

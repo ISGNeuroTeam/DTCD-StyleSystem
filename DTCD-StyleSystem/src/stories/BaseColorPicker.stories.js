@@ -26,8 +26,8 @@ const Template = (args) => {
   return picker;
 };
 
-export const DefaultPicker = Template.bind({});
-DefaultPicker.args = {
+export const DefaultColorPicker = Template.bind({});
+DefaultColorPicker.args = {
   disabled: false,
   value: '',
   label: '',
