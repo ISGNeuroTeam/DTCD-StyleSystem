@@ -1,0 +1,97 @@
+# BaseButton
+
+Базовая кнопка, представленная тэгом `<base-button>`.
+
+## Свойства
+
+| Название | Описание                    | Значение                                                                                                         |
+|----------|-----------------------------|------------------------------------------------------------------------------------------------------------------|
+| disabled | Отлкючает кнопку            | Логическое                                                                                                       |
+| theme    | Варианты отображения кнопки | Массив с названиями тем: ['theme_secondary' \| 'theme_green' \| 'theme_blueSec' \| 'theme_red' \| 'theme_alfa']. |
+| type     | Тип кнопки                  | 'submit' \| 'reset' \| 'button' \| 'menu'                                                                        |
+| size     | Размер кнопки               | 'big' \| 'small'                                                                                                 |
+| width    | Ширина кнопки               | 'full'                                                                                                           |
+
+## Атрибуты
+
+| Название | Описание                    | Значение                                                                                                                        |
+|----------|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| theme    | Варианты отображения кнопки | Название тем через запятую: 'theme_secondary' \| 'theme_green' \| 'theme_blueSec' \| 'theme_red' \| 'theme_alfa'.               |
+
+## Слоты
+
+| Название   | Описание                                                                       |
+|------------|--------------------------------------------------------------------------------|
+| (default)  | Слот по умолчанию. Отвечает за внутреннее содержимое кнопки. Обычно это текст. |
+| icon-left  | Слот для иконки, находящиеся слева от текста (слота default).                  |
+| icon-right | Слот для иконки, находящиеся справа от текста (слота default).                 |
+
+## Примеры
+
+Стандартная кнопка среднего размера, по умолчанию содержит текст “Кнопка”, который может быть заменен с помощью слота:
+
+<base-button></base-button>
+<base-button>Новый текст</base-button>
+
+```
+<base-button></base-button>
+<base-button>Новый текст</base-button>
+```
+
+Размеры кнопки изменяются с помощью атрибута `size`. Если задано неподдерживаемое значение, то размер кнопки останется средним:
+
+<base-button size="small"></base-button>
+<base-button></base-button>
+<base-button size="unsupported"></base-button>
+<base-button size="big"></base-button>
+
+```
+<base-button size="small"></base-button>
+<base-button></base-button>
+<base-button size="unsupported"></base-button>
+<base-button size="big"></base-button>
+```
+
+Кнопку можно выключить, добавив атрибут disabled или установить соответствующее свойство в значение true:
+
+<base-button disabled></base-button>
+
+```
+<base-button disabled></base-button>
+```
+
+Кнопка с левой иконкой:
+
+<base-button>
+  <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+  </svg>
+  Add something
+</base-button>
+
+```
+<base-button>
+  <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+  </svg>
+  Add something
+</base-button>
+```
+
+Установка вариантов отображения (тем) через атрибут `theme`:
+
+<base-button theme="theme_green">
+  <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+  </svg>
+  Add something
+</base-button>
+
+```
+<base-button theme="theme_green">
+  <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+  </svg>
+  Add something
+</base-button>
+```
