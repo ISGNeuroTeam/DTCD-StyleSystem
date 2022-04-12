@@ -1,5 +1,7 @@
 import BaseChip from '../base-components/BaseChip/BaseChip';
 
+import BaseChipDoc from './BaseChipDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseChip',
   argTypes: {
@@ -10,6 +12,11 @@ export default {
     close: { 
       type: 'boolean',
       description: 'Show or hide remove icon.',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseChipDoc,
     },
   },
 };
