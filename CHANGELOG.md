@@ -27,10 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseButton with icon
 - Label in BaseColorPicker
 - GaugeSegmentBuilder stories in Storybook
+- generic dropdown list (BaseDropdown)
 
 ### Changed
 
-- added BaseHeading to component list in 'components.js'
 - improved backward compatibility of BaseButton API
 - command "make clean", gitignore, Storybook config
 - improved BaseChip property "close"

@@ -3,29 +3,33 @@ import BaseDropdown from '../base-components/BaseDropdown/BaseDropdown';
 export default {
   title: 'Example/BaseComponents/BaseDropdown',
   argTypes: {
-    defaultSlot: { 
-      type: 'string',
-      description: 'Default slot',
-    },
-    toggleBtnSlot: { 
-      type: 'string',
-      description: 'Default slot',
-    },
-    iconArrowSlot: { 
-      type: 'string',
-      description: 'Default slot',
-    },
     theme: { 
       control: {
-        type: 'select',
+        type: 'multi-select',
       },
       options: [
         '<no modification>',
         'theme_alfa',
       ],
-      description: 'Configuration view component',
+    },
+    alignment: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'center',
+      ],
     },
   },
+  parameters: {
+    actions: {
+      handles: [
+        'toggle',
+      ],
+    }
+  }
 };
 
 const NAME_COMPONENT = 'base-dropdown';
@@ -35,24 +39,28 @@ window.customElements.define(NAME_COMPONENT, BaseDropdown);
 const Template = (args) => {
   const {
     theme = [],
-    defaultSlot,
-    toggleBtnSlot,
-    iconArrowSlot,
+    slot,
+    alignment,
+    opened,
   } = args;
 
   const dropdown = document.createElement(NAME_COMPONENT);
-  dropdown.theme = theme.length ? theme : [];
-  dropdown.innerHTML += defaultSlot;
-  dropdown.innerHTML += toggleBtnSlot;
-  dropdown.innerHTML += iconArrowSlot;
+  dropdown.theme = theme;
+  dropdown.alignment = alignment;
+  dropdown.opened = opened;
+  dropdown.innerHTML += slot;
+  dropdown.innerHTML += args['toggle-btn'];
+  dropdown.innerHTML += args['icon-arrow'];
 
   return dropdown;
 };
 
 export const DefaultDropdown = Template.bind({});
 DefaultDropdown.args = {
-  defaultSlot: 'lorem',
-  toggleBtnSlot: '<span slot="toggle-btn"></span>',
-  iconArrowSlot: '<span slot="icon-arrow">v</span>',
+  slot: 'lorem qwe ad qwd zxd weg dxc qwa das',
+  'toggle-btn': '<span slot="toggle-btn">toggle button</span>',
+  'icon-arrow': '',
   theme: [],
+  alignment: undefined,
+  opened: false,
 };

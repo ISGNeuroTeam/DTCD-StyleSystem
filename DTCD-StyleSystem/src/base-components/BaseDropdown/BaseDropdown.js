@@ -7,9 +7,14 @@ export default class BaseDropdown extends HTMLElement {
   #toggleBtn;
   #theme = [];
   #opened = false;
+  #alignment;
 
   static get observedAttributes() {
-    return ['theme'];
+    return [
+      'theme',
+      'alignment',
+      'opened',
+    ];
   }
 
   constructor() {
@@ -45,6 +50,30 @@ export default class BaseDropdown extends HTMLElement {
       this.removeAttribute('theme');
     }
   }
+
+  get alignment() {
+    return this.#alignment;
+  }
+
+  set alignment (newValue) {
+    if (newValue) {
+      this.setAttribute('alignment', newValue);
+    } else {
+      this.removeAttribute('alignment');
+    }
+  }
+
+  get opened() {
+    return this.#opened;
+  }
+
+  set opened(newValue) {
+    if (newValue) {
+      this.setAttribute('opened', true);
+    } else {
+      this.removeAttribute('opened');
+    }
+  }
   
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
@@ -55,6 +84,15 @@ export default class BaseDropdown extends HTMLElement {
           this.#theme = [];
         }
         this.#setThemeClasses();
+        break;
+
+      case 'alignment':
+        this.#alignment = newValue ? newValue : undefined;
+        this.#setAlignmentClasses();
+        break;
+
+      case 'opened':
+        this.toggle(newValue ? true : false);
         break;
 
       default:
@@ -79,6 +117,14 @@ export default class BaseDropdown extends HTMLElement {
       this.#dropdown.classList.remove('opened');
       document.removeEventListener('click', this.#handleDocumentClick);
     }
+
+    this.dispatchEvent(new CustomEvent('toggle', {
+      bubbles: true,
+      cancelable: false,
+      detail: {
+        opened: this.#opened,
+      },
+    }));
   }
   
   #setThemeClasses() {
@@ -97,14 +143,30 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
+  #setAlignmentClasses() {
+    const { classList } = this.#dropdown;
+
+    if (this.#alignment === 'right') {
+      classList.add('alignment_right');
+    } else {
+      classList.remove('alignment_right');
+    }
+
+    if (this.#alignment === 'center') {
+      classList.add('alignment_center');
+    } else {
+      classList.remove('alignment_center');
+    }
+  }
+
   #handleDocumentClick = (event) => {
-    let isPickerContainsOriginalTarget = false;
+    let isDropdownContainsOriginalTarget = false;
     try {
-      isPickerContainsOriginalTarget = this.#dropdown.contains(event.originalTarget);
+      isDropdownContainsOriginalTarget = this.#dropdown.contains(event.originalTarget);
     } catch (error) {}
 
     let isComponentContainsTarget = this.contains(event.target);
-    const resultCondition = !isPickerContainsOriginalTarget && !isComponentContainsTarget;
+    const resultCondition = !isDropdownContainsOriginalTarget && !isComponentContainsTarget;
 
     if (resultCondition) {
       this.toggle(false);
