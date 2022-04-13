@@ -1,6 +1,6 @@
 import BaseChip from '../base-components/BaseChip/BaseChip';
 
-import BaseChipDoc from './BaseChipDoc.mdx';
+import BaseChipDoc from './docs/BaseChipDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseChip',

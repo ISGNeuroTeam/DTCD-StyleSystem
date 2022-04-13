@@ -1,6 +1,6 @@
 import BaseButton from '../base-components/BaseButton/BaseButton';
 
-import BaseButtonDoc from './BaseButtonDoc.mdx';
+import BaseButtonDoc from './docs/BaseButtonDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseButton',

@@ -1,6 +1,6 @@
 import BaseExpander from '../base-components/BaseExpander/BaseExpander';
 
-import BaseExpanderDoc from './BaseExpanderDoc.mdx';
+import BaseExpanderDoc from './docs/BaseExpanderDoc.mdx';
 
 // More on default export: https://storybook.js.org/docs/web-components/writing-stories/introduction#default-export
 export default {

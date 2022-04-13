@@ -1,6 +1,6 @@
 import BaseCheckbox from '../base-components/BaseCheckbox/BaseCheckbox';
 
-import BaseCheckboxDoc from './BaseCheckboxDoc.mdx';
+import BaseCheckboxDoc from './docs/BaseCheckboxDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseCheckbox',
