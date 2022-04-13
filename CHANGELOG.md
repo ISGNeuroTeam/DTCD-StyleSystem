@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseButton with icon
 - Label in BaseColorPicker
 - GaugeSegmentBuilder stories in Storybook
+- BaseFileLoader component and stories
 
 ### Changed
 
