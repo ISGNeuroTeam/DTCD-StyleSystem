@@ -1,0 +1,47 @@
+# BaseHeading
+
+Компонент для отображения и стилизации заголовков, представленный тегом `<base-heading>`.
+
+## Свойства
+
+| Название | Описание                                     | Значение                                        |
+|----------|----------------------------------------------|-------------------------------------------------|
+| theme    | Варианты отображения заголовка.              | Массив с названиями тем: ['theme_titleHeavy' \| 'theme_titleLight' \| 'theme_headerHeavy' \| 'theme_headerLight' \| 'theme_subheader' \| 'theme_subheaderSmall']. |
+
+## Атрибуты
+
+| Название | Описание                                     | Значение                                        |
+|----------|----------------------------------------------|-------------------------------------------------|
+| theme    | Варианты отображения заголовка. | Название тем через запятую: 'theme_titleHeavy' \| 'theme_titleLight' \| 'theme_headerHeavy' \| 'theme_headerLight' \| 'theme_subheader' \| 'theme_subheaderSmall'.|
+
+## Слоты
+
+| Название  | Описание                                                           |
+|-----------|--------------------------------------------------------------------|
+| (default) | Слот по умолчанию. В него нужно поместить тег с текстом заголовка. |
+
+## Примеры
+
+Самый большой заголовок:
+
+<base-heading>
+  <h1>ISG Neuro is a Russian technology company.</h1>
+</base-heading>
+
+```
+<base-heading>
+  <h1>ISG Neuro is a Russian technology company.</h1>
+</base-heading>
+```
+
+Заголовок четвертого уровня:
+
+<base-heading theme="theme_subheaderSmall">
+  <p>ISG Neuro is a Russian technology company.</p>
+</base-heading>
+
+```
+<base-heading theme="theme_subheaderSmall">
+  <p>ISG Neuro is a Russian technology company.</p>
+</base-heading>
+```

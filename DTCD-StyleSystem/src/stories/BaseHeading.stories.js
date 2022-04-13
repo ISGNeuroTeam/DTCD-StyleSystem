@@ -1,5 +1,7 @@
 import BaseHeading from '../base-components/BaseHeading/BaseHeading';
 
+import BaseHeadingDoc from './docs/BaseHeadingDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseHeading',
   argTypes: {
@@ -21,6 +23,11 @@ export default {
         'theme_subheaderSmall',
       ],
       description: 'Configuration view component',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseHeadingDoc,
     },
   },
 };
