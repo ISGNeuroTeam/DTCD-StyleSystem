@@ -1,5 +1,7 @@
 import BaseInput from '../base-components/BaseInput/BaseInput';
 
+import BaseInputDoc from './docs/BaseInputDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseInput',
   argTypes: {
@@ -51,6 +53,11 @@ export default {
         'small',
         'big',
       ],
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseInputDoc,
     },
   },
 };
