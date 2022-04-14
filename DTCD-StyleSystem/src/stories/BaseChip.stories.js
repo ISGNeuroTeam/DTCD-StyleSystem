@@ -7,11 +7,9 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     close: { 
       type: 'boolean',
-      description: 'Show or hide remove icon.',
     },
   },
   parameters: {

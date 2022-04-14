@@ -11,7 +11,6 @@ export default {
         '<no modification>',
         'withSuccessFill',
       ],
-      description: 'Configuration style component.',
     },
     type: { 
       control: {
@@ -42,7 +41,6 @@ export default {
         'url',
         'week',
       ],
-      description: 'Select type input.',
     },
     size: { 
       control: {
@@ -53,7 +51,6 @@ export default {
         'small',
         'big',
       ],
-      description: 'Select size input.',
     },
   },
 };

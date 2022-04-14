@@ -9,15 +9,12 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     summarySlot: { 
       type: 'string',
-      description: 'Slot "summary"',
     },
     iconSlot: { 
       type: 'string',
-      description: 'Slot "icon"',
     },
     theme: { 
       control: {
@@ -27,7 +24,6 @@ export default {
         '',
         'with_borderBottom',
       ],
-      description: 'Configuration view component',
     },
     open: {
       type: 'boolean',

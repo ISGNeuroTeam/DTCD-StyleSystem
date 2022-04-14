@@ -7,7 +7,6 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     theme: { 
       control: {
@@ -22,7 +21,6 @@ export default {
         'theme_subheader',
         'theme_subheaderSmall',
       ],
-      description: 'Configuration view component',
     },
   },
   parameters: {

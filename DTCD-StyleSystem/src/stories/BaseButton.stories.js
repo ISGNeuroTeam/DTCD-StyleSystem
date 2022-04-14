@@ -7,7 +7,6 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     theme: { 
       control: {
@@ -21,7 +20,6 @@ export default {
         'theme_red',
         'theme_alfa',
       ],
-      description: 'Configuration style component.',
     },
     type: { 
       control: {
@@ -33,7 +31,6 @@ export default {
         'submit',
         'menu',
       ],
-      description: 'Setting type button (attribute "type").',
     },
     size: { 
       control: {
@@ -44,7 +41,6 @@ export default {
         'big',
         'small',
       ],
-      description: 'Configuration size button.',
     },
     width: { 
       control: {
@@ -54,11 +50,8 @@ export default {
         '<default>',
         'full',
       ],
-      description: 'Configuration width button in parent container.',
     },
-    disabled: {
-      description: 'Switch enable/disable button (attribute "disabled").',
-    }
+    disabled: {}
   },
   parameters: {
     docs: {

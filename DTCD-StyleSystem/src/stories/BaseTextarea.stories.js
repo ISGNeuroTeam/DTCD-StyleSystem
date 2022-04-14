@@ -12,7 +12,6 @@ export default {
         'withSuccessFill',
         'resize_off',
       ],
-      description: 'Configuration style component.',
     },
     size: { 
       control: {
@@ -23,7 +22,6 @@ export default {
         'small',
         'big',
       ],
-      description: 'Select size textarea.',
     },
   },
 };

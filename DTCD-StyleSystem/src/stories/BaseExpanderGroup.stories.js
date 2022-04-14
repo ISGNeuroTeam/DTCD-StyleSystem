@@ -7,7 +7,6 @@ export default {
   argTypes: {
     itemSlot: { 
       type: 'string[]',
-      description: 'Slot "item"',
     },
   },
   parameters: {

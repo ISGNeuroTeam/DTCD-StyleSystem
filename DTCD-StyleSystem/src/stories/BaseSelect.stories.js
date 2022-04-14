@@ -5,7 +5,6 @@ export default {
   argTypes: {
     itemSlot: { 
       type: 'string[]',
-      description: 'Item slot',
     },
     size: { 
       control: {
@@ -16,7 +15,6 @@ export default {
         'small',
         'big',
       ],
-      description: 'Select size input.',
     },
   },
 };

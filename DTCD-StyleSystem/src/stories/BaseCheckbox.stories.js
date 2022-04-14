@@ -7,7 +7,6 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
   },
   parameters: {
