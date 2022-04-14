@@ -1,5 +1,7 @@
 import BaseIconButton from '../base-components/BaseIconButton/BaseIconButton';
 
+import BaseIconButtonDoc from './docs/BaseIconButtonDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseIconButton',
   argTypes: {
@@ -45,6 +47,11 @@ export default {
     disabled: {
       description: 'Switch enable/disable button (attribute "disabled").',
     }
+  },
+  parameters: {
+    docs: {
+      page: BaseIconButtonDoc,
+    },
   },
 };
 

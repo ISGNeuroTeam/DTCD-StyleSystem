@@ -1,0 +1,104 @@
+# BaseIconButton
+
+Кнопка с иконкой, представленная тэгом `<base-icon-button>`.
+
+## Свойства
+
+| Название | Описание                    | Значение                                                                      |
+|----------|-----------------------------|-------------------------------------------------------------------------------|
+| disabled | Отлкючает кнопку            | Логическое                                                                    |
+| theme    | Варианты отображения кнопки | Массив с названиями тем: ['theme_secondary' \| 'theme_green' \| 'theme_red']. |
+| type     | Тип кнопки                  | 'submit' \| 'reset' \| 'button' \| 'menu'                                     |
+| size     | Размер кнопки               | 'big' \| 'small'                                                              |                                                                                                       |
+
+## Атрибуты
+
+| Название | Описание                    | Значение                                                                       |
+|----------|-----------------------------|--------------------------------------------------------------------------------|
+| theme    | Варианты отображения кнопки | Название тем через запятую: 'theme_secondary' \| 'theme_green' \| 'theme_red'. |
+
+## Слоты
+
+| Название   | Описание                                                                        |
+|------------|---------------------------------------------------------------------------------|
+| (default)  | Слот по умолчанию. Отвечает за внутреннее содержимое кнопки. Обычно это иконка. |
+
+## Примеры
+
+Стандартная кнопка среднего размера, по умолчанию ничего не содержит, но содержимое может быть задано с помощью слота:
+
+<base-icon-button></base-icon-button>
+<base-icon-button><svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg"><path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/></svg></base-icon-button>
+
+```
+<base-icon-button></base-icon-button>
+<base-icon-button>
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+```
+
+Размеры кнопки изменяются с помощью атрибута `size`. Если задано неподдерживаемое значение, то размер кнопки останется средним:
+
+<base-icon-button size="small">
+  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+  </svg>
+</base-icon-button>
+<base-icon-button>
+  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+  </svg>
+</base-icon-button>
+<base-icon-button size="unsupported">
+  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+  </svg>
+</base-icon-button>
+<base-icon-button size="big">
+  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+  </svg>
+</base-icon-button>
+
+```
+<base-icon-button size="small">
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+<base-icon-button>
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+<base-icon-button size="unsupported">
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+<base-icon-button size="big">
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+```
+
+Кнопку можно выключить, добавив атрибут disabled или установить соответствующее свойство в значение true:
+
+<base-icon-button disabled>
+  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+  </svg>
+</base-icon-button>
+
+```
+<base-icon-button disabled>
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+```
+
+Установка вариантов отображения (тем) через атрибут `theme`:
+
+<base-icon-button theme="theme_green">
+  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+  </svg>
+</base-icon-button>
+
+```
+<base-icon-button theme="theme_green">
+  <svg> <!-- SVG content --> </svg>
+</base-icon-button>
+```
