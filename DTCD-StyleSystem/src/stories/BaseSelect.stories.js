@@ -1,5 +1,7 @@
 import BaseSelect from '../base-components/BaseSelect/BaseSelect';
 
+import BaseSelectDoc from './docs/BaseSelectDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseSelect',
   argTypes: {
@@ -15,6 +17,11 @@ export default {
         'small',
         'big',
       ],
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseSelectDoc,
     },
   },
 };
