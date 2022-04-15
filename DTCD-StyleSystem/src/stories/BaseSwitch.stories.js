@@ -31,8 +31,8 @@ const Template = (args) => {
   return switchInput;
 };
 
-export const DefaultRadio = Template.bind({});
-DefaultRadio.args = {
+export const DefaultSwitch = Template.bind({});
+DefaultSwitch.args = {
   disabled: false,
   checked: false,
   value: '',
