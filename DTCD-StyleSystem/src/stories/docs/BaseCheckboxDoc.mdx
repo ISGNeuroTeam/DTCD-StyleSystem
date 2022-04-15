@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseCheckbox
 
 Элемент, позволяющий включить или отключить какую-либо опцию. Представлен тэгом `<base-checkbox>`. Чекбокс может быть активирован и деактивирован, что соответствует значению свойства `checked` - `true` или `false`.
@@ -36,35 +38,60 @@
 
 Чекбокс без заголовка в активированном состоянии и чекбокс с заголовком, заданным атрибутом label, в дективированном:
 
-<base-checkbox></base-checkbox>
-<base-checkbox label="Title"></base-checkbox>
+<Canvas>
+  <base-checkbox></base-checkbox>
+  <base-checkbox label="Title"></base-checkbox>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-checkbox></base-checkbox>
 <base-checkbox label="Title"></base-checkbox>
-```
+`}
+/>
 
 Заблокированные с помощью атрибута disabled чекбоксы в активированном и деактивированном состоянии:
 
-<base-checkbox disabled></base-checkbox>
-<base-checkbox disabled checked></base-checkbox>
+<Canvas>
+  <base-checkbox disabled></base-checkbox>
+  <base-checkbox disabled checked></base-checkbox>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-checkbox disabled></base-checkbox>
 <base-checkbox disabled checked></base-checkbox>
-```
+`}
+/>
 
 Для отлавливания события input необходимо добавить соответствующий слушатель на элемент. В качестве примера приведен код для VueJS:
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <template>
   <base-checkbox @input="inputHandler"></base-checkbox>
 </template>
-```
-```
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
 methods: {
   inputHandler(e) {
     console.log(e.target.value);
   },
 },
-```
+`}
+/>

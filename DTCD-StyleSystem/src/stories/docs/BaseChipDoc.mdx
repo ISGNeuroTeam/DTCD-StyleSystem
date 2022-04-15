@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseChip
 
 Компонент для удобной демонстрации каких-либо перечислений, к примеру, фильтров. Представлен тэгом `<base-chip>`. При клике по иконке закрытия происходит генерация события remove.
@@ -24,35 +26,60 @@
 
 По умолчанию, компонент содержит текст “Chip”, который может быть заменен с помощью слота:
 
-<base-chip></base-chip>
-<base-chip>Custom chip</base-chip>
+<Canvas>
+  <base-chip></base-chip>
+  <base-chip>Custom chip</base-chip>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-chip></base-chip>
 <base-chip>Custom chip</base-chip>
-```
+`}
+/>
 
 При добавлении атрибута close появляется иконка закрытия, которая генерирует событие remove при нажатии на нее:
 
-<base-chip></base-chip>
-<base-chip close></base-chip>
+<Canvas>
+  <base-chip></base-chip>
+  <base-chip close></base-chip>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-chip></base-chip>
 <base-chip close></base-chip>
-```
+`}
+/>
 
 Для отлавливания события remove необходимо добавить соответствующий слушатель на элемент. В качестве примера приведен код для VueJS:
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <template>
   <base-chip close="true" @remove="removeHandler"></base-chip>
 </template>
-```
-```
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
 methods: {
   closeHandler(e) {
     console.log('removed =>', e.target);
   },
 },
-```
+`}
+/>

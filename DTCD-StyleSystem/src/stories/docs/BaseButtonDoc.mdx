@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseButton
 
 Базовая кнопка, представленная тэгом `<base-button>`.
@@ -30,68 +32,103 @@
 
 Стандартная кнопка среднего размера, по умолчанию содержит текст “Кнопка”, который может быть заменен с помощью слота:
 
-<base-button></base-button>
-<base-button>Новый текст</base-button>
+<Canvas>
+  <base-button></base-button>
+  <base-button>Новый текст</base-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-button></base-button>
 <base-button>Новый текст</base-button>
-```
+`}
+/>
 
 Размеры кнопки изменяются с помощью атрибута `size`. Если задано неподдерживаемое значение, то размер кнопки останется средним:
 
-<base-button size="small"></base-button>
-<base-button></base-button>
-<base-button size="unsupported"></base-button>
-<base-button size="big"></base-button>
+<Canvas>
+  <base-button size="small"></base-button>
+  <base-button></base-button>
+  <base-button size="unsupported"></base-button>
+  <base-button size="big"></base-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-button size="small"></base-button>
 <base-button></base-button>
 <base-button size="unsupported"></base-button>
 <base-button size="big"></base-button>
-```
+`}
+/>
 
 Кнопку можно выключить, добавив атрибут disabled или установить соответствующее свойство в значение true:
 
-<base-button disabled></base-button>
+<Canvas>
+  <base-button disabled></base-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-button disabled></base-button>
-```
+`}
+/>
 
 Кнопка с левой иконкой:
 
-<base-button theme="theme_alfa">
-  <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
-  </svg>
-  Add something
-</base-button>
+<Canvas>
+  <base-button theme="theme_alfa">
+    <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+    </svg>
+    Add something
+  </base-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-button theme="theme_alfa">
   <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
     <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
   </svg>
   Add something
 </base-button>
-```
+`}
+/>
 
 Установка вариантов отображения (тем) через атрибут `theme`:
 
-<base-button theme="theme_green">
-  <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
-  </svg>
-  Add something
-</base-button>
+<Canvas>
+  <base-button theme="theme_green">
+    <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
+    </svg>
+    Add something
+  </base-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-button theme="theme_green">
   <svg slot="icon-left" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
     <path d="M6.5 6.5V9.5H5.5V6.5H2.5V5.5H5.5V2.5H6.5V5.5H9.5V6.5H6.5Z"/>
   </svg>
   Add something
 </base-button>
-```
+`}
+/>

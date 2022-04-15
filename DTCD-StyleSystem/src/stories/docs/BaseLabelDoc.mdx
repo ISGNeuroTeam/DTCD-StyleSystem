@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseLabel
 
 Цветной компонент-лейбл, представленный тэгом `<base-label>`.
@@ -18,26 +20,40 @@
 
 По умолчанию лейбл содержит текст “Label”, который может быть заменен с помощью слота:
 
-<base-label></base-label>
-<base-label>Custom Label</base-label>
+<Canvas>
+  <base-label></base-label>
+  <base-label>Custom Label</base-label>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-label></base-label>
 <base-label>Custom Label</base-label>
-```
+`}
+/>
 
 Цвет лейбла по умолчанию - серый, но может быть изменен с помощью соответствующего атрибута color:
 
-<base-label></base-label>
-<base-label color="accent"></base-label>
-<base-label color="warning"></base-label>
-<base-label color="danger"></base-label>
-<base-label color="success"></base-label>
+<Canvas>
+  <base-label></base-label>
+  <base-label color="accent"></base-label>
+  <base-label color="warning"></base-label>
+  <base-label color="danger"></base-label>
+  <base-label color="success"></base-label>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-label></base-label>
 <base-label color="accent"></base-label>
 <base-label color="warning"></base-label>
 <base-label color="danger"></base-label>
 <base-label color="success"></base-label>
-```
+`}
+/>

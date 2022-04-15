@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseColorPicker
 
 Элемент для выбора цвета, представленный тэгом `<base-color-picker>`. По умолчанию, значение компонента равняется `#252230`.
@@ -26,25 +28,43 @@
 
 По умолчанию список доступных цветов скрыт. Для его открытия нужно нажать на основной элемент компонента. Повторное нажатие на элементе или по какому-либо из раскрывшегося списка закроет данный список:
 
-<base-color-picker></base-color-picker>
-<base-color-picker value="red"></base-color-picker>
+<Canvas>
+  <base-color-picker></base-color-picker>
+  <base-color-picker value="red"></base-color-picker>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-color-picker></base-color-picker>
 <base-color-picker value="red"></base-color-picker>
-```
+`}
+/>
 
 Для отлавливания события input необходимо добавить соответствующий слушатель на элемент. В качестве примера приведен код для VueJS:
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <template>
   <base-color-picker @input="inputHandler"></base-color-picker>
 </template>
-```
-```
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
 methods: {
   inputHandler(e) {
     console.log(e.target.value);
   },
 },
-```
+`}
+/>

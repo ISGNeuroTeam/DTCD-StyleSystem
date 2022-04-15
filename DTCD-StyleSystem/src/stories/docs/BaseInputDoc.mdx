@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseInput
 
 Базовый элемент поля ввода однострочных текстов, представленный тэгом `<base-input>`.
@@ -34,49 +36,81 @@
 
 Размер поля изменяется с помощью атрибута `size`. Если задано неподдерживаемое значение, то размер кнопки останется средним:
 
-<base-input size="small" placeholder="size_small"></base-input>
+<Canvas>
+  <base-input size="small" placeholder="size_small"></base-input>
+  <base-input placeholder="default size"></base-input>
+  <base-input size="unsupported" placeholder="default size"></base-input>
+  <base-input size="big" placeholder="size_big"></base-input>
+</Canvas>
 
-<base-input placeholder="default size"></base-input>
-
-<base-input size="unsupported" placeholder="default size"></base-input>
-
-<base-input size="big" placeholder="size_big"></base-input>
-
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-input size="small"></base-input>
 <base-input></base-input>
 <base-input size="unsupported"></base-input>
 <base-input size="big"></base-input>
-```
+`}
+/>
 
 Выключить поле ввода можно с помощью атрибута disabled:
 
-<base-input disabled="true"></base-input>
+<Canvas>
+  <base-input disabled="true"></base-input>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-input disabled="true"></base-input>
-```
+`}
+/>
 
 Заголовок элемента задается с помощью атрибута label, а заполняющий текст - с помощью атрибута placeholder. Заполняющий текст показывается только в том случае, если в область ничего не введено, то есть свойство value содержит пустую строку:
 
-<base-input label="Title" placeholder="Placeholder"></base-input>
+<Canvas>
+  <base-input label="Title" placeholder="Placeholder"></base-input>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-input label="Title" placeholder="Placeholder"></base-input>
-```
+`}
+/>
 
 Поле с ошибкой:
 
-<base-input label="Title" required value=""></base-input>
+<Canvas>
+  <base-input label="Title" required value=""></base-input>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-input label="Title" required value=""></base-input>
-```
+`}
+/>
 
 Поле с успешным вводом:
 
-<base-input label="Title" theme="withSuccessFill"></base-input>
+<Canvas>
+  <base-input label="Title" theme="withSuccessFill"></base-input>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-input label="Title" theme="withSuccessFill"></base-input>
-```
+`}
+/>

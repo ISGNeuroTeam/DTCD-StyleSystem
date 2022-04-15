@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseRange
 
 Элемент для выбора числового значения из заданного диапазона, представленный тэгом `<base-range>`.
@@ -26,25 +28,43 @@
 * текущее значение (value) - 0;
 * шаг изменения значения (step) - 1.
 
-<base-range></base-range>
-<base-range min="10" max="52" step="2" value="15"></base-range>
+<Canvas>
+  <base-range></base-range>
+  <base-range min="10" max="52" step="2" value="15"></base-range>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-range></base-range>
 <base-range min="10" max="52" step="2" value="15"></base-range>
-```
+`}
+/>
 
 Для отлавливания события input необходимо добавить соответствующий слушатель на элемент. В качестве примера приведен код для VueJS:
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <template>
   <base-range @input="inputHandler"></base-range>
 </template>
-```
-```
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
 methods: {
   inputHandler(e) {
     console.log(e.target.value);
   },
 },
-```
+`}
+/>

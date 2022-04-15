@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseHeading
 
 Компонент для отображения и стилизации заголовков, представленный тегом `<base-heading>`.
@@ -24,24 +26,38 @@
 
 Самый большой заголовок:
 
-<base-heading>
-  <h1>ISG Neuro is a Russian technology company.</h1>
-</base-heading>
+<Canvas>
+  <base-heading>
+    <h1>ISG Neuro is a Russian technology company.</h1>
+  </base-heading>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-heading>
   <h1>ISG Neuro is a Russian technology company.</h1>
 </base-heading>
-```
+`}
+/>
 
 Заголовок четвертого уровня:
 
-<base-heading theme="theme_subheaderSmall">
-  <p>ISG Neuro is a Russian technology company.</p>
-</base-heading>
+<Canvas>
+  <base-heading theme="theme_subheaderSmall">
+    <p>ISG Neuro is a Russian technology company.</p>
+  </base-heading>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-heading theme="theme_subheaderSmall">
   <p>ISG Neuro is a Russian technology company.</p>
 </base-heading>
-```
+`}
+/>

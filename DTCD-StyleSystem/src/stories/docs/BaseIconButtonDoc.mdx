@@ -1,3 +1,5 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseIconButton
 
 Кнопка с иконкой, представленная тэгом `<base-icon-button>`.
@@ -27,40 +29,53 @@
 
 Стандартная кнопка среднего размера, по умолчанию ничего не содержит, но содержимое может быть задано с помощью слота:
 
-<base-icon-button></base-icon-button>
-<base-icon-button><svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg"><path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/></svg></base-icon-button>
+<Canvas>
+  <base-icon-button></base-icon-button>
+  <base-icon-button><svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg"><path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/></svg></base-icon-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-icon-button></base-icon-button>
 <base-icon-button>
   <svg> <!-- SVG content --> </svg>
 </base-icon-button>
-```
+`}
+/>
 
 Размеры кнопки изменяются с помощью атрибута `size`. Если задано неподдерживаемое значение, то размер кнопки останется средним:
 
-<base-icon-button size="small">
-  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-  </svg>
-</base-icon-button>
-<base-icon-button>
-  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-  </svg>
-</base-icon-button>
-<base-icon-button size="unsupported">
-  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-  </svg>
-</base-icon-button>
-<base-icon-button size="big">
-  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-  </svg>
-</base-icon-button>
+<Canvas>
+  <base-icon-button size="small">
+    <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+    </svg>
+  </base-icon-button>
+  <base-icon-button>
+    <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+    </svg>
+  </base-icon-button>
+  <base-icon-button size="unsupported">
+    <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+    </svg>
+  </base-icon-button>
+  <base-icon-button size="big">
+    <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+    </svg>
+  </base-icon-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-icon-button size="small">
   <svg> <!-- SVG content --> </svg>
 </base-icon-button>
@@ -73,32 +88,47 @@
 <base-icon-button size="big">
   <svg> <!-- SVG content --> </svg>
 </base-icon-button>
-```
+`}
+/>
 
 Кнопку можно выключить, добавив атрибут disabled или установить соответствующее свойство в значение true:
 
-<base-icon-button disabled>
-  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-  </svg>
-</base-icon-button>
+<Canvas>
+  <base-icon-button disabled>
+    <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+    </svg>
+  </base-icon-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-icon-button disabled>
   <svg> <!-- SVG content --> </svg>
 </base-icon-button>
-```
+`}
+/>
 
 Установка вариантов отображения (тем) через атрибут `theme`:
 
-<base-icon-button theme="theme_green">
-  <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
-  </svg>
-</base-icon-button>
+<Canvas>
+  <base-icon-button theme="theme_green">
+    <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.33545 12.6668L12.6688 8.00016L5.33545 3.3335V12.6668Z"/>
+    </svg>
+  </base-icon-button>
+</Canvas>
 
-```
+<Source
+language='html'
+format={true}
+dark
+code={`
 <base-icon-button theme="theme_green">
   <svg> <!-- SVG content --> </svg>
 </base-icon-button>
-```
+`}
+/>
