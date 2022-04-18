@@ -1,5 +1,7 @@
 import GaugeSegmentBuilder from '../base-components/GaugeSegmentBuilder/GaugeSegmentBuilder';
 
+import GaugeSegmentBuilderDoc from './docs/GaugeSegmentBuilderDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/GaugeSegmentBuilder',
   argTypes: {
@@ -17,6 +19,11 @@ export default {
           },
         ]
       `,
+    },
+  },
+  parameters: {
+    docs: {
+      page: GaugeSegmentBuilderDoc,
     },
   },
 };
