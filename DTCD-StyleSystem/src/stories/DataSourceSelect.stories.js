@@ -4,20 +4,6 @@ import DataSourceSelectDoc from './docs/DataSourceSelectDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/DataSourceSelect',
-  argTypes: {
-    placement: { 
-      control: {
-        type: 'select',
-      },
-      options: [
-        '<no-modification>',
-        'top',
-        'bottom',
-        'left',
-        'right',
-      ],
-    },
-  },
   parameters: {
     docs: {
       page: DataSourceSelectDoc,
@@ -37,5 +23,5 @@ const Template = (args) => {
   return dataSourceSelect;
 };
 
-export const DefaultTabs = Template.bind({});
-DefaultTabs.args = {};
+export const DefaultDataSourceSelect = Template.bind({});
+DefaultDataSourceSelect.args = {};
