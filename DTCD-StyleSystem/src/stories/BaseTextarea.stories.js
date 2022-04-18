@@ -1,5 +1,7 @@
 import BaseTextarea from '../base-components/BaseTextarea/BaseTextarea';
 
+import BaseTextareaDoc from './docs/BaseTextareaDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseTextarea',
   argTypes: {
@@ -22,6 +24,11 @@ export default {
         'small',
         'big',
       ],
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseTextareaDoc,
     },
   },
 };
