@@ -1,11 +1,17 @@
 import BaseCheckbox from '../base-components/BaseCheckbox/BaseCheckbox';
 
+import BaseCheckboxDoc from './docs/BaseCheckboxDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseCheckbox',
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseCheckboxDoc,
     },
   },
 };

@@ -1,11 +1,12 @@
 import BaseSelect from '../base-components/BaseSelect/BaseSelect';
 
+import BaseSelectDoc from './docs/BaseSelectDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseSelect',
   argTypes: {
     itemSlot: { 
       type: 'string[]',
-      description: 'Item slot',
     },
     size: { 
       control: {
@@ -16,7 +17,11 @@ export default {
         'small',
         'big',
       ],
-      description: 'Select size input.',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseSelectDoc,
     },
   },
 };

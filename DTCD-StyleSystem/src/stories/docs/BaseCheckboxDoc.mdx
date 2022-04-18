@@ -1,0 +1,97 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# BaseCheckbox
+
+Элемент, позволяющий включить или отключить какую-либо опцию. Представлен тэгом `<base-checkbox>`. Чекбокс может быть активирован и деактивирован, что соответствует значению свойства `checked` - `true` или `false`.
+
+## Свойства
+
+| Название           | Описание                                                      | Значение              |
+|--------------------|---------------------------------------------------------------|-----------------------|
+| value (deprecated) | Активирует / дезактивирует чекбокс.                           | Логическое            |
+| checked            | Активирует / дезактивирует чекбокс.                           | Логическое            |
+| disabled           | Отлкючает чекбокс.                                            | Логическое            |
+| type               | Тип поля ввода (`<input/>`). По умолчанию равен `checkbox`.   | 'checkbox' \| 'radio' |
+
+## Атрибуты
+
+| Название | Описание                            | Значение   |
+|----------|-------------------------------------|------------|
+| label    | Заголовок для чекбокса.             | Строка     |
+| checked  | Активирует / дезактивирует чекбокс. | Логическое |
+| disabled | Отключает чекбокс.                  | Логическое |
+
+## Слоты
+
+| Название   | Описание                                                                           |
+|------------|------------------------------------------------------------------------------------|
+| (default)  | Слот по умолчанию. Заголовок для чекбокса (работает аналогично свойству `label`).  |
+
+## События
+
+| Название | Описание                                                              |
+|----------|-----------------------------------------------------------------------|
+| input    | Срабатывает при активации или деактивации чекбокса при клике по нему. |
+| change   | Срабатывает при изменении состоянии чекбокса.                         |
+
+## Примеры
+
+Чекбокс без заголовка в активированном состоянии и чекбокс с заголовком, заданным атрибутом label, в дективированном:
+
+<Canvas>
+  <base-checkbox></base-checkbox>
+  <base-checkbox label="Title"></base-checkbox>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-checkbox></base-checkbox>
+<base-checkbox label="Title"></base-checkbox>
+`}
+/>
+
+Заблокированные с помощью атрибута disabled чекбоксы в активированном и деактивированном состоянии:
+
+<Canvas>
+  <base-checkbox disabled></base-checkbox>
+  <base-checkbox disabled checked></base-checkbox>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-checkbox disabled></base-checkbox>
+<base-checkbox disabled checked></base-checkbox>
+`}
+/>
+
+Для отлавливания события input необходимо добавить соответствующий слушатель на элемент. В качестве примера приведен код для VueJS:
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<template>
+  <base-checkbox @input="inputHandler"></base-checkbox>
+</template>
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
+methods: {
+  inputHandler(e) {
+    console.log(e.target.value);
+  },
+},
+`}
+/>
