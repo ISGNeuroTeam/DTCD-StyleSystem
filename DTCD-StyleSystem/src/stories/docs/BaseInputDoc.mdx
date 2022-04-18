@@ -32,6 +32,12 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | input    | Событие ввода данных внутри поля.     |
 | change   | Событие изменения данных внутри поля. |
 
+## Слоты
+
+| Имя события | Описание                     |
+|-------------|------------------------------|
+| label       | Аналогично свойству `label`. |
+
 ## Примеры
 
 Размер поля изменяется с помощью атрибута `size`. Если задано неподдерживаемое значение, то размер кнопки останется средним:
@@ -82,6 +88,25 @@ format={true}
 dark
 code={`
 <base-input label="Title" placeholder="Placeholder"></base-input>
+`}
+/>
+
+Заголовок элемента можно задать с помощью слота `label`:
+
+<Canvas>
+  <base-input placeholder="Placeholder">
+    <span slot="label">Label slot</span>
+  </base-input>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-input placeholder="Placeholder">
+  <span slot="label">Label slot</span>
+</base-input>
 `}
 />
 
