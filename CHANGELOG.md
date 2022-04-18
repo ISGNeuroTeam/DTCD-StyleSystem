@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseButton with icon
 - Label in BaseColorPicker
 - documentation of base components to Storybook
+- BaseFileLoader component
 
 ### Changed
 
