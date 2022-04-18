@@ -1,0 +1,94 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# BaseTooltip
+
+Всплывающая подсказка, представленная тэгом `<base-tooltip>`. Появляется при наведении на элемент-триггер, находящийся в слоте.
+
+## Атрибуты
+
+| Название  | Описание                | Значение                               |
+|-----------|-------------------------|----------------------------------------|
+| content   | Текст подсказки.        | Строка                                 |
+| placement | Расположение подсказки. | 'top' \| 'bottom' \| 'left' \| 'right' |
+
+## Слоты
+
+| Название  | Описание                                                                                               |
+|-----------|--------------------------------------------------------------------------------------------------------|
+| (default) | Слот по умолчанию. Представляет собой элемент-активатор, при наведении на который всплывает подсказка. |
+
+## Примеры
+
+По умолчанию подсказка не содержит текст, но он может быть задан с помощью специального атрибута `content`:
+
+<Canvas>
+  <base-tooltip>
+    <base-button>Hover me</base-button>
+  </base-tooltip>
+  <base-tooltip content="This is tooltip text">
+    <base-button>Hover me</base-button>
+  </base-tooltip>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-tooltip>
+  <base-button>Hover me</base-button>
+</base-tooltip>
+<base-tooltip content="This is tooltip text">
+  <base-button>Hover me</base-button>
+</base-tooltip>
+`}
+/>
+
+По умолчанию подсказка выровнена по верхнему краю. Изменить ее расположение можно с помощью атрибута placement. При указании неподдерживаемого значения для данного атрибута, подсказка будет также будет выровнена по верхнему краю триггера:
+
+<Canvas>
+  <base-tooltip content="This is tooltip text">
+    <base-button>Hover on me</base-button>
+  </base-tooltip>
+  <base-tooltip content="This is tooltip text" placement="top">
+    <base-button>Hover on me</base-button>
+  </base-tooltip>
+  <base-tooltip content="This is tooltip text" placement="bottom">
+    <base-button>Hover on me</base-button>
+  </base-tooltip>
+  <base-tooltip content="This is tooltip text" placement="unsupported">
+    <base-button>Hover on me</base-button>
+  </base-tooltip>
+  <base-tooltip content="This is tooltip text" placement="left">
+    <base-button>Hover on me</base-button>
+  </base-tooltip>
+  <base-tooltip content="This is tooltip text" placement="right">
+    <base-button>Hover on me</base-button>
+  </base-tooltip>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-tooltip content="This is tooltip text">
+  <base-button>Hover on me</base-button>
+</base-tooltip>
+<base-tooltip content="This is tooltip text" placement="top">
+  <base-button>Hover on me</base-button>
+</base-tooltip>
+<base-tooltip content="This is tooltip text" placement="bottom">
+  <base-button>Hover on me</base-button>
+</base-tooltip>
+<base-tooltip content="This is tooltip text" placement="unsupported">
+  <base-button>Hover on me</base-button>
+</base-tooltip>
+<base-tooltip content="This is tooltip text" placement="left">
+  <base-button>Hover on me</base-button>
+</base-tooltip>
+<base-tooltip content="This is tooltip text" placement="right">
+  <base-button>Hover on me</base-button>
+</base-tooltip>
+`}
+/>
