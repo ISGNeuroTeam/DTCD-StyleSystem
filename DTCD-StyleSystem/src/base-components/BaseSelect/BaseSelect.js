@@ -3,7 +3,7 @@ import styles from './BaseSelect.scss';
 
 export default class BaseSelect extends HTMLElement {
   #selectContainer;
-  #headerContainer;
+  #fieldWrapper;
   #header;
   #searchInput;
   #label;
@@ -40,11 +40,15 @@ export default class BaseSelect extends HTMLElement {
 
     this.#selectContainer = this.shadowRoot.querySelector('.BaseSelect');
     this.#header = this.shadowRoot.querySelector('.SelectedValue');
-    this.#headerContainer = this.shadowRoot.querySelector('.FieldWrapper');
+    this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
     this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
 
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#errorMessage = this.shadowRoot.querySelector('.Message');
+
+    this.#fieldWrapper.addEventListener('click', this.#handleFieldWrapperClick);
+    // Search items
+    this.#searchInput.addEventListener('input', this.#handleSearchFieldInput);
   }
 
   get required() {
@@ -212,33 +216,6 @@ export default class BaseSelect extends HTMLElement {
   }
 
   connectedCallback() {
-    this.#headerContainer.addEventListener('click', e => {
-      e.preventDefault();
-      this.toggle();
-
-      if (this.#opened) {
-        // Add option select listener
-        this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
-          optionItem.addEventListener('click', this.#optionClickCallback);
-        });
-      } else {
-        // Remove option select listener
-        this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
-          optionItem.removeEventListener('click', this.#optionClickCallback);
-        });
-      }
-    });
-
-    // Search items
-    this.#searchInput.addEventListener('input', (e) => {
-      const subString = e.target.value.toLowerCase();
-
-      this.querySelectorAll('[slot="item"]').forEach(item => {
-        const target = typeof item.value !== 'undefined' ? item.value.toLowerCase() : item.textContent.toLowerCase();
-        item.style.display = target.includes(subString) ? '' : 'none';
-      });
-    });
-
     // this.validate();
   }
 
@@ -298,5 +275,31 @@ export default class BaseSelect extends HTMLElement {
       default:
         break;
     }
+  }
+
+  #handleFieldWrapperClick = (e) => {
+    e.preventDefault();
+    this.toggle();
+
+    if (this.#opened) {
+      // Add option select listener
+      this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
+        optionItem.addEventListener('click', this.#optionClickCallback);
+      });
+    } else {
+      // Remove option select listener
+      this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
+        optionItem.removeEventListener('click', this.#optionClickCallback);
+      });
+    }
+  }
+
+  #handleSearchFieldInput = (e) => {
+    const subString = e.target.value.toLowerCase();
+
+    this.querySelectorAll('[slot="item"]').forEach(item => {
+      const target = typeof item.value !== 'undefined' ? item.value.toLowerCase() : item.textContent.toLowerCase();
+      item.style.display = target.includes(subString) ? '' : 'none';
+    });
   }
 }
