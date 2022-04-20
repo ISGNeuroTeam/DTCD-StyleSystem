@@ -180,6 +180,10 @@ export default class BaseFileLoader extends HTMLElement {
         this.description = newValue;
         break;
       }
+
+      case 'label':
+        this.label = newValue;
+        break;
     }
   }
 
