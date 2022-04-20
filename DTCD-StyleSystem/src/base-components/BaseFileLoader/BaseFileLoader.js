@@ -9,6 +9,7 @@ export default class BaseFileLoader extends HTMLElement {
   #dropzone;
   #descriptionEl;
   #infoEl;
+  #label;
 
   #dropEvents = [
     {
@@ -53,7 +54,7 @@ export default class BaseFileLoader extends HTMLElement {
   ]
 
   static get observedAttributes() {
-    return ['disabled', 'multiple', 'droppable', 'accept', 'description'];
+    return ['disabled', 'multiple', 'droppable', 'accept', 'description', 'label'];
   }
 
   constructor() {
@@ -127,6 +128,20 @@ export default class BaseFileLoader extends HTMLElement {
   set description(val) {
     const text = typeof val !== 'string' ? 'Загрузить файл' : val;
     this.#descriptionEl.textContent = text;
+  }
+
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    this.querySelectorAll('[slot="label"]').forEach((label) => {
+      label.remove();
+    });
+
+    if (value) {
+      this.innerHTML += `<span slot="label">${value}</span>`;
+    }
   }
 
   disconnectedCallback() {
