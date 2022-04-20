@@ -1,5 +1,7 @@
 import BaseDropdown from '../base-components/BaseDropdown/BaseDropdown';
 
+import BaseDropdownDoc from './docs/BaseDropdownDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseDropdown',
   argTypes: {
@@ -9,7 +11,6 @@ export default {
       },
       options: [
         '<no modification>',
-        'theme_alfa',
       ],
     },
     alignment: { 
@@ -24,11 +25,14 @@ export default {
     },
   },
   parameters: {
+    docs: {
+      page: BaseDropdownDoc,
+    },
     actions: {
       handles: [
         'toggle',
       ],
-    }
+    },
   }
 };
 
