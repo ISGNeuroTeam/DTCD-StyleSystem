@@ -128,9 +128,7 @@ export default class BaseDropdown extends HTMLElement {
   }
   
   #setThemeClasses() {
-    const allThemes = [
-      'theme_alfa',
-    ];
+    const allThemes = [];
 
     const { classList } = this.#dropdown;
     
