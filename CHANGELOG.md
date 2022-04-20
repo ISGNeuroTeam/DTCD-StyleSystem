@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Label in BaseColorPicker
 - GaugeSegmentBuilder stories in Storybook
 - generic dropdown list (BaseDropdown)
+- jest config
 
 ### Changed
 
