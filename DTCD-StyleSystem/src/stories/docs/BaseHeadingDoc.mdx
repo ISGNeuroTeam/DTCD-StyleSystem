@@ -1,0 +1,63 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# BaseHeading
+
+Компонент для отображения и стилизации заголовков, представленный тегом `<base-heading>`.
+
+## Свойства
+
+| Название | Описание                                     | Значение                                        |
+|----------|----------------------------------------------|-------------------------------------------------|
+| theme    | Варианты отображения заголовка.              | Массив с названиями тем: ['theme_titleHeavy' \| 'theme_titleLight' \| 'theme_headerHeavy' \| 'theme_headerLight' \| 'theme_subheader' \| 'theme_subheaderSmall']. |
+
+## Атрибуты
+
+| Название | Описание                                     | Значение                                        |
+|----------|----------------------------------------------|-------------------------------------------------|
+| theme    | Варианты отображения заголовка. | Название тем через запятую: 'theme_titleHeavy' \| 'theme_titleLight' \| 'theme_headerHeavy' \| 'theme_headerLight' \| 'theme_subheader' \| 'theme_subheaderSmall'.|
+
+## Слоты
+
+| Название  | Описание                                                           |
+|-----------|--------------------------------------------------------------------|
+| (default) | Слот по умолчанию. В него нужно поместить тег с текстом заголовка. |
+
+## Примеры
+
+Самый большой заголовок:
+
+<Canvas>
+  <base-heading>
+    <h1>ISG Neuro is a Russian technology company.</h1>
+  </base-heading>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-heading>
+  <h1>ISG Neuro is a Russian technology company.</h1>
+</base-heading>
+`}
+/>
+
+Заголовок четвертого уровня:
+
+<Canvas>
+  <base-heading theme="theme_subheaderSmall">
+    <p>ISG Neuro is a Russian technology company.</p>
+  </base-heading>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-heading theme="theme_subheaderSmall">
+  <p>ISG Neuro is a Russian technology company.</p>
+</base-heading>
+`}
+/>

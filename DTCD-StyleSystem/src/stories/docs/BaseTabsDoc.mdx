@@ -1,0 +1,57 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# BaseTabs
+
+Компонент для переключения содержимого, находящегося внутри него, представленный тэгом `<base-tabs>`.
+
+## Слоты
+
+| Название | Описание                         |
+|----------|----------------------------------|
+| tab      | Представляет собой одну вкладку. |
+
+## Примеры
+
+Задать вкладки можно с помощью соответствующего слота, в качестве которого могут выступать различные элементы:
+
+<Canvas>
+  <base-tabs>
+    <div slot="tab">Tab 1 content</div>
+    <span slot="tab">Tab 2 content</span>
+    <p slot="tab">Tab 3 content</p>
+  </base-tabs>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-tabs>
+  <div slot="tab">Tab 1 content</div>
+  <span slot="tab">Tab 2 content</span>
+  <p slot="tab">Tab 3 content</p>
+</base-tabs>
+`}
+/>
+
+В качестве заголовка вкладки, по умолчанию, указывается 'Tab', но его можно переопределить с помощью специального атрибута `tab-name`, заданного для вкладки в слоте:
+
+<Canvas withSource="true">
+  <base-tabs>
+    <div slot="tab">Tab 1 content</div>
+    <div slot="tab" tab-name="Test">Tab 2 content</div>
+  </base-tabs>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-tabs>
+  <div slot="tab">Tab 1 content</div>
+  <div slot="tab" tab-name="Test">Tab 2 content</div>
+</base-tabs>
+`}
+/>

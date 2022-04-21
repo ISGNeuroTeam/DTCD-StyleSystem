@@ -58,9 +58,7 @@ export default class BaseRadioGroup extends HTMLElement {
   }
 
   #getRadioButtons() {
-    return this.#slot.assignedElements().filter(
-      el => el.tagName.toLowerCase() === 'base-radio'
-    );
+    return this.querySelectorAll('base-radio');
   }
 
 }

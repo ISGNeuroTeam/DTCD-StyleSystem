@@ -1,11 +1,17 @@
 import BaseExpanderGroup from '../base-components/BaseExpanderGroup/BaseExpanderGroup';
 
+import BaseExpanderGroupDoc from './docs/BaseExpanderGroupDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseExpander',
   argTypes: {
     itemSlot: { 
       type: 'string[]',
-      description: 'Slot "item"',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseExpanderGroupDoc,
     },
   },
 };

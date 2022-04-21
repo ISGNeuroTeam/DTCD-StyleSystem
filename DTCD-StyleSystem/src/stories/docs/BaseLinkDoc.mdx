@@ -1,0 +1,52 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# BaseLink
+
+Базовый элемент ссылки, представленный тэгом `<base-link>`.
+
+## Атрибуты
+
+| Название | Описание                                                                                                       | Значение |
+|----------|----------------------------------------------------------------------------------------------------------------|----------|
+| href     | Адрес ссылки ([см. подробнее](https://developer.mozilla.org/ru/docs/Web/HTML/Element/A#attr-href)).            | Строка   |
+| target   | Место открытия ссылки ([см. подробнее](https://developer.mozilla.org/ru/docs/Web/HTML/Element/A#attr-target)). | Строка   |
+
+## Слоты
+
+| Название  | Описание                                                     |
+|-----------|--------------------------------------------------------------|
+| (default) | Слот по умолчанию. Отвечает за внутреннее содержимое ссылки. |
+
+## Примеры
+
+По умолчанию, ссылка содержит текст “Link”, который может быть заменен с помощью слота:
+
+<Canvas>
+  <base-link></base-link>
+  <base-link>Custom Link</base-link>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-link></base-link>
+<base-link>Custom Link</base-link>
+`}
+/>
+
+Адрес ссылки может быть задан с помощью атрибута href, при этом текст ссылки становится подчеркнутым. Место открытия ссылки задается атрибутом target:
+
+<Canvas>
+  <base-link href="http://ya.ru" target="_blank"></base-link>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-link href="http://ya.ru" target="_blank"></base-link>
+`}
+/>

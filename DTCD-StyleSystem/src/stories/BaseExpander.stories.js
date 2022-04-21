@@ -1,5 +1,7 @@
 import BaseExpander from '../base-components/BaseExpander/BaseExpander';
 
+import BaseExpanderDoc from './docs/BaseExpanderDoc.mdx';
+
 // More on default export: https://storybook.js.org/docs/web-components/writing-stories/introduction#default-export
 export default {
   title: 'Example/BaseComponents/BaseExpander',
@@ -7,15 +9,12 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     summarySlot: { 
       type: 'string',
-      description: 'Slot "summary"',
     },
     iconSlot: { 
       type: 'string',
-      description: 'Slot "icon"',
     },
     theme: { 
       control: {
@@ -25,7 +24,6 @@ export default {
         '',
         'with_borderBottom',
       ],
-      description: 'Configuration view component',
     },
     open: {
       type: 'boolean',
@@ -36,6 +34,11 @@ export default {
       }
     },
   },
+  parameters: {
+    docs: {
+      page: BaseExpanderDoc,
+    }
+  }
 };
 
 const NAME_COMPONENT = 'base-expander';
