@@ -45,10 +45,6 @@ export default class BaseSelect extends HTMLElement {
 
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#errorMessage = this.shadowRoot.querySelector('.Message');
-
-    this.#fieldWrapper.addEventListener('click', this.#handleFieldWrapperClick);
-    // Search items
-    this.#searchInput.addEventListener('input', this.#handleSearchFieldInput);
   }
 
   get required() {
@@ -216,7 +212,17 @@ export default class BaseSelect extends HTMLElement {
   }
 
   connectedCallback() {
+    this.#fieldWrapper.addEventListener('click', this.#handleFieldWrapperClick);
+
+    // Search items
+    this.#searchInput.addEventListener('input', this.#handleSearchFieldInput);
+    
     // this.validate();
+  }
+
+  disconnectedCallback() {
+    this.#fieldWrapper.removeEventListener('click', this.#handleFieldWrapperClick);
+    this.#searchInput.removeEventListener('input', this.#handleSearchFieldInput);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
