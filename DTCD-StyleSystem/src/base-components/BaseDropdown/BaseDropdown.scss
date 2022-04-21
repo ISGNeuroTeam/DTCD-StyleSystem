@@ -1,0 +1,66 @@
+:host {
+  display: inline-block;
+}
+
+.BaseDropdown {
+  position: relative;
+
+  &,
+  .ToggleBtn {
+    height: 100%;
+  }
+
+  .ToggleBtn {
+    padding: 0;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .Arrow {
+    flex: none;
+  }
+
+  .Arrow > *,
+  ::slotted([slot="icon-arrow"]) {
+    transform: rotate(0);
+    transition: .3s;
+  }
+
+  .DropdownContent {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    max-width: 100vw;
+    width: max-content;
+  }
+
+  &.alignment_right {
+    .DropdownContent {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  &.alignment_center {
+    .DropdownContent {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+  }
+
+  &.opened {
+    .Arrow > *,
+    ::slotted([slot="icon-arrow"]) {
+      transform: rotate(180deg);
+    }
+
+    .DropdownContent {
+      display: block;
+    }
+  }
+}
