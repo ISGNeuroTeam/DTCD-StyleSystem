@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'datacad-icons';
+  src:  url('fonts/datacad-icons.eot?eoa3a5');
+  src:  url('fonts/datacad-icons.eot?eoa3a5#iefix') format('embedded-opentype'),
+    url('fonts/datacad-icons.ttf?eoa3a5') format('truetype'),
+    url('fonts/datacad-icons.woff?eoa3a5') format('woff'),
+    url('fonts/datacad-icons.svg?eoa3a5#datacad-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.FontIcon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'datacad-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.FontIcon.name_caretDown:before {
+  content: "\e900";
+}
+.FontIcon.name_chevronDown:before {
+  content: "\e901";
+}
