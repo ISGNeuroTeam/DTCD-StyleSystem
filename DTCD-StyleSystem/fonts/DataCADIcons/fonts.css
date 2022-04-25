@@ -1,5 +1,27 @@
 @import './style.css';
 
-.FontIcon.size_2x {
+.FontIcon {
+  font-size: 17px;
+}
+
+.FontIcon.size_2xs {
+  font-size: 11px;
+}
+.FontIcon.size_xs {
+  font-size: 13px;
+}
+.FontIcon.size_sm {
+  font-size: 15px;
+}
+.FontIcon.size_lg {
   font-size: 24px;
+}
+.FontIcon.size_xl {
+  font-size: 32px;
+}
+.FontIcon.size_2xl {
+  font-size: 42px;
+}
+.FontIcon.size_3xl {
+  font-size: 56px;
 }

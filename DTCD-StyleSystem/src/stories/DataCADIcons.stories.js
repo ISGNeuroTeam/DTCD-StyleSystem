@@ -4,19 +4,6 @@ import BaseTooltipDoc from './docs/BaseTooltipDoc.mdx';
 
 export default {
   title: 'Example/Icons/DataCADIcons',
-  argTypes: {
-    size: { 
-      control: {
-        type: 'select',
-      },
-      options: [
-        '1x',
-        '2x',
-        '3x',
-        '4x',
-      ],
-    },
-  },
   parameters: {
     docs: {
       page: BaseTooltipDoc,
@@ -34,23 +21,6 @@ const Template = (args) => {
   iconsContainer.style.columnGap = '20px';
   iconsContainer.style.rowGap = '20px';
   iconsContainer.style.flexWrap = 'wrap';
-
-  // switch (size) {
-  //   case '2x':
-  //     icon.classList.add('size_2x');
-  //     break;
-
-  //   case '3x':
-  //     icon.classList.add('size_3x');
-  //     break;
-
-  //   case '4x':
-  //     icon.classList.add('size_4x');
-  //     break;
-  
-  //   default:
-  //     break;
-  // }
 
   iconmoonJson.icons.forEach((iconData) => {
     const iconWrapper = document.createElement('div');
@@ -76,6 +46,4 @@ const Template = (args) => {
 };
 
 export const AllDataCADIcons = Template.bind({});
-AllDataCADIcons.args = {
-  size: '1x',
-};
+AllDataCADIcons.args = {};
