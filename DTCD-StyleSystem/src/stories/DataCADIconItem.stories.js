@@ -49,7 +49,7 @@ export default {
         'flip_both',
       ],
     },
-    rotate_custom: {
+    '--font-icon-rotate-angle': {
       control: {
         type: 'number',
       },
@@ -67,7 +67,7 @@ const Template = (args) => {
     size,
     name,
     rotate,
-    rotate_custom,
+    rotate_custom = args['--font-icon-rotate-angle'],
   } = args;
 
   const icon = document.createElement('span');
@@ -98,5 +98,5 @@ Icon.args = {
   size: '<default>',
   name: ICON_NAMES[0],
   rotate: '<default>',
-  rotate_custom: 0,
+  '--font-icon-rotate-angle': 0,
 };

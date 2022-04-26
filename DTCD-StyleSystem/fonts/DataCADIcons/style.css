@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'datacad-icons';
-  src:  url('fonts/datacad-icons.eot?eoa3a5');
-  src:  url('fonts/datacad-icons.eot?eoa3a5#iefix') format('embedded-opentype'),
-    url('fonts/datacad-icons.ttf?eoa3a5') format('truetype'),
-    url('fonts/datacad-icons.woff?eoa3a5') format('woff'),
-    url('fonts/datacad-icons.svg?eoa3a5#datacad-icons') format('svg');
+  src:  url('fonts/datacad-icons.eot?z91ap7');
+  src:  url('fonts/datacad-icons.eot?z91ap7#iefix') format('embedded-opentype'),
+    url('fonts/datacad-icons.ttf?z91ap7') format('truetype'),
+    url('fonts/datacad-icons.woff?z91ap7') format('woff'),
+    url('fonts/datacad-icons.svg?z91ap7#datacad-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,9 +25,235 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.FontIcon.name_slider02:before {
+  content: "\e902";
+}
+.FontIcon.name_slider01:before {
+  content: "\e903";
+}
+.FontIcon.name_shareOutline:before {
+  content: "\e904";
+}
+.FontIcon.name_share:before {
+  content: "\e905";
+}
+.FontIcon.name_unfoldMore:before {
+  content: "\e906";
+}
+.FontIcon.name_unfoldLess:before {
+  content: "\e907";
+}
+.FontIcon.name_expand:before {
+  content: "\e908";
+}
+.FontIcon.name_shrink:before {
+  content: "\e909";
+}
+.FontIcon.name_settingsFuture:before {
+  content: "\e90a";
+}
+.FontIcon.name_settingsFilled:before {
+  content: "\e90b";
+}
+.FontIcon.name_settings:before {
+  content: "\e90c";
+}
+.FontIcon.name_slider03:before {
+  content: "\e90d";
+}
+.FontIcon.name_refresh02:before {
+  content: "\e90e";
+}
+.FontIcon.name_refresh:before {
+  content: "\e90f";
+}
+.FontIcon.name_radioFilled:before {
+  content: "\e910";
+}
+.FontIcon.name_radio:before {
+  content: "\e911";
+}
+.FontIcon.name_thin_long_02_down:before {
+  content: "\e912";
+  color: #17569b;
+}
+.FontIcon.name_thinBigDown:before {
+  content: "\e913";
+}
+.FontIcon.name_image:before {
+  content: "\e914";
+}
+.FontIcon.name_imageAlt:before {
+  content: "\e915";
+}
+.FontIcon.name_phoneOutline:before {
+  content: "\e916";
+}
+.FontIcon.name_phone:before {
+  content: "\e917";
+}
+.FontIcon.name_unlink:before {
+  content: "\e918";
+}
+.FontIcon.name_map:before {
+  content: "\e919";
+}
+.FontIcon.name_mailOpen:before {
+  content: "\e91a";
+}
+.FontIcon.name_mail:before {
+  content: "\e91b";
+}
+.FontIcon.name_thinLongDown:before {
+  content: "\e91c";
+}
+.FontIcon.name_subLeft:before {
+  content: "\e91d";
+}
+.FontIcon.name_smallLongDown:before {
+  content: "\e91e";
+}
+.FontIcon.name_trashFull:before {
+  content: "\e91f";
+}
+.FontIcon.name_trashEmpty:before {
+  content: "\e920";
+}
+.FontIcon.name_locationOutline:before {
+  content: "\e921";
+}
+.FontIcon.name_location:before {
+  content: "\e922";
+}
+.FontIcon.name_link:before {
+  content: "\e923";
+}
+.FontIcon.name_layersAlt:before {
+  content: "\e924";
+}
+.FontIcon.name_layers:before {
+  content: "\e925";
+}
+.FontIcon.name_shortDown:before {
+  content: "\e926";
+}
+.FontIcon.name_tag:before {
+  content: "\e927";
+}
+.FontIcon.name_tagOutline:before {
+  content: "\e928";
+}
+.FontIcon.name_label:before {
+  content: "\e929";
+}
+.FontIcon.name_helpQuestionmark:before {
+  content: "\e92a";
+}
+.FontIcon.name_helpCircleOutline:before {
+  content: "\e92b";
+}
+.FontIcon.name_helpCircle:before {
+  content: "\e92c";
+}
+.FontIcon.name_heartOutline:before {
+  content: "\e92d";
+}
+.FontIcon.name_heartFill:before {
+  content: "\e92e";
+}
+.FontIcon.name_lastPage:before {
+  content: "\e92f";
+}
+.FontIcon.name_longDown:before {
+  content: "\e930";
+}
+.FontIcon.name_flagOutline:before {
+  content: "\e931";
+}
+.FontIcon.name_flagFill:before {
+  content: "\e932";
+}
+.FontIcon.name_downloadDone:before {
+  content: "\e933";
+}
+.FontIcon.name_checkBold:before {
+  content: "\e934";
+}
+.FontIcon.name_checkAllBig:before {
+  content: "\e935";
+}
+.FontIcon.name_checkBig:before {
+  content: "\e936";
+}
+.FontIcon.name_checkAll:before {
+  content: "\e937";
+}
+.FontIcon.name_check:before {
+  content: "\e938";
+}
+.FontIcon.name_circleDown:before {
+  content: "\e939";
+}
+.FontIcon.name_circleChevronDown:before {
+  content: "\e93a";
+}
+.FontIcon.name_creditCardAlt:before {
+  content: "\e93b";
+}
+.FontIcon.name_creditCard:before {
+  content: "\e93c";
+}
+.FontIcon.name_loading:before {
+  content: "\e93d";
+}
+.FontIcon.name_confused:before {
+  content: "\e93e";
+}
+.FontIcon.name_command:before {
+  content: "\e93f";
+}
+.FontIcon.name_externalLink:before {
+  content: "\e940";
+}
+.FontIcon.name_clock:before {
+  content: "\e941";
+}
+.FontIcon.name_stopwatch:before {
+  content: "\e942";
+}
+.FontIcon.name_chevronDown:before {
+  content: "\e943";
+}
+.FontIcon.name_chevronDuoDown:before {
+  content: "\e944";
+}
+.FontIcon.name_circleCheckOutline:before {
+  content: "\e945";
+}
+.FontIcon.name_circleCheck:before {
+  content: "\e946";
+}
+.FontIcon.name_checkboxSquare:before {
+  content: "\e947";
+}
+.FontIcon.name_checkboxChecked:before {
+  content: "\e948";
+}
+.FontIcon.name_checkbox:before {
+  content: "\e949";
+}
+.FontIcon.name_download:before {
+  content: "\e94a";
+}
+.FontIcon.name_alarmAdd:before {
+  content: "\e94b";
+}
+.FontIcon.name_alarm:before {
+  content: "\e94c";
+}
 .FontIcon.name_caretDown:before {
   content: "\e900";
 }
-.FontIcon.name_chevronDown:before {
+.FontIcon.name_chevronBigDown:before {
   content: "\e901";
 }
