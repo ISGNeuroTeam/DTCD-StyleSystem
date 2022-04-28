@@ -69,6 +69,7 @@ export default class BaseFileLoader extends HTMLElement {
     this.shadowRoot.append(style, template.content.cloneNode(true));
 
     this.#input = this.shadowRoot.getElementById('input');
+    this.#label = this.shadowRoot.getElementById('label');
     this.#dropzone = this.shadowRoot.getElementById('dropzone');
     this.#infoEl = this.shadowRoot.getElementById('info');
     this.#descriptionEl = this.shadowRoot.getElementById('description');
@@ -144,13 +145,6 @@ export default class BaseFileLoader extends HTMLElement {
     }
   }
 
-  disconnectedCallback() {
-    this.#input.oninput = null;
-    this.#dropEvents.forEach(
-      event => this.#dropzone[`on${event.name}`] = null
-    );
-  }
-
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled': {
@@ -205,7 +199,7 @@ export default class BaseFileLoader extends HTMLElement {
     const { name, type } = file;
 
     if (!this.accept) return true;
-    this.addEventListener
+
     const checks = this.accept.split(',').map(str => {
       const format = str.trim();
       const validCases = [

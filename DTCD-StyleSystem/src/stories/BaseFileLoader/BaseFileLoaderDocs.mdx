@@ -14,6 +14,7 @@ import { Canvas, Story } from '@storybook/addon-docs';
 | `droppable`    | Режим Drag & Drop                    | `Boolean` |
 | `accept`       | Фильтрация типов принимаемых файлов  | `String`  |
 | `description`  | Выводимое описание                   | `String`  |
+| `label`        | Лейбл над элементом                  | `String`  |
 
 \* свойство `value` предоставляется только для чтения.
 
@@ -26,12 +27,14 @@ import { Canvas, Story } from '@storybook/addon-docs';
 | `droppable`    | Режим Drag & Drop                    | `Boolean` |
 | `accept`       | Фильтрация типов принимаемых файлов  | `String`  |
 | `description`  | Выводимое описание                   | `String`  |
+| `label`        | Лейбл над элементом                  | `String`  |
 
 ## Слоты
 
 | Название       | Описание                                         |
 |:---------------|:-------------------------------------------------|
 | `icon`         | Выводимая иконка                                 |
+| `label`        | Лейбл над элементом                              |
 
 ## События
 
@@ -122,6 +125,33 @@ baseFileLoader.description = 'Выберите файл или картинку'
 ```
 
 <base-file-loader description={ 'Выберите файл или картинку' }></base-file-loader>
+
+### Лейбл элемента
+
+Лейбл над элементов может быть задан с помощью свойства или трибута `label`, а также с помощью
+соответствующего слота.
+
+```
+baseFileLoader.label = 'Выберите файл';
+```
+
+```
+<base-file-loader label="Выберите файл"></base-file-loader>
+```
+
+<base-file-loader label="Выберите файл"></base-file-loader>
+
+В случае, если одновременно задан и атрибут и слот, приоритет имеет значение атрибута:
+
+```
+<base-file-loader label="Лейбл из атрибута">
+  <span slot="label">Лейбл из слота</span>
+</base-file-loader>
+```
+
+<base-file-loader label="Лейбл из атрибута">
+  <span slot="label">Лейбл из слота</span>
+</base-file-loader>
 
 ### Иконка компонента
 

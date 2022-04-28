@@ -26,7 +26,7 @@ input {
   transform: scale(0);
   z-index: -1;
 
-  &:disabled + .BaseFileLoader {
+  &:disabled ~ .BaseFileLoader {
     cursor: not-allowed;
   }
 }
@@ -38,7 +38,7 @@ input {
   line-height: 1.18;
   color: var(--text_main);
   letter-spacing: .25px;
-  
+
   ::slotted([slot="label"]) {
     display: block;
     padding-bottom: 4px;
