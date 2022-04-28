@@ -2,10 +2,7 @@ import iconmoonJson from '../../fonts/DataCADIcons/selection.json';
 
 import BaseTooltipDoc from './docs/BaseTooltipDoc.mdx';
 
-const ICON_NAMES = [];
-iconmoonJson.icons.forEach((iconData) => {
-  ICON_NAMES.push(iconData.properties.name);
-});
+const ICON_NAMES = iconmoonJson.icons.map((iconData) => iconData.properties.name).sort();
 
 export default {
   title: 'Example/Icons/DataCADIcons',
@@ -14,7 +11,7 @@ export default {
       control: {
         type: 'select',
       },
-      options: [...ICON_NAMES],
+      options: ICON_NAMES,
     },
     size: { 
       control: {
@@ -53,7 +50,12 @@ export default {
       control: {
         type: 'number',
       },
-    }
+    },
+    color: {
+      control: {
+        type: 'color',
+      },
+    },
   },
   parameters: {
     docs: {
@@ -68,6 +70,7 @@ const Template = (args) => {
     name,
     rotate,
     rotate_custom = args['--font-icon-rotate-angle'],
+    color,
   } = args;
 
   const icon = document.createElement('span');
@@ -90,6 +93,8 @@ const Template = (args) => {
     icon.setAttribute('style', `--font-icon-rotate-angle: ${rotate_custom}deg;`);
   }
 
+  color ? icon.style.color = color : false;
+
   return icon;
 };
 
@@ -99,4 +104,5 @@ Icon.args = {
   name: ICON_NAMES[0],
   rotate: '<default>',
   '--font-icon-rotate-angle': 0,
+  color: '',
 };
