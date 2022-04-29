@@ -20,6 +20,7 @@
 
   .Arrow {
     flex: none;
+    cursor: pointer;
   }
 
   .Arrow > *,
@@ -50,6 +51,28 @@
       left: 50%;
       right: auto;
       transform: translateX(-50%);
+    }
+  }
+
+  &.placement_rightStart {
+    .DropdownContent {
+      top: 0;
+      left: 100%;
+    }
+  }
+
+  &.placement_leftStart {
+    .DropdownContent {
+      top: 0;
+      left: auto;
+      right: 100%;
+    }
+  }
+
+  &.placement_top {
+    .DropdownContent {
+      top: auto;
+      bottom: 100%;
     }
   }
 

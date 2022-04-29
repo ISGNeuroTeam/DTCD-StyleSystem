@@ -6,10 +6,12 @@ import {Canvas, Source} from '@storybook/addon-docs';
 
 ## Свойства
 
-| Название | Описание                                     | Значение                                        |
-|----------|----------------------------------------------|-------------------------------------------------|
-| theme    | Варианты отображения выпадающего списка.     | Массив с названиями тем.                        |
-| opened   | Открыт или раскрыт выпадающий список.        | Логическое                                      |
+| Название  | Описание                                                                 | Значение                             |
+|-----------|--------------------------------------------------------------------------|--------------------------------------|
+| theme     | Варианты отображения выпадающего списка.                                 | Массив с названиями тем.             |
+| opened    | Открыт или раскрыт выпадающий список.                                    | Логическое                           |
+| alignment | Расположение скрытого содержимого по горизонтали.                        | 'right' \| 'center'                  |
+| placement | Расположение скрытого содержимого относительно родительского контейнера. | 'top' \| 'rightStart' \| 'leftStart' |
 
 ## Атрибуты
 
@@ -65,6 +67,48 @@ code={`
   <span slot="toggle-btn">toggle button</span>
   <span slot="icon-arrow">v</span>
   lorem ipsum
+</base-dropdown>
+`}
+/>
+
+Чтобы расположить контейнер со скрытым содержимым по центру, нужно добавить атрибут/свойство `alignment="center"`:
+
+<Canvas>
+  <base-dropdown alignment="center">
+    <span slot="toggle-btn">toggle button</span>
+    center alignment
+  </base-dropdown>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-dropdown alignment="center">
+  <span slot="toggle-btn">toggle button</span>
+  center alignment
+</base-dropdown>
+`}
+/>
+
+Чтобы расположить контейнер со скрытым содержимым сверху, нужно добавить атрибут/свойство `placement="top"`:
+
+<Canvas>
+  <base-dropdown placement="top">
+    <span slot="toggle-btn">toggle button</span>
+    top location
+  </base-dropdown>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-dropdown placement="top">
+  <span slot="toggle-btn">toggle button</span>
+  top location
 </base-dropdown>
 `}
 />

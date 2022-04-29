@@ -23,6 +23,17 @@ export default {
         'center',
       ],
     },
+    placement: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'rightStart',
+        'leftStart',
+        'top',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -45,12 +56,14 @@ const Template = (args) => {
     theme = [],
     slot,
     alignment,
+    placement,
     opened,
   } = args;
 
   const dropdown = document.createElement(NAME_COMPONENT);
   dropdown.theme = theme;
   dropdown.alignment = alignment;
+  dropdown.placement = placement;
   dropdown.opened = opened;
   dropdown.innerHTML += slot;
   dropdown.innerHTML += args['toggle-btn'];
@@ -61,10 +74,11 @@ const Template = (args) => {
 
 export const DefaultDropdown = Template.bind({});
 DefaultDropdown.args = {
-  slot: 'lorem qwe ad qwd zxd weg dxc qwa das',
+  slot: '<div>lorem qwe ad qwd zxd weg dxc qwa das</div>',
   'toggle-btn': '<span slot="toggle-btn">toggle button</span>',
   'icon-arrow': '',
   theme: [],
   alignment: undefined,
+  placement: undefined,
   opened: false,
 };
