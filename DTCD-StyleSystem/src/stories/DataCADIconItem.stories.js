@@ -80,12 +80,12 @@ const Template = (args) => {
     icon.classList.add(`name_${name}`);
   }
 
-  if (size && size != '<defalut>') {
+  if (size && size != '<default>') {
     icon.classList.add(`size_${size}`);
   }
 
   if (!rotate_custom) {
-    if (rotate && rotate != '<defalut>') {
+    if (rotate && rotate != '<default>') {
       icon.classList.add(rotate);
     }
   } else {
