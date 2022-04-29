@@ -45,6 +45,13 @@
     }
   }
 
+  &.placement_rightTop {
+    .DropdownContent {
+      top: 0;
+      left: 100%;
+    }
+  }
+
   &.alignment_center {
     .DropdownContent {
       left: 50%;

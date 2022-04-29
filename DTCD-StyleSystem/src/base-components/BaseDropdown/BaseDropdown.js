@@ -8,12 +8,14 @@ export default class BaseDropdown extends HTMLElement {
   #theme = [];
   #opened = false;
   #alignment;
+  #placement;
 
   static get observedAttributes() {
     return [
       'theme',
       'alignment',
       'opened',
+      'placement'
     ];
   }
 
@@ -63,6 +65,14 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
+  set placement (newValue) {
+    if (newValue) {
+      this.setAttribute('placement', newValue);
+    } else {
+      this.removeAttribute('placement');
+    }
+  }
+
   get opened() {
     return this.#opened;
   }
@@ -89,6 +99,11 @@ export default class BaseDropdown extends HTMLElement {
       case 'alignment':
         this.#alignment = newValue ? newValue : undefined;
         this.#setAlignmentClasses();
+        break;
+
+      case 'placement':
+        this.#placement = newValue ? newValue : undefined;
+        this.#setPlacementClasses();
         break;
 
       case 'opened':
@@ -154,6 +169,16 @@ export default class BaseDropdown extends HTMLElement {
       classList.add('alignment_center');
     } else {
       classList.remove('alignment_center');
+    }
+  }
+
+  #setPlacementClasses() {
+    const { classList } = this.#dropdown;
+
+    if (this.#placement === 'rightTop') {
+      classList.add('placement_rightTop');
+    } else {
+      classList.remove('placement_rightTop');
     }
   }
 

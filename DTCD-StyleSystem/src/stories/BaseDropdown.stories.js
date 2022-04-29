@@ -23,6 +23,15 @@ export default {
         'center',
       ],
     },
+    placement: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'rightTop',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -45,12 +54,14 @@ const Template = (args) => {
     theme = [],
     slot,
     alignment,
+    placement,
     opened,
   } = args;
 
   const dropdown = document.createElement(NAME_COMPONENT);
   dropdown.theme = theme;
   dropdown.alignment = alignment;
+  dropdown.placement = placement;
   dropdown.opened = opened;
   dropdown.innerHTML += slot;
   dropdown.innerHTML += args['toggle-btn'];
@@ -66,5 +77,6 @@ DefaultDropdown.args = {
   'icon-arrow': '',
   theme: [],
   alignment: undefined,
+  placement: undefined,
   opened: false,
 };
