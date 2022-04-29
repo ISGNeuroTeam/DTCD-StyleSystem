@@ -46,18 +46,33 @@
     }
   }
 
-  &.placement_rightTop {
+  &.alignment_center {
+    .DropdownContent {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+  }
+
+  &.placement_rightStart {
     .DropdownContent {
       top: 0;
       left: 100%;
     }
   }
 
-  &.alignment_center {
+  &.placement_leftStart {
     .DropdownContent {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
+      top: 0;
+      left: auto;
+      right: 100%;
+    }
+  }
+
+  &.placement_top {
+    .DropdownContent {
+      top: auto;
+      bottom: 100%;
     }
   }
 

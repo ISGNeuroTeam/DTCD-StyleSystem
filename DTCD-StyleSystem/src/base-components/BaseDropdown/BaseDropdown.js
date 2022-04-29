@@ -175,10 +175,22 @@ export default class BaseDropdown extends HTMLElement {
   #setPlacementClasses() {
     const { classList } = this.#dropdown;
 
-    if (this.#placement === 'rightTop') {
-      classList.add('placement_rightTop');
+    if (this.#placement === 'rightStart') {
+      classList.add('placement_rightStart');
     } else {
-      classList.remove('placement_rightTop');
+      classList.remove('placement_rightStart');
+    }
+
+    if (this.#placement === 'leftStart') {
+      classList.add('placement_leftStart');
+    } else {
+      classList.remove('placement_leftStart');
+    }
+
+    if (this.#placement === 'top') {
+      classList.add('placement_top');
+    } else {
+      classList.remove('placement_top');
     }
   }
 

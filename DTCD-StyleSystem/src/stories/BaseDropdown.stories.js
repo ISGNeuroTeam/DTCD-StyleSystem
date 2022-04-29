@@ -29,7 +29,9 @@ export default {
       },
       options: [
         '<no modification>',
-        'rightTop',
+        'rightStart',
+        'leftStart',
+        'top',
       ],
     },
   },
@@ -72,7 +74,7 @@ const Template = (args) => {
 
 export const DefaultDropdown = Template.bind({});
 DefaultDropdown.args = {
-  slot: 'lorem qwe ad qwd zxd weg dxc qwa das',
+  slot: '<div>lorem qwe ad qwd zxd weg dxc qwa das</div>',
   'toggle-btn': '<span slot="toggle-btn">toggle button</span>',
   'icon-arrow': '',
   theme: [],
