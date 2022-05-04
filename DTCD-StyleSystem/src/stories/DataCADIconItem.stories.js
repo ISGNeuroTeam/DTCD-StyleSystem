@@ -18,10 +18,11 @@ export default {
         type: 'select',
       },
       options: [
+        '<default>',
         '2xs',
         'xs',
         'sm',
-        '<default>',
+        'md',
         'lg',
         'xl',
         '2xl',

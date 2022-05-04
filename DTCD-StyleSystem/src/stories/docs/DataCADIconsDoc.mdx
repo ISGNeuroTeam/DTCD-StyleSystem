@@ -22,13 +22,14 @@ code={`
 `}
 />
 
-Стандартный размер иконок - `17px`. Чтобы изменить размер, нужно добавить класс-модификатор. Модификаторы соответствуют размерам текста из UI-kit. Так как иконки являются шрифтом, то они стилизуются, как текст.
+Размер иконок задается css-правилом `font-size` и по-умолчаниию наследуется от родительского тега. Чтобы изменить размер, нужно добавить класс-модификатор. Модификаторы соответствуют размерам текста из UI-kit. Так как иконки являются шрифтом, то они стилизуются, как текст.
 
 <Canvas>
+  <span className="FontIcon name_flagFill"></span>
   <span className="FontIcon name_flagFill size_2xs"></span>
   <span className="FontIcon name_flagFill size_xs"></span>
   <span className="FontIcon name_flagFill size_sm"></span>
-  <span className="FontIcon name_flagFill"></span>
+  <span className="FontIcon name_flagFill size_md"></span>
   <span className="FontIcon name_flagFill size_lg"></span>
   <span className="FontIcon name_flagFill size_xl"></span>
   <span className="FontIcon name_flagFill size_2xl"></span>
@@ -39,10 +40,11 @@ language='html'
 format={true}
 dark
 code={`
+<span class="FontIcon name_flagFill"></span>
 <span class="FontIcon name_flagFill size_2xs"></span>
 <span class="FontIcon name_flagFill size_xs"></span>
 <span class="FontIcon name_flagFill size_sm"></span>
-<span class="FontIcon name_flagFill"></span>
+<span class="FontIcon name_flagFill size_md"></span>
 <span class="FontIcon name_flagFill size_lg"></span>
 <span class="FontIcon name_flagFill size_xl"></span>
 <span class="FontIcon name_flagFill size_2xl"></span>

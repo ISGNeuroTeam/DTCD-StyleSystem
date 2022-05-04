@@ -2,7 +2,6 @@
 
 .FontIcon {
   display: inline-block;
-  font-size: 17px;
 }
 
 .FontIcon.size_2xs {
@@ -13,6 +12,9 @@
 }
 .FontIcon.size_sm {
   font-size: 15px;
+}
+.FontIcon.size_md {
+  font-size: 17px;
 }
 .FontIcon.size_lg {
   font-size: 24px;
