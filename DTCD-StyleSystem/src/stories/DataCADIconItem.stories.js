@@ -1,6 +1,6 @@
 import iconmoonJson from '../../fonts/DataCADIcons/selection.json';
 
-import BaseTooltipDoc from './docs/BaseTooltipDoc.mdx';
+import DataCADIconsDoc from './docs/DataCADIconsDoc.mdx';
 
 const ICON_NAMES = iconmoonJson.icons.map((iconData) => iconData.properties.name).sort();
 
@@ -59,7 +59,7 @@ export default {
   },
   parameters: {
     docs: {
-      page: BaseTooltipDoc,
+      page: DataCADIconsDoc,
     },
   },
 };

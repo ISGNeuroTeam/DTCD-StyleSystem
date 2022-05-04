@@ -1,6 +1,6 @@
 import iconmoonJson from '../../fonts/DataCADIcons/selection.json';
 
-import BaseTooltipDoc from './docs/BaseTooltipDoc.mdx';
+import DataCADIconsDoc from './docs/DataCADIconsDoc.mdx';
 
 export default {
   title: 'Example/Icons/DataCADIcons',
@@ -13,7 +13,7 @@ export default {
   },
   parameters: {
     docs: {
-      page: BaseTooltipDoc,
+      page: DataCADIconsDoc,
     },
   },
 };
