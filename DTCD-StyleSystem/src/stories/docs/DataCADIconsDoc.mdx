@@ -55,14 +55,16 @@ code={`
 Для поворота иконки вокруг собственной оси имеются специальные классы-модификаторы:
 
 <Canvas>
-  <span className="FontIcon name_circleDown size_3xl"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_45"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_90"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_135"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_180"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_225"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_270"></span>
-  <span className="FontIcon name_circleDown size_3xl rotate_315"></span>
+  <div style={{fontSize: '80px'}}>
+    <span className="FontIcon name_circleDown"></span>
+    <span className="FontIcon name_circleDown rotate_45"></span>
+    <span className="FontIcon name_circleDown rotate_90"></span>
+    <span className="FontIcon name_circleDown rotate_135"></span>
+    <span className="FontIcon name_circleDown rotate_180"></span>
+    <span className="FontIcon name_circleDown rotate_225"></span>
+    <span className="FontIcon name_circleDown rotate_270"></span>
+    <span className="FontIcon name_circleDown rotate_315"></span>
+  </div>
 </Canvas>
 <Source
 language='html'
@@ -83,7 +85,9 @@ code={`
 Можно также повернуть иконку на произвольный угол. Для этого нужно добавить модификатор `rotate_custom` и задать угол наклона через css-переменную `--font-icon-rotate-angle`:
 
 <Canvas>
-  <span className="FontIcon name_circleDown size_3xl rotate_custom" style={{'--font-icon-rotate-angle': '30deg'}}></span>
+  <div style={{fontSize: '80px'}}>
+    <span className="FontIcon name_circleDown rotate_custom" style={{'--font-icon-rotate-angle': '30deg'}}></span>
+  </div>
 </Canvas>
 <Source
 language='html'
@@ -97,10 +101,12 @@ code={`
 Чтобы повернуть иконку по оси X или Y (отобразить зеркально), можно добавить класс-модификатор:
 
 <Canvas>
-  <span className="FontIcon name_pieChart75 size_3xl"></span>
-  <span className="FontIcon name_pieChart75 size_3xl flip_horizontal"></span>
-  <span className="FontIcon name_pieChart75 size_3xl flip_vertical"></span>
-  <span className="FontIcon name_pieChart75 size_3xl flip_both"></span>
+  <div style={{fontSize: '80px'}}>
+    <span className="FontIcon name_pieChart75"></span>
+    <span className="FontIcon name_pieChart75 flip_horizontal"></span>
+    <span className="FontIcon name_pieChart75 flip_vertical"></span>
+    <span className="FontIcon name_pieChart75 flip_both"></span>
+  </div>
 </Canvas>
 <Source
 language='html'
@@ -125,22 +131,23 @@ dark
 code={`
 <span class="FontIcon name_pieChart75 size_3xl"></span>
 // FontIcon - название блока.
-// name_pieChart75 - модификатор блока, где 'name' - название модификатора, а 'pieChart75' - его значение.
-// size_3xl - модификатор блока, где 'size' - название модификатора, а '3xl' - его значение.
+// name_pieChart75 - модификатор блока, где 'name' - название модификатора, означающее имя иконки, а 'pieChart75' - его значение.
+// size_3xl - модификатор блока, где 'size' - название модификатора, означающее размер иконки, а '3xl' - его значение.
 `}
 />
 
 ## Добавление/редактирование иконки
 
-1. Импортировать проект в [https://icomoon.io/app/#/projects](https://icomoon.io/app/#/projects);
-2. Импортировать .svg кнопкой "Import Icons" или перетащить в окно;
-3. Редактировать каждую иконку:
-    * Дать одно название пиктограммы иконке в Names (в формате camelCase);
-    * Обесцветить - Color => Remove Color;
+1. Зайти на сайт [https://icomoon.io/app/#/projects](https://icomoon.io/app/#/projects).
+2. Так проект со шрифтом создается не "с нуля", то нужно взять файл `/DTCD-StyleSystem/fonts/DataCADIcons/selection.json` и загрузить его на сайт;
+3. Импортировать .svg кнопкой "Import Icons" или перетащить в окно;
+4. Редактировать каждую (новую) иконку:
+    * Дать одно название пиктограммы иконки в Names (в стиле camelCase);
+    * Обесцветить: Color => Remove Color;
     * Задать Grid = 24;
-    * Отцентрировать - Canvas/Alignment => Align to Center;
-    * Если соотношение сторон 1:1 - Canvas/Alignment => Square Canvas;
-    * Ужать чтобы она помещалась - Canvas/Alignment => Fit to Canvas;
-4. Инструментом Select (в хедбаре) активировать иконку;
-5. Нажать Generate Font в тулбаре снизу;
-6. Также заместить папку /assets/fonts/ папкой /fonts/ из архива.
+    * Отцентрировать (если требуется): Canvas/Alignment => Align to Center;
+    * Если соотношение сторон 1:1 (обычно это не требуется): Canvas/Alignment => Square Canvas;
+    * Ужать иконку, чтобы она помещалась: Canvas/Alignment => Fit to Canvas;
+5. Инструментом 'Select' (в хедбаре) активировать (добавить в будущий шрифт) иконку;
+6. Нажать 'Generate Font' в тулбаре снизу;
+7. Из архива со свежим шрифтом нужно скопировать: `fonts`, `style.css`, `selection.json` и вставить с заменой в директорию `/DTCD-StyleSystem/fonts/DataCADIcons`.
