@@ -6,7 +6,7 @@ import { Canvas, Source } from '@storybook/addon-docs';
 
 ## Примеры
 
-Чтобы добавить иконку на страницу, нужно подключить данный шрифт. Затем добавить тег с классом `FontIcon` и класс с названием иконки:
+Чтобы добавить иконку на страницу, нужно подключить данный шрифт (если не подключился с помощью StyleSystem). Затем добавить тег с классом `FontIcon` и класс с названием иконки:
 
 <Canvas>
   <span className="FontIcon name_checkAll"></span>
@@ -139,7 +139,7 @@ code={`
 ## Добавление/редактирование иконки
 
 1. Зайти на сайт [https://icomoon.io/app/#/projects](https://icomoon.io/app/#/projects).
-2. Так проект со шрифтом создается не "с нуля", то нужно взять файл `/DTCD-StyleSystem/fonts/DataCADIcons/selection.json` и загрузить его на сайт;
+2. Так как проект со шрифтом создается не "с нуля", то нужно взять файл `/DTCD-StyleSystem/fonts/DataCADIcons/selection.json` и загрузить его на сайт;
 3. Импортировать .svg кнопкой "Import Icons" или перетащить в окно;
 4. Редактировать каждую (новую) иконку:
     * Дать одно название пиктограммы иконки в Names (в стиле camelCase);
@@ -150,4 +150,4 @@ code={`
     * Ужать иконку, чтобы она помещалась: Canvas/Alignment => Fit to Canvas;
 5. Инструментом 'Select' (в хедбаре) активировать (добавить в будущий шрифт) иконку;
 6. Нажать 'Generate Font' в тулбаре снизу;
-7. Из архива со свежим шрифтом нужно скопировать: `fonts`, `style.css`, `selection.json` и вставить с заменой в директорию `/DTCD-StyleSystem/fonts/DataCADIcons`.
+7. Из архива со свежим шрифтом нужно скопировать `fonts`, `style.css`, `selection.json` и вставить с заменой в директорию `/DTCD-StyleSystem/fonts/DataCADIcons`.
