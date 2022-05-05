@@ -35,11 +35,14 @@ const Template = (args) => {
 
   ICON_NAMES.forEach((iconName) => {
     const iconWrapper = document.createElement('div');
-    iconWrapper.style.display = 'flex';
+    iconWrapper.style.display = 'inline-flex';
     iconWrapper.style.alignItems = 'center';
-    iconWrapper.style.justifyContent = 'center';
-    iconWrapper.style.width = '32px';
-    iconWrapper.style.height = '32px';
+    iconWrapper.style.flexWrap = 'wrap';
+    iconWrapper.style.flexDirection = 'column';
+    iconWrapper.style.width = '100px';
+    iconWrapper.style.padding = '2px 3px';
+    iconWrapper.style.wordWrap = 'anywhere';
+    iconWrapper.style.textAlign = 'center';
     iconWrapper.style.border = '1px dashed var(--button_primary)';
     iconWrapper.style.borderRadius = '3px';
     iconWrapper.setAttribute('title', iconName);
@@ -47,9 +50,11 @@ const Template = (args) => {
     const icon = document.createElement('span');
     icon.classList.add('FontIcon');
     icon.classList.add(`name_${iconName}`);
+    icon.style.fontSize = '40px';
     icon.style.flex = 'none';
 
     iconWrapper.appendChild(icon);
+    iconWrapper.append(iconName);
     iconsContainer.appendChild(iconWrapper);
   });
 
