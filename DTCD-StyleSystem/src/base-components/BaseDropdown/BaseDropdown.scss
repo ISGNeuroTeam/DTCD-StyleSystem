@@ -16,6 +16,11 @@
     border: none;
     display: flex;
     align-items: center;
+    width: 100%;
+
+    ::slotted([slot="toggle-btn"]) {
+      margin-right: auto;
+    }
   }
 
   .Arrow {
