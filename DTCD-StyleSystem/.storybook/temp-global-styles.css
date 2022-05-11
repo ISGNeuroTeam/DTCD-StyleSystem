@@ -1,4 +1,5 @@
-@import '../fonts/fonts.css';
+@import '../fonts/ProximaNova/fonts.css';
+@import '../fonts/DataCADIcons/fonts.css';
 
 :root {
   --background_main: #FEFEFE;
