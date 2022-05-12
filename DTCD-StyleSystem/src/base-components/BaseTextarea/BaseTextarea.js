@@ -43,7 +43,7 @@ export default class BaseTextarea extends HTMLElement {
     this.#textarea = this.shadowRoot.querySelector('.Field');
     this.#message = this.shadowRoot.querySelector('.Message');
 
-    this.#textarea.addEventListener('input', this.#inputHandler);
+    this.#textarea.addEventListener('change', this.#handleTextareaChange);
   }
 
   validate() {
@@ -56,10 +56,6 @@ export default class BaseTextarea extends HTMLElement {
       this.#messageText = message;
       this.invalid = !isValid;
     } else this.invalid = false;
-  }
-
-  disconnectedCallback() {
-    this.#textarea.removeEventListener('input', this.#inputHandler);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -241,10 +237,9 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
-  #inputHandler = (e) => {
-    e.stopPropagation();
-    this.value = e.target.value;
-  };
+  #handleTextareaChange = () => {
+    this.dispatchEvent(new Event('change'));
+  }
 
   #setThemeClasses() {
     const allThemes = [

@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - styles, scripts and API of BaseTextarea
 - import of fonts and styles in Rollup
 - styles, script and layout of GaugeSegmentBuilder
+- dispatch of "input" and "change" events
 - updated styles of DataSourceSelect
 
 ### Fixed

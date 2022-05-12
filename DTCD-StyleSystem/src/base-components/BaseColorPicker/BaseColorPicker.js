@@ -66,9 +66,7 @@ export default class BaseColorPicker extends HTMLElement {
       if (!classes.includes(target.className)) return;
 
       const color = target.getAttribute('data-color');
-      this.#value = color;
-      this.#setSelectedColorBackground(color);
-      this.dispatchEvent(new Event('input', { bubbles: true }));
+      this.value = color;
 
       this.toggle(false);
     };
@@ -141,7 +139,7 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   connectedCallback() {
-    colors.forEach(c => this.#addColorSelected(c.val));
+    colors.forEach(color => this.#addColorSelected(color));
   }
 
   disconnectedCallback() {
@@ -159,8 +157,14 @@ export default class BaseColorPicker extends HTMLElement {
     }
 
     if (attrName === 'value') {
+      const oldValue = this.#value;
       this.#value = newValue;
       this.#setSelectedColorBackground(newValue);
+
+      this.dispatchEvent(new Event('input'));
+      if (oldValue !== newValue) {
+        this.dispatchEvent(new Event('change'));
+      }
     }
 
     if (attrName === 'label') {
@@ -199,12 +203,13 @@ export default class BaseColorPicker extends HTMLElement {
   #addColorSelected(color) {
     const selected = document.createElement('div');
     selected.className = 'SelectedColor';
-    selected.setAttribute('data-color', color);
+    selected.setAttribute('data-color', color.val);
+    selected.setAttribute('title', `${color.name}: ${color.val}`);
 
     const preview = document.createElement('div');
     preview.className = 'ColorPreview';
-    preview.style.backgroundColor = color;
-    preview.setAttribute('data-color', color);
+    preview.style.backgroundColor = color.val;
+    preview.setAttribute('data-color', color.val);
 
     selected.appendChild(preview);
     this.#colorList.appendChild(selected);

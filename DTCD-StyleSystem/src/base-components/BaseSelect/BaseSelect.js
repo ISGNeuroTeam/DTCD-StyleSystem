@@ -64,12 +64,17 @@ export default class BaseSelect extends HTMLElement {
   }
 
   set value(newValue) {
+    const oldValue = this.value;
     this.#value = newValue;
     this.#header.innerHTML = newValue;
     this.#searchInput.setAttribute('placeholder', newValue);
 
     this.validate();
+
     this.dispatchEvent(new Event('input'));
+    if (oldValue !== this.value) {
+      this.dispatchEvent(new Event('change'));
+    }
   }
 
   get search() {
