@@ -1,11 +1,12 @@
 import BaseIconButton from '../base-components/BaseIconButton/BaseIconButton';
 
+import BaseIconButtonDoc from './docs/BaseIconButtonDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseIconButton',
   argTypes: {
     defaultSlot: { 
       type: 'text',
-      description: 'Default slot',
     },
     theme: { 
       control: {
@@ -17,7 +18,6 @@ export default {
         'theme_green',
         'theme_red',
       ],
-      description: 'Configuration style component.',
     },
     type: { 
       control: {
@@ -29,7 +29,6 @@ export default {
         'submit',
         'menu',
       ],
-      description: 'Setting type button (attribute "type").',
     },
     size: { 
       control: {
@@ -40,11 +39,13 @@ export default {
         'big',
         'small',
       ],
-      description: 'Configuration size button.',
     },
-    disabled: {
-      description: 'Switch enable/disable button (attribute "disabled").',
-    }
+    disabled: {}
+  },
+  parameters: {
+    docs: {
+      page: BaseIconButtonDoc,
+    },
   },
 };
 

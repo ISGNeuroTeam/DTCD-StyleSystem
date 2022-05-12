@@ -1,5 +1,7 @@
 import BaseInput from '../base-components/BaseInput/BaseInput';
 
+import BaseInputDoc from './docs/BaseInputDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseInput',
   argTypes: {
@@ -11,7 +13,6 @@ export default {
         '<no modification>',
         'withSuccessFill',
       ],
-      description: 'Configuration style component.',
     },
     type: { 
       control: {
@@ -42,7 +43,6 @@ export default {
         'url',
         'week',
       ],
-      description: 'Select type input.',
     },
     size: { 
       control: {
@@ -53,7 +53,11 @@ export default {
         'small',
         'big',
       ],
-      description: 'Select size input.',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseInputDoc,
     },
   },
 };

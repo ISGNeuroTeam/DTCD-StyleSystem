@@ -1,11 +1,17 @@
 import BaseRadio from '../base-components/BaseRadio/BaseRadio';
 
+import BaseRadioDoc from './docs/BaseRadioDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseRadio',
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseRadioDoc,
     },
   },
 };
@@ -18,8 +24,8 @@ const Template = (args) => {
   const {
     disabled,
     checked,
-    value,
     defaultSlot,
+    value,
   } = args;
 
   const radio = document.createElement(NAME_COMPONENT);
@@ -37,5 +43,5 @@ DefaultRadio.args = {
   disabled: false,
   defaultSlot: '',
   checked: false,
-  value: 'test',
+  value: '',
 };

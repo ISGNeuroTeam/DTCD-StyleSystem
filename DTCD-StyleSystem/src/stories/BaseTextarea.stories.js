@@ -1,5 +1,7 @@
 import BaseTextarea from '../base-components/BaseTextarea/BaseTextarea';
 
+import BaseTextareaDoc from './docs/BaseTextareaDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseTextarea',
   argTypes: {
@@ -12,7 +14,6 @@ export default {
         'withSuccessFill',
         'resize_off',
       ],
-      description: 'Configuration style component.',
     },
     size: { 
       control: {
@@ -23,7 +24,11 @@ export default {
         'small',
         'big',
       ],
-      description: 'Select size textarea.',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseTextareaDoc,
     },
   },
 };

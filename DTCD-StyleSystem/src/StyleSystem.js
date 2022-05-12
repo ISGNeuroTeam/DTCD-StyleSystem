@@ -5,7 +5,8 @@ import {
   LogSystemAdapter,
 } from '../../DTCD-SDK/index';
 
-import './../fonts/fonts.css';
+import './../fonts/ProximaNova/fonts.css';
+import './../fonts/DataCADIcons/fonts.css';
 import baseComponentList from './base-components/components';
 import { version } from './../package.json';
 

@@ -1,0 +1,200 @@
+import { Canvas, Story } from '@storybook/addon-docs';
+
+# BaseFileLoader
+
+Компонент для выбора файла из системы пользователя, представленный тэгом `<base-file-loader>`.
+
+## Свойства
+
+| Название       | Описание                             | Тип       |
+|:---------------|:-------------------------------------|:----------|
+| `value` *      | Список выбранных файлов              | `Array`   |
+| `disabled`     | Отключает компонент                  | `Boolean` |
+| `multiple`     | Режим выбора нескольких файлов       | `Boolean` |
+| `droppable`    | Режим Drag & Drop                    | `Boolean` |
+| `accept`       | Фильтрация типов принимаемых файлов  | `String`  |
+| `description`  | Выводимое описание                   | `String`  |
+| `label`        | Лейбл над элементом                  | `String`  |
+
+\* свойство `value` предоставляется только для чтения.
+
+## Атрибуты
+
+| Название       | Описание                             | Тип       |
+|:---------------|:-------------------------------------|:----------|
+| `disabled`     | Отключает компонент                  | `Boolean` |
+| `multiple`     | Режим выбора нескольких файлов       | `Boolean` |
+| `droppable`    | Режим Drag & Drop                    | `Boolean` |
+| `accept`       | Фильтрация типов принимаемых файлов  | `String`  |
+| `description`  | Выводимое описание                   | `String`  |
+| `label`        | Лейбл над элементом                  | `String`  |
+
+## Слоты
+
+| Название       | Описание                                         |
+|:---------------|:-------------------------------------------------|
+| `icon`         | Выводимая иконка                                 |
+| `label`        | Лейбл над элементом                              |
+
+## События
+
+| Название       | Описание                                         |
+|:---------------|:-------------------------------------------------|
+| `input`        | Публикуется при выборе файла(ов)                    |
+
+## Примеры
+
+Некоторые примеры использования компонента.
+
+### Отключение компонента
+
+Для отключения компонента используется свойство `disabled` или соответствующий атрибут.
+
+```
+baseFileLoader.disabled = true;
+```
+
+```
+<base-file-loader disabled></base-file-loader>
+```
+
+<base-file-loader disabled={ true }></base-file-loader>
+
+### Множественный выбор
+
+Компонент поддерживает выбор сразу нескольких файлов, для чего
+используется свойство `multiple` или соответствующий атрибут.
+
+```
+baseFileLoader.multiple = true;
+```
+
+```
+<base-file-loader multiple></base-file-loader>
+```
+
+<base-file-loader multiple={ true }></base-file-loader>
+
+### Режим Drag & Drop
+
+Выбор файлов может соуществляться путем их перетаскивания из операционной системы.
+
+Для этого используется свойство `droppable` или соответствующий атрибут.
+
+```
+baseFileLoader.droppable = true;
+```
+
+```
+<base-file-loader droppable></base-file-loader>
+```
+
+<base-file-loader droppable={ true }></base-file-loader>
+
+### Фильтр файлов
+
+Компонент поддерживает фильтрацию допустимых форматов файлов, для чего используется
+свойство `accept` или соответствующий атрибут.
+
+Фильтрация осуществляется на основе заданных
+[MIME-типов файлов](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types),
+которые должны быть перечислены в строке через запятую.
+
+Вцелом, функционал фильтрации повторяет [аналогичный](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input/file#limiting_accepted_file_types) для `<input type="file">`.
+
+```
+baseFileLoader.accept = 'image/*, application/pdf, .txt';
+```
+
+```
+<base-file-loader accept="image/*, application/pdf, .txt"></base-file-loader>
+```
+
+<base-file-loader accept={ 'image/*, application/pdf, .txt' }></base-file-loader>
+
+### Описание компонента
+
+Выводимое внутри компонента описание может быть задано с помощью свойства `description` или соответствующего атрибута.
+
+```
+baseFileLoader.description = 'Выберите файл или картинку';
+```
+
+```
+<base-file-loader description="Выберите файл или картинку"></base-file-loader>
+```
+
+<base-file-loader description={ 'Выберите файл или картинку' }></base-file-loader>
+
+### Лейбл элемента
+
+Лейбл над элементов может быть задан с помощью свойства или трибута `label`, а также с помощью
+соответствующего слота.
+
+```
+baseFileLoader.label = 'Выберите файл';
+```
+
+```
+<base-file-loader label="Выберите файл"></base-file-loader>
+```
+
+<base-file-loader label="Выберите файл"></base-file-loader>
+
+В случае, если одновременно задан и атрибут и слот, приоритет имеет значение атрибута:
+
+```
+<base-file-loader label="Лейбл из атрибута">
+  <span slot="label">Лейбл из слота</span>
+</base-file-loader>
+```
+
+<base-file-loader label="Лейбл из атрибута">
+  <span slot="label">Лейбл из слота</span>
+</base-file-loader>
+
+### Иконка компонента
+
+Иконку можно задать с помощью соответствующего слота `icon`, который
+должен быть дочерним элементом компонента `<base-file-loader>`.
+
+```
+<base-file-loader>
+  <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM5 5V19H19V5H5ZM18 17H6L9 13L10 14L13 10L18 17ZM8.5 11C7.67157 11 7 10.3284 7 9.5C7 8.67157 7.67157 8 8.5 8C9.32843 8 10 8.67157 10 9.5C10 10.3284 9.32843 11 8.5 11Z" fill="#938FA0"/>
+  </svg>
+</base-file-loader>
+```
+
+<base-file-loader>
+  <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM5 5V19H19V5H5ZM18 17H6L9 13L10 14L13 10L18 17ZM8.5 11C7.67157 11 7 10.3284 7 9.5C7 8.67157 7.67157 8 8.5 8C9.32843 8 10 8.67157 10 9.5C10 10.3284 9.32843 11 8.5 11Z" fill="#938FA0"/>
+  </svg>
+</base-file-loader>
+
+### Обработка события выбора
+
+Событие `input` возникает при выборе файлов. Для его отлова следует воспользоваться обработчиками событий, к примеру:
+
+- `fileLoader.addEventListener('input', callback);`
+- `fileLoader.oninput = callback;`
+
+Выбранные файлы можно получить с помощью свойства `value`.
+
+Ниже представлен пример обработки на VueJS:
+
+```
+<template>
+  <base-checkbox @input="inputHandler"></base-checkbox>
+</template>
+
+<script>
+export.default {
+  methods: {
+    inputHandler(e) {
+      console.log(e.target.value);
+    },
+  },
+};
+</script>
+```

@@ -12,26 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - integration Storybook to project for UI-kit
 - information about Storybook to README.md
 - BaseExpander and BaseExpanderGroup
-- BaseExpander stories
-- BaseExpanderGroup stories
 - BaseHeading custom component
 - new styles of BaseButton
-- BaseButton stories in Storybook
-- BaseChip stories in Storybook
-- BaseInput stories in Storybook
 - animate error message of BaseInput
-- BaseSelect stories in Storybook
 - BaseSelect new API
-- BaseCheckbox stories in Storybook
-- BaseColorPicker stories in Storybook
 - BaseButton with icon
 - Label in BaseColorPicker
-- GaugeSegmentBuilder stories in Storybook
-- BaseRadioGroup stories in Storybook
+- documentation of base components to Storybook
+- BaseFileLoader component
+- generic dropdown list (BaseDropdown)
+- jest config
 
 ### Changed
 
-- added BaseHeading to component list in 'components.js'
 - improved backward compatibility of BaseButton API
 - command "make clean", gitignore, Storybook config
 - improved BaseChip property "close"
@@ -44,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - import of fonts and styles in Rollup
 - styles, script and layout of GaugeSegmentBuilder
 - dispatch of "input" and "change" events
+- updated styles of DataSourceSelect
 
 ### Fixed
 

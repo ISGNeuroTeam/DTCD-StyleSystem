@@ -1,15 +1,20 @@
 import BaseChip from '../base-components/BaseChip/BaseChip';
 
+import BaseChipDoc from './docs/BaseChipDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseChip',
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     close: { 
       type: 'boolean',
-      description: 'Show or hide remove icon.',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseChipDoc,
     },
   },
 };

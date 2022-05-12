@@ -1,0 +1,153 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# DataCAD Font Icons
+
+Шрифт с иконками, как [FontAwesome](https://fontawesome.com/). Сгенерирован с помощью сервиса [IcoMoon](https://icomoon.io/).
+
+## Примеры
+
+Чтобы добавить иконку на страницу, нужно подключить данный шрифт (если не подключился с помощью StyleSystem). Затем добавить тег с классом `FontIcon` и класс с названием иконки:
+
+<Canvas>
+  <span className="FontIcon name_checkAll"></span>
+  <span className="FontIcon name_flagFill"></span>
+</Canvas>
+<Source
+language='html'
+format={true}
+dark
+code={`
+<span class="FontIcon name_checkAll"></span>
+<span class="FontIcon name_flagFill"></span>
+`}
+/>
+
+Размер иконок задается css-правилом `font-size` и по-умолчаниию наследуется от родительского тега. Чтобы изменить размер, нужно добавить класс-модификатор. Модификаторы соответствуют размерам текста из UI-kit. Так как иконки являются шрифтом, то они стилизуются, как текст.
+
+<Canvas>
+  <span className="FontIcon name_flagFill"></span>
+  <span className="FontIcon name_flagFill size_2xs"></span>
+  <span className="FontIcon name_flagFill size_xs"></span>
+  <span className="FontIcon name_flagFill size_sm"></span>
+  <span className="FontIcon name_flagFill size_md"></span>
+  <span className="FontIcon name_flagFill size_lg"></span>
+  <span className="FontIcon name_flagFill size_xl"></span>
+  <span className="FontIcon name_flagFill size_2xl"></span>
+  <span className="FontIcon name_flagFill size_3xl"></span>
+</Canvas>
+<Source
+language='html'
+format={true}
+dark
+code={`
+<span class="FontIcon name_flagFill"></span>
+<span class="FontIcon name_flagFill size_2xs"></span>
+<span class="FontIcon name_flagFill size_xs"></span>
+<span class="FontIcon name_flagFill size_sm"></span>
+<span class="FontIcon name_flagFill size_md"></span>
+<span class="FontIcon name_flagFill size_lg"></span>
+<span class="FontIcon name_flagFill size_xl"></span>
+<span class="FontIcon name_flagFill size_2xl"></span>
+<span class="FontIcon name_flagFill size_3xl"></span>
+`}
+/>
+
+Для поворота иконки вокруг собственной оси имеются специальные классы-модификаторы:
+
+<Canvas>
+  <div style={{fontSize: '80px'}}>
+    <span className="FontIcon name_circleDown"></span>
+    <span className="FontIcon name_circleDown rotate_45"></span>
+    <span className="FontIcon name_circleDown rotate_90"></span>
+    <span className="FontIcon name_circleDown rotate_135"></span>
+    <span className="FontIcon name_circleDown rotate_180"></span>
+    <span className="FontIcon name_circleDown rotate_225"></span>
+    <span className="FontIcon name_circleDown rotate_270"></span>
+    <span className="FontIcon name_circleDown rotate_315"></span>
+  </div>
+</Canvas>
+<Source
+language='html'
+format={true}
+dark
+code={`
+<span class="FontIcon name_circleDown"></span>
+<span class="FontIcon name_circleDown rotate_45"></span>
+<span class="FontIcon name_circleDown rotate_90"></span>
+<span class="FontIcon name_circleDown rotate_135"></span>
+<span class="FontIcon name_circleDown rotate_180"></span>
+<span class="FontIcon name_circleDown rotate_225"></span>
+<span class="FontIcon name_circleDown rotate_270"></span>
+<span class="FontIcon name_circleDown rotate_315"></span>
+`}
+/>
+
+Можно также повернуть иконку на произвольный угол. Для этого нужно добавить модификатор `rotate_custom` и задать угол наклона через css-переменную `--font-icon-rotate-angle`:
+
+<Canvas>
+  <div style={{fontSize: '80px'}}>
+    <span className="FontIcon name_circleDown rotate_custom" style={{'--font-icon-rotate-angle': '30deg'}}></span>
+  </div>
+</Canvas>
+<Source
+language='html'
+format={true}
+dark
+code={`
+<span class="FontIcon name_circleDown rotate_custom" style="--font-icon-rotate-angle: 30deg;"></span>
+`}
+/>
+
+Чтобы повернуть иконку по оси X или Y (отобразить зеркально), можно добавить класс-модификатор:
+
+<Canvas>
+  <div style={{fontSize: '80px'}}>
+    <span className="FontIcon name_pieChart75"></span>
+    <span className="FontIcon name_pieChart75 flip_horizontal"></span>
+    <span className="FontIcon name_pieChart75 flip_vertical"></span>
+    <span className="FontIcon name_pieChart75 flip_both"></span>
+  </div>
+</Canvas>
+<Source
+language='html'
+format={true}
+dark
+code={`
+<span class="FontIcon name_pieChart75"></span>
+<span class="FontIcon name_pieChart75 flip_horizontal"></span>
+<span class="FontIcon name_pieChart75 flip_vertical"></span>
+<span class="FontIcon name_pieChart75 flip_both"></span>
+`}
+/>
+
+## Название классов
+
+Классы иконок сделаны по методологии [БЭМ в стиле "React"](https://ru.bem.info/methodology/naming-convention/#%D1%81%D1%82%D0%B8%D0%BB%D1%8C-react). Пример:
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<span class="FontIcon name_pieChart75 size_3xl"></span>
+// FontIcon - название блока.
+// name_pieChart75 - модификатор блока, где 'name' - название модификатора, означающее имя иконки, а 'pieChart75' - его значение.
+// size_3xl - модификатор блока, где 'size' - название модификатора, означающее размер иконки, а '3xl' - его значение.
+`}
+/>
+
+## Добавление/редактирование иконки
+
+1. Зайти на сайт [https://icomoon.io/app/#/projects](https://icomoon.io/app/#/projects).
+2. Так как проект со шрифтом создается не "с нуля", то нужно взять файл `/DTCD-StyleSystem/fonts/DataCADIcons/selection.json` и загрузить его на сайт;
+3. Импортировать .svg кнопкой "Import Icons" или перетащить в окно;
+4. Редактировать каждую (новую) иконку:
+    * Дать одно название пиктограммы иконки в Names (в стиле camelCase);
+    * Обесцветить: Color => Remove Color;
+    * Задать Grid = 24;
+    * Отцентрировать (если требуется): Canvas/Alignment => Align to Center;
+    * Если соотношение сторон 1:1 (обычно это не требуется): Canvas/Alignment => Square Canvas;
+    * Ужать иконку, чтобы она помещалась: Canvas/Alignment => Fit to Canvas;
+5. Инструментом 'Select' (в хедбаре) активировать (добавить в будущий шрифт) иконку;
+6. Нажать 'Generate Font' в тулбаре снизу;
+7. Из архива со свежим шрифтом нужно скопировать `fonts`, `style.css`, `selection.json` и вставить с заменой в директорию `/DTCD-StyleSystem/fonts/DataCADIcons`.

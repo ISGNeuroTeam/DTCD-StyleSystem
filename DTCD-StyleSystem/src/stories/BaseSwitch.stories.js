@@ -1,7 +1,14 @@
 import BaseSwitch from '../base-components/BaseSwitch/BaseSwitch';
 
+import BaseSwitchDoc from './docs/BaseSwitchDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseSwitch',
+  parameters: {
+    docs: {
+      page: BaseSwitchDoc,
+    },
+  },
 };
 
 const NAME_COMPONENT = 'base-switch';
@@ -12,21 +19,21 @@ const Template = (args) => {
   const {
     disabled,
     checked,
+    value,
   } = args;
 
-  const baseSwitch = document.createElement(NAME_COMPONENT);
+  const switchInput = document.createElement(NAME_COMPONENT);
 
-  baseSwitch.checked = checked;
-  baseSwitch.disabled = disabled;
+  switchInput.checked = checked;
+  switchInput.disabled = disabled;
+  switchInput.value = value;
 
-  baseSwitch.addEventListener('input', () => {console.log('input')});
-  baseSwitch.addEventListener('change', () => {console.log('change')});
-
-  return baseSwitch;
+  return switchInput;
 };
 
 export const DefaultSwitch = Template.bind({});
 DefaultSwitch.args = {
   disabled: false,
   checked: false,
+  value: '',
 };

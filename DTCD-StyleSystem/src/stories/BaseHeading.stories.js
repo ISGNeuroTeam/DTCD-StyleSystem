@@ -1,11 +1,12 @@
 import BaseHeading from '../base-components/BaseHeading/BaseHeading';
 
+import BaseHeadingDoc from './docs/BaseHeadingDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseHeading',
   argTypes: {
     defaultSlot: { 
       type: 'string',
-      description: 'Default slot',
     },
     theme: { 
       control: {
@@ -20,7 +21,11 @@ export default {
         'theme_subheader',
         'theme_subheaderSmall',
       ],
-      description: 'Configuration view component',
+    },
+  },
+  parameters: {
+    docs: {
+      page: BaseHeadingDoc,
     },
   },
 };

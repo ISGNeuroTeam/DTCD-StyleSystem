@@ -1,0 +1,15 @@
+.DataSourceSelect {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  align-items: flex-start;
+
+  & > * {
+    flex: 1 0 auto;
+  }
+
+  .CreateSourseButton {
+    flex-grow: inherit;
+    padding-top: 17px;
+  }
+}

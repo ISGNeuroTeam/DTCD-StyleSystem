@@ -1,7 +1,14 @@
 import BaseColorPicker from '../base-components/BaseColorPicker/BaseColorPicker';
 
+import BaseColorPickerDoc from './docs/BaseColorPickerDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseColorPicker',
+  parameters: {
+    docs: {
+      page: BaseColorPickerDoc,
+    },
+  },
 };
 
 const NAME_COMPONENT = 'base-color-picker';
