@@ -12,6 +12,8 @@ export default {
       options: [
         '<no modification>',
         'withSuccessFill',
+        'withLeftIcon',
+        'withRightIcon',
       ],
     },
     type: { 
@@ -98,12 +100,15 @@ const Template = (args) => {
   input.readonly = readonly;
   
   input.innerHTML += labelSlot;
+  input.innerHTML += args['icon-left'];
+  input.innerHTML += args['icon-right'];
   
   return input;
 };
 
 export const DefaultInput = Template.bind({});
 DefaultInput.args = {
+  theme: [],
   placeholder: 'placeholder',
   type: 'text',
   disabled: false,
@@ -113,4 +118,38 @@ DefaultInput.args = {
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
+  'icon-left': '',
+  'icon-right': '',
+};
+
+export const InputWithLeftIcon = Template.bind({});
+InputWithLeftIcon.args = {
+  theme: ['withLeftIcon'],
+  placeholder: 'placeholder',
+  type: 'text',
+  disabled: false,
+  label: '',
+  size: '',
+  required: false,
+  value: '',
+  readonly: false,
+  labelSlot: '<span slot="label">Label slot</span>',
+  'icon-left': '<span slot="icon-left" class="FontIcon name_show size_lg"></span>',
+  'icon-right': '',
+};
+
+export const InputWithRightIcon = Template.bind({});
+InputWithRightIcon.args = {
+  theme: ['withRightIcon'],
+  placeholder: 'placeholder',
+  type: 'text',
+  disabled: false,
+  label: '',
+  size: '',
+  required: false,
+  value: '',
+  readonly: false,
+  labelSlot: '<span slot="label">Label slot</span>',
+  'icon-left': '',
+  'icon-right': '<span slot="icon-right" class="FontIcon name_show size_lg"></span>',
 };

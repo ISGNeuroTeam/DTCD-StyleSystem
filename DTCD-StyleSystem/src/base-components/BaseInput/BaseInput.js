@@ -253,6 +253,8 @@ export default class BaseInput extends HTMLElement {
     const allThemes = [
       'withSuccessFill',
       'withError',
+      'withLeftIcon',
+      'withRightIcon',
     ];
 
     const { classList } = this.#baseInput;

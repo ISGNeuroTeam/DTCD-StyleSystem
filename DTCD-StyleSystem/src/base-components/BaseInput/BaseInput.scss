@@ -3,6 +3,7 @@
 }
 
 .BaseInput {
+  --padding-field-x: 12px;
   display: block;
 
   &,
@@ -37,7 +38,7 @@
     background-color: var(--border_12);
     border: 1px solid var(--border);
     border-radius: 4.44px;
-    padding: 6px 12px;
+    padding: 6px var(--padding-field-x);
     font-size: 13px;
     line-height: 1.23;
     color: var(--text_main);
@@ -46,6 +47,22 @@
     &::placeholder {
       color: var(--text_secondary);
     }
+  }
+
+  ::slotted([slot="icon-left"]),
+  ::slotted([slot="icon-right"]) {
+    position: absolute;
+    top: 50%;
+  }
+  
+  ::slotted([slot="icon-left"]) {
+    left: calc(var(--padding-field-x) + 24px / 2);
+    transform: translate(-50%, -50%);
+  }
+
+  ::slotted([slot="icon-right"]) {
+    right: calc(var(--padding-field-x) + 24px / 2);
+    transform: translate(50%, -50%);
   }
   
   .Message {
@@ -58,14 +75,28 @@
     transition: .3s;
   }
 
+  &.withRightIcon {
+    .Field {
+      padding-right: 45px;
+    }
+  }
+  &.withLeftIcon {
+    .Field {
+      padding-left: 45px;
+    }
+  }
+
+  &.withSuccessFill,
+  &.withError {
+    .Message {
+      padding-top: 4px;
+    }
+  }
+
   &.withSuccessFill {
     .Label,
     .Message {
       color: var(--success);
-    }
-
-    .Message {
-      padding-top: 4px;
     }
 
     .Field {
@@ -79,32 +110,25 @@
       color: var(--danger);
     }
 
-    .Message {
-      padding-top: 4px;
-    }
-
     .Field {
       border-color: var(--danger);
-      padding-right: 30px;
     }
   }
 
   &.size_big {
+    --padding-field-x: 16px;
+
     .Field {
       height: 34px;
-      padding: 8px 16px;
+      padding: 8px var(--padding-field-x);
       font-size: 15px;
       line-height: 1.218;
-    }
-
-    &.withError {
-      .Field {
-        padding-right: 40px;
-      }
     }
   }
 
   &.size_small {
+    --padding-field-x: 6px;
+
     .Label {
       ::slotted([slot="label"]) {
         padding-bottom: 2px;
@@ -113,16 +137,24 @@
 
     .Field {
       height: 20px;
-      padding: 2px 6px;
+      padding: 2px var(--padding-field-x);
     }
 
+    &.withSuccessFill,
     &.withError {
-      .Field {
-        padding-right: 20px;
-      }
-      
       .Message {
         padding-top: 2px;
+      }
+    }
+
+    &.withRightIcon {
+      .Field {
+        padding-right: 35px;
+      }
+    }
+    &.withLeftIcon {
+      .Field {
+        padding-left: 35px;
       }
     }
   }
