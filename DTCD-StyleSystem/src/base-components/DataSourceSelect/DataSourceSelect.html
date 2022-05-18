@@ -1,24 +1,6 @@
-<style>
-  .container {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: end;
-    justify-content: space-around;
-  }
-
-  .select {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .new_ds {
-    margin-top: 10px;
-  }
-</style>
-<div class="container">
-  <div class="select_ds" id="selectDataSourceContainer">
-  </div>
-  <div class="new_ds">
-    <base-button id="createDataSourceButton">Создать источник</base-button>
-  </div>
+<div class="DataSourceSelect">
+  <div id="selectDataSourceContainer"></div>
+  <base-button id="createDataSourceButton" class="CreateSourseButton">
+   Создать источник
+  </base-button>
 </div>

@@ -63,6 +63,7 @@ clean:
 	rm -rf ./$(DTCD_SDK)/
 	rm -rf ./$(PROJECT_NAME)/node_modules/
 	rm -rf ./$(PROJECT_NAME)/*-lock.*
+	rm -rf ./$(PROJECT_NAME)/storybook-static
 	echo Cleaning completed.
 	# required section
 
@@ -101,3 +102,9 @@ sdk:
 dev: build
 	cp -rf ./build/$(PROJECT_NAME)_$(VERSION) ./../DTCD/server/plugins
 	npm run dev --prefix ./$(PROJECT_NAME)
+
+storybook: build
+	npm run storybook --prefix ./$(PROJECT_NAME)
+
+build-storybook: build
+	npm run build-storybook --prefix ./$(PROJECT_NAME)

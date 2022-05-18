@@ -1,9 +1,11 @@
-import html from './DataSourceSelect.html';
 import {
   WorkspaceSystemAdapter,
   DataSourceSystemAdapter,
   EventSystemAdapter,
 } from './../../../../DTCD-SDK/index';
+
+import html from './DataSourceSelect.html';
+import styles from './DataSourceSelect.scss';
 
 export default class DataSourceSelect extends HTMLElement {
   #workspaceSystem;
@@ -33,6 +35,10 @@ export default class DataSourceSelect extends HTMLElement {
     this.#selectDSContainer = this.shadowRoot.querySelector('#selectDataSourceContainer');
     this.#createDSBtn = this.shadowRoot.querySelector('#createDataSourceButton');
     this.#renderSelect();
+
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
   }
 
   get required() {
@@ -77,7 +83,7 @@ export default class DataSourceSelect extends HTMLElement {
     const dataSourceSystemInstance = this.#dataSourceSystem.getSystem('DataSourceSystem', '0.2.0');
     const dataSourceSystemGUID = dataSourceSystemInstance.getGUID(dataSourceSystemInstance);
     this.#createDSBtn.addEventListener('click', e => {
-      this.#workspaceSystem.openPanelInModal('DatasourcePanel');
+      this.#workspaceSystem.openPanelInModal('DatasourcePanel', '0.2.0');
     });
     this.#eventSystem.registerCustomAction(
       'updateDataSourceListByCreated',

@@ -1,0 +1,73 @@
+:host {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.BaseCheckbox {
+  display: flex;
+  align-items: center;
+
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  .Input {
+    display: none;
+
+    &:checked ~ .Сheckbox {
+      border-color: var(--base-checkbox-color, var(--button_primary));
+      background-color: var(--base-checkbox-color, var(--button_primary));
+
+      .Icon {
+        opacity: 1;
+      }
+    }
+
+    &:disabled {
+      & ~ .Сheckbox,
+      & ~ .Label {
+        border-color: var(--base-checkbox-color, var(--border_24));
+        background-color: var(--base-checkbox-color, var(--border_24));
+        cursor: not-allowed;
+      }
+
+      & ~ .Сheckbox {
+        .Icon {
+          fill: var(--border);
+        }
+      }
+    }
+  }
+
+  .Сheckbox {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    border-radius: 4.44px;
+    transition: .3s;
+    position: relative;
+  
+    .Icon {
+      fill: #FEFEFE;
+      opacity: 0;
+    }
+  }
+  
+  .Label {
+    display: inline-block;
+    padding-left: 8px;
+    cursor: pointer;
+    color: var(--text_main);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .25px;
+  }
+}

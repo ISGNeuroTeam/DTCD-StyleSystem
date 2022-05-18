@@ -1,4 +1,5 @@
 import html from './BaseColorPicker.html';
+import styles from './BaseColorPicker.scss';
 
 const colors = [
   { name: 'title', val: 'rgba(37, 34, 48, 1)' },
@@ -31,10 +32,12 @@ export default class BaseColorPicker extends HTMLElement {
   #colorList;
   #selectedPreview;
   #colorListClickHandler;
-  #selectedPreviewClickHandler;
+  #value;
+  #label;
+  #opened = false;
 
   static get observedAttributes() {
-    return ['value', 'disabled'];
+    return ['value', 'disabled', 'label'];
   }
 
   constructor() {
@@ -46,29 +49,26 @@ export default class BaseColorPicker extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#picker = this.shadowRoot.querySelector('.picker');
-    this.#colorList = this.shadowRoot.querySelector('.color-list');
-    this.#selectedPreview = this.shadowRoot.querySelector('#selected-color');
+    this.#picker = this.shadowRoot.querySelector('.BaseColorPicker');
+    this.#colorList = this.shadowRoot.querySelector('.ColorList');
+    this.#selectedPreview = this.shadowRoot.querySelector('.Field');
+    this.#label = this.shadowRoot.querySelector('.Label');
 
-    this.value = '#252230';
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+
+    this.#value = '#252230';
 
     this.#colorListClickHandler = ({ target }) => {
-      const classes = ['color-variant', 'color-preview'];
+      const classes = ['SelectedColor', 'ColorPreview'];
 
       if (!classes.includes(target.className)) return;
 
       const color = target.getAttribute('data-color');
       this.value = color;
-      this.#setSelectedColorBackground(color);
-      this.dispatchEvent(new Event('input', { bubbles: true }));
 
-      if (this.#colorList.classList.contains('open')) this.#toggleColorList();
-    };
-
-    this.#selectedPreviewClickHandler = () => {
-      if (!this.disabled) {
-        this.#toggleColorList();
-      }
+      this.toggle(false);
     };
 
     this.#colorList.addEventListener('click', this.#colorListClickHandler);
@@ -84,48 +84,134 @@ export default class BaseColorPicker extends HTMLElement {
     else this.removeAttribute('disabled');
   }
 
-  #setSelectedColorBackground(color = '#252230') {
-    this.#selectedPreview.querySelector('.color-preview').style.backgroundColor = color;
+  get value() {
+    return this.#value;
   }
 
-  #addColorVariant(color) {
-    const variant = document.createElement('div');
-    variant.className = 'color-variant';
-    variant.setAttribute('data-color', color);
-
-    const preview = document.createElement('div');
-    preview.className = 'color-preview';
-    preview.style.backgroundColor = color;
-    preview.setAttribute('data-color', color);
-
-    variant.appendChild(preview);
-    this.#colorList.appendChild(variant);
+  set value(value) {
+    if (value) this.setAttribute('value', value);
+    else this.removeAttribute('value');
   }
 
-  #toggleColorList() {
-    this.#colorList.classList.toggle('open');
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    this.querySelectorAll('[slot="label"]').forEach((label) => {
+      label.remove();
+    });
+
+    if (value) {
+      this.innerHTML += `<span slot="label">${value}</span>`;
+    }
+  }
+
+  get opened() {
+    return this.#opened;
+  }
+
+  set opened(newValue) {
+    if (newValue) {
+      this.setAttribute('opened', true);
+    } else {
+      this.removeAttribute('opened');
+    }
+  }
+
+  toggle = (doOpen) => {
+    if (doOpen !== undefined) {
+      if (!!doOpen === this.#opened) {
+        return;
+      }
+      this.#opened = !!doOpen;
+    } else {
+      this.#opened = !this.#opened;
+    }
+
+    if (this.#opened) {
+      this.#picker.classList.add('opened');
+      document.addEventListener('click', this.#handleDocumentClick);
+    } else {
+      this.#picker.classList.remove('opened');
+      document.removeEventListener('click', this.#handleDocumentClick);
+    }
   }
 
   connectedCallback() {
-    colors.forEach(c => this.#addColorVariant(c.val));
+    colors.forEach(color => this.#addColorSelected(color));
   }
 
   disconnectedCallback() {
     this.#colorList.removeEventListener('click', this.#colorListClickHandler);
     this.#selectedPreview.removeEventListener('click', this.#selectedPreviewClickHandler);
+    document.removeEventListener('click', this.#handleDocumentClick);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === 'disabled') {
       this.#picker.classList.toggle('disabled');
       if (this.disabled) {
-        this.#colorList.classList.remove('open');
+        this.#picker.classList.remove('opened');
       }
     }
 
     if (attrName === 'value') {
-      this.value = newValue;
+      const oldValue = this.#value;
+      this.#value = newValue;
       this.#setSelectedColorBackground(newValue);
+
+      this.dispatchEvent(new Event('input'));
+      if (oldValue !== newValue) {
+        this.dispatchEvent(new Event('change'));
+      }
     }
+
+    if (attrName === 'label') {
+      this.label = newValue;
+    }
+
+    if (attrName === 'opened') {
+      this.toggle(newValue ? true : false);
+    }
+  }
+
+  #handleDocumentClick = (event) => {
+    let isPickerContainsOriginalTarget = false;
+    try {
+      isPickerContainsOriginalTarget = this.#picker.contains(event.originalTarget);
+    } catch (error) {}
+
+    let isComponentContainsTarget = this.contains(event.target);
+    const resultCondition = !isPickerContainsOriginalTarget && !isComponentContainsTarget;
+
+    if (resultCondition) {
+      this.toggle(false);
+    }
+  }
+
+  #selectedPreviewClickHandler = () => {
+    if (!this.disabled) {
+      this.toggle();
+    }
+  };
+
+  #setSelectedColorBackground(color = '#252230') {
+    this.#selectedPreview.querySelector('.ColorPreview').style.backgroundColor = color;
+  }
+
+  #addColorSelected(color) {
+    const selected = document.createElement('div');
+    selected.className = 'SelectedColor';
+    selected.setAttribute('data-color', color.val);
+    selected.setAttribute('title', `${color.name}: ${color.val}`);
+
+    const preview = document.createElement('div');
+    preview.className = 'ColorPreview';
+    preview.style.backgroundColor = color.val;
+    preview.setAttribute('data-color', color.val);
+
+    selected.appendChild(preview);
+    this.#colorList.appendChild(selected);
   }
 }

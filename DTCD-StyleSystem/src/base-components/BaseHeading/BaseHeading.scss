@@ -1,0 +1,66 @@
+.BaseHeading {
+  &,
+  *,
+  *::after,
+  *::before,
+  ::slotted(*) {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: var(--title);
+  }
+
+  &.theme_titleHeavy {
+    ::slotted(*) {
+      font-weight: 700;
+      font-size: 56px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+  }
+  
+  &.theme_titleLight {
+    ::slotted(*) {
+      font-weight: 500;
+      font-size: 56px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &.theme_headerHeavy {
+    ::slotted(*) {
+      font-weight: 700;
+      font-size: 42px;
+      line-height: 1.19;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &.theme_headerLight {
+    ::slotted(*) {
+      font-weight: 700;
+      font-size: 42px;
+      line-height: 1.19;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &.theme_subheader {
+    ::slotted(*) {
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &.theme_subheaderSmall {
+    ::slotted(*) {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+  }
+}

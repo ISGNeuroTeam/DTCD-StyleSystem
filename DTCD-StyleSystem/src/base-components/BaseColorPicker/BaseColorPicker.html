@@ -1,80 +1,15 @@
-<style>
-:host {
-  display: inline-block;
-  align-self: flex-start;
-}
-
-.picker {
-  box-sizing: border-box;
-  display: flex;
-  width: 44px;
-  height: 24px;
-  border: 1px solid var(--border);
-  border-radius: 4.44px;
-  cursor: pointer;
-  position: relative;
-}
-
-.color-list {
-  position: absolute;
-  top: 26px;
-  left: -1px;
-  border: 1px solid var(--border);
-  border-radius: 4.44px;
-  width: 100%;
-  max-height: 112px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  z-index: -1;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.color-list.open {
-  z-index: 1;
-  opacity: 1;
-  visibility: visible;
-}
-
-.color-list.open + .color-variant .icon {
-  transform: rotate(180deg);
-}
-
-.color-variant {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--border_12);
-  width: 44px;
-  height: 22px;
-  padding: 0 4px;
-}
-
-.color-preview {
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-}
-
-.picker.disabled {
-  cursor: not-allowed;
-}
-
-.picker.disabled .color-variant.preview {
-  background-color: var(--border) !important;
-}
-</style>
-
-<div class="picker">
-  <div class="color-list"></div>
-  <div id="selected-color" class="color-variant preview">
-    <div class="color-preview"></div>
-    <svg class="icon" width="16" height="16" viewBox="0 0 16 16">
+<label class="BaseColorPicker">
+  <span class="Label">
+    <slot name="label"></slot>
+  </span>
+  <span class="Field">
+    <div class="ColorPreview"></div>
+    <svg class="Arrow" width="16" height="16" viewBox="0 0 16 16">
       <path
         fill="#2E3A59"
         d="M7.99983 10.4754L12.0065 6.46872L11.0645 5.52539L7.99983 8.59206L4.93583 5.52539L3.99316 6.46806L7.99983 10.4754Z"
       />
     </svg>
-  </div>
-</div>
+  </span>
+  <div class="ColorList"></div>
+</label>

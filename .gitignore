@@ -3,6 +3,7 @@ node_modules
 /dist
 /build
 DTCD-SDK/
+/DTCD-StyleSystem/storybook-static
 
 
 # local env files

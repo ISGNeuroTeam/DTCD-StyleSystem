@@ -1,0 +1,963 @@
+@font-face {
+  font-family: 'datacad-icons';
+  src:  url('fonts/datacad-icons.eot?6bo7i5');
+  src:  url('fonts/datacad-icons.eot?6bo7i5#iefix') format('embedded-opentype'),
+    url('fonts/datacad-icons.ttf?6bo7i5') format('truetype'),
+    url('fonts/datacad-icons.woff?6bo7i5') format('woff'),
+    url('fonts/datacad-icons.svg?6bo7i5#datacad-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.FontIcon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'datacad-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.FontIcon.name_chevronBigDown:before {
+  content: "\e900";
+}
+.FontIcon.name_caretDown:before {
+  content: "\e901";
+}
+.FontIcon.name_sort:before {
+  content: "\e94d";
+}
+.FontIcon.name_colorPicker:before {
+  content: "\e94e";
+}
+.FontIcon.name_printer:before {
+  content: "\e94f";
+}
+.FontIcon.name_skipPrevious:before {
+  content: "\e950";
+}
+.FontIcon.name_skipNext:before {
+  content: "\e951";
+}
+.FontIcon.name_shuffle:before {
+  content: "\e952";
+}
+.FontIcon.name_repeat:before {
+  content: "\e953";
+}
+.FontIcon.name_playCircleOutline:before {
+  content: "\e954";
+}
+.FontIcon.name_playCircleFilled:before {
+  content: "\e955";
+}
+.FontIcon.name_playArrow:before {
+  content: "\e956";
+}
+.FontIcon.name_pauseCircleOutline:before {
+  content: "\e957";
+}
+.FontIcon.name_pauseCircleFilled:before {
+  content: "\e958";
+}
+.FontIcon.name_fastRewind:before {
+  content: "\e959";
+}
+.FontIcon.name_fastForward:before {
+  content: "\e95a";
+}
+.FontIcon.name_cast:before {
+  content: "\e95b";
+}
+.FontIcon.name_airplay:before {
+  content: "\e95c";
+}
+.FontIcon.name_addRow:before {
+  content: "\e95d";
+}
+.FontIcon.name_addColumn:before {
+  content: "\e95e";
+}
+.FontIcon.name_deleteColumn:before {
+  content: "\e95f";
+}
+.FontIcon.name_deleteRow:before {
+  content: "\e960";
+}
+.FontIcon.name_doubleQuotesL:before {
+  content: "\e961";
+}
+.FontIcon.name_doubleQuotesR:before {
+  content: "\e962";
+}
+.FontIcon.name_singleQuotesR:before {
+  content: "\e963";
+}
+.FontIcon.name_singleQuotesL:before {
+  content: "\e964";
+}
+.FontIcon.name_combineCells:before {
+  content: "\e965";
+}
+.FontIcon.name_tableDelete:before {
+  content: "\e966";
+}
+.FontIcon.name_tableAdd:before {
+  content: "\e967";
+}
+.FontIcon.name_table:before {
+  content: "\e968";
+}
+.FontIcon.name_redo:before {
+  content: "\e969";
+}
+.FontIcon.name_undo:before {
+  content: "\e96a";
+}
+.FontIcon.name_moveVertical:before {
+  content: "\e96b";
+}
+.FontIcon.name_moveHorizontal:before {
+  content: "\e96c";
+}
+.FontIcon.name_lineBreak:before {
+  content: "\e96d";
+}
+.FontIcon.name_strikethrough:before {
+  content: "\e96e";
+}
+.FontIcon.name_underline:before {
+  content: "\e96f";
+}
+.FontIcon.name_italic:before {
+  content: "\e970";
+}
+.FontIcon.name_bold:before {
+  content: "\e971";
+}
+.FontIcon.name_paragraph:before {
+  content: "\e972";
+}
+.FontIcon.name_mention:before {
+  content: "\e973";
+}
+.FontIcon.name_heading6:before {
+  content: "\e974";
+}
+.FontIcon.name_heading5:before {
+  content: "\e975";
+}
+.FontIcon.name_heading4:before {
+  content: "\e976";
+}
+.FontIcon.name_heading3:before {
+  content: "\e977";
+}
+.FontIcon.name_heading2:before {
+  content: "\e978";
+}
+.FontIcon.name_heading1:before {
+  content: "\e979";
+}
+.FontIcon.name_heading:before {
+  content: "\e97a";
+}
+.FontIcon.name_offOutlineClose:before {
+  content: "\e97b";
+}
+.FontIcon.name_move:before {
+  content: "\e97c";
+}
+.FontIcon.name_show:before {
+  content: "\e97d";
+}
+.FontIcon.name_hide:before {
+  content: "\e97e";
+}
+.FontIcon.name_searchSmallPlus:before {
+  content: "\e97f";
+}
+.FontIcon.name_searchSmallMinus:before {
+  content: "\e980";
+}
+.FontIcon.name_searchSmall:before {
+  content: "\e981";
+}
+.FontIcon.name_offClose:before {
+  content: "\e982";
+}
+.FontIcon.name_plusSquare:before {
+  content: "\e983";
+}
+.FontIcon.name_plusCircleOutline:before {
+  content: "\e984";
+}
+.FontIcon.name_plusCircle:before {
+  content: "\e985";
+}
+.FontIcon.name_minusCircleOutline:before {
+  content: "\e986";
+}
+.FontIcon.name_minusCircle:before {
+  content: "\e987";
+}
+.FontIcon.name_plus:before {
+  content: "\e988";
+}
+.FontIcon.name_minusSquare:before {
+  content: "\e989";
+}
+.FontIcon.name_notificationPlus:before {
+  content: "\e98a";
+}
+.FontIcon.name_notificationOutlinePlus:before {
+  content: "\e98b";
+}
+.FontIcon.name_minus:before {
+  content: "\e98c";
+}
+.FontIcon.name_checklistAlt:before {
+  content: "\e98d";
+}
+.FontIcon.name_checklist:before {
+  content: "\e98e";
+}
+.FontIcon.name_listUl:before {
+  content: "\e98f";
+}
+.FontIcon.name_listPlus:before {
+  content: "\e990";
+}
+.FontIcon.name_listOl:before {
+  content: "\e991";
+}
+.FontIcon.name_listMinus:before {
+  content: "\e992";
+}
+.FontIcon.name_listCheck:before {
+  content: "\e993";
+}
+.FontIcon.name_notificationOutlineMinus:before {
+  content: "\e994";
+}
+.FontIcon.name_notificationOutlineDot:before {
+  content: "\e995";
+}
+.FontIcon.name_notificationOutline:before {
+  content: "\e996";
+}
+.FontIcon.name_notificationMinus:before {
+  content: "\e997";
+}
+.FontIcon.name_notificationDot:before {
+  content: "\e998";
+}
+.FontIcon.name_notificationDeactivated:before {
+  content: "\e999";
+}
+.FontIcon.name_notificationActive:before {
+  content: "\e99a";
+}
+.FontIcon.name_notification:before {
+  content: "\e99b";
+}
+.FontIcon.name_textAlignJustify:before {
+  content: "\e99c";
+}
+.FontIcon.name_textAlignCenter:before {
+  content: "\e99d";
+}
+.FontIcon.name_textAlignLeft:before {
+  content: "\e99e";
+}
+.FontIcon.name_copy:before {
+  content: "\e99f";
+}
+.FontIcon.name_edit:before {
+  content: "\e9a0";
+}
+.FontIcon.name_selectMultiple:before {
+  content: "\e9a1";
+}
+.FontIcon.name_addToQueue:before {
+  content: "\e9a2";
+}
+.FontIcon.name_dummyOutline:before {
+  content: "\e9a3";
+}
+.FontIcon.name_dummyFill:before {
+  content: "\e9a4";
+}
+.FontIcon.name_lineXl:before {
+  content: "\e9a5";
+}
+.FontIcon.name_lineSx:before {
+  content: "\e9a6";
+}
+.FontIcon.name_note:before {
+  content: "\e9a7";
+}
+.FontIcon.name_folderPlus:before {
+  content: "\e9a8";
+}
+.FontIcon.name_lineS:before {
+  content: "\e9a9";
+}
+.FontIcon.name_lineM:before {
+  content: "\e9aa";
+}
+.FontIcon.name_lineL:before {
+  content: "\e9ab";
+}
+.FontIcon.name_dot:before {
+  content: "\e9ac";
+}
+.FontIcon.name_folderOpen:before {
+  content: "\e9ad";
+}
+.FontIcon.name_folderMinus:before {
+  content: "\e9ae";
+}
+.FontIcon.name_folder:before {
+  content: "\e9af";
+}
+.FontIcon.name_fileSvg:before {
+  content: "\e9b0";
+}
+.FontIcon.name_filePng:before {
+  content: "\e9b1";
+}
+.FontIcon.name_filePdf:before {
+  content: "\e9b2";
+}
+.FontIcon.name_fileNew:before {
+  content: "\e9b3";
+}
+.FontIcon.name_fileMinus:before {
+  content: "\e9b4";
+}
+.FontIcon.name_gridSmallRound:before {
+  content: "\e9b5";
+}
+.FontIcon.name_gridSmall:before {
+  content: "\e9b6";
+}
+.FontIcon.name_fileJs:before {
+  content: "\e9b7";
+}
+.FontIcon.name_fileJpg:before {
+  content: "\e9b8";
+}
+.FontIcon.name_fileImage:before {
+  content: "\e9b9";
+}
+.FontIcon.name_fileHtml:before {
+  content: "\e9ba";
+}
+.FontIcon.name_fileFind:before {
+  content: "\e9bb";
+}
+.FontIcon.name_fileCss:before {
+  content: "\e9bc";
+}
+.FontIcon.name_fileBlankOutline:before {
+  content: "\e9bd";
+}
+.FontIcon.name_fileBlankFill:before {
+  content: "\e9be";
+}
+.FontIcon.name_gridRound:before {
+  content: "\e9bf";
+}
+.FontIcon.name_gridHorizontalRound:before {
+  content: "\e9c0";
+}
+.FontIcon.name_gridHorizontal:before {
+  content: "\e9c1";
+}
+.FontIcon.name_gridBigRound:before {
+  content: "\e9c2";
+}
+.FontIcon.name_gridBig:before {
+  content: "\e9c3";
+}
+.FontIcon.name_dashboard02:before {
+  content: "\e9c4";
+}
+.FontIcon.name_dashboard:before {
+  content: "\e9c5";
+}
+.FontIcon.name_fileArchive:before {
+  content: "\e9c6";
+}
+.FontIcon.name_cloudUp:before {
+  content: "\e9c7";
+}
+.FontIcon.name_cloudOutline:before {
+  content: "\e9c8";
+}
+.FontIcon.name_cloudOff:before {
+  content: "\e9c9";
+}
+.FontIcon.name_cloudDown:before {
+  content: "\e9ca";
+}
+.FontIcon.name_cloudClose:before {
+  content: "\e9cb";
+}
+.FontIcon.name_cloudCheck:before {
+  content: "\e9cc";
+}
+.FontIcon.name_cloud:before {
+  content: "\e9cd";
+}
+.FontIcon.name_userFilled:before {
+  content: "\e9ce";
+}
+.FontIcon.name_admin:before {
+  content: "\e9cf";
+}
+.FontIcon.name_groupAlt:before {
+  content: "\e9d0";
+}
+.FontIcon.name_group:before {
+  content: "\e9d1";
+}
+.FontIcon.name_userVoice:before {
+  content: "\e9d2";
+}
+.FontIcon.name_userCheck:before {
+  content: "\e9d3";
+}
+.FontIcon.name_userClose:before {
+  content: "\e9d4";
+}
+.FontIcon.name_trendingUp:before {
+  content: "\e9d5";
+}
+.FontIcon.name_trendingDown:before {
+  content: "\e9d6";
+}
+.FontIcon.name_pieChartOutline25:before {
+  content: "\e9d7";
+}
+.FontIcon.name_pieChartOutline:before {
+  content: "\e9d8";
+}
+.FontIcon.name_pieChart75:before {
+  content: "\e9d9";
+}
+.FontIcon.name_pieChart50:before {
+  content: "\e9da";
+}
+.FontIcon.name_pieChart25:before {
+  content: "\e9db";
+}
+.FontIcon.name_userHeart:before {
+  content: "\e9dc";
+}
+.FontIcon.name_userMinus:before {
+  content: "\e9dd";
+}
+.FontIcon.name_userPlus:before {
+  content: "\e9de";
+}
+.FontIcon.name_user:before {
+  content: "\e9df";
+}
+.FontIcon.name_userSquare:before {
+  content: "\e9e0";
+}
+.FontIcon.name_userCircle:before {
+  content: "\e9e1";
+}
+.FontIcon.name_userPin:before {
+  content: "\e9e2";
+}
+.FontIcon.name_idCard:before {
+  content: "\e9e3";
+}
+.FontIcon.name_lineChartUp:before {
+  content: "\e9e4";
+}
+.FontIcon.name_lineChartDown:before {
+  content: "\e9e5";
+}
+.FontIcon.name_doughnutChart:before {
+  content: "\e9e6";
+}
+.FontIcon.name_barChartCircle:before {
+  content: "\e9e7";
+}
+.FontIcon.name_barChartSquare:before {
+  content: "\e9e8";
+}
+.FontIcon.name_barChartHorizontal:before {
+  content: "\e9e9";
+}
+.FontIcon.name_barChartAlt:before {
+  content: "\e9ea";
+}
+.FontIcon.name_barChart:before {
+  content: "\e9eb";
+}
+.FontIcon.name_chatAlt:before {
+  content: "\e9ec";
+}
+.FontIcon.name_messageRound:before {
+  content: "\e9ed";
+}
+.FontIcon.name_messageCircle:before {
+  content: "\e9ee";
+}
+.FontIcon.name_chat:before {
+  content: "\e9ef";
+}
+.FontIcon.name_messagePlusAlt:before {
+  content: "\e9f0";
+}
+.FontIcon.name_messageClose:before {
+  content: "\e9f1";
+}
+.FontIcon.name_messagePlus:before {
+  content: "\e9f2";
+}
+.FontIcon.name_messageMinus:before {
+  content: "\e9f3";
+}
+.FontIcon.name_messageCheck:before {
+  content: "\e9f4";
+}
+.FontIcon.name_messageWriting:before {
+  content: "\e9f5";
+}
+.FontIcon.name_message:before {
+  content: "\e9f6";
+}
+.FontIcon.name_filterOff:before {
+  content: "\e9f7";
+}
+.FontIcon.name_filterOffOutline:before {
+  content: "\e9f8";
+}
+.FontIcon.name_filter:before {
+  content: "\e9f9";
+}
+.FontIcon.name_filterOutline:before {
+  content: "\e9fa";
+}
+.FontIcon.name_qrCodeAlt:before {
+  content: "\e9fb";
+}
+.FontIcon.name_qrCode:before {
+  content: "\e9fc";
+}
+.FontIcon.name_warningOutline:before {
+  content: "\e9fd";
+}
+.FontIcon.name_warning:before {
+  content: "\e9fe";
+}
+.FontIcon.name_infoSquareOutline:before {
+  content: "\e9ff";
+}
+.FontIcon.name_infoSquare:before {
+  content: "\ea00";
+}
+.FontIcon.name_infoCircleOutline:before {
+  content: "\ea01";
+}
+.FontIcon.name_infoCircle:before {
+  content: "\ea02";
+}
+.FontIcon.name_errorOutline:before {
+  content: "\ea03";
+}
+.FontIcon.name_error:before {
+  content: "\ea04";
+}
+.FontIcon.name_barcode:before {
+  content: "\ea05";
+}
+.FontIcon.name_windowTerminal:before {
+  content: "\ea06";
+}
+.FontIcon.name_windowSidebar:before {
+  content: "\ea07";
+}
+.FontIcon.name_windowCodeBlock:before {
+  content: "\ea08";
+}
+.FontIcon.name_windowClose:before {
+  content: "\ea09";
+}
+.FontIcon.name_windowCheck:before {
+  content: "\ea0a";
+}
+.FontIcon.name_window:before {
+  content: "\ea0b";
+}
+.FontIcon.name_transfer:before {
+  content: "\ea0c";
+}
+.FontIcon.name_menuDuoAlt:before {
+  content: "\ea0d";
+}
+.FontIcon.name_moreHorizontal:before {
+  content: "\ea0e";
+}
+.FontIcon.name_menuDuo:before {
+  content: "\ea0f";
+}
+.FontIcon.name_terminal:before {
+  content: "\ea10";
+}
+.FontIcon.name_data:before {
+  content: "\ea11";
+}
+.FontIcon.name_cylinder:before {
+  content: "\ea12";
+}
+.FontIcon.name_code:before {
+  content: "\ea13";
+}
+.FontIcon.name_barBottom:before {
+  content: "\ea14";
+}
+.FontIcon.name_menuAlt05:before {
+  content: "\ea15";
+}
+.FontIcon.name_menuAlt04:before {
+  content: "\ea16";
+}
+.FontIcon.name_menuAlt03:before {
+  content: "\ea17";
+}
+.FontIcon.name_menuAlt02:before {
+  content: "\ea18";
+}
+.FontIcon.name_menuAlt01:before {
+  content: "\ea19";
+}
+.FontIcon.name_hamburger:before {
+  content: "\ea1a";
+}
+.FontIcon.name_closeSmall:before {
+  content: "\ea1b";
+}
+.FontIcon.name_closeBig:before {
+  content: "\ea1c";
+}
+.FontIcon.name_homeX:before {
+  content: "\ea1d";
+}
+.FontIcon.name_homePlus:before {
+  content: "\ea1e";
+}
+.FontIcon.name_homeOutline:before {
+  content: "\ea1f";
+}
+.FontIcon.name_homeMinus:before {
+  content: "\ea20";
+}
+.FontIcon.name_homeHeartFill:before {
+  content: "\ea21";
+}
+.FontIcon.name_homeHeart:before {
+  content: "\ea22";
+}
+.FontIcon.name_homeFill:before {
+  content: "\ea23";
+}
+.FontIcon.name_calendarX:before {
+  content: "\ea24";
+}
+.FontIcon.name_homeCheck:before {
+  content: "\ea25";
+}
+.FontIcon.name_homeAltX:before {
+  content: "\ea26";
+}
+.FontIcon.name_homeAltPlus:before {
+  content: "\ea27";
+}
+.FontIcon.name_homeAltOutline:before {
+  content: "\ea28";
+}
+.FontIcon.name_homeAltMinus:before {
+  content: "\ea29";
+}
+.FontIcon.name_homeAltFill:before {
+  content: "\ea2a";
+}
+.FontIcon.name_homeAltCheck:before {
+  content: "\ea2b";
+}
+.FontIcon.name_building:before {
+  content: "\ea2c";
+}
+.FontIcon.name_calendarWeek:before {
+  content: "\ea2d";
+}
+.FontIcon.name_calendarPlus:before {
+  content: "\ea2e";
+}
+.FontIcon.name_calendarMinus:before {
+  content: "\ea2f";
+}
+.FontIcon.name_calendarEvent:before {
+  content: "\ea30";
+}
+.FontIcon.name_calendarEdit:before {
+  content: "\ea31";
+}
+.FontIcon.name_calendarCheck:before {
+  content: "\ea32";
+}
+.FontIcon.name_calendarEmpty:before {
+  content: "\ea33";
+}
+.FontIcon.name_calendar:before {
+  content: "\ea34";
+}
+.FontIcon.name_exit:before {
+  content: "\ea35";
+}
+.FontIcon.name_logout:before {
+  content: "\ea36";
+}
+.FontIcon.name_path:before {
+  content: "\ea37";
+}
+.FontIcon.name_slider02:before {
+  content: "\e902";
+}
+.FontIcon.name_slider01:before {
+  content: "\e903";
+}
+.FontIcon.name_shareOutline:before {
+  content: "\e904";
+}
+.FontIcon.name_share:before {
+  content: "\e905";
+}
+.FontIcon.name_unfoldMore:before {
+  content: "\e906";
+}
+.FontIcon.name_unfoldLess:before {
+  content: "\e907";
+}
+.FontIcon.name_expand:before {
+  content: "\e908";
+}
+.FontIcon.name_shrink:before {
+  content: "\e909";
+}
+.FontIcon.name_settingsFuture:before {
+  content: "\e90a";
+}
+.FontIcon.name_settingsFilled:before {
+  content: "\e90b";
+}
+.FontIcon.name_settings:before {
+  content: "\e90c";
+}
+.FontIcon.name_slider03:before {
+  content: "\e90d";
+}
+.FontIcon.name_refresh02:before {
+  content: "\e90e";
+}
+.FontIcon.name_refresh:before {
+  content: "\e90f";
+}
+.FontIcon.name_radioFilled:before {
+  content: "\e910";
+}
+.FontIcon.name_radio:before {
+  content: "\e911";
+}
+.FontIcon.name_thinLong02Down:before {
+  content: "\e912";
+}
+.FontIcon.name_thinBigDown:before {
+  content: "\e913";
+}
+.FontIcon.name_image:before {
+  content: "\e914";
+}
+.FontIcon.name_imageAlt:before {
+  content: "\e915";
+}
+.FontIcon.name_phoneOutline:before {
+  content: "\e916";
+}
+.FontIcon.name_phone:before {
+  content: "\e917";
+}
+.FontIcon.name_unlink:before {
+  content: "\e918";
+}
+.FontIcon.name_map:before {
+  content: "\e919";
+}
+.FontIcon.name_mailOpen:before {
+  content: "\e91a";
+}
+.FontIcon.name_mail:before {
+  content: "\e91b";
+}
+.FontIcon.name_thinLongDown:before {
+  content: "\e91c";
+}
+.FontIcon.name_subLeft:before {
+  content: "\e91d";
+}
+.FontIcon.name_smallLongDown:before {
+  content: "\e91e";
+}
+.FontIcon.name_trashFull:before {
+  content: "\e91f";
+}
+.FontIcon.name_trashEmpty:before {
+  content: "\e920";
+}
+.FontIcon.name_locationOutline:before {
+  content: "\e921";
+}
+.FontIcon.name_location:before {
+  content: "\e922";
+}
+.FontIcon.name_link:before {
+  content: "\e923";
+}
+.FontIcon.name_layersAlt:before {
+  content: "\e924";
+}
+.FontIcon.name_layers:before {
+  content: "\e925";
+}
+.FontIcon.name_shortDown:before {
+  content: "\e926";
+}
+.FontIcon.name_tag:before {
+  content: "\e927";
+}
+.FontIcon.name_tagOutline:before {
+  content: "\e928";
+}
+.FontIcon.name_label:before {
+  content: "\e929";
+}
+.FontIcon.name_helpQuestionmark:before {
+  content: "\e92a";
+}
+.FontIcon.name_helpCircleOutline:before {
+  content: "\e92b";
+}
+.FontIcon.name_helpCircle:before {
+  content: "\e92c";
+}
+.FontIcon.name_heartOutline:before {
+  content: "\e92d";
+}
+.FontIcon.name_heartFill:before {
+  content: "\e92e";
+}
+.FontIcon.name_lastPage:before {
+  content: "\e92f";
+}
+.FontIcon.name_longDown:before {
+  content: "\e930";
+}
+.FontIcon.name_flagOutline:before {
+  content: "\e931";
+}
+.FontIcon.name_flagFill:before {
+  content: "\e932";
+}
+.FontIcon.name_downloadDone:before {
+  content: "\e933";
+}
+.FontIcon.name_checkBold:before {
+  content: "\e934";
+}
+.FontIcon.name_checkAllBig:before {
+  content: "\e935";
+}
+.FontIcon.name_checkBig:before {
+  content: "\e936";
+}
+.FontIcon.name_checkAll:before {
+  content: "\e937";
+}
+.FontIcon.name_check:before {
+  content: "\e938";
+}
+.FontIcon.name_circleDown:before {
+  content: "\e939";
+}
+.FontIcon.name_circleChevronDown:before {
+  content: "\e93a";
+}
+.FontIcon.name_creditCardAlt:before {
+  content: "\e93b";
+}
+.FontIcon.name_creditCard:before {
+  content: "\e93c";
+}
+.FontIcon.name_loading:before {
+  content: "\e93d";
+}
+.FontIcon.name_confused:before {
+  content: "\e93e";
+}
+.FontIcon.name_command:before {
+  content: "\e93f";
+}
+.FontIcon.name_externalLink:before {
+  content: "\e940";
+}
+.FontIcon.name_clock:before {
+  content: "\e941";
+}
+.FontIcon.name_stopwatch:before {
+  content: "\e942";
+}
+.FontIcon.name_chevronDown:before {
+  content: "\e943";
+}
+.FontIcon.name_chevronDuoDown:before {
+  content: "\e944";
+}
+.FontIcon.name_circleCheckOutline:before {
+  content: "\e945";
+}
+.FontIcon.name_circleCheck:before {
+  content: "\e946";
+}
+.FontIcon.name_checkboxSquare:before {
+  content: "\e947";
+}
+.FontIcon.name_checkboxChecked:before {
+  content: "\e948";
+}
+.FontIcon.name_checkbox:before {
+  content: "\e949";
+}
+.FontIcon.name_download:before {
+  content: "\e94a";
+}
+.FontIcon.name_alarmAdd:before {
+  content: "\e94b";
+}
+.FontIcon.name_alarm:before {
+  content: "\e94c";
+}

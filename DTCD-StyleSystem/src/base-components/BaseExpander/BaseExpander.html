@@ -1,0 +1,25 @@
+<details class="BaseExpander">
+  <summary>
+    <slot name="summary"></slot>
+    <div class="Icons">
+      <slot name="icon"></slot>
+      <svg
+        id="dropDownIcon"
+        class="ArrowIcon"
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.22217 7.7596L11.0001 15.5375L18.778 7.7596L17.4818 6.46252L11.0001 12.9452L4.51833 6.46252L3.22217 7.7596Z"
+          fill="#0579F6"
+        />
+      </svg>
+    </div>
+  </summary>
+  <div class="ContentWrapper">
+    <slot></slot>
+  </div>
+</details>

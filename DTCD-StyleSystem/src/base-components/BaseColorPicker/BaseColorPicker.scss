@@ -1,0 +1,99 @@
+:host {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.BaseColorPicker {
+  --border_radius: 4.44px;
+
+  display: block;
+  cursor: pointer;
+  position: relative;
+
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  .Label {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1.18;
+    color: var(--text_main);
+    letter-spacing: .25px;
+    
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
+    }
+  }
+
+  .Field,
+  .ColorList {
+    width: 44px;
+  }
+
+  .Field{
+    border: 1px solid var(--border);
+    border-radius: var(--border_radius);
+  }
+
+  .Field,
+  .SelectedColor {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--border_12);
+    height: 28px;
+    padding: 0 4px;
+
+    .ColorPreview {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      background-color: var(--title);
+    }
+
+    .Arrow {
+      transition: all ease .3s;
+    }
+  }
+
+  .ColorList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--border_radius) var(--border_radius);
+    max-height: 112px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+    z-index: 1;
+    background-color: var(--border_secondary)
+  }
+
+  &.opened {
+    .Field {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .Arrow {
+        transform: rotate(180deg);
+      }
+    }
+
+    .ColorList {
+      display: block;
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}

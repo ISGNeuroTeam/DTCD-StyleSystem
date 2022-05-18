@@ -1,0 +1,169 @@
+:host {
+  display: inline-flex;
+}
+
+:host([width="full"]) {
+  display: block;
+  width: 100%;
+}
+
+.BaseButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px 18px;
+  border-radius: 6.22px;
+  width: 100%;
+  height: auto;
+  border: none;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: .25px;
+  transition: background-color .3s;
+
+  color: var(--background_main);
+  background-color: var(--button_primary);
+
+  .Icon {
+    fill: var(--background_main);
+
+    &::slotted([slot="icon-left"]) {
+      margin-right: 4px;
+    }
+
+    &::slotted([slot="icon-right"]) {
+      margin-left: 4px;
+    }
+  }
+  
+  &:hover {
+    background-color: var(--button_primary_86);
+  }
+  
+  &:active {
+    background-color: var(--button_primary_72);
+  }
+
+  &.theme_secondary {
+    color: var(--text_main);
+    background-color: var(--border_12);
+    
+    &:hover {
+      background-color: var(--border_18);
+    }
+    
+    &:active {
+      background-color: var(--border_24);
+    }
+
+    .Icon {
+      fill: var(--text_main);
+    }
+  }
+
+  &.theme_green {
+    color: var(--success);
+    background-color: var(--success_12);
+    
+    &:hover {
+      background-color: var(--success_18);
+    }
+    
+    &:active {
+      background-color: var(--success_24);
+    }
+
+    .Icon {
+      fill: var(--success);
+    }
+  }
+
+  &.theme_blueSec {
+    color: var(--button_primary);
+    background-color: var(--button_primary_12);
+    
+    &:hover {
+      background-color: var(--button_primary_18);
+    }
+    
+    &:active {
+      background-color: var(--button_primary_24);
+    }
+
+    .Icon {
+      fill: var(--button_primary);
+    }
+  }
+
+  &.theme_red {
+    color: var(--danger);
+    background-color: var(--danger_12);
+    
+    &:hover {
+      background-color: var(--danger_18);
+    }
+    
+    &:active {
+      background-color: var(--danger_24);
+    }
+
+    .Icon {
+      fill: var(--danger);
+    }
+  }
+
+  &.theme_alfa {
+    color: var(--button_primary);
+    border: none;
+    line-height: 1.27;
+
+    &,
+    &.size_big,
+    &.size_small {
+      padding: 0;
+      border-radius: none;
+    }
+    
+    &,
+    &:hover,
+    &:active {
+      background-color: transparent;
+    }
+
+    .Icon {
+      fill: var(--button_primary);
+    }
+  }
+
+  &:disabled {
+    &,
+    &:hover,
+    &:active {
+      cursor: not-allowed;
+      color: var(--text_secondary);
+      background-color: var(--border);
+    }
+
+    .Icon {
+      fill: var(--text_secondary);
+    }
+
+    &.theme_alfa {
+      background-color: transparent;
+    }
+  }
+
+  &.size_big {
+    font-size: 15px;
+    padding: 11px 22px;
+    border-radius: 8.88px;
+  }
+
+  &.size_small {
+    font-size: 11px;
+    padding: 4px 13px;
+    border-radius: 4.66px;
+  }
+}

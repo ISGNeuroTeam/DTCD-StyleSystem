@@ -16,7 +16,11 @@ import BaseTooltip from './BaseTooltip/BaseTooltip';
 import BaseRadio from './BaseRadio/BaseRadio';
 import BaseRadioGroup from './BaseRadioGroup/BaseRadioGroup';
 import BaseRange from './BaseRange/BaseRange';
-import BaseExpandPanel from './BaseExpandPanel/BaseExpandPanel';
+import BaseExpander from './BaseExpander/BaseExpander';
+import BaseExpanderGroup from './BaseExpanderGroup/BaseExpanderGroup';
+import BaseHeading from './BaseHeading/BaseHeading';
+import BaseFileLoader from './BaseFileLoader/BaseFileLoader';
+import BaseDropdown from './BaseDropdown/BaseDropdown';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -35,7 +39,11 @@ export default [
   { name: 'base-radio', baseClass: BaseRadio },
   { name: 'base-radio-group', baseClass: BaseRadioGroup },
   { name: 'base-range', baseClass: BaseRange },
-  { name: 'base-expand-panel', baseClass: BaseExpandPanel },
+  { name: 'base-expander', baseClass: BaseExpander },
+  { name: 'base-expander-group', baseClass: BaseExpanderGroup },
+  { name: 'base-heading', baseClass: BaseHeading },
+  { name: 'base-file-loader', baseClass: BaseFileLoader },
   { name: 'datasource-select', baseClass: DataSourceSelect },
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
+  { name: 'base-dropdown', baseClass: BaseDropdown },
 ];

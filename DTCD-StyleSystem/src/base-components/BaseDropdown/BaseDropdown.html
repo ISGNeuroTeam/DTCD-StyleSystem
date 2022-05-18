@@ -1,0 +1,13 @@
+<div class="BaseDropdown">
+  <button class="ToggleBtn">
+    <slot name="toggle-btn"></slot>
+    <slot name="icon-arrow" class="Arrow">
+      <svg id="dropdown-default" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" d="M0.594727 3.90539L1.65539 2.84473L6.00006 7.1894L10.3447 2.84473L11.4054 3.90539L6.00006 9.31072L0.594727 3.90539Z" />
+      </svg>
+    </slot>
+  </button>
+  <div class="DropdownContent">
+    <slot></slot>
+  </div>
+</div>

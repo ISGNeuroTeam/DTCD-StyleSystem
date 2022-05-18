@@ -14,13 +14,31 @@ const outputDirectory = watch
   : `./build`;
 
 const plugins = [
+  // import global fonts to <head>
   styles({
-    mode:['inject',()=>''],
+    mode: [
+      'inject',
+      {
+        container: 'head',
+        attributes: {
+          'data-is': 'global-fonts',
+          'data-from': 'style-system',
+        },
+      },
+    ],
+    include: ['**/fonts.css'],
+  }),
+  // import styles
+  styles({
+    mode: [
+      'inject',
+      () => '',
+    ],
+    exclude: ['**/fonts.css'],
   }),
   html({
     include: ['**/*.html', '**/*.svg'],
   }),
-  styles(),
   json(),
 ];
 

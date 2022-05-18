@@ -1,0 +1,153 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
+# BaseRadio
+
+Базовый элемент радиокнопки, представленный тэгом `<base-radio>`. Может использоваться только совместно с элементом `<base-radio-group>` для формирования группы радиокнопок.
+
+## Свойства/Атрибуты
+
+| Название | Описание                      | Значение   |
+|----------|-------------------------------|------------|
+| checked  | Делает радиокнопку выбранной. | Логическое |
+| disabled | Отключает радиокнопку.        | Логическое |
+| value    | Значение радиокнопки.         | Строка     |
+
+## Слоты
+
+| Название  | Описание                                              |
+|-----------|-------------------------------------------------------|
+| (default) | Слот по умолчанию. Отвечает за заголовок радиокнопки. |
+
+## События
+
+| Название | Описание                                                                                                                                                                                 |
+|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| input    | Событие, происходящее при выборе радиокнопки. Не рекомендуется использовать данное событие, так как оно предназначено для контейнера группы радиокнопок - элемента `<base-radio-group>`. |
+
+## Примеры
+
+По умолчанию радиокнопка не выбрана и не содержит заголовка, но он может быть задан с помощью слота:
+
+<Canvas>
+  <base-radio-group>
+    <base-radio></base-radio>
+    <base-radio>Title</base-radio>
+  </base-radio-group>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-link></base-link>
+<base-link>Custom Link</base-link>
+<base-radio-group>
+  <base-radio></base-radio>
+  <base-radio>Title</base-radio>
+</base-radio-group>
+`}
+/>
+
+Значение радиокнопки можно установить с помощью атрибута value, а выбрать конкретную радиокнопку в группе - с помощью атрибута checked:
+
+<Canvas>
+  <base-radio-group>
+    <base-radio value="val1">val1</base-radio>
+    <base-radio value="val2" checked>val2</base-radio>
+    <base-radio value="val3">val3</base-radio>
+  </base-radio-group>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-radio-group>
+  <base-radio value="val1">val1</base-radio>
+  <base-radio value="val2" checked>val2</base-radio>
+  <base-radio value="val3">val3</base-radio>
+</base-radio-group>
+`}
+/>
+
+Если атрибут checked в группе радиокнопок встречается встречается несколько раз, выбранной будет только последняя радиокнопка:
+
+<Canvas>
+  <base-radio-group>
+    <base-radio checked></base-radio>
+    <base-radio></base-radio>
+    <base-radio checked></base-radio>
+    <base-radio checked></base-radio>
+  </base-radio-group>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-radio-group>
+  <base-radio checked></base-radio>
+  <base-radio></base-radio>
+  <base-radio checked></base-radio>
+  <base-radio checked></base-radio>
+</base-radio-group>
+`}
+/>
+
+Выключить радиокнопку можно с помощью атрибута disabled:
+
+<Canvas>
+  <base-radio-group>
+    <base-radio></base-radio>
+    <base-radio disabled></base-radio>
+    <base-radio disabled checked></base-radio>
+  </base-radio-group>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-radio-group>
+  <base-radio></base-radio>
+  <base-radio disabled></base-radio>
+  <base-radio disabled checked></base-radio>
+</base-radio-group>
+`}
+/>
+
+Для отлавливания события input для группы радиокнопок необходимо добавить соответствующий слушатель. В качестве примера приведен код для VueJS:
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<template>
+  <base-radio-group @input="inputHandler">
+    <base-radio value="val1">val1</base-radio>
+    <base-radio value="val2" checked>val2</base-radio>
+    <base-radio value="val3">val3</base-radio>
+  </base-radio-group>
+</template>
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
+methods: {
+  inputHandler(e) {
+    console.log(e.target.value);
+  },
+},
+`}
+/>
+
+В качестве текущего значения группы будет возвращено соответствующее значение выбранной радиокнопки.

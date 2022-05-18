@@ -1,4 +1,5 @@
 import html from './BaseCheckbox.html';
+import styles from './BaseCheckbox.scss';
 
 export default class BaseCheckbox extends HTMLElement {
 
@@ -18,18 +19,27 @@ export default class BaseCheckbox extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#label = this.shadowRoot.querySelector('#label');
-    this.#checkbox = this.shadowRoot.querySelector('input');
-
-    this.value = false;
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+    
+    this.#label = this.shadowRoot.querySelector('.Label');
+    this.#checkbox = this.shadowRoot.querySelector('.Input');
+    
+    this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
   }
 
   get value() {
     return this.#checkbox.checked;
   }
 
-  set value(val) {
-    this.#checkbox.checked = Boolean(val);
+  set value(newValue) {
+    const oldValue = this.value;
+    this.#checkbox.checked = Boolean(newValue);
+
+    if (oldValue !== Boolean(newValue)) {
+      this.dispatchEvent(new Event('change'));
+    }
   }
 
   get checked() {
@@ -37,7 +47,7 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   set checked(value) {
-    if (value) this.setAttribute('checked', '');
+    if (value) this.setAttribute('checked', true);
     else this.removeAttribute('checked');
   }
 
@@ -50,17 +60,40 @@ export default class BaseCheckbox extends HTMLElement {
     else this.removeAttribute('disabled');
   }
 
+  get label() {
+    return this.#label.innerHTML;
+  }
+
+  set label(value) {
+    if (value) this.setAttribute('label', value);
+    else this.removeAttribute('label');
+  }
+
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'label') {
-      this.#label.textContent = newValue ? newValue : '';
-    }
+    switch (attrName) {
+      case 'label': {
+        this.#label.innerHTML = newValue ? newValue : '';
+        break;
+      }
+  
+      case 'checked': {
+        this.value = newValue ? true : false;
+        break;
+      }
+  
+      case 'disabled': {
+        this.#checkbox.disabled = this.disabled;
+        break;
+      }
 
-    if (attrName === 'checked') {
-      this.#checkbox.checked = this.checked;
+      default:
+        break;
     }
+  }
 
-    if (attrName === 'disabled') {
-      this.#checkbox.disabled = this.disabled;
-    }
+  #handleCheckboxChange = (event) => {
+    event.stopPropagation();
+    this.checked = event.target.checked;
+    this.dispatchEvent(new Event('change'));
   }
 }

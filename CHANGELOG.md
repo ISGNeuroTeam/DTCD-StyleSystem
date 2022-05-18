@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0]
+
+### Added
+
+- integration Storybook to project for UI-kit
+- information about Storybook to README.md
+- BaseExpander and BaseExpanderGroup
+- BaseHeading custom component
+- new styles of BaseButton
+- animate error message of BaseInput
+- BaseSelect new API
+- BaseButton with icon
+- Label in BaseColorPicker
+- documentation of base components to Storybook
+- BaseFileLoader component
+- generic dropdown list (BaseDropdown)
+- jest config
+
+### Changed
+
+- improved backward compatibility of BaseButton API
+- command "make clean", gitignore, Storybook config
+- improved BaseChip property "close"
+- added new styles BaseIconButton and new API
+- improved base styles of BaseInput and its API
+- improved view of "BaseSelect"
+- styles of BaseCheckbox
+- styles of BaseColorPicker
+- styles, scripts and API of BaseTextarea
+- import of fonts and styles in Rollup
+- styles, script and layout of GaugeSegmentBuilder
+- dispatch of "input" and "change" events
+- updated styles of DataSourceSelect
+
+### Fixed
+
+- bug with infinite input recursion in range field (GaugeSegmentBuilder component)
+- opening BaseSelect and BaseColorPicker
+
 ## [0.4.0]
 
 ### Added
