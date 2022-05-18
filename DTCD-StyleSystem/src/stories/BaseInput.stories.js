@@ -134,7 +134,7 @@ InputWithLeftIcon.args = {
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
-  'icon-left': '<span slot="icon-left" class="FontIcon name_show size_lg"></span>',
+  'icon-left': '<span slot="icon-left" class="FontIcon name_searchSmall size_lg"></span>',
   'icon-right': '',
 };
 
