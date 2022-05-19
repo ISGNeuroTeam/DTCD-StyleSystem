@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'datacad-icons';
-  src:  url('fonts/datacad-icons.eot?6bo7i5');
-  src:  url('fonts/datacad-icons.eot?6bo7i5#iefix') format('embedded-opentype'),
-    url('fonts/datacad-icons.ttf?6bo7i5') format('truetype'),
-    url('fonts/datacad-icons.woff?6bo7i5') format('woff'),
-    url('fonts/datacad-icons.svg?6bo7i5#datacad-icons') format('svg');
+  src:  url('fonts/datacad-icons.eot?bomawz');
+  src:  url('fonts/datacad-icons.eot?bomawz#iefix') format('embedded-opentype'),
+    url('fonts/datacad-icons.ttf?bomawz') format('truetype'),
+    url('fonts/datacad-icons.woff?bomawz') format('woff'),
+    url('fonts/datacad-icons.svg?bomawz#datacad-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,42 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.FontIcon.name_arrowBack:before {
+  content: "\ea42";
+}
+.FontIcon.name_adminEmpty:before {
+  content: "\ea43";
+}
+.FontIcon.name_loadImage:before {
+  content: "\ea41";
+}
+.FontIcon.name_open:before {
+  content: "\ea39";
+}
+.FontIcon.name_drag:before {
+  content: "\ea3a";
+}
+.FontIcon.name_trashFilled:before {
+  content: "\ea3b";
+}
+.FontIcon.name_fileBlankDoubleFill:before {
+  content: "\ea3c";
+}
+.FontIcon.name_fileBlankDoubleOutline:before {
+  content: "\ea3d";
+}
+.FontIcon.name_cut:before {
+  content: "\ea3e";
+}
+.FontIcon.name_scale:before {
+  content: "\ea3f";
+}
+.FontIcon.name_gridHexagon:before {
+  content: "\ea40";
+}
+.FontIcon.name_save:before {
+  content: "\ea38";
+}
 .FontIcon.name_chevronBigDown:before {
   content: "\e900";
 }
