@@ -1,5 +1,5 @@
-import BaseFileLoader from '../../base-components/BaseFileLoader/BaseFileLoader';
-import BaseFileLoaderDocs from './BaseFileLoaderDocs.mdx';
+import BaseFileLoader from '../base-components/BaseFileLoader/BaseFileLoader';
+import BaseFileLoaderDocs from './docs/BaseFileLoaderDocs.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseFileLoader',
