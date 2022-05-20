@@ -103,8 +103,14 @@ dev: build
 	cp -rf ./build/$(PROJECT_NAME)_$(VERSION) ./../DTCD/server/plugins
 	npm run dev --prefix ./$(PROJECT_NAME)
 
-storybook: build
+storybook: sdk
+	if ! [ -d ./$(PROJECT_NAME)/node_modules ];\
+		then npm i --prefix ./$(PROJECT_NAME);\
+	fi
 	npm run storybook --prefix ./$(PROJECT_NAME)
 
-build-storybook: build
+build-storybook: sdk
+	if ! [ -d ./$(PROJECT_NAME)/node_modules ];\
+		then npm i --prefix ./$(PROJECT_NAME);\
+	fi
 	npm run build-storybook --prefix ./$(PROJECT_NAME)
