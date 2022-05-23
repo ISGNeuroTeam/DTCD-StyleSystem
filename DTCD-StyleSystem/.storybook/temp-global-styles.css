@@ -24,22 +24,37 @@
   --danger: #FF3B30;
   --pink: #CD5D67;
   --accent: #17569B;
-  --accent_12: rgba(23,86,155,.12);
+  /* --accent_12: rgba(23,86,155,.12); */
+  --accent_12: #E2E9F2;
   --button_primary: #0579F6;
-  --button_primary_86: rgba(5,121,246,.86);
-  --button_primary_72: rgba(5,121,246,.72);
-  --button_primary_12: rgba(5,121,246,.12);
-  --button_primary_18: rgba(5,121,246,.18);
-  --button_primary_24: rgba(5,121,246,.24);
-  --success_12: rgba(76,217,100,.12);
-  --success_18: rgba(76,217,100,.18);
-  --success_24: rgba(76,217,100,.24);
-  --danger_12: rgba(255,59,48,.12);
-  --danger_18: rgba(255,59,48,.18);
-  --danger_24: rgba(255,59,48,.24);
-  --border_12: rgba(198,198,212,.12);
-  --border_18: rgba(198,198,212,.18);
-  --border_24: rgba(198,198,212,.24);
+  /* --button_primary_86: rgba(5,121,246,.86); */
+  --button_primary_86: #288CF8;
+  /* --button_primary_72: rgba(26, 45, 66, 0.72); */
+  --button_primary_72: #4B9EF8;
+  /* --button_primary_12: rgba(5,121,246,.12); */
+  --button_primary_12: #E0EDFD;
+  /* --button_primary_18: rgba(5,121,246,.18); */
+  --button_primary_18: #D1E6FC;
+  /* --button_primary_24: rgba(5,121,246,.24); */
+  --button_primary_24: #C2DEFC;
+  /* --success_12: rgba(76,217,100,.12); */
+  --success_12: #E8F9EB;
+  /* --success_18: rgba(76,217,100,.18); */
+  --success_18: #DEF7E2;
+  /* --success_24: rgba(76,217,100,.24); */
+  --success_24: #D3F5D9;
+  /* --danger_12: rgba(255,59,48,.12); */
+  --danger_12: #FEE6E5;
+  /* --danger_18: rgba(255,59,48,.18); */
+  --danger_18: #FED8D9;
+  /* --danger_24: rgba(255,59,48,.24); */
+  --danger_24: #FECFCD;
+  /* --border_12: rgba(198,198,212,.12); */
+  --border_12: #F7F7F8;
+  /* --border_18: rgba(198,198,212,.18); */
+  --border_18: #F4F4F6;
+  /* --border_24: rgba(198,198,212,.24); */
+  --border_24: #F1F1F4;
   --header_background: #272A3A;
   --header_content: #FFFFFF;
   --main-bg-color-panel: #fff;
@@ -66,11 +81,72 @@
   --button-selected-hover-border: #2196f3;
 }
 
+/* :root {
+  --background_main: #353542;
+  --aero: #749CCA;
+  --background_secondary: #232323;
+  --navi: #454372;
+  --border: #A8A8BB;
+  --brown: #AC8E68;
+  --border_secondary: #46465B;
+  --orange: #FF9F0A;
+  --title: #FDFDFD;
+  --yellow: #FFE26C;
+  --general_white: #FFF;
+  --general_black: #272A3A;
+  --text_main: #E0E1E7;
+  --mint: #66D4CF;
+  --text_secondary: #A2A3B8;
+  --teal: #40C8E0;
+  --cyan: #64D2FF;
+  --success: #53C670;
+  --indigo: #5E5CE6;
+  --warning: #FFD60A;
+  --purple: #BF5AF2;
+  --danger: #E3493F;
+  --pink: #D37079;
+  --accent: #2C67A6;
+  --button_primary: #51A1F4;
+  --button_primary_86: #4B8FD7;
+  --button_primary_72: #457EBA;
+  --button_primary_12: #29323C;
+  --button_primary_18: #2C3A49;
+  --button_primary_24: #2F4256;
+  --success_12: #29372C;
+  --success_18: #2C4131;
+  --success_24: #2F4A36;
+  --danger_12: #3A2827;
+  --danger_18: #462A28;
+  --danger_24: #522C2A;
+  --border_12: #333335;
+  --border_18: #3B3B3F;
+  --border_24: #434348;
+  --main-bg-color-panel: #06090f;
+  --secondary-bg-color-panel: #0D1117;
+  --text-color-light: #fff;
+  --text-color-dark: #878787;
+  --overlay-bg-color: #BDBDBD;
+  --divider: #b7b7b7;
+  --detail-hover: #555556;
+  --button-bg-color: #2196f3;
+  --button-text-color: #fff;
+  --button-border-color: #2196f3;
+  --button-hover-bg-color: #555556;
+  --button-hover-text-color: #fff;
+  --button-hover-border: #fff;
+  --button-focus-bg-color: #fff;
+  --button-focus-text-color: #2196f3;
+  --button-focus-border: #2196f3;
+  --button-active-bg-color: #fff;
+  --button-active-text-color: #2196f3;
+  --button-active-border: #2196f3;
+} */
+
 html {
   font-family: 'Proxima Nova';
 }
 
 body {
   margin: 0;
-  background-color: var(--background_secondary);
+  background-color: var(--background_main);
 }
