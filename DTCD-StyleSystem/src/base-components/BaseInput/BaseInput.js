@@ -8,7 +8,6 @@ export default class BaseInput extends HTMLElement {
   #label;
   #message;
   #messageText;
-  #resetBtn;
   #theme = [];
   #size;
 
@@ -43,14 +42,9 @@ export default class BaseInput extends HTMLElement {
     this.#internalInput = this.shadowRoot.querySelector('.Field');
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
-    this.#resetBtn = this.shadowRoot.querySelector('.StatusIcon.type_reset');
 
     this.#internalInput.addEventListener('input', this.#inputHandler);
     this.#internalInput.addEventListener('change', this.#handleInputChange);
-
-    if (this.#resetBtn) {
-      this.#resetBtn.addEventListener('click', this.#clickResetBtnHandler);
-    }
   }
 
   validate() {
@@ -255,14 +249,12 @@ export default class BaseInput extends HTMLElement {
     this.dispatchEvent(new Event('change'));
   }
 
-  #clickResetBtnHandler = (e) => {
-    this.value = '';
-  };
-
   #setThemeClasses() {
     const allThemes = [
       'withSuccessFill',
       'withError',
+      'withLeftIcon',
+      'withRightIcon',
     ];
 
     const { classList } = this.#baseInput;
