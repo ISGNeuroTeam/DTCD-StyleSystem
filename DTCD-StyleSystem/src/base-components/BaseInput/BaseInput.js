@@ -11,6 +11,11 @@ export default class BaseInput extends HTMLElement {
   #theme = [];
   #size;
 
+  #iconSlots = [
+    { id: 'iconLeft', theme: 'withLeftIcon', el: null },
+    { id: 'iconRight', theme: 'withRightIcon', el: null },
+  ];
+
   static get observedAttributes() {
     return [
       'placeholder',
@@ -45,6 +50,15 @@ export default class BaseInput extends HTMLElement {
 
     this.#internalInput.addEventListener('input', this.#inputHandler);
     this.#internalInput.addEventListener('change', this.#handleInputChange);
+
+    this.#iconSlots.forEach(slot => {
+      slot.el = this.shadowRoot.getElementById(slot.id);
+      slot.el.addEventListener('slotchange', () => {
+        const nodes = slot.el.assignedNodes();
+        const action = nodes.length > 0 ? 'add' : 'remove';
+        this.#baseInput.classList[action](slot.theme);
+      });
+    });
   }
 
   validate() {
@@ -91,7 +105,7 @@ export default class BaseInput extends HTMLElement {
 
       case 'theme':
         if (newValue) {
-          this.#theme = newValue.split(',');
+          this.#theme = newValue.split(',').map(t => t.trim());
         } else {
           this.#theme = [];
         }
@@ -193,7 +207,7 @@ export default class BaseInput extends HTMLElement {
       this.#baseInput.classList.add('disabled');
     } else {
       this.#internalInput.removeAttribute('readonly');
-      
+
       if ( ! this.disabled) {
         this.#baseInput.classList.remove('disabled');
       }
@@ -253,12 +267,10 @@ export default class BaseInput extends HTMLElement {
     const allThemes = [
       'withSuccessFill',
       'withError',
-      'withLeftIcon',
-      'withRightIcon',
     ];
 
     const { classList } = this.#baseInput;
-    
+
     for (const theme of allThemes) {
       if (this.#theme.indexOf(theme) != -1) {
         classList.add(theme);

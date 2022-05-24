@@ -12,11 +12,9 @@ export default {
       options: [
         '<no modification>',
         'withSuccessFill',
-        'withLeftIcon',
-        'withRightIcon',
       ],
     },
-    type: { 
+    type: {
       control: {
         type: 'select',
       },
@@ -46,7 +44,7 @@ export default {
         'week',
       ],
     },
-    size: { 
+    size: {
       control: {
         type: 'select',
       },
@@ -98,11 +96,11 @@ const Template = (args) => {
   input.required = required;
   input.value = value;
   input.readonly = readonly;
-  
+
   input.innerHTML += labelSlot;
   input.innerHTML += args['icon-left'];
   input.innerHTML += args['icon-right'];
-  
+
   return input;
 };
 
@@ -122,9 +120,9 @@ DefaultInput.args = {
   'icon-right': '',
 };
 
-export const InputWithLeftIcon = Template.bind({});
-InputWithLeftIcon.args = {
-  theme: ['withLeftIcon'],
+export const InputWithIcons = Template.bind({});
+InputWithIcons.args = {
+  theme: [],
   placeholder: 'placeholder',
   type: 'text',
   disabled: false,
@@ -135,21 +133,5 @@ InputWithLeftIcon.args = {
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
   'icon-left': '<span slot="icon-left" class="FontIcon name_searchSmall size_lg"></span>',
-  'icon-right': '',
-};
-
-export const InputWithRightIcon = Template.bind({});
-InputWithRightIcon.args = {
-  theme: ['withRightIcon'],
-  placeholder: 'placeholder',
-  type: 'text',
-  disabled: false,
-  label: '',
-  size: '',
-  required: false,
-  value: '',
-  readonly: false,
-  labelSlot: '<span slot="label">Label slot</span>',
-  'icon-left': '',
   'icon-right': '<span slot="icon-right" class="FontIcon name_show size_lg"></span>',
 };
