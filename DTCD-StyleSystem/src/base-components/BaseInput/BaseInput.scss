@@ -20,7 +20,7 @@
     line-height: 1.18;
     color: var(--text_main);
     letter-spacing: .25px;
-    
+
     ::slotted([slot="label"]) {
       display: block;
       padding-bottom: 4px;
@@ -54,7 +54,7 @@
     position: absolute;
     top: 50%;
   }
-  
+
   ::slotted([slot="icon-left"]) {
     left: calc(var(--padding-field-x) + 24px / 2);
     transform: translate(-50%, -50%);
@@ -64,7 +64,7 @@
     right: calc(var(--padding-field-x) + 24px / 2);
     transform: translate(50%, -50%);
   }
-  
+
   .Message {
     display: block;
     font-weight: 600;
@@ -124,6 +124,18 @@
       font-size: 15px;
       line-height: 1.218;
     }
+
+    &.withRightIcon {
+      .Field {
+        padding-right: 50px;
+      }
+    }
+
+    &.withLeftIcon {
+      .Field {
+        padding-left: 50px;
+      }
+    }
   }
 
   &.size_small {
@@ -152,6 +164,7 @@
         padding-right: 35px;
       }
     }
+
     &.withLeftIcon {
       .Field {
         padding-left: 35px;
