@@ -94,4 +94,11 @@
       }
     }
   }
+
+  &.theme_iconLeft {
+    summary {
+      flex-direction: row-reverse;
+      column-gap: 5px;
+    }
+  }
 }

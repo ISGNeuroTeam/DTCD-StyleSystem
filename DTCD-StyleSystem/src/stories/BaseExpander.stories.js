@@ -23,6 +23,7 @@ export default {
       options: [
         '',
         'with_borderBottom',
+        'theme_iconLeft',
       ],
     },
     open: {
