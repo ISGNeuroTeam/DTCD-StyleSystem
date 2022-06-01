@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - colors with transparency in Storybook
 - docs of BaseFileLoader
 
+### Fixed
+
+- BaseSelect option list correct opening
+
 ## [0.5.0]
 
 ### Added

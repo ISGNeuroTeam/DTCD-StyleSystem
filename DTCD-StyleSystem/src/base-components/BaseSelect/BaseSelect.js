@@ -9,7 +9,8 @@ export default class BaseSelect extends HTMLElement {
   #label;
   #errorMessage;
   #value;
-  #opened;
+  #itemSlot;
+  #opened = false;
 
   static get observedAttributes() {
     return [
@@ -42,6 +43,7 @@ export default class BaseSelect extends HTMLElement {
     this.#header = this.shadowRoot.querySelector('.SelectedValue');
     this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
     this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
+    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
 
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#errorMessage = this.shadowRoot.querySelector('.Message');
@@ -147,34 +149,31 @@ export default class BaseSelect extends HTMLElement {
     return (this.invalid = false);
   }
 
-  #optionClickCallback = (evt) => {
-    const selectedOptionEl = evt.target.closest('[slot="item"]');
+  #optionClickCallback = (e) => {
+    e.stopPropagation();
+    const selectedOption = e.target.closest('[slot="item"]');
 
-    if (typeof selectedOptionEl.value !== 'undefined') {
-      this.value = selectedOptionEl.value;
-    } else if (selectedOptionEl.hasAttribute('value')) {
-      this.value = selectedOptionEl.getAttribute('value');
+    if (typeof selectedOption.value !== 'undefined') {
+      this.value = selectedOption.value;
+    } else if (selectedOption.hasAttribute('value')) {
+      this.value = selectedOption.getAttribute('value');
     } else {
-      this.value = selectedOptionEl.innerHTML;
+      this.value = selectedOption.innerHTML;
     }
   }
 
   #documentClickCallback = (event) => {
     // this condition is written to support nested web-components
-    let isSelectContainsOriginalTarget = false;
-    try {
-      isSelectContainsOriginalTarget = this.#selectContainer.contains(event.originalTarget);
-    } catch (error) {}
-
-    let isComponentContainsTarget = this.contains(event.target);
-    const resultCondition = !isSelectContainsOriginalTarget && !isComponentContainsTarget;
-
-    if (resultCondition) {
+    const eventPath = event.composedPath();
+    const originalTarget = eventPath[0];
+    const isSelectContainsOriginalTarget = this.#selectContainer.contains(originalTarget);
+    const isComponentContainsTarget = this.contains(event.target);
+    if (!isSelectContainsOriginalTarget && !isComponentContainsTarget) {
       this.toggle(false);
     }
   };
 
-  toggle = (doOpen) => {
+  toggle(doOpen) {
     if (doOpen !== undefined) {
       if (!!doOpen === this.#opened) {
         return;
@@ -185,17 +184,20 @@ export default class BaseSelect extends HTMLElement {
     }
 
     if (this.#opened) {
-      // TO EXPAND
       this.#selectContainer.classList.add('opened');
       document.addEventListener('click', this.#documentClickCallback);
-
-      // Focus searchInput if it active
       if (this.hasAttribute('search')) {
         this.#searchInput.focus();
       }
     } else {
-      // TO ZIP
       this.#selectContainer.classList.remove('opened');
+      document.removeEventListener('click', this.#documentClickCallback);
+
+      if (this.hasAttribute('search')) {
+        this.#searchInput.blur();
+        this.#searchInput.value = '';
+      }
+
       this.validate();
 
       if (this.required && this.invalid) {
@@ -205,24 +207,14 @@ export default class BaseSelect extends HTMLElement {
         this.#selectContainer.classList.remove('withError');
         this.#errorMessage.innerHTML = '';
       }
-
-      document.removeEventListener('click', this.#documentClickCallback);
-
-      // Unfocus searchInput if it active
-      if (this.hasAttribute('search')) {
-        this.#searchInput.blur();
-        this.#searchInput.value = '';
-      }
     }
+
+    return this.#opened;
   }
 
   connectedCallback() {
     this.#fieldWrapper.addEventListener('click', this.#handleFieldWrapperClick);
-
-    // Search items
     this.#searchInput.addEventListener('input', this.#handleSearchFieldInput);
-    
-    // this.validate();
   }
 
   disconnectedCallback() {
@@ -288,29 +280,25 @@ export default class BaseSelect extends HTMLElement {
     }
   }
 
+  #getSelectOptions() {
+    return this.#itemSlot.assignedNodes();
+  }
+
   #handleFieldWrapperClick = (e) => {
     e.preventDefault();
-    this.toggle();
-
-    if (this.#opened) {
-      // Add option select listener
-      this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
-        optionItem.addEventListener('click', this.#optionClickCallback);
-      });
-    } else {
-      // Remove option select listener
-      this.querySelectorAll('[slot="item"]').forEach((optionItem) => {
-        optionItem.removeEventListener('click', this.#optionClickCallback);
-      });
-    }
+    const action = this.toggle() ? 'add' : 'remove';
+    const method = action + 'EventListener';
+    this.#getSelectOptions().forEach(
+      option => option[method]('click', this.#optionClickCallback)
+    );
   }
 
   #handleSearchFieldInput = (e) => {
     const subString = e.target.value.toLowerCase();
-
-    this.querySelectorAll('[slot="item"]').forEach(item => {
-      const target = typeof item.value !== 'undefined' ? item.value.toLowerCase() : item.textContent.toLowerCase();
-      item.style.display = target.includes(subString) ? '' : 'none';
+    this.#getSelectOptions().forEach(item => {
+      const isValueExist = typeof item.value !== 'undefined';
+      const value = isValueExist ? item.value.toLowerCase() : item.textContent.toLowerCase();
+      item.style.display = value.includes(subString) ? '' : 'none';
     });
   }
 }
