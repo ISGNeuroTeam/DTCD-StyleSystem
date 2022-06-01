@@ -27,7 +27,6 @@ const colors = [
 ];
 
 export default class BaseColorPicker extends HTMLElement {
-
   #picker;
   #colorList;
   #selectedPreview;
@@ -98,7 +97,7 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   set label(value) {
-    this.querySelectorAll('[slot="label"]').forEach((label) => {
+    this.querySelectorAll('[slot="label"]').forEach(label => {
       label.remove();
     });
 
@@ -119,7 +118,7 @@ export default class BaseColorPicker extends HTMLElement {
     }
   }
 
-  toggle = (doOpen) => {
+  toggle = doOpen => {
     if (doOpen !== undefined) {
       if (!!doOpen === this.#opened) {
         return;
@@ -136,7 +135,7 @@ export default class BaseColorPicker extends HTMLElement {
       this.#picker.classList.remove('opened');
       document.removeEventListener('click', this.#handleDocumentClick);
     }
-  }
+  };
 
   connectedCallback() {
     colors.forEach(color => this.#addColorSelected(color));
@@ -176,7 +175,7 @@ export default class BaseColorPicker extends HTMLElement {
     }
   }
 
-  #handleDocumentClick = (event) => {
+  #handleDocumentClick = event => {
     let isPickerContainsOriginalTarget = false;
     try {
       isPickerContainsOriginalTarget = this.#picker.contains(event.originalTarget);
@@ -188,7 +187,7 @@ export default class BaseColorPicker extends HTMLElement {
     if (resultCondition) {
       this.toggle(false);
     }
-  }
+  };
 
   #selectedPreviewClickHandler = () => {
     if (!this.disabled) {

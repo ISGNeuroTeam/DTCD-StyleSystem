@@ -5,34 +5,23 @@ import BaseDropdownDoc from './docs/BaseDropdownDoc.mdx';
 export default {
   title: 'Example/BaseComponents/BaseDropdown',
   argTypes: {
-    theme: { 
+    theme: {
       control: {
         type: 'multi-select',
       },
-      options: [
-        '<no modification>',
-      ],
+      options: ['<no modification>'],
     },
-    alignment: { 
+    alignment: {
       control: {
         type: 'select',
       },
-      options: [
-        '<no modification>',
-        'right',
-        'center',
-      ],
+      options: ['<no modification>', 'right', 'center'],
     },
-    placement: { 
+    placement: {
       control: {
         type: 'select',
       },
-      options: [
-        '<no modification>',
-        'rightStart',
-        'leftStart',
-        'top',
-      ],
+      options: ['<no modification>', 'rightStart', 'leftStart', 'top'],
     },
   },
   parameters: {
@@ -40,25 +29,17 @@ export default {
       page: BaseDropdownDoc,
     },
     actions: {
-      handles: [
-        'toggle',
-      ],
+      handles: ['toggle'],
     },
-  }
+  },
 };
 
 const NAME_COMPONENT = 'base-dropdown';
 
 window.customElements.define(NAME_COMPONENT, BaseDropdown);
 
-const Template = (args) => {
-  const {
-    theme = [],
-    slot,
-    alignment,
-    placement,
-    opened,
-  } = args;
+const Template = args => {
+  const { theme = [], slot, alignment, placement, opened } = args;
 
   const dropdown = document.createElement(NAME_COMPONENT);
   dropdown.theme = theme;

@@ -1,7 +1,6 @@
 import html from './BaseSwitch.html';
 
 export default class BaseSwitch extends HTMLElement {
-
   #checkbox;
 
   static get observedAttributes() {
@@ -62,9 +61,9 @@ export default class BaseSwitch extends HTMLElement {
     }
   }
 
-  #handleCheckboxChange = (event) => {
+  #handleCheckboxChange = event => {
     event.stopPropagation();
     this.checked = event.target.checked;
     this.dispatchEvent(new Event('change'));
-  }
+  };
 }

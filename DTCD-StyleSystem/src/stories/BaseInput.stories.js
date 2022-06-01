@@ -9,14 +9,9 @@ export default {
       control: {
         type: 'multi-select',
       },
-      options: [
-        '<no modification>',
-        'withSuccessFill',
-        'withLeftIcon',
-        'withRightIcon',
-      ],
+      options: ['<no modification>', 'withSuccessFill', 'withLeftIcon', 'withRightIcon'],
     },
-    type: { 
+    type: {
       control: {
         type: 'select',
       },
@@ -46,15 +41,11 @@ export default {
         'week',
       ],
     },
-    size: { 
+    size: {
       control: {
         type: 'select',
       },
-      options: [
-        '<no-modification>',
-        'small',
-        'big',
-      ],
+      options: ['<no-modification>', 'small', 'big'],
     },
   },
   parameters: {
@@ -68,7 +59,7 @@ const NAME_COMPONENT = 'base-input';
 
 window.customElements.define(NAME_COMPONENT, BaseInput);
 
-const Template = (args) => {
+const Template = args => {
   const {
     theme = [],
     placeholder,
@@ -98,11 +89,11 @@ const Template = (args) => {
   input.required = required;
   input.value = value;
   input.readonly = readonly;
-  
+
   input.innerHTML += labelSlot;
   input.innerHTML += args['icon-left'];
   input.innerHTML += args['icon-right'];
-  
+
   return input;
 };
 
