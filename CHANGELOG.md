@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - left and right icon slot for BaseInput
+- script for saving the selected theme after page reload
 
 ### Changed
 
