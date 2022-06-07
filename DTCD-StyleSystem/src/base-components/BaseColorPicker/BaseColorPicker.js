@@ -177,15 +177,11 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   #handleDocumentClick = (event) => {
-    let isPickerContainsOriginalTarget = false;
-    try {
-      isPickerContainsOriginalTarget = this.#picker.contains(event.originalTarget);
-    } catch (error) {}
-
-    let isComponentContainsTarget = this.contains(event.target);
-    const resultCondition = !isPickerContainsOriginalTarget && !isComponentContainsTarget;
-
-    if (resultCondition) {
+    const eventPath = event.composedPath();
+    const originalTarget = eventPath[0];
+    const isPickerContainsOriginalTarget = this.#picker.contains(originalTarget);
+    const isComponentContainsTarget = this.contains(event.target);
+    if (!isPickerContainsOriginalTarget && !isComponentContainsTarget) {
       this.toggle(false);
     }
   }
