@@ -7,7 +7,9 @@ export default class BaseSelect extends HTMLElement {
   #header;
   #searchInput;
   #label;
-  #errorMessage;
+  #message;
+  #messageText;
+  #invalid = false;
   #value;
   #itemSlot;
   #opened = false;
@@ -22,6 +24,7 @@ export default class BaseSelect extends HTMLElement {
       'size',
       'search',
       'opened',
+      'invalid',
     ];
   }
 
@@ -46,7 +49,7 @@ export default class BaseSelect extends HTMLElement {
     this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
 
     this.#label = this.shadowRoot.querySelector('.Label');
-    this.#errorMessage = this.shadowRoot.querySelector('.Message');
+    this.#message = this.shadowRoot.querySelector('.Message');
   }
 
   get required() {
@@ -141,12 +144,33 @@ export default class BaseSelect extends HTMLElement {
     }
   }
 
+  get invalid() {
+    return this.#invalid;
+  }
+
+  set invalid(newVal) {
+    this.#invalid = Boolean(newVal);
+
+    if (this.#invalid) {
+      this.#selectContainer.classList.remove('withSuccessFill');
+      this.#selectContainer.classList.add('withError');
+    } else {
+      this.#selectContainer.classList.remove('withError');
+    }
+
+    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
+    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
+  }
+
   validate() {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.value === '') {
+      this.#messageText = 'Это обязательное поле*';
       return (this.invalid = true);
+    } else {
+      this.#messageText = '';
+      return (this.invalid = false);
     }
-    return (this.invalid = false);
   }
 
   #optionClickCallback = (e) => {
@@ -199,14 +223,6 @@ export default class BaseSelect extends HTMLElement {
       }
 
       this.validate();
-
-      if (this.required && this.invalid) {
-        this.#selectContainer.classList.add('withError');
-        this.#errorMessage.innerHTML = 'Это обязательное поле*';
-      } else {
-        this.#selectContainer.classList.remove('withError');
-        this.#errorMessage.innerHTML = '';
-      }
     }
 
     return this.#opened;
@@ -273,6 +289,10 @@ export default class BaseSelect extends HTMLElement {
 
       case 'opened':
         this.toggle(newValue ? true : false);
+        break;
+
+      case 'invalid':
+        this.invalid = newValue;
         break;
 
       default:

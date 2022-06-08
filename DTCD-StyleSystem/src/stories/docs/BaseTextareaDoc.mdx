@@ -19,6 +19,7 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | required    | Флаг, обязательность значения у компонента. Если значения нет и флаг true, то свойство invalid будет тоже равно true, компонент будет подсвечен красным, а внизу будет отображаться текст ошибки. | Логическое                                                                   |
 | theme       | Варианты отображения поля.                                                                                                                                                                        | Массив с названиями тем: ['withError' \| 'withSuccessFill' \| 'resize_off']. |
 | rows        | Количество строк.                                                                                                                                                                                 | Число                                                                        |
+| invalid     | Является ли значение поля ввода валидным, если false - то валидное, если true - невалидное.                                                                                                       | Логическое                                                                   |
 
 ## Атрибуты
 
@@ -114,7 +115,7 @@ code={`
 Поле с ошибкой:
 
 <Canvas>
-  <base-textarea label="Title" required value=""></base-textarea>
+  <base-textarea label="Title" invalid="true"></base-textarea>
 </Canvas>
 
 <Source
@@ -122,7 +123,7 @@ language='html'
 format={true}
 dark
 code={`
-<base-textarea label="Title" required value=""></base-textarea>
+<base-textarea label="Title" invalid="true"></base-textarea>
 `}
 />
 

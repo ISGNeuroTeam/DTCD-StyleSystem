@@ -78,6 +78,7 @@ const Template = (args) => {
     value,
     readonly,
     labelSlot,
+    invalid,
   } = args;
 
   const input = document.createElement(NAME_COMPONENT);
@@ -96,6 +97,7 @@ const Template = (args) => {
   input.required = required;
   input.value = value;
   input.readonly = readonly;
+  input.invalid = invalid;
 
   input.innerHTML += labelSlot;
   input.innerHTML += args['icon-left'];
@@ -113,6 +115,7 @@ DefaultInput.args = {
   label: '',
   size: '',
   required: false,
+  invalid: false,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
@@ -129,6 +132,7 @@ InputWithIcons.args = {
   label: '',
   size: '',
   required: false,
+  invalid: false,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',

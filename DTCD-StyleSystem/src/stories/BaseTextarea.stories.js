@@ -49,6 +49,7 @@ const Template = (args) => {
     readonly,
     labelSlot,
     rows,
+    invalid,
   } = args;
 
   const textarea = document.createElement(NAME_COMPONENT);
@@ -67,6 +68,7 @@ const Template = (args) => {
   textarea.value = value;
   textarea.readonly = readonly;
   textarea.rows = rows;
+  textarea.invalid = invalid;
   
   textarea.innerHTML += labelSlot;
   
@@ -80,6 +82,7 @@ DefaultTextarea.args = {
   label: '',
   labelSlot: '<span slot="label">Label slot</span>',
   required: false,
+  invalid: false,
   value: '',
   readonly: false,
   rows: 4,
