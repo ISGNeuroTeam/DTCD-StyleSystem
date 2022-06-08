@@ -8,6 +8,7 @@ export default class BaseInput extends HTMLElement {
   #label;
   #message;
   #messageText;
+  #invalid = false;
   #theme = [];
   #size;
 
@@ -27,6 +28,7 @@ export default class BaseInput extends HTMLElement {
       'theme',
       'size',
       'readonly',
+      'invalid',
     ];
   }
 
@@ -118,7 +120,11 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = readonly;
+        this.readonly = newValue;
+        break;
+
+      case 'invalid':
+        this.invalid = newValue;
         break;
 
       default:
@@ -126,15 +132,22 @@ export default class BaseInput extends HTMLElement {
     }
   }
 
+  get invalid() {
+    return this.#invalid;
+  }
+
   set invalid(newVal) {
-    if (newVal) {
+    this.#invalid = Boolean(newVal);
+
+    if (this.#invalid) {
       this.#baseInput.classList.remove('withSuccessFill');
       this.#baseInput.classList.add('withError');
     } else {
       this.#baseInput.classList.remove('withError');
     }
 
-    this.#message.innerHTML = newVal && this.#messageText ? this.#messageText : '';
+    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
+    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
   }
 
   get value() {

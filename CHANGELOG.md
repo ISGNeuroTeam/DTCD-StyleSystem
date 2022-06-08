@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - launch commands of Storybook
 - colors with transparency in Storybook
 - docs of BaseFileLoader
+- display error message of BaseInput, BaseTextarea and BaseSelect
 
 ### Fixed
 
