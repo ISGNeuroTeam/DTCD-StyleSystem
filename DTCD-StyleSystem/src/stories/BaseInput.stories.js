@@ -12,6 +12,8 @@ export default {
       options: [
         '<no modification>',
         'withSuccessFill',
+        'withLeftIcon',
+        'withRightIcon'
       ],
     },
     type: {
@@ -48,11 +50,7 @@ export default {
       control: {
         type: 'select',
       },
-      options: [
-        '<no-modification>',
-        'small',
-        'big',
-      ],
+      options: ['<no-modification>', 'small', 'big'],
     },
   },
   parameters: {
@@ -66,7 +64,7 @@ const NAME_COMPONENT = 'base-input';
 
 window.customElements.define(NAME_COMPONENT, BaseInput);
 
-const Template = (args) => {
+const Template = args => {
   const {
     theme = [],
     placeholder,
