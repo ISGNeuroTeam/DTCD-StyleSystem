@@ -42,6 +42,13 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.shadow.querySelector('.submitButton').addEventListener('click', () => {
       this.updateToggleText();
       this.toggleCalendar();
+      this.dispatchEvent(new Event('input'));
+    });
+
+    this.addEventListener('input', event => {
+      if (event.isTrusted) {
+        event.stopImmediatePropagation();
+      }
     });
 
     this.#toggleWithContext = this.#toggleButton.bind(this);
