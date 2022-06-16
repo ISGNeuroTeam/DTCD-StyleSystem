@@ -27,7 +27,6 @@ const colors = [
 ];
 
 export default class BaseColorPicker extends HTMLElement {
-
   #picker;
   #colorList;
   #selectedPreview;
@@ -98,7 +97,7 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   set label(value) {
-    this.querySelectorAll('[slot="label"]').forEach((label) => {
+    this.querySelectorAll('[slot="label"]').forEach(label => {
       label.remove();
     });
 
@@ -119,7 +118,7 @@ export default class BaseColorPicker extends HTMLElement {
     }
   }
 
-  toggle = (doOpen) => {
+  toggle = doOpen => {
     if (doOpen !== undefined) {
       if (!!doOpen === this.#opened) {
         return;
@@ -136,7 +135,7 @@ export default class BaseColorPicker extends HTMLElement {
       this.#picker.classList.remove('opened');
       document.removeEventListener('click', this.#handleDocumentClick);
     }
-  }
+  };
 
   connectedCallback() {
     colors.forEach(color => this.#addColorSelected(color));
@@ -177,18 +176,14 @@ export default class BaseColorPicker extends HTMLElement {
   }
 
   #handleDocumentClick = (event) => {
-    let isPickerContainsOriginalTarget = false;
-    try {
-      isPickerContainsOriginalTarget = this.#picker.contains(event.originalTarget);
-    } catch (error) {}
-
-    let isComponentContainsTarget = this.contains(event.target);
-    const resultCondition = !isPickerContainsOriginalTarget && !isComponentContainsTarget;
-
-    if (resultCondition) {
+    const eventPath = event.composedPath();
+    const originalTarget = eventPath[0];
+    const isPickerContainsOriginalTarget = this.#picker.contains(originalTarget);
+    const isComponentContainsTarget = this.contains(event.target);
+    if (!isPickerContainsOriginalTarget && !isComponentContainsTarget) {
       this.toggle(false);
     }
-  }
+  };
 
   #selectedPreviewClickHandler = () => {
     if (!this.disabled) {

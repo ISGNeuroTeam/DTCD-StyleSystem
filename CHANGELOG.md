@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0]
+
+### Added
+
+- left and right icon slot for BaseInput
+- script for saving the selected theme after page reload
+- tracking of the active tab for BaseTabs
+
+### Changed
+
+- launch commands of Storybook
+- colors with transparency in Storybook
+- docs of BaseFileLoader
+- display error message of BaseInput, BaseTextarea and BaseSelect
+
+### Fixed
+
+- BaseSelect option list correct opening
+- BaseColorPicker outside click in Chrome
+
 ## [0.5.0]
 
 ### Added

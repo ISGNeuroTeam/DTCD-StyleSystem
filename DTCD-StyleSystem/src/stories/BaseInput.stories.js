@@ -12,9 +12,11 @@ export default {
       options: [
         '<no modification>',
         'withSuccessFill',
+        'withLeftIcon',
+        'withRightIcon'
       ],
     },
-    type: { 
+    type: {
       control: {
         type: 'select',
       },
@@ -44,15 +46,11 @@ export default {
         'week',
       ],
     },
-    size: { 
+    size: {
       control: {
         type: 'select',
       },
-      options: [
-        '<no-modification>',
-        'small',
-        'big',
-      ],
+      options: ['<no-modification>', 'small', 'big'],
     },
   },
   parameters: {
@@ -66,7 +64,7 @@ const NAME_COMPONENT = 'base-input';
 
 window.customElements.define(NAME_COMPONENT, BaseInput);
 
-const Template = (args) => {
+const Template = args => {
   const {
     theme = [],
     placeholder,
@@ -78,6 +76,7 @@ const Template = (args) => {
     value,
     readonly,
     labelSlot,
+    invalid,
   } = args;
 
   const input = document.createElement(NAME_COMPONENT);
@@ -96,21 +95,45 @@ const Template = (args) => {
   input.required = required;
   input.value = value;
   input.readonly = readonly;
-  
+  input.invalid = invalid;
+
   input.innerHTML += labelSlot;
-  
+  input.innerHTML += args['icon-left'];
+  input.innerHTML += args['icon-right'];
+
   return input;
 };
 
 export const DefaultInput = Template.bind({});
 DefaultInput.args = {
+  theme: [],
   placeholder: 'placeholder',
   type: 'text',
   disabled: false,
   label: '',
   size: '',
   required: false,
+  invalid: false,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
+  'icon-left': '',
+  'icon-right': '',
+};
+
+export const InputWithIcons = Template.bind({});
+InputWithIcons.args = {
+  theme: [],
+  placeholder: 'placeholder',
+  type: 'text',
+  disabled: false,
+  label: '',
+  size: '',
+  required: false,
+  invalid: false,
+  value: '',
+  readonly: false,
+  labelSlot: '<span slot="label">Label slot</span>',
+  'icon-left': '<span slot="icon-left" class="FontIcon name_searchSmall size_lg"></span>',
+  'icon-right': '<span slot="icon-right" class="FontIcon name_show size_lg"></span>',
 };

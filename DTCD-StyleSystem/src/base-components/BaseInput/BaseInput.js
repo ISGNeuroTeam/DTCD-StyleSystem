@@ -8,9 +8,14 @@ export default class BaseInput extends HTMLElement {
   #label;
   #message;
   #messageText;
-  #resetBtn;
+  #invalid = false;
   #theme = [];
   #size;
+
+  #iconSlots = [
+    { id: 'iconLeft', theme: 'withLeftIcon', el: null },
+    { id: 'iconRight', theme: 'withRightIcon', el: null },
+  ];
 
   static get observedAttributes() {
     return [
@@ -23,6 +28,7 @@ export default class BaseInput extends HTMLElement {
       'theme',
       'size',
       'readonly',
+      'invalid',
     ];
   }
 
@@ -43,14 +49,18 @@ export default class BaseInput extends HTMLElement {
     this.#internalInput = this.shadowRoot.querySelector('.Field');
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
-    this.#resetBtn = this.shadowRoot.querySelector('.StatusIcon.type_reset');
 
     this.#internalInput.addEventListener('input', this.#inputHandler);
     this.#internalInput.addEventListener('change', this.#handleInputChange);
 
-    if (this.#resetBtn) {
-      this.#resetBtn.addEventListener('click', this.#clickResetBtnHandler);
-    }
+    this.#iconSlots.forEach(slot => {
+      slot.el = this.shadowRoot.getElementById(slot.id);
+      slot.el.addEventListener('slotchange', () => {
+        const nodes = slot.el.assignedNodes();
+        const action = nodes.length > 0 ? 'add' : 'remove';
+        this.#baseInput.classList[action](slot.theme);
+      });
+    });
   }
 
   validate() {
@@ -97,7 +107,7 @@ export default class BaseInput extends HTMLElement {
 
       case 'theme':
         if (newValue) {
-          this.#theme = newValue.split(',');
+          this.#theme = newValue.split(',').map(t => t.trim());
         } else {
           this.#theme = [];
         }
@@ -110,7 +120,11 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = readonly;
+        this.readonly = newValue;
+        break;
+
+      case 'invalid':
+        this.invalid = newValue;
         break;
 
       default:
@@ -118,15 +132,22 @@ export default class BaseInput extends HTMLElement {
     }
   }
 
+  get invalid() {
+    return this.#invalid;
+  }
+
   set invalid(newVal) {
-    if (newVal) {
+    this.#invalid = Boolean(newVal);
+
+    if (this.#invalid) {
       this.#baseInput.classList.remove('withSuccessFill');
       this.#baseInput.classList.add('withError');
     } else {
       this.#baseInput.classList.remove('withError');
     }
 
-    this.#message.innerHTML = newVal && this.#messageText ? this.#messageText : '';
+    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
+    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
   }
 
   get value() {
@@ -199,7 +220,7 @@ export default class BaseInput extends HTMLElement {
       this.#baseInput.classList.add('disabled');
     } else {
       this.#internalInput.removeAttribute('readonly');
-      
+
       if ( ! this.disabled) {
         this.#baseInput.classList.remove('disabled');
       }
@@ -255,10 +276,6 @@ export default class BaseInput extends HTMLElement {
     this.dispatchEvent(new Event('change'));
   }
 
-  #clickResetBtnHandler = (e) => {
-    this.value = '';
-  };
-
   #setThemeClasses() {
     const allThemes = [
       'withSuccessFill',
@@ -266,7 +283,7 @@ export default class BaseInput extends HTMLElement {
     ];
 
     const { classList } = this.#baseInput;
-    
+
     for (const theme of allThemes) {
       if (this.#theme.indexOf(theme) != -1) {
         classList.add(theme);

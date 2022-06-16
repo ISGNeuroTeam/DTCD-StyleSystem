@@ -42,6 +42,7 @@ const Template = (args) => {
     disabled,
     required,
     labelSlot,
+    invalid,
   } = args;
 
   const select = document.createElement(NAME_COMPONENT);
@@ -53,6 +54,7 @@ const Template = (args) => {
   select.opened = opened;
   select.disabled = disabled;
   select.required = required;
+  select.invalid = invalid;
 
   select.innerHTML += labelSlot;
 
@@ -78,5 +80,6 @@ DefaultSelect.args = {
   value: '',
   disabled: false,
   required: false,
+  invalid: false,
   labelSlot: '<span slot="label">Default dropdown</span>',
 };

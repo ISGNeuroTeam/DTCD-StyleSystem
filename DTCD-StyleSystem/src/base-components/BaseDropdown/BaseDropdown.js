@@ -2,7 +2,6 @@ import html from './BaseDropdown.html';
 import styles from './BaseDropdown.scss';
 
 export default class BaseDropdown extends HTMLElement {
-
   #dropdown;
   #toggleBtn;
   #theme = [];
@@ -11,12 +10,7 @@ export default class BaseDropdown extends HTMLElement {
   #placement;
 
   static get observedAttributes() {
-    return [
-      'theme',
-      'alignment',
-      'opened',
-      'placement'
-    ];
+    return ['theme', 'alignment', 'opened', 'placement'];
   }
 
   constructor() {
@@ -24,14 +18,14 @@ export default class BaseDropdown extends HTMLElement {
 
     const template = document.createElement('template');
     template.innerHTML = html;
-    
+
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
-    
+
     this.#dropdown = this.shadowRoot.querySelector('.BaseDropdown');
     this.#toggleBtn = this.#dropdown.querySelector('.ToggleBtn');
     this.#toggleBtn.addEventListener('click', this.#handleToggleBtnClick);
@@ -57,7 +51,7 @@ export default class BaseDropdown extends HTMLElement {
     return this.#alignment;
   }
 
-  set alignment (newValue) {
+  set alignment(newValue) {
     if (newValue) {
       this.setAttribute('alignment', newValue);
     } else {
@@ -65,7 +59,7 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
-  set placement (newValue) {
+  set placement(newValue) {
     if (newValue) {
       this.setAttribute('placement', newValue);
     } else {
@@ -84,7 +78,7 @@ export default class BaseDropdown extends HTMLElement {
       this.removeAttribute('opened');
     }
   }
-  
+
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'theme':
@@ -115,7 +109,7 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
-  toggle = (doOpen) => {
+  toggle = doOpen => {
     if (doOpen !== undefined) {
       if (!!doOpen === this.#opened) {
         return;
@@ -133,20 +127,22 @@ export default class BaseDropdown extends HTMLElement {
       document.removeEventListener('click', this.#handleDocumentClick);
     }
 
-    this.dispatchEvent(new CustomEvent('toggle', {
-      bubbles: true,
-      cancelable: false,
-      detail: {
-        opened: this.#opened,
-      },
-    }));
-  }
-  
+    this.dispatchEvent(
+      new CustomEvent('toggle', {
+        bubbles: true,
+        cancelable: false,
+        detail: {
+          opened: this.#opened,
+        },
+      })
+    );
+  };
+
   #setThemeClasses() {
     const allThemes = [];
 
     const { classList } = this.#dropdown;
-    
+
     for (const theme of allThemes) {
       if (this.#theme.indexOf(theme) != -1) {
         classList.add(theme);
@@ -194,7 +190,7 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
-  #handleDocumentClick = (event) => {
+  #handleDocumentClick = event => {
     let isDropdownContainsOriginalTarget = false;
     try {
       isDropdownContainsOriginalTarget = this.#dropdown.contains(event.originalTarget);
@@ -206,7 +202,7 @@ export default class BaseDropdown extends HTMLElement {
     if (resultCondition) {
       this.toggle(false);
     }
-  }
+  };
 
   #handleToggleBtnClick = () => {
     if (!this.disabled) {

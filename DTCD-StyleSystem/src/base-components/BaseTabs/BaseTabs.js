@@ -28,6 +28,10 @@ export default class BaseTabs extends HTMLElement {
     this.#tabSlot.removeEventListener('slotchange', this.#tabSlotChangeHandler);
   }
 
+  get activeTab() {
+    return this.#tabList[this.#activeTab];
+  }
+
   get #tabPanels() {
     return this.#tabSlot.assignedElements();
   }
@@ -44,12 +48,15 @@ export default class BaseTabs extends HTMLElement {
     return tab;
   }
 
-  #selectTab(tabIndex) {
+  #selectTab(tabIndex, isAfterSync = false) {
     const activeTab = this.#tabList[this.#activeTab];
     const currentTab = this.#tabList[tabIndex];
     this.#toggleTabVisibility(false, activeTab);
     this.#toggleTabVisibility(true, currentTab);
-    this.#activeTab = tabIndex;
+    if (isAfterSync || tabIndex !== this.#activeTab) {
+      this.#activeTab = tabIndex;
+      this.dispatchEvent(new Event('select'));
+    }
   }
 
   #toggleTabVisibility(isShow = true, { tab, panel }) {
@@ -60,21 +67,21 @@ export default class BaseTabs extends HTMLElement {
   #syncTabsWithNav() {
     this.#clearNavTabs();
 
-    this.#tabList = this.#tabPanels.map((panel, index) => {
+    this.#tabList = this.#tabPanels.map((panel, tabIndex) => {
       const tabName = !panel.hasAttribute('tab-name')
         ? 'Tab'
         : panel.getAttribute('tab-name');
 
-      const tab = this.#createNavTab(index, tabName);
+      const tab = this.#createNavTab(tabIndex, tabName);
       this.#nav.appendChild(tab);
       panel.style.display = 'none';
 
-      return { tab, panel };
+      return { tab, panel, tabName, tabIndex };
     });
 
     if (this.#activeTab > this.#tabList.length - 1) this.#activeTab = 0;
 
-    this.#tabList.length > 0 && this.#selectTab(this.#activeTab);
+    this.#tabList.length > 0 && this.#selectTab(this.#activeTab, true);
   }
 
 }

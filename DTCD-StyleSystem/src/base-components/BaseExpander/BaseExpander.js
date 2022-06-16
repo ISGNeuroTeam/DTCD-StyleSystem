@@ -84,6 +84,7 @@ export default class BaseExpander extends HTMLElement {
   #setThemeClasses() {
     const allThemes = [
       'with_borderBottom',
+      'theme_iconLeft',
     ];
 
     const { classList } = this.#expander;

@@ -48,8 +48,15 @@ export class StyleSystem extends SystemPlugin {
       );
       this.logSystem.debug('Setting themes received from server in system');
       this.themes = data;
-      this.logSystem.debug(`Setting ${this.themes[0].name} as default theme in system`);
       this.currentThemeName = this.themes[0].name;
+      this.themes.forEach((item) => {
+          if (item.name === localStorage.getItem('currentTheme')) {
+            this.currentThemeName = item.name;
+            return;
+          } 
+      });
+
+      this.logSystem.debug(`Setting ${this.currentThemeName} as default theme in system`);
       this.logSystem.info('System inited successfully');
     } catch (err) {
       this.logSystem.fatal(
@@ -66,6 +73,7 @@ export class StyleSystem extends SystemPlugin {
         this.currentThemeName = name;
         this.logSystem.info(`New theme '${name}' set in system`);
         this.eventSystem.publishEvent('ThemeUpdate');
+        localStorage.setItem('currentTheme', name);
       } else {
         this.logSystem.warn(`Theme '${name}' doesn't exist in system!`);
         throw new Error('Theme not found!');

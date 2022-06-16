@@ -4,6 +4,18 @@ import { Canvas, Source } from '@storybook/addon-docs';
 
 Компонент для переключения содержимого, находящегося внутри него, представленный тэгом `<base-tabs>`.
 
+## Свойства
+
+| Название       | Описание                             | Тип       |
+|:---------------|:-------------------------------------|:----------|
+| `activeTab`    | Объект с данными выбранной вкладки.  | `Object`  |
+
+## События
+
+| Название | Описание                         |
+|----------|----------------------------------|
+| select   | Событие переключения вкладок.    |
+
 ## Слоты
 
 | Название | Описание                         |
@@ -35,7 +47,8 @@ code={`
 `}
 />
 
-В качестве заголовка вкладки, по умолчанию, указывается 'Tab', но его можно переопределить с помощью специального атрибута `tab-name`, заданного для вкладки в слоте:
+В качестве заголовка вкладки, по умолчанию, указывается 'Tab', но его можно переопределить
+с помощью специального атрибута `tab-name`, заданного для вкладки в слоте:
 
 <Canvas withSource="true">
   <base-tabs>
@@ -53,5 +66,63 @@ code={`
   <div slot="tab">Tab 1 content</div>
   <div slot="tab" tab-name="Test">Tab 2 content</div>
 </base-tabs>
+`}
+/>
+
+Событие `select` возникает при переключении вкладок. Для его отлова следует воспользоваться
+обработчиками событий, к примеру, `tabs.addEventListener('select', callback);`
+
+Текущую вкладку можно получить с помощью свойства `activeTab`, которое представляет собой объект вида:
+
+<Source
+format={true}
+dark
+code={`
+  {
+    tab: HTMLElement,
+    panel: HTMLElement,
+    tabName: 'Название вкладки',
+    tabIndex: 0
+  }
+`}
+/>
+
+где:
+
+- `tab` - сгенерированный HTML-элемент заголовка вкладки;
+- `panel` - контент вкладки, заданный с помощью слота;
+- `tabName` - заголовок вкладки;
+- `tabIndex` - порядковый номер вкладки.
+
+Ниже представлен пример обработки на VueJS:
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<template>
+  <base-tabs @select="selectHandler">
+    <div slot="tab" tab-name="Tab 1">Tab 1 content</div>
+    <div slot="tab" tab-name="Tab 2">Tab 2 content</div>
+  </base-tabs>
+</template>
+`}
+/>
+
+<Source
+language='js'
+format={true}
+dark
+code={`
+<script>
+  export.default {
+    methods: {
+      selectHandler(e) {
+        console.log(e.target.activeTab);
+      },
+    },
+  };
+</script>
 `}
 />

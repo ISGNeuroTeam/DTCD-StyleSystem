@@ -21,11 +21,11 @@ SET_PACK_NAME = $(eval PACK_NAME=$(PROJECT_NAME)-$(VERSION)-$(BRANCH).tar.gz)
 
 DEV_STORAGE = https://storage.dev.isgneuro.com/repository/components
 DTCD_SDK = DTCD-SDK
-DTCD_SDK_URL = $(DEV_STORAGE)/$(DTCD_SDK)/$(DTCD_SDK)-0.1.2-develop-0121.tar.gz
+DTCD_SDK_URL = $(DEV_STORAGE)/$(DTCD_SDK)/$(DTCD_SDK)-0.1.2-develop-0131.tar.gz
 
 .SILENT:
 
-COMPONENTS: sdk 
+COMPONENTS: sdk
 
 export ANNOUNCE_BODY
 
@@ -103,8 +103,14 @@ dev: build
 	cp -rf ./build/$(PROJECT_NAME)_$(VERSION) ./../DTCD/server/plugins
 	npm run dev --prefix ./$(PROJECT_NAME)
 
-storybook: build
+storybook: sdk
+	if ! [ -d ./$(PROJECT_NAME)/node_modules ];\
+		then npm i --prefix ./$(PROJECT_NAME);\
+	fi
 	npm run storybook --prefix ./$(PROJECT_NAME)
 
-build-storybook: build
+build-storybook: sdk
+	if ! [ -d ./$(PROJECT_NAME)/node_modules ];\
+		then npm i --prefix ./$(PROJECT_NAME);\
+	fi
 	npm run build-storybook --prefix ./$(PROJECT_NAME)

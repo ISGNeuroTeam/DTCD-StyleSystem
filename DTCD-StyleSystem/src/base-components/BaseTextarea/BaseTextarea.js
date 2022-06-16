@@ -8,6 +8,7 @@ export default class BaseTextarea extends HTMLElement {
   #textarea;
   #message;
   #messageText;
+  #invalid = false;
   #theme = [];
   #size;
 
@@ -22,6 +23,7 @@ export default class BaseTextarea extends HTMLElement {
       'size',
       'readonly',
       'rows',
+      'invalid',
     ];
   }
 
@@ -95,7 +97,11 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = readonly;
+        this.readonly = newValue;
+        break;
+      
+      case 'invalid':
+        this.invalid = newValue;
         break;
 
       case 'rows':
@@ -107,15 +113,22 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
+  get invalid() {
+    return this.#invalid;
+  }
+
   set invalid(newVal) {
-    if (newVal) {
+    this.#invalid = Boolean(newVal);
+
+    if (this.#invalid) {
       this.#block.classList.remove('withSuccessFill');
       this.#block.classList.add('withError');
     } else {
       this.#block.classList.remove('withError');
     }
 
-    this.#message.innerHTML = newVal && this.#messageText ? this.#messageText : '';
+    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
+    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
   }
 
   get value() {
