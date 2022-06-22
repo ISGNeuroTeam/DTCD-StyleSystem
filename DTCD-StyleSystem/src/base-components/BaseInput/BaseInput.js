@@ -154,7 +154,7 @@ export default class BaseInput extends HTMLElement {
     }
 
     this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
   }
 
   get value() {
