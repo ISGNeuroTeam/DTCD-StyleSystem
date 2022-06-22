@@ -13,6 +13,7 @@ export default class BaseSelect extends HTMLElement {
   #value;
   #itemSlot;
   #opened = false;
+  #doValidation = false;
 
   static get observedAttributes() {
     return [
@@ -74,7 +75,7 @@ export default class BaseSelect extends HTMLElement {
     this.#header.innerHTML = newValue;
     this.#searchInput.setAttribute('placeholder', newValue);
 
-    this.validate();
+    this.#doValidation && this.validate();
 
     this.dispatchEvent(new Event('input'));
     if (oldValue !== this.value) {
@@ -222,13 +223,15 @@ export default class BaseSelect extends HTMLElement {
         this.#searchInput.value = '';
       }
 
-      this.validate();
+      this.#doValidation && this.validate();
     }
 
     return this.#opened;
   }
 
   connectedCallback() {
+    this.#doValidation = true;
+
     this.#fieldWrapper.addEventListener('click', this.#handleFieldWrapperClick);
     this.#searchInput.addEventListener('input', this.#handleSearchFieldInput);
   }

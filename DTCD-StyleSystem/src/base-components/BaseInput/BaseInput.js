@@ -11,6 +11,7 @@ export default class BaseInput extends HTMLElement {
   #invalid = false;
   #theme = [];
   #size;
+  #doValidation = false;
 
   #iconSlots = [
     { id: 'iconLeft', theme: 'withLeftIcon', el: null },
@@ -72,7 +73,13 @@ export default class BaseInput extends HTMLElement {
       const { isValid, message } = this.validation(this.#internalInput.value);
       this.#messageText = message;
       this.invalid = !isValid;
-    } else this.invalid = false;
+    } else {
+      this.invalid = false;
+    }
+  }
+
+  connectedCallback() {
+    this.#doValidation = true;
   }
 
   disconnectedCallback() {
@@ -156,7 +163,7 @@ export default class BaseInput extends HTMLElement {
 
   set value(val) {
     this.#internalInput.value = val;
-    this.validate();
+    this.#doValidation && this.validate();
     this.dispatchEvent(new Event('input'));
   }
 

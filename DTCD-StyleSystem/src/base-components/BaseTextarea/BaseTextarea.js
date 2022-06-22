@@ -11,6 +11,7 @@ export default class BaseTextarea extends HTMLElement {
   #invalid = false;
   #theme = [];
   #size;
+  #doValidation = false;
 
   static get observedAttributes() {
     return [
@@ -57,7 +58,13 @@ export default class BaseTextarea extends HTMLElement {
       const { isValid, message } = this.validation(this.#textarea.value);
       this.#messageText = message;
       this.invalid = !isValid;
-    } else this.invalid = false;
+    } else {
+      this.invalid = false;
+    }
+  }
+
+  connectedCallback() {
+    this.#doValidation = true;
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -137,7 +144,7 @@ export default class BaseTextarea extends HTMLElement {
 
   set value(val) {
     this.#textarea.value = val;
-    this.validate();
+    this.#doValidation && this.validate();
     this.dispatchEvent(new Event('input'));
   }
 
