@@ -41,5 +41,8 @@
     "sass-loader": "^12.6.0",
     "storybook": "^6.4.19",
     "storybook-dark-mode": "^1.0.9"
+  },
+  "dependencies": {
+    "moment": "^2.29.3"
   }
 }

@@ -58,7 +58,7 @@ export default class Day {
       .replace(/\bMMM\b/, this.monthShort)
       .replace(/\bMM\b/, this.monthNumber.toString().padStart(2, '0'))
       .replace(/\bM\b/, this.monthNumber)
-      .replace(/\bH\b/, this.hours)
+      .replace(/\bH\b/, this.hours.toString().padStart(2, '0'))
       .replace(/\bm\b/, this.minutes.toString().padStart(2, '0'));
   }
 }
