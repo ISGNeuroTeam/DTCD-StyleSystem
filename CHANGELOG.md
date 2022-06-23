@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 'display:none' with 'padding:0' in error message of BaseInput, BaseTextarea and BaseSelect
 
+### Fixed
+
+- synced typed value in datetime picker
+
 ## [0.6.0]
 
 ### Added

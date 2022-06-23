@@ -1,6 +1,8 @@
 import html from 'rollup-plugin-html';
 import styles from 'rollup-plugin-styles';
 import json from '@rollup/plugin-json';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 
 import { version } from './package.json';
 
@@ -14,6 +16,8 @@ const outputDirectory = watch
   : `./build`;
 
 const plugins = [
+  resolve(),
+  commonjs(),
   // import global fonts to <head>
   styles({
     mode: [
@@ -30,10 +34,7 @@ const plugins = [
   }),
   // import styles
   styles({
-    mode: [
-      'inject',
-      () => '',
-    ],
+    mode: ['inject', () => ''],
     exclude: ['**/fonts.css'],
   }),
   html({
