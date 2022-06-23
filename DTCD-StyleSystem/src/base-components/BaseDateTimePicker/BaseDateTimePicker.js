@@ -59,6 +59,7 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.calendar = new Calendar(this.#date.year, this.#date.monthNumber, 'ru-RU');
       this.renderCalendarDays();
       this.setTime();
+      this.dispatchEvent(new Event('input'));
     });
 
     this.addEventListener('input', event => {
