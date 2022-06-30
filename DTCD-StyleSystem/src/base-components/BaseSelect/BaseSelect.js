@@ -244,7 +244,7 @@ export default class BaseSelect extends HTMLElement {
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled':
-        if (newValue) {
+        if (this.disabled) {
           this.#searchInput.setAttribute('disabled', true);
           this.#selectContainer.classList.add('disabled');
         } else {

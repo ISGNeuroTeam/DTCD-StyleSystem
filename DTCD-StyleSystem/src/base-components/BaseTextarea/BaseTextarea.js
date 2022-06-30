@@ -1,3 +1,5 @@
+import { getBoolFromAttrVal } from '../../utils/functions';
+
 import html from './BaseTextarea.html';
 import styles from './BaseTextarea.scss';
 
@@ -74,7 +76,7 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'disabled':
-        this.disabled = newValue;
+        this.disabled = getBoolFromAttrVal(newValue);
         break;
 
       case 'label':
@@ -86,7 +88,7 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'required':
-        this.required = newValue;
+        this.required = getBoolFromAttrVal(newValue);
         break;
 
       case 'theme':
@@ -104,7 +106,7 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = newValue;
+        this.readonly = getBoolFromAttrVal(newValue);
         break;
       
       case 'invalid':
