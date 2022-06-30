@@ -1,3 +1,5 @@
+import { getBoolFromAttrVal } from '../../utils/functions';
+
 import html from './BaseInput.html';
 import styles from './BaseInput.scss';
 
@@ -93,7 +95,7 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'disabled':
-        this.disabled = newValue;
+        this.disabled = getBoolFromAttrVal(newValue);
         break;
 
       case 'type':
@@ -109,7 +111,7 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'required':
-        this.required = newValue;
+        this.required = getBoolFromAttrVal(newValue);
         break;
 
       case 'theme':
@@ -127,7 +129,7 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = newValue;
+        this.readonly = getBoolFromAttrVal(newValue);
         break;
 
       case 'invalid':
