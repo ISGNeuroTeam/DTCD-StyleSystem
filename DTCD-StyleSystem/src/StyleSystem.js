@@ -43,17 +43,15 @@ export class StyleSystem extends SystemPlugin {
 
     try {
       this.logSystem.debug('Requesting design object from endpoint /get-design-objects');
-      const { data } = await this.interactionSystem.GETRequest(
-        '/mock_server/v1/get-design-objects'
-      );
+      const { data } = await this.interactionSystem.GETRequest('/dtcd_utils/v1/get-design-objects');
       this.logSystem.debug('Setting themes received from server in system');
       this.themes = data;
       this.currentThemeName = this.themes[0].name;
-      this.themes.forEach((item) => {
-          if (item.name === localStorage.getItem('currentTheme')) {
-            this.currentThemeName = item.name;
-            return;
-          } 
+      this.themes.forEach(item => {
+        if (item.name === localStorage.getItem('currentTheme')) {
+          this.currentThemeName = item.name;
+          return;
+        }
       });
 
       this.logSystem.debug(`Setting ${this.currentThemeName} as default theme in system`);
