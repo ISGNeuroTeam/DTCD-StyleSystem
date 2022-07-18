@@ -1,68 +1,9 @@
-<style>
-:host {
-  display: inline-block;
-  align-self: flex-start;
-}
-
-.switch {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 34px;
-  height: 20px;
-}
-
-.slider {
-  box-sizing: border-box;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background-color: var(--background_main);
-  transition: .3s;
-}
-
-.slider:before {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 16px;
-  height: 16px;
-  border: 0.5px solid var(--border);
-  border-radius: 50%;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .1);
-  background-color: var(--background_main);
-  transition: .3s;
-}
-
-input {
-  appearance: none;
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  z-index: -1;
-}
-
-input:checked + .slider {
-  background-color: var(--base-switch-color, var(--button_primary));
-}
-
-input:disabled + .slider {
-  cursor: not-allowed;
-  background-color: var(--border) ;
-}
-
-input:checked + .slider:before {
-  transform: translateX(14px);
-}
-</style>
-
-<label class="switch">
-  <input id="check" type="checkbox">
-  <span class="slider"></span>
+<label class="BaseSwitch">
+  <span class="Label">
+    <slot name="label"></slot>
+  </span>
+  <input type="checkbox" class="Input">
+  <div class="Switch">
+    <span class="Slider"></span>
+  </div>
 </label>
