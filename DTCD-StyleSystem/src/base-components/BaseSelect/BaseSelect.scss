@@ -39,11 +39,14 @@
     background-color: var(--border_12);
     border: 1px solid var(--border);
     border-radius: 4.44px;
-    padding: 5px 12px;
+    padding: 5px 25px 5px 12px;
     color: var(--text_main);
     transition: border-color .3s, background-color .3s;
     font-size: 13px;
     line-height: 1.218;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 
     &::placeholder {
       color: var(--text_secondary);

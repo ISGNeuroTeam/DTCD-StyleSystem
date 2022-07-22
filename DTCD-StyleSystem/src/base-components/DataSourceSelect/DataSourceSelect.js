@@ -83,7 +83,7 @@ export default class DataSourceSelect extends HTMLElement {
     const dataSourceSystemInstance = this.#dataSourceSystem.getSystem('DataSourceSystem', '0.2.0');
     const dataSourceSystemGUID = dataSourceSystemInstance.getGUID(dataSourceSystemInstance);
     this.#createDSBtn.addEventListener('click', e => {
-      this.#workspaceSystem.openPanelInModal('DatasourcePanel', '0.2.0');
+      this.#workspaceSystem.openPanelInModal('DatasourcePanel', '0.3.0');
     });
     this.#eventSystem.registerCustomAction(
       'updateDataSourceListByCreated',

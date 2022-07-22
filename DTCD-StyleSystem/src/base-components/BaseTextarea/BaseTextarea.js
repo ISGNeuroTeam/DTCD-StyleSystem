@@ -1,3 +1,5 @@
+import { getBoolFromAttrVal } from '../../utils/functions';
+
 import html from './BaseTextarea.html';
 import styles from './BaseTextarea.scss';
 
@@ -11,6 +13,7 @@ export default class BaseTextarea extends HTMLElement {
   #invalid = false;
   #theme = [];
   #size;
+  #doValidation = false;
 
   static get observedAttributes() {
     return [
@@ -57,7 +60,13 @@ export default class BaseTextarea extends HTMLElement {
       const { isValid, message } = this.validation(this.#textarea.value);
       this.#messageText = message;
       this.invalid = !isValid;
-    } else this.invalid = false;
+    } else {
+      this.invalid = false;
+    }
+  }
+
+  connectedCallback() {
+    this.#doValidation = true;
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -67,7 +76,7 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'disabled':
-        this.disabled = newValue;
+        this.disabled = getBoolFromAttrVal(newValue);
         break;
 
       case 'label':
@@ -79,7 +88,7 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'required':
-        this.required = newValue;
+        this.required = getBoolFromAttrVal(newValue);
         break;
 
       case 'theme':
@@ -97,7 +106,7 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = newValue;
+        this.readonly = getBoolFromAttrVal(newValue);
         break;
       
       case 'invalid':
@@ -128,7 +137,7 @@ export default class BaseTextarea extends HTMLElement {
     }
 
     this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
   }
 
   get value() {
@@ -137,7 +146,7 @@ export default class BaseTextarea extends HTMLElement {
 
   set value(val) {
     this.#textarea.value = val;
-    this.validate();
+    this.#doValidation && this.validate();
     this.dispatchEvent(new Event('input'));
   }
 

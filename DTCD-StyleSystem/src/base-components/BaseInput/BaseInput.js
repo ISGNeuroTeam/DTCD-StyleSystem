@@ -1,3 +1,5 @@
+import { getBoolFromAttrVal } from '../../utils/functions';
+
 import html from './BaseInput.html';
 import styles from './BaseInput.scss';
 
@@ -11,6 +13,7 @@ export default class BaseInput extends HTMLElement {
   #invalid = false;
   #theme = [];
   #size;
+  #doValidation = false;
 
   #iconSlots = [
     { id: 'iconLeft', theme: 'withLeftIcon', el: null },
@@ -72,7 +75,13 @@ export default class BaseInput extends HTMLElement {
       const { isValid, message } = this.validation(this.#internalInput.value);
       this.#messageText = message;
       this.invalid = !isValid;
-    } else this.invalid = false;
+    } else {
+      this.invalid = false;
+    }
+  }
+
+  connectedCallback() {
+    this.#doValidation = true;
   }
 
   disconnectedCallback() {
@@ -86,7 +95,7 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'disabled':
-        this.disabled = newValue;
+        this.disabled = getBoolFromAttrVal(newValue);
         break;
 
       case 'type':
@@ -102,7 +111,7 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'required':
-        this.required = newValue;
+        this.required = getBoolFromAttrVal(newValue);
         break;
 
       case 'theme':
@@ -120,7 +129,7 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'readonly':
-        this.readonly = newValue;
+        this.readonly = getBoolFromAttrVal(newValue);
         break;
 
       case 'invalid':
@@ -147,7 +156,7 @@ export default class BaseInput extends HTMLElement {
     }
 
     this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.display = this.#message.textContent.length ? '' : 'none';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
   }
 
   get value() {
@@ -156,7 +165,7 @@ export default class BaseInput extends HTMLElement {
 
   set value(val) {
     this.#internalInput.value = val;
-    this.validate();
+    this.#doValidation && this.validate();
     this.dispatchEvent(new Event('input'));
   }
 

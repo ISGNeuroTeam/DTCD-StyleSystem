@@ -20,6 +20,8 @@ const Template = (args) => {
     disabled,
     checked,
     value,
+    label,
+    labelSlot,
   } = args;
 
   const switchInput = document.createElement(NAME_COMPONENT);
@@ -27,13 +29,18 @@ const Template = (args) => {
   switchInput.checked = checked;
   switchInput.disabled = disabled;
   switchInput.value = value;
+  switchInput.label = label;
+  
+  switchInput.innerHTML += labelSlot;
 
   return switchInput;
 };
 
 export const DefaultSwitch = Template.bind({});
 DefaultSwitch.args = {
+  label: '',
   disabled: false,
   checked: false,
   value: '',
+  labelSlot: '<span slot="label">Label slot</span>',
 };

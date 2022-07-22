@@ -1,10 +1,13 @@
 import html from './BaseSwitch.html';
+import styles from './BaseSwitch.scss';
 
 export default class BaseSwitch extends HTMLElement {
+
+  #label;
   #checkbox;
 
   static get observedAttributes() {
-    return ['checked', 'disabled'];
+    return ['label', 'checked', 'disabled'];
   }
 
   constructor() {
@@ -16,8 +19,15 @@ export default class BaseSwitch extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#checkbox = this.shadowRoot.querySelector('#check');
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+
+    this.#label = this.shadowRoot.querySelector('.Label');
+    this.#checkbox = this.shadowRoot.querySelector('.Input');
+
     this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
+    
   }
 
   get value() {
@@ -51,13 +61,39 @@ export default class BaseSwitch extends HTMLElement {
     else this.removeAttribute('disabled');
   }
 
-  attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'checked') {
-      this.value = newValue ? true : false;
-    }
+  get label() {
+    return this.#label.innerHTML;
+  }
 
-    if (attrName === 'disabled') {
-      this.#checkbox.disabled = this.disabled;
+  set label(value) {
+    this.querySelectorAll('[slot="label"]').forEach((label) => {
+      label.remove();
+    });
+
+    if (value) {
+      this.innerHTML += `<span slot="label">${value}</span>`;
+    }
+  }
+
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    switch (attrName) {
+      case 'label': {
+        this.label = newValue;
+        break;
+      }
+  
+      case 'checked': {
+        this.value = newValue ? true : false;
+        break;
+      }
+  
+      case 'disabled': {
+        this.#checkbox.disabled = this.disabled;
+        break;
+      }
+
+      default:
+        break;
     }
   }
 

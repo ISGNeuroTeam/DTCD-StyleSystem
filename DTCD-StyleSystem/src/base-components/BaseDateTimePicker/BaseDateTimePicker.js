@@ -1,5 +1,6 @@
 import styles from './BaseDateTimePicker.scss';
 import html from './BaseDateTimePicker.html';
+import moment from 'moment';
 
 import Day from './Day';
 import Calendar from './Calendar';
@@ -42,6 +43,22 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.shadow.querySelector('.submitButton').addEventListener('click', () => {
       this.updateToggleText();
       this.toggleCalendar();
+      this.dispatchEvent(new Event('input'));
+    });
+
+    this.dateInput.addEventListener('change', () => {
+      const regexp =
+        /^(0[1-9]|[12]\d|3[01])[.](0[1-9]|1[0-2])[.]\d{4}\s(0\d|1\d|2[0-3])[:]([0-5]\d)$/;
+      let date = moment(this.dateInput.value, 'DD-MM-YYYY hh:mm');
+      if (!date.isValid() || this.dateInput.value.match(regexp) === null) {
+        this.#date = new Day(new Date(Date.now()), 'ru-RU');
+        this.updateToggleText();
+        return;
+      }
+      this.#date = new Day(date.toDate(), 'ru-RU');
+      this.calendar = new Calendar(this.#date.year, this.#date.monthNumber, 'ru-RU');
+      this.renderCalendarDays();
+      this.setTime();
       this.dispatchEvent(new Event('input'));
     });
 
