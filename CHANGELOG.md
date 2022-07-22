@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - synced typed value in datetime picker
 - long value in BaseSelect component
+- DataSourceSelect create button not work
 
 ## [0.6.0]
 
