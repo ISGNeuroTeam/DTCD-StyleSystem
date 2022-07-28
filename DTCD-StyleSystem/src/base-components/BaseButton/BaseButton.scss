@@ -142,12 +142,12 @@
     &:hover,
     &:active {
       cursor: not-allowed;
-      color: var(--text_secondary);
+      color: var(--border_secondary);
       background-color: var(--border);
     }
 
     .Icon {
-      fill: var(--text_secondary);
+      fill: var(--border_secondary);
     }
 
     &.theme_alfa {
