@@ -16,6 +16,9 @@ export default {
     iconSlot: { 
       type: 'string',
     },
+    'icon-arrow': {
+      type: 'string',
+    },
     theme: { 
       control: {
         type: 'multi-select',
@@ -24,6 +27,7 @@ export default {
         '',
         'with_borderBottom',
         'theme_iconLeft',
+        'theme_rotate90',
       ],
     },
     open: {
@@ -59,6 +63,7 @@ const Template = (args) => {
   const expander = document.createElement(NAME_COMPONENT);
   expander.innerHTML += summarySlot;
   expander.innerHTML += iconSlot;
+  expander.innerHTML += args['icon-arrow'];
   expander.innerHTML += defaultSlot;
 
   expander.open = open ? true : false;
@@ -72,6 +77,7 @@ export const DefaultExpander = Template.bind({});
 DefaultExpander.args = {
   summarySlot: '<div slot="summary">Default expander</div>',
   iconSlot: '',
+  'icon-arrow': '',
   defaultSlot: 'Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?',
   theme: [],
   open: false,
@@ -81,6 +87,7 @@ export const ExpanderWithBottomBorder = Template.bind({});
 ExpanderWithBottomBorder.args = {
   summarySlot: '<div slot="summary">Expander with bottom border</div>',
   iconSlot: '',
+  'icon-arrow': '',
   defaultSlot: 'Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?',
   theme: ['with_borderBottom'],
   open: false,

@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .BaseExpander {
   &,
   *,
@@ -43,13 +47,15 @@
     }
   }
 
-  .ArrowIcon {
+  .ArrowIcon > *,
+  ::slotted([slot="icon-arrow"]) {
     flex: none;
     max-width: 24px;
     max-height: 24px;
-    transition: transform 0.3s;
     transform: rotate(0deg);
-
+    transition: transform 0.3s;
+    color: var(--button_primary);
+    
     path,
     rect {
       fill: var(--button_primary);
@@ -72,8 +78,25 @@
       }
     }
 
-    .ArrowIcon {
+    .ArrowIcon > *,
+    ::slotted([slot="icon-arrow"]) {
       transform: rotate(180deg);
+    }
+
+    &.theme_rotate90 {
+      &:not(.theme_iconLeft) {
+        .ArrowIcon > *,
+        ::slotted([slot="icon-arrow"]) {
+          transform: rotate(90deg);
+        }
+      }
+
+      &.theme_iconLeft {
+        .ArrowIcon > *,
+        ::slotted([slot="icon-arrow"]) {
+          transform: rotate(-90deg);
+        }
+      }
     }
   }
   
@@ -99,6 +122,10 @@
     summary {
       flex-direction: row-reverse;
       column-gap: 5px;
+    }
+
+    ::slotted([slot="summary"]) {
+      margin-right: 0;
     }
   }
 }

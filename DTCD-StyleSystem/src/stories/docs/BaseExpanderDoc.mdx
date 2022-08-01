@@ -1,24 +1,78 @@
+import { Canvas, Source } from '@storybook/addon-docs';
+
 # BaseExpander
 
 Раскрывающийся список (экспандер), представленный тегом `base-expander`. Основан на теге `<details>`.
 
 ## Свойства
 
-| Название | Описание                                     | Значение                                        |
-|----------|----------------------------------------------|-------------------------------------------------|
-| theme    | Варианты отображения раскрывающегося списка. | Массив с названиями тем: ['with_borderBottom']. |
-| open     | Открыт или раскрыт экспандер.                | Логическое                                      |
+| Название | Описание                                     | Значение                                                                            |
+|----------|----------------------------------------------|-------------------------------------------------------------------------------------|
+| theme    | Варианты отображения раскрывающегося списка. | Массив с названиями тем: ['with_borderBottom', 'theme_iconLeft', 'theme_rotate90']. |
+| open     | Открыт или раскрыт экспандер.                | Логическое                                                                          |
 
 ## Атрибуты
 
-| Название | Описание                                     | Значение                                        |
-|----------|----------------------------------------------|-------------------------------------------------|
-| theme    | Варианты отображения раскрывающегося списка. | Название тем через запятую: 'with_borderBottom'.|
+| Название | Описание                                     | Значение                                                                            |
+|----------|----------------------------------------------|-------------------------------------------------------------------------------------|
+| theme    | Варианты отображения раскрывающегося списка. | Название тем через запятую: 'with_borderBottom', 'theme_iconLeft', 'theme_rotate90'.|
 
 ## Слоты
 
-| Название  | Описание                                                                                                                             |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------------|
-| (default) | Слот по умолчанию. Отвечает за скрытое содержимое.                                                                                   |
-| summary   | Слот в элементе, на который нужно кликнуть, чтобы отобразилось скрытое содержимое. Сюда можно поместить текст, кнопки, иконки и т.п. |
+| Название   | Описание                                                                                                                             |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| (default)  | Слот по умолчанию. Отвечает за скрытое содержимое.                                                                                   |
+| summary    | Слот в элементе, на который нужно кликнуть, чтобы отобразилось скрытое содержимое. Сюда можно поместить текст, кнопки, иконки и т.п. |
+| icon-arrow | Слот, в который можно поместить иконку вместо стандартной стрелки. 
 
+## Примеры
+
+Стандартный раскрывающийся список:
+
+<Canvas>
+  <base-expander>
+    <div slot="summary">Default expander</div>
+    Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?
+  </base-expander>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-expander>
+  <div slot="summary">Default expander</div>
+  Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit,
+  nemo consequuntur nesciunt itaque necessitatibus repellendus
+  recusandae porro soluta consequatur?
+</base-expander>
+`}
+/>
+
+Раскрывающийся список с пользовательской иконкой, перенесенной направо:
+
+<Canvas>
+  <base-expander theme="theme_iconLeft,theme_rotate90">
+    <div slot="summary">Default expander</div>
+    <span slot="icon-arrow" className="FontIcon name_caretDown"></span>
+    Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?
+  </base-expander>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-expander theme="theme_iconLeft,theme_rotate90">
+  <div slot="summary">Default expander</div>
+  <span slot="icon-arrow" class="FontIcon name_caretDown"></span>
+  Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit,
+  nemo consequuntur nesciunt itaque necessitatibus repellendus
+  recusandae porro soluta consequatur?
+</base-expander>
+`}
+/>
