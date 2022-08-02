@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - new theme of BaseExpander
 
+### Changed
+
+- BaseExpander docs about slot 'icon'
+
 ### Fixed
 
 - visibility of text and icon in disabled BaseButton in dark theme

@@ -10,13 +10,13 @@ export default {
     defaultSlot: { 
       type: 'string',
     },
-    summarySlot: { 
+    'summary(slot)': { 
       type: 'string',
     },
-    iconSlot: { 
+    'icon(slot)': { 
       type: 'string',
     },
-    'icon-arrow': {
+    'icon-arrow(slot)': {
       type: 'string',
     },
     theme: { 
@@ -55,15 +55,13 @@ const Template = (args) => {
   const {
     theme = [],
     open,
-    summarySlot,
-    iconSlot,
     defaultSlot,
   } = args;
 
   const expander = document.createElement(NAME_COMPONENT);
-  expander.innerHTML += summarySlot;
-  expander.innerHTML += iconSlot;
-  expander.innerHTML += args['icon-arrow'];
+  expander.innerHTML += args['summary(slot)'];
+  expander.innerHTML += args['icon(slot)'];
+  expander.innerHTML += args['icon-arrow(slot)'];
   expander.innerHTML += defaultSlot;
 
   expander.open = open ? true : false;
@@ -75,9 +73,9 @@ const Template = (args) => {
 export const DefaultExpander = Template.bind({});
 // More on args: https://storybook.js.org/docs/web-components/writing-stories/args
 DefaultExpander.args = {
-  summarySlot: '<div slot="summary">Default expander</div>',
-  iconSlot: '',
-  'icon-arrow': '',
+  'summary(slot)': '<div slot="summary">Default expander</div>',
+  'icon(slot)': '',
+  'icon-arrow(slot)': '',
   defaultSlot: 'Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?',
   theme: [],
   open: false,
@@ -85,9 +83,9 @@ DefaultExpander.args = {
 
 export const ExpanderWithBottomBorder = Template.bind({});
 ExpanderWithBottomBorder.args = {
-  summarySlot: '<div slot="summary">Expander with bottom border</div>',
-  iconSlot: '',
-  'icon-arrow': '',
+  'summary(slot)': '<div slot="summary">Expander with bottom border</div>',
+  'icon(slot)': '',
+  'icon-arrow(slot)': '',
   defaultSlot: 'Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?',
   theme: ['with_borderBottom'],
   open: false,
