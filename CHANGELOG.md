@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- new theme of BaseExpander
+- new themes of BaseExpander
 
 ### Changed
 
 - BaseExpander docs about slot 'icon'
+- BaseExpander styles of arrow icon
 
 ### Fixed
 

@@ -8,14 +8,14 @@ import { Canvas, Source } from '@storybook/addon-docs';
 
 | Название | Описание                                     | Значение                                                                            |
 |----------|----------------------------------------------|-------------------------------------------------------------------------------------|
-| theme    | Варианты отображения раскрывающегося списка. | Массив с названиями тем: ['with_borderBottom', 'theme_iconLeft', 'theme_rotate90']. |
+| theme    | Варианты отображения раскрывающегося списка. | Массив с названиями тем: ['with_borderBottom', 'theme_iconLeft', 'rotation_type2']. |
 | open     | Открыт или раскрыт экспандер.                | Логическое                                                                          |
 
 ## Атрибуты
 
 | Название | Описание                                     | Значение                                                                            |
 |----------|----------------------------------------------|-------------------------------------------------------------------------------------|
-| theme    | Варианты отображения раскрывающегося списка. | Название тем через запятую: 'with_borderBottom', 'theme_iconLeft', 'theme_rotate90'.|
+| theme    | Варианты отображения раскрывающегося списка. | Название тем через запятую: 'with_borderBottom', 'theme_iconLeft', 'rotation_type2'.|
 
 ## Слоты
 
@@ -55,9 +55,9 @@ code={`
 Раскрывающийся список с пользовательской иконкой, перенесенной влево:
 
 <Canvas>
-  <base-expander theme="theme_iconLeft,theme_rotate90">
+  <base-expander theme="theme_iconLeft,rotation_type2">
     <div slot="summary">Default expander</div>
-    <span slot="icon-arrow" className="FontIcon name_caretDown"></span>
+    <span slot="icon-arrow" className="FontIcon name_caretDown rotate_270"></span>
     Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis veniam, dolor explicabo dolore nobis, minima rerum obcaecati eius fuga fugit, nemo consequuntur nesciunt itaque necessitatibus repellendus recusandae porro soluta consequatur?
   </base-expander>
 </Canvas>
@@ -67,7 +67,7 @@ language='html'
 format={true}
 dark
 code={`
-<base-expander theme="theme_iconLeft,theme_rotate90">
+<base-expander theme="theme_iconLeft,rotation_type2">
   <div slot="summary">Default expander</div>
   <span slot="icon-arrow" class="FontIcon name_caretDown"></span>
   Default slot. Lorem ipsum dolor sit amet consectetur adipisicing elit.

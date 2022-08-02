@@ -46,14 +46,20 @@
     flex: none;
     max-width: 24px;
     max-height: 24px;
-    transform: rotate(0deg);
-    transition: transform 0.3s;
     color: var(--button_primary);
     
     path,
     rect {
       fill: var(--button_primary);
     }
+  }
+
+  .ArrowIcon {
+    display: inline-flex;
+    max-width: 24px;
+    max-height: 24px;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
   }
 
   &[open] {
@@ -72,23 +78,28 @@
       }
     }
 
-    .ArrowIcon > *,
-    ::slotted([slot="icon-arrow"]) {
-      transform: rotate(180deg);
+    &:not(.theme_iconLeft) {
+      .ArrowIcon {
+        transform: rotate(180deg);
+      }
     }
 
-    &.theme_rotate90 {
+    &.theme_iconLeft {
+      .ArrowIcon {
+        transform: rotate(-180deg);
+      }
+    }
+
+    &.rotation_type2 {
       &:not(.theme_iconLeft) {
-        .ArrowIcon > *,
-        ::slotted([slot="icon-arrow"]) {
-          transform: rotate(90deg);
+        .ArrowIcon {
+          transform: rotate(-90deg);
         }
       }
 
       &.theme_iconLeft {
-        .ArrowIcon > *,
-        ::slotted([slot="icon-arrow"]) {
-          transform: rotate(-90deg);
+        .ArrowIcon {
+          transform: rotate(90deg);
         }
       }
     }
