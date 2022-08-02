@@ -34,16 +34,10 @@
     align-items: center;
 
     ::slotted([slot="icon"]) {
-      margin-right: 16px;
-
       & > * {
         max-width: 22px;
         max-height: 22px;
       }
-    }
-
-    ::slotted([slot="icon"]:hover) {
-      background-color: var(--border_secondary);
     }
   }
 
