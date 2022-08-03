@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'datacad-icons';
-  src:  url('fonts/datacad-icons.eot?z29lbz');
-  src:  url('fonts/datacad-icons.eot?z29lbz#iefix') format('embedded-opentype'),
-    url('fonts/datacad-icons.ttf?z29lbz') format('truetype'),
-    url('fonts/datacad-icons.woff?z29lbz') format('woff'),
-    url('fonts/datacad-icons.svg?z29lbz#datacad-icons') format('svg');
+  src:  url('fonts/datacad-icons.eot?3n5f5q');
+  src:  url('fonts/datacad-icons.eot?3n5f5q#iefix') format('embedded-opentype'),
+    url('fonts/datacad-icons.ttf?3n5f5q') format('truetype'),
+    url('fonts/datacad-icons.woff?3n5f5q') format('woff'),
+    url('fonts/datacad-icons.svg?3n5f5q#datacad-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.FontIcon.name_gridSquare:before {
+  content: "\ea45";
+}
 .FontIcon.name_gridHexagon:before {
   content: "\ea40";
 }
