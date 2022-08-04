@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .BaseExpander {
   &,
   *,
@@ -30,30 +34,32 @@
     align-items: center;
 
     ::slotted([slot="icon"]) {
-      margin-right: 16px;
-
       & > * {
         max-width: 22px;
         max-height: 22px;
       }
     }
-
-    ::slotted([slot="icon"]:hover) {
-      background-color: var(--border_secondary);
-    }
   }
 
-  .ArrowIcon {
+  .ArrowIcon > *,
+  ::slotted([slot="icon-arrow"]) {
     flex: none;
     max-width: 24px;
     max-height: 24px;
-    transition: transform 0.3s;
-    transform: rotate(0deg);
-
+    color: var(--button_primary);
+    
     path,
     rect {
       fill: var(--button_primary);
     }
+  }
+
+  .ArrowIcon {
+    display: inline-flex;
+    max-width: 24px;
+    max-height: 24px;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
   }
 
   &[open] {
@@ -72,8 +78,30 @@
       }
     }
 
-    .ArrowIcon {
-      transform: rotate(180deg);
+    &:not(.theme_iconLeft) {
+      .ArrowIcon {
+        transform: rotate(180deg);
+      }
+    }
+
+    &.theme_iconLeft {
+      .ArrowIcon {
+        transform: rotate(-180deg);
+      }
+    }
+
+    &.rotation_type2 {
+      &:not(.theme_iconLeft) {
+        .ArrowIcon {
+          transform: rotate(-90deg);
+        }
+      }
+
+      &.theme_iconLeft {
+        .ArrowIcon {
+          transform: rotate(90deg);
+        }
+      }
     }
   }
   
@@ -99,6 +127,10 @@
     summary {
       flex-direction: row-reverse;
       column-gap: 5px;
+    }
+
+    ::slotted([slot="summary"]) {
+      margin-right: 0;
     }
   }
 }

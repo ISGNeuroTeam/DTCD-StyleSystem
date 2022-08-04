@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### Added
+
+- new themes of BaseExpander
+
+### Changed
+
+- BaseExpander docs about slot 'icon'
+- BaseExpander styles of arrow icon
+
 ### Fixed
 
 - visibility of text and icon in disabled BaseButton in dark theme
