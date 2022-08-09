@@ -14,6 +14,7 @@ export default {
       },
       options: [
         '<no modification>',
+        'theme_primary',
         'theme_secondary',
         'theme_green',
         'theme_red',
