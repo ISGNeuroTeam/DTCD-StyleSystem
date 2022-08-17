@@ -120,6 +120,7 @@ export default class BaseIconButton extends HTMLElement {
 
   #setThemeClasses() {
     const allThemes = [
+      'theme_primary',
       'theme_secondary',
       'theme_green',
       'theme_red',
