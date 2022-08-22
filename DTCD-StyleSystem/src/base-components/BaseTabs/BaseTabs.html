@@ -39,11 +39,15 @@ nav .tab[active] {
 .panels {
   padding-top: 10px;
 }
+
+.panels-compact {
+  padding-top: 0;
+}
 </style>
 
 <div class="container">
   <nav id="nav"></nav>
-  <div class="panels">
+  <div id="panels" class="panels">
     <slot name="tab"></slot>
   </div>
 </div>
