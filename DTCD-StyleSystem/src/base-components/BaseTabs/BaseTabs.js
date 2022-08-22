@@ -6,6 +6,7 @@ export default class BaseTabs extends HTMLElement {
   #activeTab = 0;
   #nav;
   #tabSlot;
+  #panelsContainer;
   #tabSlotChangeHandler;
 
   constructor() {
@@ -18,6 +19,7 @@ export default class BaseTabs extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.#nav = this.shadowRoot.querySelector('#nav');
+    this.#panelsContainer = this.shadowRoot.querySelector('#panels');
     this.#tabSlot = this.shadowRoot.querySelector('slot[name=tab]');
     this.#tabSlotChangeHandler = () => this.#syncTabsWithNav();
 
@@ -32,6 +34,17 @@ export default class BaseTabs extends HTMLElement {
     return this.#tabList[this.#activeTab];
   }
 
+  set activeTab(tabIndex = 0) {
+    this.#selectTab(tabIndex);
+  }
+
+  set isNavbarVisible(visible = true) {
+    const display = visible ? 'flex' : 'none';
+    const className = visible ? 'panels' : 'panels-compact';
+    this.#nav.style.display = display;
+    this.#panelsContainer.className = className;
+  }
+
   get #tabPanels() {
     return this.#tabSlot.assignedElements();
   }
@@ -44,7 +57,9 @@ export default class BaseTabs extends HTMLElement {
     const tab = document.createElement('div');
     tab.className = 'tab';
     tab.textContent = title;
-    tab.onclick = () => this.#selectTab(tabIndex);
+    tab.onclick = () => {
+      this.activeTab = tabIndex;
+    };
     return tab;
   }
 
