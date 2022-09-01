@@ -46,6 +46,13 @@ const Template = (args) => {
   } = args;
 
   const select = document.createElement(NAME_COMPONENT);
+  
+  if (Array.isArray(itemSlot)) {
+    itemSlot.forEach((item) => {
+      select.innerHTML += item;
+    });
+  }
+
   select.theme = theme.length ? theme : [];
   select.label = label;
   select.value = value;
@@ -57,10 +64,6 @@ const Template = (args) => {
   select.invalid = invalid;
 
   select.innerHTML += labelSlot;
-
-  itemSlot.forEach((item) => {
-    select.innerHTML += item;
-  });
 
   return select;
 };
