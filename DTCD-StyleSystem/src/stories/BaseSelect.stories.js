@@ -72,9 +72,9 @@ export const DefaultSelect = Template.bind({});
 DefaultSelect.args = {
   label: '',
   itemSlot: [
-    '<div slot="item" value="1">Alfa (1)</div>',
-    '<div slot="item" value="2">Bravo (2)</div>',
-    '<div slot="item" value="3">Charlie (3)</div>',
+    '<div slot="item" value="1" data-visible-value="Alfa">Alfa (1)</div>',
+    '<div slot="item" value="2" data-visible-value="Bravo">Bravo (2)</div>',
+    '<div slot="item" value="3" data-visible-value="Charlie">Charlie (3)</div>',
   ],
   theme: [],
   value: '',

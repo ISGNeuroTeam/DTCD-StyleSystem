@@ -317,8 +317,16 @@ export default class BaseSelect extends HTMLElement {
     nodes.forEach((nodeOption) => {
       optionValues.push({
         nodeOption,
-        value: nodeOption.value || nodeOption.getAttribute('value') || nodeOption.textContent || '',
-        visibleValue: nodeOption.textContent || nodeOption.value || nodeOption.getAttribute('value') || '',
+        value: nodeOption.value
+            || nodeOption.getAttribute('value')
+            || nodeOption.getAttribute('data-visible-value')
+            || nodeOption.textContent
+            || '',
+        visibleValue: nodeOption.getAttribute('data-visible-value')
+                  || nodeOption.textContent
+                  || nodeOption.value
+                  || nodeOption.getAttribute('value')
+                  || '',
       });
     });
 
