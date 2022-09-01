@@ -310,10 +310,6 @@ export default class BaseSelect extends HTMLElement {
     }
   }
 
-  #getSelectOptions() {
-    return this.#itemSlot.assignedNodes();
-  }
-
   #getAllOptionValues = () => {
     const optionValues = [];
     const nodes = this.#itemSlot.assignedNodes();
@@ -333,14 +329,14 @@ export default class BaseSelect extends HTMLElement {
     e.preventDefault();
     const action = this.toggle() ? 'add' : 'remove';
     const method = action + 'EventListener';
-    this.#getSelectOptions().forEach(
+    this.#itemSlot.assignedNodes().forEach(
       option => option[method]('click', this.#optionClickCallback)
     );
   }
 
   #handleSearchFieldInput = (e) => {
     const subString = e.target.value.toLowerCase();
-    this.#getSelectOptions().forEach(item => {
+    this.#itemSlot.assignedNodes().forEach(item => {
       const isValueExist = typeof item.value !== 'undefined';
       const value = isValueExist ? item.value.toLowerCase() : item.textContent.toLowerCase();
       item.style.display = value.includes(subString) ? '' : 'none';
