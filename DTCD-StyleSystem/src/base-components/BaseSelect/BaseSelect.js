@@ -1,3 +1,5 @@
+import { getBoolFromAttrVal } from '../../utils/functions';
+
 import html from './BaseSelect.html';
 import styles from './BaseSelect.scss';
 
@@ -14,6 +16,7 @@ export default class BaseSelect extends HTMLElement {
   #itemSlot;
   #opened = false;
   #doValidation = false;
+  #disabled = false;
 
   static get observedAttributes() {
     return [
@@ -126,14 +129,17 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get disabled() {
-    return this.hasAttribute('disabled');
+    return this.#disabled;
   }
 
   set disabled(newValue) {
-    if (newValue) {
-      this.setAttribute('disabled', true);
+    this.#disabled = Boolean(newValue);
+    if (this.#disabled) {
+      this.#searchInput.setAttribute('disabled', true);
+      this.#selectContainer.classList.add('disabled');
     } else {
-      this.removeAttribute('disabled');
+      this.#searchInput.removeAttribute('disabled');
+      this.#selectContainer.classList.remove('disabled');
     }
   }
 
@@ -251,13 +257,7 @@ export default class BaseSelect extends HTMLElement {
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled':
-        if (this.disabled) {
-          this.#searchInput.setAttribute('disabled', true);
-          this.#selectContainer.classList.add('disabled');
-        } else {
-          this.#searchInput.removeAttribute('disabled');
-          this.#selectContainer.classList.remove('disabled');
-        }
+        this.disabled = getBoolFromAttrVal(newValue);
         break;
 
       case 'size':
@@ -335,6 +335,8 @@ export default class BaseSelect extends HTMLElement {
 
   #handleFieldWrapperClick = (e) => {
     e.preventDefault();
+    if (this.#disabled) return;
+
     const action = this.toggle() ? 'add' : 'remove';
     const method = action + 'EventListener';
     this.#itemSlot.assignedNodes().forEach(

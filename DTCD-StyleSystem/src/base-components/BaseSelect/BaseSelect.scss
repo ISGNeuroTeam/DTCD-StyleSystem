@@ -20,6 +20,7 @@
     line-height: 1.18;
     color: var(--text_main);
     letter-spacing: .25px;
+    cursor: pointer;
 
     ::slotted([slot="label"]) {
       display: block;
@@ -30,6 +31,7 @@
   .FieldWrapper {
     position: relative;
     display: block;
+    cursor: pointer;
   }
 
   .Field {
@@ -208,8 +210,8 @@
       color: var(--border);
     }
 
-    .SearchInput,
-    .Field {
+    .FieldWrapper,
+    .Label {
       cursor: not-allowed;
     }
 
