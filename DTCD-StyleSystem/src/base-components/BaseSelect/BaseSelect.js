@@ -305,6 +305,10 @@ export default class BaseSelect extends HTMLElement {
         this.invalid = newValue;
         break;
 
+      case 'required':
+        this.required = getBoolFromAttrVal(newValue);
+        break;
+
       default:
         break;
     }
