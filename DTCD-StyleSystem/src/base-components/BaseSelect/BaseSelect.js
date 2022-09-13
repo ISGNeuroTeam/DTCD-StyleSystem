@@ -15,6 +15,7 @@ export default class BaseSelect extends HTMLElement {
   #opened = false;
   #doValidation = false;
   #disabled = false;
+  #required = false;
 
   static get observedAttributes() {
     return [
@@ -55,15 +56,11 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get required() {
-    return this.hasAttribute('required');
+    return this.#required;
   }
 
   set required(newValue) {
-    if (newValue) {
-      this.setAttribute('required', true);
-    } else {
-      this.removeAttribute('required');
-    }
+    this.#required = Boolean(newValue);
   }
 
   get value() {
