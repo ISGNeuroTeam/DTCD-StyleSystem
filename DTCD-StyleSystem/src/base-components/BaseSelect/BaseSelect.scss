@@ -210,8 +210,9 @@
       color: var(--border);
     }
 
+    .Label,
     .FieldWrapper,
-    .Label {
+    .SearchInput {
       cursor: not-allowed;
     }
 
