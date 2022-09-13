@@ -29,3 +29,9 @@
 //     expect(isDropdownClosed).toBeTruthy();
 //   });
 // });
+
+describe('BaseDropdown tests', () => {
+  test('Mock test', () => {
+    expect(true).toBeTruthy();
+  });
+});
