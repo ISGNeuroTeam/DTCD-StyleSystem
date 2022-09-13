@@ -1,5 +1,3 @@
-import { getBoolFromAttrVal } from '../../utils/functions';
-
 import html from './BaseSelect.html';
 import styles from './BaseSelect.scss';
 
@@ -257,7 +255,7 @@ export default class BaseSelect extends HTMLElement {
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled':
-        this.disabled = getBoolFromAttrVal(newValue);
+        this.disabled = this.hasAttribute('disabled');
         break;
 
       case 'size':
@@ -277,11 +275,15 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'placeholder':
-        this.#header.innerHTML = newValue;
+        if (oldValue !== newValue) {
+          this.#header.innerHTML = newValue;
+        }
         break;
 
       case 'label':
-        this.label = newValue;
+        if (oldValue !== newValue) {
+          this.label = newValue;
+        }
         break;
 
       case 'search':
@@ -302,11 +304,11 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'invalid':
-        this.invalid = newValue;
+        this.invalid = this.hasAttribute('invalid');
         break;
 
       case 'required':
-        this.required = getBoolFromAttrVal(newValue);
+        this.required = this.hasAttribute('required');
         break;
 
       default:
