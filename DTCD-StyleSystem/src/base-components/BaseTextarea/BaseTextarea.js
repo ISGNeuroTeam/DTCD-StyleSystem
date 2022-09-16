@@ -70,7 +70,10 @@ export default class BaseTextarea extends HTMLElement {
 
   connectedCallback() {
     this.#doValidation = true;
-    this.#minHeightTA = this.#textarea.clientHeight;
+    this.#minHeightTA = this.#textarea.offsetHeight;
+
+    // For right inizialization throw attribute 'data-autoheight'
+    this.autoheight = this.#autoheight;
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -275,9 +278,14 @@ export default class BaseTextarea extends HTMLElement {
 
   set autoheight(value) {
     this.#autoheight = Boolean(value);
+
+    if (!this.#textarea.isConnected) return;
+
     if (this.#autoheight) {
       this.#textarea.style['overflow-y'] = 'hidden';
-      this.#textarea.style.height = this.#textarea.scrollHeight + 'px';
+      this.#textarea.style.height = this.#minHeightTA > this.#textarea.scrollHeight
+                                  ? this.#minHeightTA + 'px'
+                                  : this.#textarea.scrollHeight + 'px';
       this.#textarea.addEventListener('input', this.#handleTextareaInput);
     } else {
       this.#textarea.style['overflow-y'] = '';
