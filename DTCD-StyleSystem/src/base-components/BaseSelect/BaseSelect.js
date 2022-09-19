@@ -71,9 +71,15 @@ export default class BaseSelect extends HTMLElement {
 
   set value(newValue) {
     const oldValue = this.value;
-    this.#value = newValue;
-    this.#header.innerHTML = newValue;
-    this.#searchInput.setAttribute('placeholder', newValue);
+    
+    const optionValues = this.#getAllOptionValues();
+    const selectedOption = optionValues.find((optionItem) => {
+      return optionItem.value === newValue;
+    });
+
+    this.#value = selectedOption?.value || '';
+    this.#header.innerHTML = selectedOption?.visibleValue || '';
+    this.#searchInput.setAttribute('placeholder', selectedOption?.visibleValue || '');
 
     this.#doValidation && this.validate();
 
@@ -178,13 +184,14 @@ export default class BaseSelect extends HTMLElement {
     e.stopPropagation();
     const selectedOption = e.target.closest('[slot="item"]');
 
-    if (typeof selectedOption.value !== 'undefined') {
-      this.value = selectedOption.value;
-    } else if (selectedOption.hasAttribute('value')) {
-      this.value = selectedOption.getAttribute('value');
-    } else {
-      this.value = selectedOption.innerHTML;
-    }
+    const optionValues = this.#getAllOptionValues();
+    const findedOption = optionValues.find((optionItem) => {
+      return optionItem.nodeOption === selectedOption;
+    });
+
+    this.value = findedOption?.value || '';
+    this.#header.innerHTML = findedOption?.visibleValue || '';
+    this.#searchInput.setAttribute('placeholder', findedOption?.visibleValue || '');
   }
 
   #documentClickCallback = (event) => {
@@ -303,22 +310,41 @@ export default class BaseSelect extends HTMLElement {
     }
   }
 
-  #getSelectOptions() {
-    return this.#itemSlot.assignedNodes();
-  }
+  #getAllOptionValues = () => {
+    const optionValues = [];
+    const nodes = this.#itemSlot.assignedNodes();
+
+    nodes.forEach((nodeOption) => {
+      optionValues.push({
+        nodeOption,
+        value: nodeOption.value
+            || nodeOption.getAttribute('value')
+            || nodeOption.getAttribute('data-visible-value')
+            || nodeOption.textContent
+            || '',
+        visibleValue: nodeOption.getAttribute('data-visible-value')
+                  || nodeOption.textContent
+                  || nodeOption.value
+                  || nodeOption.getAttribute('value')
+                  || '',
+      });
+    });
+
+    return optionValues;
+  };
 
   #handleFieldWrapperClick = (e) => {
     e.preventDefault();
     const action = this.toggle() ? 'add' : 'remove';
     const method = action + 'EventListener';
-    this.#getSelectOptions().forEach(
+    this.#itemSlot.assignedNodes().forEach(
       option => option[method]('click', this.#optionClickCallback)
     );
   }
 
   #handleSearchFieldInput = (e) => {
     const subString = e.target.value.toLowerCase();
-    this.#getSelectOptions().forEach(item => {
+    this.#itemSlot.assignedNodes().forEach(item => {
       const isValueExist = typeof item.value !== 'undefined';
       const value = isValueExist ? item.value.toLowerCase() : item.textContent.toLowerCase();
       item.style.display = value.includes(subString) ? '' : 'none';
