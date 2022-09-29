@@ -1,6 +1,10 @@
 @import '../BaseInput/BaseInput.scss';
 
 .BaseInput {
+  textarea.Field {
+    max-width: 100%;
+  }
+
   &,
   &.size_big,
   &.size_small {

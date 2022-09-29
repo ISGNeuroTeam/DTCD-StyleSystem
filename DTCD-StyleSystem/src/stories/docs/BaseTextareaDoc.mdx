@@ -10,7 +10,7 @@ import { Canvas, Source } from '@storybook/addon-docs';
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
 | validation  | Функция валидации значения                                                                                                                                                                        | Функция                                                                      |
 | value       | Значение внутри поля ввода                                                                                                                                                                        | В соответствии с типами                                                      |
-| invalid     | Является ли значение поля ввода валидным, если false - то валидное, если true - невалидное.                                                                                                       | Логическое                                                                   |
+| invalid     | Является ли значение поля ввода валидным.                                                                                                                                                         | Логическое                                                                   |
 | placeholder | Текст отображаемый в пустом поле ввода в роли подсказки.                                                                                                                                          | Строка                                                                       |
 | type        | Тип вводимых данных. Влияет на визуализацию.                                                                                                                                                      | Строка, в соответствии со спецификацией                                      |
 | disabled    | Флаг обозначающий возможность ввода значения в поле.                                                                                                                                              | Логическое                                                                   |
@@ -19,13 +19,14 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | required    | Флаг, обязательность значения у компонента. Если значения нет и флаг true, то свойство invalid будет тоже равно true, компонент будет подсвечен красным, а внизу будет отображаться текст ошибки. | Логическое                                                                   |
 | theme       | Варианты отображения поля.                                                                                                                                                                        | Массив с названиями тем: ['withError' \| 'withSuccessFill' \| 'resize_off']. |
 | rows        | Количество строк.                                                                                                                                                                                 | Число                                                                        |
-| invalid     | Является ли значение поля ввода валидным, если false - то валидное, если true - невалидное.                                                                                                       | Логическое                                                                   |
+| autoheight  | Автоматическое увеличение высоты вместо прокрутки в зависимости от количества текста. Если установлено значение `rows`, то оно установит минимальную высоту.                                                                                                             | Логическое |
 
 ## Атрибуты
 
-| Название | Описание                    | Значение                                                                      |
-|----------|-----------------------------|-------------------------------------------------------------------------------|
-| theme    | Варианты отображения кнопки | Название тем через запятую: 'withError' \| 'withSuccessFill' \| 'resize_off'. |
+| Название        | Описание                                                                                                                                                     | Значение                                                                      |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| theme           | Варианты отображения кнопки                                                                                                                                  | Название тем через запятую: 'withError' \| 'withSuccessFill' \| 'resize_off'. |
+| data-autoheight | Автоматическое увеличение высоты вместо прокрутки в зависимости от количества текста. Если установлено значение `rows`, то оно установит минимальную высоту. | Логическое |
 
 ## События
 
@@ -139,5 +140,24 @@ format={true}
 dark
 code={`
 <base-textarea label="Title" theme="withSuccessFill"></base-textarea>
+`}
+/>
+
+Высота поля адаптируется в зависимости от текста с помощью атрибута `data-autoheight` (свойство `autoheight`):
+
+<Canvas>
+  <base-textarea data-autoheight label="Без текста и со стандартным rows"></base-textarea>
+  <base-textarea data-autoheight label="С текстом и без rows" rows="0" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate accusantium nobis ipsa sapiente laboriosam deserunt rem. Impedit distinctio est ut nulla voluptatem aspernatur libero temporibus, beatae necessitatibus commodi dignissimos veniam!"></base-textarea>
+  <base-textarea data-autoheight label="С текстом и с rows" title="С текстом и с rows" rows="5" value="Lorem ipsum dolor sit amet consectetur adipisicing elit."></base-textarea>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-textarea data-autoheight label="Без текста и со стандартным rows"></base-textarea>
+<base-textarea data-autoheight label="С текстом и без rows" rows="0" value="Lorem ipsum dolor..."></base-textarea>
+<base-textarea data-autoheight label="С текстом и с rows" rows="5" value="Lorem ipsum dolor..."></base-textarea>
 `}
 />

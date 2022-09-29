@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.9.0]
 
+### Added
+
+- adaptive height of BaseTextarea
+- maximum width of 100% BaseTextarea during resizing
+
 ### Changed
 
 - value setting of BaseSelect
