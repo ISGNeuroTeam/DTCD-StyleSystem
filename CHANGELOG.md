@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - adaptive height of BaseTextarea
 - maximum width of 100% BaseTextarea during resizing
 
+### Fixed
+
+- bug opening of BaseSelect in disabled mode
+
 ## [0.9.0]
 
 ### Changed
@@ -21,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - small bug in displaying BaseSelect
-- bug opening of BaseSelect in disabled mode
 
 ## [0.8.1]
 
