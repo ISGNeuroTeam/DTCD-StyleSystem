@@ -14,6 +14,8 @@ export default class BaseTextarea extends HTMLElement {
   #theme = [];
   #size;
   #doValidation = false;
+  #minHeightTA;
+  #autoheight = false;
 
   static get observedAttributes() {
     return [
@@ -27,6 +29,7 @@ export default class BaseTextarea extends HTMLElement {
       'readonly',
       'rows',
       'invalid',
+      'data-autoheight',
     ];
   }
 
@@ -67,6 +70,10 @@ export default class BaseTextarea extends HTMLElement {
 
   connectedCallback() {
     this.#doValidation = true;
+    this.#minHeightTA = this.#textarea.offsetHeight;
+
+    // For right inizialization throw attribute 'data-autoheight'
+    this.autoheight = this.#autoheight;
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -114,7 +121,13 @@ export default class BaseTextarea extends HTMLElement {
         break;
 
       case 'rows':
-        this.#textarea.rows = newValue;
+        if (oldValue !== newValue) {
+          this.rows = newValue;
+        }
+        break;
+
+      case 'data-autoheight':
+        this.autoheight = this.hasAttribute('data-autoheight');
         break;
 
       default:
@@ -259,8 +272,37 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
+  get autoheight() {
+    return this.#autoheight;
+  }
+
+  set autoheight(value) {
+    this.#autoheight = Boolean(value);
+
+    if (!this.#textarea.isConnected) return;
+
+    if (this.#autoheight) {
+      this.#textarea.style['overflow-y'] = 'hidden';
+      this.#textarea.style.height = this.#minHeightTA > this.#textarea.scrollHeight
+                                  ? this.#minHeightTA + 'px'
+                                  : this.#textarea.scrollHeight + 'px';
+      this.#textarea.addEventListener('input', this.#handleTextareaInput);
+    } else {
+      this.#textarea.style['overflow-y'] = '';
+      this.#textarea.style.height = '';
+      this.#textarea.removeEventListener('input', this.#handleTextareaInput);
+    }
+  }
+
   #handleTextareaChange = () => {
     this.dispatchEvent(new Event('change'));
+  }
+
+  #handleTextareaInput = () => {
+    this.#textarea.style.height = 0;
+    this.#textarea.style.height = this.#minHeightTA > this.#textarea.scrollHeight
+                                ? this.#minHeightTA + 'px'
+                                : this.#textarea.scrollHeight + 'px';
   }
 
   #setThemeClasses() {

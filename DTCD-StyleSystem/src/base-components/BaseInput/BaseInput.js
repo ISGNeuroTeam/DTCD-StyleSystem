@@ -196,7 +196,7 @@ export default class BaseInput extends HTMLElement {
   }
 
   get type() {
-    return this.#internalInput.getAttribute('required');
+    return this.#internalInput.getAttribute('type');
   }
 
   set type(value) {

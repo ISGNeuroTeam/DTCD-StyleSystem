@@ -14,6 +14,8 @@ export default class BaseSelect extends HTMLElement {
   #itemSlot;
   #opened = false;
   #doValidation = false;
+  #disabled = false;
+  #required = false;
 
   static get observedAttributes() {
     return [
@@ -54,15 +56,11 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get required() {
-    return this.hasAttribute('required');
+    return this.#required;
   }
 
   set required(newValue) {
-    if (newValue) {
-      this.setAttribute('required', true);
-    } else {
-      this.removeAttribute('required');
-    }
+    this.#required = Boolean(newValue);
   }
 
   get value() {
@@ -126,14 +124,17 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get disabled() {
-    return this.hasAttribute('disabled');
+    return this.#disabled;
   }
 
   set disabled(newValue) {
-    if (newValue) {
-      this.setAttribute('disabled', true);
+    this.#disabled = Boolean(newValue);
+    if (this.#disabled) {
+      this.#searchInput.setAttribute('disabled', true);
+      this.#selectContainer.classList.add('disabled');
     } else {
-      this.removeAttribute('disabled');
+      this.#searchInput.removeAttribute('disabled');
+      this.#selectContainer.classList.remove('disabled');
     }
   }
 
@@ -251,13 +252,7 @@ export default class BaseSelect extends HTMLElement {
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled':
-        if (this.disabled) {
-          this.#searchInput.setAttribute('disabled', true);
-          this.#selectContainer.classList.add('disabled');
-        } else {
-          this.#searchInput.removeAttribute('disabled');
-          this.#selectContainer.classList.remove('disabled');
-        }
+        this.disabled = this.hasAttribute('disabled');
         break;
 
       case 'size':
@@ -277,11 +272,15 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'placeholder':
-        this.#header.innerHTML = newValue;
+        if (oldValue !== newValue) {
+          this.#header.innerHTML = newValue;
+        }
         break;
 
       case 'label':
-        this.label = newValue;
+        if (oldValue !== newValue) {
+          this.label = newValue;
+        }
         break;
 
       case 'search':
@@ -302,7 +301,11 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'invalid':
-        this.invalid = newValue;
+        this.invalid = this.hasAttribute('invalid');
+        break;
+
+      case 'required':
+        this.required = this.hasAttribute('required');
         break;
 
       default:
@@ -335,6 +338,8 @@ export default class BaseSelect extends HTMLElement {
 
   #handleFieldWrapperClick = (e) => {
     e.preventDefault();
+    if (this.#disabled) return;
+
     const action = this.toggle() ? 'add' : 'remove';
     const method = action + 'EventListener';
     this.#itemSlot.assignedNodes().forEach(
