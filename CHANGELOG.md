@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### Added 
+
+- color variables in BaseSelect icon and text
+
 ### Changed
 
 - version of DatasourcePanel in DataSourceSelect
