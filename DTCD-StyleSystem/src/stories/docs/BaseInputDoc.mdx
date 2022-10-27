@@ -17,8 +17,9 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | label       | Текст который будет отображаться маленьким шрифтом над основным полем ввода.                                                                                                                      | Строка                                                                                            |
 | size        | Задает размер элемента.                                                                                                                                                                           | 'small' \| 'big'                                                                                  |
 | required    | Флаг, обязательность значения у компонента. Если значения нет и флаг true, то свойство invalid будет тоже равно true, компонент будет подсвечен красным, а внизу будет отображаться текст ошибки. | Логическое                                                                                        |
-| theme       | Варианты отображения поля.                                                                                                                                                                        | Массив с названиями тем: ['withError' \| 'withSuccessFill']. |
+| theme       | Варианты отображения поля.                                                                                                                                                                        | Массив с названиями тем: ['withError' \| 'withSuccessFill'].                                      |
 | invalid     | Является ли значение поля ввода валидным, если false - то валидное, если true - невалидное.                                                                                                       | Логическое                                                                                        |
+| maxlength   | Ограничение длины текста в поле ввода                                                                                                                                                             | Строка                                                                                            |
 
 ## Атрибуты
 
@@ -165,5 +166,20 @@ code={`
 <base-input label="slot 'icon-right'">
   <span slot="icon-right" class="FontIcon name_show size_lg"></span>
 </base-input>
+`}
+/>
+
+Ограничить длину текста в поле ввода можно с помощью атрибута maxlength:
+
+<Canvas>
+  <base-input maxlength="5"></base-input>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-input maxlength="5"></base-input>
 `}
 />

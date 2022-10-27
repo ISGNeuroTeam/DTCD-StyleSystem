@@ -19,7 +19,8 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | required    | Флаг, обязательность значения у компонента. Если значения нет и флаг true, то свойство invalid будет тоже равно true, компонент будет подсвечен красным, а внизу будет отображаться текст ошибки. | Логическое                                                                   |
 | theme       | Варианты отображения поля.                                                                                                                                                                        | Массив с названиями тем: ['withError' \| 'withSuccessFill' \| 'resize_off']. |
 | rows        | Количество строк.                                                                                                                                                                                 | Число                                                                        |
-| autoheight  | Автоматическое увеличение высоты вместо прокрутки в зависимости от количества текста. Если установлено значение `rows`, то оно установит минимальную высоту.                                                                                                             | Логическое |
+| autoheight  | Автоматическое увеличение высоты вместо прокрутки в зависимости от количества текста. Если установлено значение `rows`, то оно установит минимальную высоту.                                      | Логическое                                                                   |
+| maxlength   | Ограничение длины текста в поле ввода                                                                                                                                                             | Строка                                                                       |
 
 ## Атрибуты
 
@@ -159,5 +160,20 @@ code={`
 <base-textarea data-autoheight label="Без текста и со стандартным rows"></base-textarea>
 <base-textarea data-autoheight label="С текстом и без rows" rows="0" value="Lorem ipsum dolor..."></base-textarea>
 <base-textarea data-autoheight label="С текстом и с rows" rows="5" value="Lorem ipsum dolor..."></base-textarea>
+`}
+/>
+
+Ограничить длину текста в поле ввода можно с помощью атрибута maxlength:
+
+<Canvas>
+  <base-textarea maxlength="5"></base-textarea>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-textarea maxlength="5"></base-textarea>
 `}
 />

@@ -32,6 +32,7 @@ export default class BaseInput extends HTMLElement {
       'size',
       'readonly',
       'invalid',
+      'maxlength',
     ];
   }
 
@@ -134,6 +135,10 @@ export default class BaseInput extends HTMLElement {
 
       case 'invalid':
         this.invalid = newValue;
+        break;
+
+      case 'maxlength':
+        this.maxlength = newValue;
         break;
 
       default:
@@ -273,6 +278,18 @@ export default class BaseInput extends HTMLElement {
       this.setAttribute('size', value);
     } else {
       this.removeAttribute('size');
+    }
+  }
+
+  get maxlength() {
+    return this.#internalInput.getAttribute('maxlength');
+  }
+
+  set maxlength(value) {
+    if (value) {     
+      this.#internalInput.setAttribute('maxlength', value);
+    } else {
+      this.#internalInput.removeAttribute('maxlength');
     }
   }
 

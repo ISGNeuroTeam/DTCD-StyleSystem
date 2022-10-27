@@ -30,6 +30,7 @@ export default class BaseTextarea extends HTMLElement {
       'rows',
       'invalid',
       'data-autoheight',
+      'maxlength',
     ];
   }
 
@@ -129,6 +130,10 @@ export default class BaseTextarea extends HTMLElement {
       case 'data-autoheight':
         this.autoheight = this.hasAttribute('data-autoheight');
         break;
+
+      case 'maxlength':
+        this.maxlength = newValue;
+        break;  
 
       default:
         break;
@@ -291,6 +296,18 @@ export default class BaseTextarea extends HTMLElement {
       this.#textarea.style['overflow-y'] = '';
       this.#textarea.style.height = '';
       this.#textarea.removeEventListener('input', this.#handleTextareaInput);
+    }
+  }
+
+  get maxlength() {
+    return this.#textarea.getAttribute('maxlength');
+  }
+
+  set maxlength(value) {
+    if (value) {     
+      this.#textarea.setAttribute('maxlength', value);
+    } else {
+      this.#textarea.removeAttribute('maxlength');
     }
   }
 
