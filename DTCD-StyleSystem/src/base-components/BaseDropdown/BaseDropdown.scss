@@ -32,6 +32,7 @@
   ::slotted([slot="icon-arrow"]) {
     transform: rotate(0);
     transition: .3s;
+    fill: var(--text_main);
   }
 
   .DropdownContent {
