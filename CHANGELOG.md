@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added 
 
 - color variables in BaseSelect icon and text
-- color variables in BaseColorPicker, BaseDataTimePicker, BasseDropdown, BaseLabel fot correct displaying in dark theme
+- color variables in BaseColorPicker, BaseDataTimePicker, BaseDropdown, BaseLabel for correct displaying in dark theme
 
 ## [0.11.0]
 
