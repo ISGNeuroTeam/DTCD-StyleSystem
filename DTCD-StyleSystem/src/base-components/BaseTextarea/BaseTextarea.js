@@ -31,6 +31,7 @@ export default class BaseTextarea extends HTMLElement {
       'invalid',
       'data-autoheight',
       'maxlength',
+      'minlength',
     ];
   }
 
@@ -134,6 +135,10 @@ export default class BaseTextarea extends HTMLElement {
       case 'maxlength':
         this.maxlength = newValue;
         break;  
+
+      case 'minlength':
+        this.maxlength = newValue;
+        break;
 
       default:
         break;
@@ -308,6 +313,18 @@ export default class BaseTextarea extends HTMLElement {
       this.#textarea.setAttribute('maxlength', value);
     } else {
       this.#textarea.removeAttribute('maxlength');
+    }
+  }
+
+  get minlength() {
+    return this.#textarea.getAttribute('minlength');
+  }
+
+  set minlength(value) {
+    if (value) {     
+      this.#textarea.setAttribute('minlength', value);
+    } else {
+      this.#textarea.removeAttribute('minlength');
     }
   }
 
