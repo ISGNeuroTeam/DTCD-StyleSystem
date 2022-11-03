@@ -77,6 +77,8 @@ const Template = args => {
     readonly,
     labelSlot,
     invalid,
+    maxlength,
+    minlength,
   } = args;
 
   const input = document.createElement(NAME_COMPONENT);
@@ -96,6 +98,8 @@ const Template = args => {
   input.value = value;
   input.readonly = readonly;
   input.invalid = invalid;
+  input.maxlength = maxlength;
+  input.minlength = minlength;
 
   input.innerHTML += labelSlot;
   input.innerHTML += args['icon-left'];
@@ -119,6 +123,8 @@ DefaultInput.args = {
   labelSlot: '<span slot="label">Label slot</span>',
   'icon-left': '',
   'icon-right': '',
+  maxlength: '',
+  minlength: '',
 };
 
 export const InputWithIcons = Template.bind({});
@@ -136,4 +142,6 @@ InputWithIcons.args = {
   labelSlot: '<span slot="label">Label slot</span>',
   'icon-left': '<span slot="icon-left" class="FontIcon name_searchSmall size_lg"></span>',
   'icon-right': '<span slot="icon-right" class="FontIcon name_show size_lg"></span>',
+  maxlength: '',
+  minlength: '',
 };
