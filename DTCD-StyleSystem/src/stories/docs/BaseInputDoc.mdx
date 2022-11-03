@@ -20,6 +20,7 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | theme       | Варианты отображения поля.                                                                                                                                                                        | Массив с названиями тем: ['withError' \| 'withSuccessFill'].                                      |
 | invalid     | Является ли значение поля ввода валидным, если false - то валидное, если true - невалидное.                                                                                                       | Логическое                                                                                        |
 | maxlength   | Ограничение длины текста в поле ввода                                                                                                                                                             | Строка                                                                                            |
+| minlength   | Устанавливает минимальную длину текста в поле ввода                                                                                                                                               | Строка                                                                                            |
 
 ## Атрибуты
 
@@ -181,5 +182,20 @@ format={true}
 dark
 code={`
 <base-input maxlength="5"></base-input>
+`}
+/>
+
+Установить минимальную длину текста в поле ввода можно с помощью атрибута minlength:
+
+<Canvas>
+  <base-input minlength="5"></base-input>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-input minlength="5"></base-input>
 `}
 />
