@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [UNRELEASED]
+
+### Added 
+
+- maxlength and minlength in BaseInput and BaseTextarea
+
 ## [0.12.0]
 
 ### Added 
 
 - color variables in BaseSelect icon and text
 - color variables in BaseColorPicker, BaseDataTimePicker, BaseDropdown, BaseLabel for correct displaying in dark theme
-- maxlength and minlength in BaseInput and BaseTextarea
 
 ## [0.11.0]
 
