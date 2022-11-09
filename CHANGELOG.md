@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - color variables in BaseSelect icon and text
 - color variables in BaseColorPicker, BaseDataTimePicker, BaseDropdown, BaseLabel for correct displaying in dark theme
+- documentation in BaseDropdown 
 
 ## [0.11.0]
 
