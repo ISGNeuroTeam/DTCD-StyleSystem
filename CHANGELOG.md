@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - maxlength and minlength in BaseInput and BaseTextarea
 - info about event 'toggle' in documentation of BaseDropdown
+- property for correct displaying of DatasourceSelect
 
 ## [0.12.0]
 
