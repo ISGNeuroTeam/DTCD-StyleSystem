@@ -51,6 +51,8 @@ const Template = (args) => {
     rows,
     invalid,
     autoheight,
+    maxlength,
+    minlength,
   } = args;
 
   const textarea = document.createElement(NAME_COMPONENT);
@@ -71,6 +73,8 @@ const Template = (args) => {
   textarea.rows = rows;
   textarea.invalid = invalid;
   textarea.autoheight = autoheight;
+  textarea.maxlength = maxlength;
+  textarea.minlength = minlength;
   
   textarea.innerHTML += labelSlot;
   
@@ -89,4 +93,6 @@ DefaultTextarea.args = {
   readonly: false,
   rows: 4,
   autoheight: false,
+  maxlength: '',
+  minlength: '',
 };
