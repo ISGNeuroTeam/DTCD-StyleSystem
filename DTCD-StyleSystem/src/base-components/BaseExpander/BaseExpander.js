@@ -78,7 +78,14 @@ export default class BaseExpander extends HTMLElement {
   }
 
   #expanderToggleHandler = (event) => {
-    this.open = event.currentTarget.hasAttribute('open') ? true : false;
+    // this.open = event.currentTarget.hasAttribute('open') ? true : false;
+    this.dispatchEvent(new CustomEvent('toggle', {
+      bubbles: true,
+      cancelable: false,
+      detail: {
+        open: event.currentTarget.hasAttribute('open') ? true : false,
+      }
+    }));
   }
 
   #setThemeClasses() {
