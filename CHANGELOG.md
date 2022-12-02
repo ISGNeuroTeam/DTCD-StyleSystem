@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## Added
+### Added
 
 - toggle event in BaseExpander
 - attribute `data-active-tab` in BaseTabs
+
+### Fixed 
+
+- autoheight of BaseTextarea
 
 ## [0.13.0]
 

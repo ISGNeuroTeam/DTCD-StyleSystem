@@ -170,6 +170,7 @@ export default class BaseTextarea extends HTMLElement {
   set value(val) {
     this.#textarea.value = val;
     this.#doValidation && this.validate();
+    if (this.#autoheight) this.#handleTextareaInput();
     this.dispatchEvent(new Event('input'));
   }
 
