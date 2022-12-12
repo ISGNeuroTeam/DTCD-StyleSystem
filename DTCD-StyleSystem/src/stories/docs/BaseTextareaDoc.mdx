@@ -145,12 +145,12 @@ code={`
 `}
 />
 
-Высота поля адаптируется в зависимости от текста с помощью атрибута `data-autoheight` (свойство `autoheight`):
+Высота поля адаптируется в зависимости от текста с помощью атрибута `data-autoheight` (свойство `autoheight`). Это свойство (html-атрибут) нужно применять **после** установки свойства (html-атрибута) `value`.
 
 <Canvas>
-  <base-textarea data-autoheight label="Без текста и со стандартным rows"></base-textarea>
-  <base-textarea data-autoheight label="С текстом и без rows" rows="0" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate accusantium nobis ipsa sapiente laboriosam deserunt rem. Impedit distinctio est ut nulla voluptatem aspernatur libero temporibus, beatae necessitatibus commodi dignissimos veniam!"></base-textarea>
-  <base-textarea data-autoheight label="С текстом и с rows" title="С текстом и с rows" rows="5" value="Lorem ipsum dolor sit amet consectetur adipisicing elit."></base-textarea>
+  <base-textarea value="" data-autoheight label="Без текста и со стандартным rows"></base-textarea>
+  <base-textarea value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate accusantium nobis ipsa sapiente laboriosam deserunt rem. Impedit distinctio est ut nulla voluptatem aspernatur libero temporibus, beatae necessitatibus commodi dignissimos veniam!" data-autoheight label="С текстом и без rows" rows="0"></base-textarea>
+  <base-textarea value="Lorem ipsum dolor sit amet consectetur adipisicing elit." data-autoheight label="С текстом и с rows" title="С текстом и с rows" rows="5"></base-textarea>
 </Canvas>
 
 <Source
@@ -158,9 +158,9 @@ language='html'
 format={true}
 dark
 code={`
-<base-textarea data-autoheight label="Без текста и со стандартным rows"></base-textarea>
-<base-textarea data-autoheight label="С текстом и без rows" rows="0" value="Lorem ipsum dolor..."></base-textarea>
-<base-textarea data-autoheight label="С текстом и с rows" rows="5" value="Lorem ipsum dolor..."></base-textarea>
+<base-textarea value="" data-autoheight label="Без текста и со стандартным rows"></base-textarea>
+<base-textarea value="Lorem ipsum dolor..." data-autoheight label="С текстом и без rows" rows="0"></base-textarea>
+<base-textarea value="Lorem ipsum dolor..." data-autoheight label="С текстом и с rows" rows="5"></base-textarea>
 `}
 />
 
