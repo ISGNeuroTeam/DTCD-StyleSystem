@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - toggle event in BaseExpander
 - attribute `data-active-tab` in BaseTabs
+- closing the BaseDataTimePicker on the cancel button
 
 ### Fixed 
 

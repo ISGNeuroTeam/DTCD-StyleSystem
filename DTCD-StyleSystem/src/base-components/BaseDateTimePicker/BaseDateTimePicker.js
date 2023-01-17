@@ -46,6 +46,10 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.dispatchEvent(new Event('input'));
     });
 
+    this.shadow.querySelector('.cancelButton').addEventListener('click', () => {
+      this.toggleCalendar();
+    });
+
     this.dateInput.addEventListener('change', () => {
       const regexp =
         /^(0[1-9]|[12]\d|3[01])[.](0[1-9]|1[0-2])[.]\d{4}\s(0\d|1\d|2[0-3])[:]([0-5]\d)$/;
