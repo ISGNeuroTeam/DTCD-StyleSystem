@@ -143,12 +143,17 @@ export default class BaseSelect extends HTMLElement {
   }
 
   set label(value) {
-    this.querySelectorAll('[slot="label"]').forEach((label) => {
-      label.remove();
-    });
+    // this.querySelectorAll('[slot="label"]').forEach((label) => {
+    //   label.remove();
+    // });
 
     if (value) {
-      this.innerHTML += `<span slot="label">${value}</span>`;
+      // this.innerHTML += `<span slot="label">${value}</span>`;
+      this.#label.innerHTML = value;
+      this.#selectContainer.classList.add('withLabel');
+    } else {
+      this.#label.innerHTML = '<slot name="label"></slot>';
+      this.#selectContainer.classList.remove('withLabel');
     }
   }
 
