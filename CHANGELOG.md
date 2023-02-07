@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - autoheight of BaseTextarea
 - height of BaseFileLoader
+- position of dropdown in BaseDateTimePicker
 
 ## [0.13.0]
 

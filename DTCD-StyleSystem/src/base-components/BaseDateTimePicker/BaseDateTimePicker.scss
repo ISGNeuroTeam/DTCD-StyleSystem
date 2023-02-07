@@ -1,7 +1,9 @@
 :host {
-  position: relative;
+  display: block;
 }
 .BaseDateTimePicker {
+  position: relative;
+
   .date-toggle {
     position: absolute;
     bottom: 8px;
