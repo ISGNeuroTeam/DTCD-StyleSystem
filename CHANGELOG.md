@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - attribute `data-active-tab` in BaseTabs
 - closing the BaseDataTimePicker on the cancel button
 - variable in storybook global styles
+- displaying of tooltip in storybook
+- tooltip scss in separate file
 
 ### Changed
 

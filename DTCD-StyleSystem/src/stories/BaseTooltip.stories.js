@@ -45,8 +45,8 @@ const Template = (args) => {
   return tooltip;
 };
 
-export const DefaultTabs = Template.bind({});
-DefaultTabs.args = {
+export const DefaultTooltip = Template.bind({});
+DefaultTooltip.args = {
   defaultSlot: '<button>click me</button>',
   placement: 'top',
   content: 'Tooltip',
