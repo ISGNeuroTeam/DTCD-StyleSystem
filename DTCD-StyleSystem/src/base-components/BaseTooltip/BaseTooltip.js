@@ -37,10 +37,6 @@ export default class BaseTooltip extends HTMLElement {
     this.#tooltip.innerHTML = value;
   }
 
-  #setContent(value = '') {
-    this.#tooltip.textContent = value;
-  }
-
   get placement() {
     return this.getAttribute('placement');
   }
@@ -83,7 +79,7 @@ export default class BaseTooltip extends HTMLElement {
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === 'content') {
-      this.#setContent(newValue);
+      this.#tooltip.innerHTML = newValue;
     }
 
     if (attrName === 'placement') {
