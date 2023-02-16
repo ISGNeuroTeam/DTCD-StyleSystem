@@ -1,9 +1,11 @@
 import html from './BaseTooltip.html';
+import styles from './BaseTooltip.scss';
 
 export default class BaseTooltip extends HTMLElement {
 
   #placements = ['top', 'bottom', 'left', 'right'];
   #tooltip;
+  #content;
 
   static get observedAttributes() {
     return ['content', 'placement'];
@@ -18,18 +20,38 @@ export default class BaseTooltip extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+
     this.#tooltip = this.shadowRoot.querySelector('#tooltip');
     this.#tooltip.addEventListener('animationstart', this.#animationStartHandler);
     this.#tooltip.addEventListener('animationend', this.#animationEndHandler);
   }
 
-  #setContent(value = '') {
-    this.#tooltip.textContent = value;
+  get content() {
+    return this.#content.innerHTML;
+  }
+
+  set content(value = '') {
+    this.#tooltip.innerHTML = value;
+  }
+
+  get placement() {
+    return this.getAttribute('placement');
+  }
+
+  set placement(newValue) {
+    if (newValue) {
+      this.setAttribute('placement', newValue);
+    } else {
+      this.removeAttribute('placement');
+    }
   }
 
   #setPlacement(value = 'top') {
     const placement = this.#placements.includes(value) ? value : 'top';
-    this.#tooltip.className = `tooltip ${placement}`;
+    this.#tooltip.classList = `Tooltip ${placement}`;
   }
 
   #animationStartHandler(e) {
@@ -57,7 +79,7 @@ export default class BaseTooltip extends HTMLElement {
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === 'content') {
-      this.#setContent(newValue);
+      this.#tooltip.innerHTML = newValue;
     }
 
     if (attrName === 'placement') {
