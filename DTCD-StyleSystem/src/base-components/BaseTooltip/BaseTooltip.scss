@@ -11,7 +11,7 @@
   position: relative;
 
   .Tooltip {
-    display: none;
+    display: block;
     box-sizing: border-box;
     position: absolute;
     width: max-content;
@@ -24,15 +24,7 @@
     font-family: 'Proxima Nova';
     padding: 4px 8px;
     z-index: 1;
-
-    &.visible {
-      display: block;
-      animation-name: fade-in;
-    }
-
-    &.hidden {
-      animation-name: fade-out;
-    }
+    animation: fade-in .2s;
 
     &::after {
       content: '';
@@ -104,24 +96,9 @@
       }
     }
   }
-  
-  .Trigger:hover + .Tooltip {
-    display: block;
-    animation: fade-in .2s;
-  }
-  
-  .Trigger:not(:hover) + .Tooltip.did-fade-in {
-    display: block;
-    animation: fade-out .2s;
-  }
 }
   
 @keyframes fade-in {
   0% { opacity: 0; }
   100% { opacity: 1; }
-}
-  
-@keyframes fade-out {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
 }

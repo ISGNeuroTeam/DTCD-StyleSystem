@@ -4,8 +4,10 @@ import styles from './BaseTooltip.scss';
 export default class BaseTooltip extends HTMLElement {
 
   #placements = ['top', 'bottom', 'left', 'right'];
-  #tooltip;
   #content;
+
+  #container;
+  #tooltip;
 
   static get observedAttributes() {
     return ['content', 'placement'];
@@ -24,9 +26,10 @@ export default class BaseTooltip extends HTMLElement {
     this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
 
-    this.#tooltip = this.shadowRoot.querySelector('#tooltip');
-    this.#tooltip.addEventListener('animationstart', this.#animationStartHandler);
-    this.#tooltip.addEventListener('animationend', this.#animationEndHandler);
+    this.#container = this.shadowRoot.querySelector('.Container');
+
+    this.#tooltip = document.createElement('div');
+    this.#tooltip.classList.add('Tooltip');
   }
 
   get content() {
@@ -49,32 +52,18 @@ export default class BaseTooltip extends HTMLElement {
     }
   }
 
-  #setPlacement(value = 'top') {
-    const placement = this.#placements.includes(value) ? value : 'top';
-    this.#tooltip.classList = `Tooltip ${placement}`;
-  }
-
-  #animationStartHandler(e) {
-    if (e.animationName === 'fade-in') {
-      e.target.classList.add('did-fade-in');
-    }
-  }
-
-  #animationEndHandler(e) {
-    if (e.animationName === 'fade-out') {
-      e.target.classList.remove('did-fade-in');
-    }
-  }
-
   connectedCallback() {
+    this.addEventListener('mouseenter', this.#handlerHoverStart);
+    this.addEventListener('mouseleave', this.#handlerHoverEnd);
+    
     if (!this.hasAttribute('placement')) {
       this.#setPlacement('top');
     }
   }
 
   disconnectedCallback() {
-    this.#tooltip.removeEventListener('animationstart', this.#animationStartHandler);
-    this.#tooltip.removeEventListener('animationend', this.#animationEndHandler);
+    this.removeEventListener('mouseenter', this.#handlerHoverStart);
+    this.removeEventListener('mouseleave', this.#handlerHoverEnd);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -87,4 +76,16 @@ export default class BaseTooltip extends HTMLElement {
     }
   }
 
+  #setPlacement(value = 'top') {
+    const placement = this.#placements.includes(value) ? value : 'top';
+    this.#tooltip.classList = `Tooltip ${placement}`;
+  }
+
+  #handlerHoverStart() {
+    this.#container.append(this.#tooltip);
+  }
+
+  #handlerHoverEnd() {
+    this.#tooltip.remove();
+  }
 }
