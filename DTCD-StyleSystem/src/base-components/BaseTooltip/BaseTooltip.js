@@ -4,6 +4,7 @@ import styles from './BaseTooltip.scss';
 export default class BaseTooltip extends HTMLElement {
 
   #placements = ['top', 'bottom', 'left', 'right'];
+  #placement;
   #content;
 
   #container;
@@ -55,7 +56,7 @@ export default class BaseTooltip extends HTMLElement {
   connectedCallback() {
     this.addEventListener('mouseenter', this.#handlerHoverStart);
     this.addEventListener('mouseleave', this.#handlerHoverEnd);
-    
+
     if (!this.hasAttribute('placement')) {
       this.#setPlacement('top');
     }
@@ -77,11 +78,50 @@ export default class BaseTooltip extends HTMLElement {
   }
 
   #setPlacement(value = 'top') {
-    const placement = this.#placements.includes(value) ? value : 'top';
-    this.#tooltip.classList = `Tooltip ${placement}`;
+    this.#placement = this.#placements.includes(value) ? value : 'top';
+    this.#tooltip.classList = `Tooltip ${this.#placement}`;
+  }
+
+  #setPosition() {
+    const {
+      height,
+      width,
+      left,
+      top,
+    } = this.getBoundingClientRect();
+
+    const {
+      style,
+    } = this.#tooltip;
+
+    switch (this.#placement) {
+      case 'bottom':
+        style.top = (top + height) + 'px';
+        style.left = (left + width / 2) + 'px';
+        break;
+
+      case 'top':
+        style.top = top + 'px';
+        style.left = (left + width / 2) + 'px';
+        break;
+
+      case 'left':
+        style.top = (top + height / 2) + 'px';
+        style.left = left + 'px';
+        break;
+
+      case 'right':
+        style.top = (top + height / 2) + 'px';
+        style.left = (left + width) + 'px';
+        break;
+    
+      default:
+        break;
+    }
   }
 
   #handlerHoverStart() {
+    this.#setPosition();
     this.#container.append(this.#tooltip);
   }
 

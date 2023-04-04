@@ -10,10 +10,17 @@
 .Container {
   position: relative;
 
+  &,
+  * {
+    &:after,
+    &::before {
+      box-sizing: border-box;
+    }
+  }
+
   .Tooltip {
     display: block;
-    box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     width: max-content;
     max-width: 400px;
     background-color: var(--accent);
@@ -37,8 +44,8 @@
     }
 
     &.bottom {
-      top: 100%;
-      left: 50%;
+      // top: 100%;
+      // left: 50%;
       transform: translate(-50%, var(--t-translate));
     
       &::after {
@@ -52,8 +59,8 @@
     }
 
     &.top {
-      top: 0;
-      left: 50%;
+      // top: 0;
+      // left: 50%;
       transform: translate(-50%, calc(-100% - var(--t-translate)));
     
       &::after {
@@ -67,8 +74,8 @@
     } 
 
     &.left {
-      top: 50%;
-      left: 0;
+      // top: 50%;
+      // left: 0;
       transform: translate(calc(-100% - var(--t-translate)), -50%);
     
       &::after {
@@ -82,8 +89,8 @@
     }
 
     &.right {
-      top: 50%;
-      left: 100%;
+      // top: 50%;
+      // left: 100%;
       transform: translate(var(--t-translate), -50%);
     
       &::after {
