@@ -57,6 +57,30 @@ export default class BaseTooltip extends HTMLElement {
     this.addEventListener('mouseenter', this.#handlerHoverStart);
     this.addEventListener('mouseleave', this.#handlerHoverEnd);
 
+    const options = {
+      root: document.body,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const callback = (entries, observer) => {
+      entries.forEach((entry) => {
+        // console.log(entry.boundingClientRect);
+        // Each entry describes an intersection change for one observed
+        // target element:
+        //   entry.boundingClientRect
+        //   entry.intersectionRatio
+        //   entry.intersectionRect
+        //   entry.isIntersecting
+        //   entry.rootBounds
+        //   entry.target
+        //   entry.time
+      });
+    };
+    
+    const observer = new IntersectionObserver(callback, options);
+          observer.observe(this);
+
     if (!this.hasAttribute('placement')) {
       this.#setPlacement('top');
     }
@@ -79,10 +103,14 @@ export default class BaseTooltip extends HTMLElement {
 
   #setPlacement(value = 'top') {
     this.#placement = this.#placements.includes(value) ? value : 'top';
-    this.#tooltip.classList = `Tooltip ${this.#placement}`;
   }
 
   #setPosition() {
+    const {
+      offsetHeight: windowHeight,
+      offsetWidth: windowWidth,
+    } = document.body;
+
     const {
       height,
       width,
@@ -90,39 +118,64 @@ export default class BaseTooltip extends HTMLElement {
       top,
     } = this.getBoundingClientRect();
 
+    const render = (hintPos) => {
+      const {
+        style,
+        classList,
+      } = this.#tooltip;
+
+      classList.remove('top', 'bottom', 'left', 'right');
+      classList.add(hintPos);
+  
+      switch (hintPos) {
+        case 'bottom':
+          style.top = (top + height) + 'px';
+          style.left = (left + width / 2) + 'px';
+          break;
+  
+        case 'top':
+          style.top = top + 'px';
+          style.left = (left + width / 2) + 'px';
+          break;
+  
+        case 'left':
+          style.top = (top + height / 2) + 'px';
+          style.left = left + 'px';
+          break;
+  
+        case 'right':
+          style.top = (top + height / 2) + 'px';
+          style.left = (left + width) + 'px';
+          break;
+      
+        default:
+          break;
+      }
+    }
+
+    render(this.placement);
+
     const {
-      style,
-    } = this.#tooltip;
+      top: hintTop,
+      bottom: hintBottom,
+      left: hintLeft,
+      right: hintRight,
+    } = this.#tooltip.getBoundingClientRect();
 
-    switch (this.#placement) {
-      case 'bottom':
-        style.top = (top + height) + 'px';
-        style.left = (left + width / 2) + 'px';
-        break;
+    let posAwayFromScreen = this.#placement;
+    if (hintTop < 0) posAwayFromScreen = 'bottom';
+    if (hintBottom > windowHeight) posAwayFromScreen = 'top';
+    if (hintLeft < 0) posAwayFromScreen = 'right';
+    if (hintRight > windowWidth) posAwayFromScreen = 'left';
 
-      case 'top':
-        style.top = top + 'px';
-        style.left = (left + width / 2) + 'px';
-        break;
-
-      case 'left':
-        style.top = (top + height / 2) + 'px';
-        style.left = left + 'px';
-        break;
-
-      case 'right':
-        style.top = (top + height / 2) + 'px';
-        style.left = (left + width) + 'px';
-        break;
-    
-      default:
-        break;
+    if (this.placement !== posAwayFromScreen) {
+      render(posAwayFromScreen);
     }
   }
 
   #handlerHoverStart() {
-    this.#setPosition();
     this.#container.append(this.#tooltip);
+    this.#setPosition();
   }
 
   #handlerHoverEnd() {
