@@ -107,11 +107,6 @@ export default class BaseTooltip extends HTMLElement {
 
   #setPosition() {
     const {
-      offsetHeight: windowHeight,
-      offsetWidth: windowWidth,
-    } = document.body;
-
-    const {
       height,
       width,
       left,
@@ -153,8 +148,15 @@ export default class BaseTooltip extends HTMLElement {
       }
     }
 
+    if (!this.placement) {
+      this.placement = this.#placements[0];
+    }
     render(this.placement);
 
+    const {
+      offsetHeight: windowHeight,
+      offsetWidth: windowWidth,
+    } = document.body;
     const {
       top: hintTop,
       bottom: hintBottom,
