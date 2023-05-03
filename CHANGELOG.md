@@ -21,12 +21,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - adding of label to BaseSelect
 - tooltip title color
 - tooltip rendering so that it doesn't get cut off
+- updated Storybook
 
 ### Fixed 
 
 - autoheight of BaseTextarea
 - height of BaseFileLoader
 - position of dropdown in BaseDateTimePicker
+- style of canvas in Storybook docs
 
 ## [0.13.0]
 
