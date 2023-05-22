@@ -167,6 +167,12 @@
     }
   }
 
+  &.withLabel {
+    .Label {
+      padding-bottom: 4px;
+    }
+  }
+
   &.size_big {
     .OptionList ::slotted([slot="item"]),
     .Field {
@@ -184,6 +190,12 @@
   &.size_small {
     .Label {
       ::slotted([slot="label"]) {
+        padding-bottom: 2px;
+      }
+    }
+
+    &.withLabel {
+      .Label {
         padding-bottom: 2px;
       }
     }

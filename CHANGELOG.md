@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0]
+
+### Added
+
+- toggle event in BaseExpander
+- attribute `data-active-tab` in BaseTabs
+- closing the BaseDataTimePicker on the cancel button
+- variable in storybook global styles
+- displaying of tooltip in storybook
+- tooltip scss in separate file
+
+### Changed
+
+- adding of label to BaseSelect
+- tooltip title color
+- tooltip rendering so that it doesn't get cut off
+- updated Storybook
+
+### Fixed 
+
+- autoheight of BaseTextarea
+- height of BaseFileLoader
+- position of dropdown in BaseDateTimePicker
+- style of canvas in Storybook docs
+
 ## [0.13.0]
 
 ### Added 

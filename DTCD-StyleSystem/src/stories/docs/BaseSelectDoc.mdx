@@ -129,6 +129,58 @@ code={`
 `}
 />
 
+
+Добавление подписи (label) через атрибут `label` и через слот `label`:
+
+<Canvas>
+  <base-select size="small" label="Подпись через атрибут">
+    <div slot="item">Вариант 1</div>
+    <div slot="item">Вариант 2</div>
+  </base-select>
+  <base-select label="Подпись через атрибут">
+    <div slot="item">Вариант 1</div>
+    <div slot="item">Вариант 2</div>
+  </base-select>
+
+  <base-select size="small">
+    <span slot="label">Подпись в слоте</span>
+    <div slot="item">Вариант 1</div>
+    <div slot="item">Вариант 2</div>
+  </base-select>
+  <base-select>
+    <span slot="label">Подпись в слоте</span>
+    <div slot="item">Вариант 1</div>
+    <div slot="item">Вариант 2</div>
+  </base-select>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-select size="small" label="Подпись через атрибут">
+  <div slot="item">Вариант 1</div>
+  <div slot="item">Вариант 2</div>
+</base-select>
+<base-select label="Подпись через атрибут">
+  <div slot="item">Вариант 1</div>
+  <div slot="item">Вариант 2</div>
+</base-select>
+
+<base-select size="small">
+  <span slot="label">Подпись в слоте</span>
+  <div slot="item">Вариант 1</div>
+  <div slot="item">Вариант 2</div>
+</base-select>
+<base-select>
+  <span slot="label">Подпись в слоте</span>
+  <div slot="item">Вариант 1</div>
+  <div slot="item">Вариант 2</div>
+</base-select>
+`}
+/>
+
 Для отлавливания события input необходимо добавить соответствующий слушатель на элемент. В качестве примера приведен код для VueJS:
 
 <Source

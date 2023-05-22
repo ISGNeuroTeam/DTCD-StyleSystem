@@ -4,10 +4,18 @@ export default class BaseTabs extends HTMLElement {
 
   #tabList = [];
   #activeTab = 0;
+  #tmpActiveTab;
+
   #nav;
   #tabSlot;
   #panelsContainer;
   #tabSlotChangeHandler;
+
+  static get observedAttributes() {
+    return [
+      'data-active-tab',
+    ];
+  }
 
   constructor() {
     super();
@@ -21,8 +29,8 @@ export default class BaseTabs extends HTMLElement {
     this.#nav = this.shadowRoot.querySelector('#nav');
     this.#panelsContainer = this.shadowRoot.querySelector('#panels');
     this.#tabSlot = this.shadowRoot.querySelector('slot[name=tab]');
-    this.#tabSlotChangeHandler = () => this.#syncTabsWithNav();
 
+    this.#tabSlotChangeHandler = () => this.#syncTabsWithNav();
     this.#tabSlot.addEventListener('slotchange', this.#tabSlotChangeHandler);
   }
 
@@ -35,7 +43,14 @@ export default class BaseTabs extends HTMLElement {
   }
 
   set activeTab(tabIndex = 0) {
-    this.#selectTab(tabIndex);
+    if (!this.#tabList.length) {
+      this.#tmpActiveTab = tabIndex;
+      return;
+    }
+
+    if (!isNaN(tabIndex) && tabIndex !== null) {
+      this.#selectTab(parseInt(tabIndex));
+    }
   }
 
   set isNavbarVisible(visible = true) {
@@ -43,6 +58,17 @@ export default class BaseTabs extends HTMLElement {
     const className = visible ? 'panels' : 'panels-compact';
     this.#nav.style.display = display;
     this.#panelsContainer.className = className;
+  }
+
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    switch (attrName) {
+      case 'data-active-tab':
+        this.activeTab = newValue;
+        break;
+
+      default:
+        break;
+    }
   }
 
   get #tabPanels() {
@@ -64,13 +90,21 @@ export default class BaseTabs extends HTMLElement {
   }
 
   #selectTab(tabIndex, isAfterSync = false) {
+    const targetActiveTab = (tabIndex > this.#tabList.length - 1)
+                            ? this.#tabList.length - 1
+                            : tabIndex;
+
     const activeTab = this.#tabList[this.#activeTab];
-    const currentTab = this.#tabList[tabIndex];
+    const currentTab = this.#tabList[targetActiveTab];
     this.#toggleTabVisibility(false, activeTab);
     this.#toggleTabVisibility(true, currentTab);
-    if (isAfterSync || tabIndex !== this.#activeTab) {
-      this.#activeTab = tabIndex;
-      this.dispatchEvent(new Event('select'));
+    if (isAfterSync || targetActiveTab !== this.#activeTab) {
+      this.#activeTab = targetActiveTab;
+      this.dispatchEvent(new CustomEvent('select', {
+        detail: {
+          indexActiveTab: this.#activeTab,
+        }
+      }));
     }
   }
 
@@ -94,9 +128,14 @@ export default class BaseTabs extends HTMLElement {
       return { tab, panel, tabName, tabIndex };
     });
 
-    if (this.#activeTab > this.#tabList.length - 1) this.#activeTab = 0;
-
-    this.#tabList.length > 0 && this.#selectTab(this.#activeTab, true);
+    if (this.#tabList.length > 0) {
+      if (this.#tmpActiveTab !== undefined) {
+        this.#selectTab(this.#tmpActiveTab, true);
+        this.#tmpActiveTab = undefined;
+      } else {
+        this.#selectTab(this.#activeTab, true);
+      }
+    }
   }
 
 }

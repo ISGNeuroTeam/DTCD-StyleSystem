@@ -1,0 +1,111 @@
+:host {
+  display: inline-block;
+  align-self: flex-start;
+  --t-size: 6px;
+  --t-width: 13px;
+  --t-offset: 4px;
+  --t-translate: calc(var(--t-size) + var(--t-offset));
+}
+    
+.Container {
+  position: relative;
+
+  &,
+  * {
+    &:after,
+    &::before {
+      box-sizing: border-box;
+    }
+  }
+
+  .Tooltip {
+    display: block;
+    position: fixed;
+    width: max-content;
+    max-width: 400px;
+    background-color: var(--accent);
+    border-radius: 4px;
+    color: var(--general_white);
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Proxima Nova';
+    padding: 4px 8px;
+    z-index: 1;
+    animation: fade-in .2s;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-style: solid;
+      border-color: transparent;
+    }
+
+    &.bottom {
+      // top: 100%;
+      // left: 50%;
+      transform: translate(-50%, var(--t-translate));
+    
+      &::after {
+        left: 50%;
+        border-width: 0 calc(var(--t-width) / 2);
+        top: 0;
+        transform: translate(-50%, -100%);
+        border-bottom-color: var(--accent);
+        border-bottom-width: var(--t-size);
+      }
+    }
+
+    &.top {
+      // top: 0;
+      // left: 50%;
+      transform: translate(-50%, calc(-100% - var(--t-translate)));
+    
+      &::after {
+        left: 50%;
+        border-width: 0 calc(var(--t-width) / 2);
+        top: 100%;
+        transform: translate(-50%);
+        border-top-color: var(--accent);
+        border-top-width: var(--t-size);
+      }
+    } 
+
+    &.left {
+      // top: 50%;
+      // left: 0;
+      transform: translate(calc(-100% - var(--t-translate)), -50%);
+    
+      &::after {
+        top: 50%;
+        border-width: calc(var(--t-width) / 2) 0;
+        left: 100%;
+        transform: translate(0, -50%);
+        border-left-color: var(--accent);
+        border-left-width: var(--t-size);
+      }
+    }
+
+    &.right {
+      // top: 50%;
+      // left: 100%;
+      transform: translate(var(--t-translate), -50%);
+    
+      &::after {
+        top: 50%;
+        border-width: calc(var(--t-width) / 2) 0;
+        left: 0;
+        transform: translate(-100%, -50%);
+        border-right-color: var(--accent);
+        border-right-width: var(--t-size);
+      }
+    }
+  }
+}
+  
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

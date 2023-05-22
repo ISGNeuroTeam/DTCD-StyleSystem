@@ -1,6 +1,6 @@
 {
   "name": "style-system",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "StyleSystem",
   "main": "index.js",
   "private": "true",
@@ -8,8 +8,8 @@
     "test": "jest",
     "build": "rollup -c",
     "dev": "rollup -cw",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "keywords": [],
   "author": "",
@@ -17,15 +17,16 @@
   "devDependencies": {
     "@babel/core": "7.12.13",
     "@babel/preset-env": "7.19.0",
-    "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-commonjs": "21.0.1",
+    "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "13.1.3",
-    "@storybook/addon-actions": "6.4.19",
-    "@storybook/addon-essentials": "6.4.19",
-    "@storybook/addon-links": "6.4.19",
-    "@storybook/builder-webpack5": "6.4.19",
-    "@storybook/manager-webpack5": "6.4.19",
-    "@storybook/web-components": "6.4.19",
+    "@storybook/addon-actions": "7.0.7",
+    "@storybook/addon-essentials": "7.0.7",
+    "@storybook/addon-links": "7.0.7",
+    "@storybook/addon-mdx-gfm": "7.0.7",
+    "@storybook/manager-webpack5": "6.5.16",
+    "@storybook/web-components": "7.0.7",
+    "@storybook/web-components-webpack5": "7.0.7",
     "babel-jest": "26.6.3",
     "babel-loader": "8.2.3",
     "css-loader": "6.6.0",
@@ -41,8 +42,8 @@
     "rollup-plugin-styles": "3.14.1",
     "sass": "1.49.7",
     "sass-loader": "12.6.0",
-    "storybook": "6.4.19",
-    "storybook-dark-mode": "1.0.9"
+    "storybook": "7.0.7",
+    "storybook-dark-mode": "3.0.0"
   },
   "dependencies": {
     "moment": "2.29.3"

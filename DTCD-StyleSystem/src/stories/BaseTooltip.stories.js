@@ -42,11 +42,16 @@ const Template = (args) => {
   tooltip.placement = placement;
   tooltip.content = content;
 
-  return tooltip;
+  const wrapper = document.createElement('div');
+        wrapper.style.margin = '30px';
+        wrapper.style.overflow = 'hidden';
+        wrapper.appendChild(tooltip);
+
+  return wrapper;
 };
 
-export const DefaultTabs = Template.bind({});
-DefaultTabs.args = {
+export const DefaultTooltip = Template.bind({});
+DefaultTooltip.args = {
   defaultSlot: '<button>click me</button>',
   placement: 'top',
   content: 'Tooltip',
