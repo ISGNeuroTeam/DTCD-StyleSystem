@@ -1,5 +1,3 @@
-import BaseDateTimePicker from '../base-components/BaseDateTimePicker/BaseDateTimePicker';
-
 export default {
   title: 'Example/BaseComponents/BaseDateTimePicker',
   argTypes: {
@@ -12,14 +10,10 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'date-time-picker';
-
-window.customElements.define(NAME_COMPONENT, BaseDateTimePicker);
-
 const Template = args => {
   const { visible, value, label, size, disabled, required } = args;
 
-  const picker = document.createElement(NAME_COMPONENT);
+  const picker = document.createElement('date-time-picker');
   picker.visible = visible;
   picker.value = value;
   picker.disabled = disabled;

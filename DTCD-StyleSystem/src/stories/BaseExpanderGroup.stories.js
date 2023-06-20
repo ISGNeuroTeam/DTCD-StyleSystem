@@ -1,5 +1,3 @@
-import BaseExpanderGroup from '../base-components/BaseExpanderGroup/BaseExpanderGroup';
-
 import BaseExpanderGroupDoc from './docs/BaseExpanderGroupDoc.mdx';
 
 export default {
@@ -16,17 +14,13 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-expander-group';
-
-window.customElements.define(NAME_COMPONENT, BaseExpanderGroup);
-
 const Template = (args) => {
   const {
     itemSlot = [],
     themesOfExpanders,
   } = args;
 
-  const expanderGroup = document.createElement(NAME_COMPONENT);
+  const expanderGroup = document.createElement('base-expander-group');
 
   itemSlot.forEach((slot) => {
     expanderGroup.innerHTML += slot;

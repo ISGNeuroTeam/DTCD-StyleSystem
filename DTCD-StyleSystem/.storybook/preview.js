@@ -1,4 +1,11 @@
+import baseComponentList from '../src/base-components/components';
+
 import './temp-global-styles.css';
+
+baseComponentList.forEach(component => {
+  const { name, baseClass } = component;
+  window.customElements.define(name, baseClass);
+});
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

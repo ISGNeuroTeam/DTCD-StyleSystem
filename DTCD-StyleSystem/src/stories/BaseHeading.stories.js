@@ -1,5 +1,3 @@
-import BaseHeading from '../base-components/BaseHeading/BaseHeading';
-
 import BaseHeadingDoc from './docs/BaseHeadingDoc.mdx';
 
 export default {
@@ -30,17 +28,13 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-heading';
-
-window.customElements.define(NAME_COMPONENT, BaseHeading);
-
 const Template = (args) => {
   const {
     theme = [],
     defaultSlot,
   } = args;
 
-  const heading = document.createElement(NAME_COMPONENT);
+  const heading = document.createElement('base-heading');
   heading.theme = theme.length ? theme : [];
   heading.innerHTML += defaultSlot;
 

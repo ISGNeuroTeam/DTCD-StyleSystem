@@ -1,5 +1,3 @@
-import BaseDropdown from '../base-components/BaseDropdown/BaseDropdown';
-
 import BaseDropdownDoc from './docs/BaseDropdownDoc.mdx';
 
 export default {
@@ -34,14 +32,10 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-dropdown';
-
-window.customElements.define(NAME_COMPONENT, BaseDropdown);
-
 const Template = args => {
   const { theme = [], slot, alignment, placement, opened } = args;
 
-  const dropdown = document.createElement(NAME_COMPONENT);
+  const dropdown = document.createElement('base-dropdown');
   dropdown.theme = theme;
   dropdown.alignment = alignment;
   dropdown.placement = placement;

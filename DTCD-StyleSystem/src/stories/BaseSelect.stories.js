@@ -1,5 +1,3 @@
-import BaseSelect from '../base-components/BaseSelect/BaseSelect';
-
 import BaseSelectDoc from './docs/BaseSelectDoc.mdx';
 
 export default {
@@ -26,10 +24,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-select';
-
-window.customElements.define(NAME_COMPONENT, BaseSelect);
-
 const Template = (args) => {
   const {
     theme = [],
@@ -45,7 +39,7 @@ const Template = (args) => {
     invalid,
   } = args;
 
-  const select = document.createElement(NAME_COMPONENT);
+  const select = document.createElement('base-select');
   
   if (Array.isArray(itemSlot)) {
     itemSlot.forEach((item) => {

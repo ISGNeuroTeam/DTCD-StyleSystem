@@ -1,5 +1,3 @@
-import BaseButton from '../base-components/BaseButton/BaseButton';
-
 import BaseButtonDoc from './docs/BaseButtonDoc.mdx';
 
 export default {
@@ -60,10 +58,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-button';
-
-window.customElements.define(NAME_COMPONENT, BaseButton);
-
 const Template = (args) => {
   const {
     theme = [],
@@ -76,7 +70,7 @@ const Template = (args) => {
     slotIconRight,
   } = args;
 
-  const button = document.createElement(NAME_COMPONENT);
+  const button = document.createElement('base-button');
 
   if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
     button.theme = [];

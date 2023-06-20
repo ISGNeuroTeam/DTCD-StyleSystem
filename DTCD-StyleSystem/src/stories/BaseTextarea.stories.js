@@ -1,5 +1,3 @@
-import BaseTextarea from '../base-components/BaseTextarea/BaseTextarea';
-
 import BaseTextareaDoc from './docs/BaseTextareaDoc.mdx';
 
 export default {
@@ -33,10 +31,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-textarea';
-
-window.customElements.define(NAME_COMPONENT, BaseTextarea);
-
 const Template = (args) => {
   const {
     theme = [],
@@ -55,7 +49,7 @@ const Template = (args) => {
     minlength,
   } = args;
 
-  const textarea = document.createElement(NAME_COMPONENT);
+  const textarea = document.createElement('base-textarea');
 
   if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
     textarea.theme = [];

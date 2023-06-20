@@ -1,5 +1,3 @@
-import BaseTimeWindowPicker from '../base-components/BaseTimeWindowPicker/BaseTimeWindowPicker';
-
 export default {
   title: 'Example/BaseComponents/BaseTimeWindowPicker',
   argTypes: {
@@ -12,14 +10,10 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'time-window-picker';
-
-window.customElements.define(NAME_COMPONENT, BaseTimeWindowPicker);
-
 const Template = args => {
   const { visible, value, label, size, disabled, required } = args;
 
-  const picker = document.createElement(NAME_COMPONENT);
+  const picker = document.createElement('time-window-picker');
   picker.visible = visible;
   picker.value = value;
   picker.disabled = disabled;

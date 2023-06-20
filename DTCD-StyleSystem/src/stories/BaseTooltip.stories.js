@@ -1,5 +1,3 @@
-import BaseTooltip from '../base-components/BaseTooltip/BaseTooltip';
-
 import BaseTooltipDoc from './docs/BaseTooltipDoc.mdx';
 
 export default {
@@ -25,10 +23,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-tooltip';
-
-window.customElements.define(NAME_COMPONENT, BaseTooltip);
-
 const Template = (args) => {
   const {
     defaultSlot,
@@ -36,7 +30,7 @@ const Template = (args) => {
     content = '',
   } = args;
 
-  const tooltip = document.createElement(NAME_COMPONENT);
+  const tooltip = document.createElement('base-tooltip');
 
   tooltip.innerHTML = defaultSlot;
   tooltip.placement = placement;
