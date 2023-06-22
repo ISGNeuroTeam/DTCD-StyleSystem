@@ -1,11 +1,8 @@
 <div class="BaseTimeWindowPicker">
-  <base-select>
-    <div slot="item">За все время</div>
-    <div slot="item" value="qwe asd">
-      <base-dropdown placement="leftStart">
-        <span slot="toggle-btn">Выбрать временное окно</span>
-        <div>Календарь</div>
-      </base-dropdown>
-    </div>
+  <base-select class="DropdownList" value="all">
+    <div slot="item" value="all">За все время</div>
+    <div slot="item" value="1">Последние 60 минут</div>
+    <div slot="item" value="2">Последние 4 часа</div>
+    <div slot="item" value="custom" id="custom-date-btn">Выбрать даты</div>
   </base-select>
 </div>

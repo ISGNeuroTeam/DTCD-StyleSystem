@@ -3,12 +3,24 @@ import styles from './BaseTimeWindowPicker.scss';
 
 export default class BaseTimeWindowPicker extends HTMLElement {
 
-  #button;
   #theme = [];
-  #size;
+
+  #twPicker;
+  #selectContainer;
+  #customDateBtn;
 
   static get observedAttributes() {
-    return ['disabled', 'theme', 'width', 'size', 'type'];
+    return [
+      // base select
+      'placeholder',
+      'value',
+      'required',
+      'disabled',
+      'label',
+      'size',
+      'opened',
+      'invalid',
+    ];
   }
 
   constructor() {
@@ -20,26 +32,20 @@ export default class BaseTimeWindowPicker extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.#button = this.shadowRoot.querySelector('button');
+    this.#twPicker = this.shadowRoot.querySelector('.BaseTimeWindowPicker');
+    this.#selectContainer = this.shadowRoot.querySelector('.DropdownList');
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
     style.appendChild(document.createTextNode(styles));
-
-    this.addEventListener('click', this.#clickHandler);
   }
-
 
   get disabled() {
     return this.hasAttribute('disabled');
   }
 
   set disabled(value) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+    value ? this.setAttribute('disabled', '') : this.removeAttribute('disabled');
   }
 
   get theme() {
@@ -58,16 +64,20 @@ export default class BaseTimeWindowPicker extends HTMLElement {
     }
   }
 
-  get type() {
-    return this.getAttribute('type');
+  get placeholder() {
+    return this.getAttribute('placeholder');
   }
 
-  set type(value) {
-    if (value) {
-      this.setAttribute('type', value);
-    } else {
-      this.removeAttribute('type');
-    }
+  set placeholder(value) {
+    value ? this.setAttribute('placeholder', value) : this.removeAttribute('placeholder');
+  }
+
+  get label() {
+    return this.getAttribute('label');
+  }
+
+  set label(value) {
+    value ? this.setAttribute('label', value) : this.removeAttribute('label');
   }
 
   get size() {
@@ -75,33 +85,40 @@ export default class BaseTimeWindowPicker extends HTMLElement {
   }
 
   set size(value) {
-    if (value) {
-      this.setAttribute('size', value);
-    } else {
-      this.removeAttribute('size');
-    }
+    value ? this.setAttribute('size', value) : this.removeAttribute('size');
   }
 
-  get width() {
-    return this.getAttribute('width');
+  get opened() {
+    return this.getAttribute('opened');
   }
 
-  set width(value) {
-    if (value) {
-      this.setAttribute('width', value);
-    } else {
-      this.removeAttribute('width');
-    }
+  set opened(value) {
+    value ? this.setAttribute('opened', value) : this.removeAttribute('opened');
+  }
+
+  get invalid() {
+    return this.getAttribute('invalid');
+  }
+
+  set invalid(value) {
+    value ? this.setAttribute('invalid', value) : this.removeAttribute('invalid');
   }
 
   disconnectedCallback() {
-    this.removeEventListener('click', this.#clickHandler);
+
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
-      case 'disabled': {
-        this.#button.disabled = this.disabled;
+      case 'placeholder':
+      case 'value':
+      case 'required':
+      case 'disabled':
+      case 'label':
+      case 'size':
+      case 'opened':
+      case 'invalid': {
+        this.#selectContainer.setAttribute(attrName, newValue);
         break;
       }
       case 'theme': {
@@ -113,35 +130,16 @@ export default class BaseTimeWindowPicker extends HTMLElement {
         this.#setThemeClasses();
         break;
       }
-      case 'type': {
-        this.#button.type = this.type;
-        break;
-      }
-      case 'size': {
-        this.#size = newValue ? newValue : undefined;
-        this.#setSizeClasses();
-        break;
-      }
 
       default:
         break;
     }
   }
 
-  #clickHandler = (e) => {
-    this.disabled && e.stopImmediatePropagation();
-  };
-
   #setThemeClasses() {
-    const allThemes = [
-      'theme_secondary',
-      'theme_green',
-      'theme_blueSec',
-      'theme_red',
-      'theme_alfa',
-    ];
+    const allThemes = [];
 
-    const { classList } = this.#button;
+    const { classList } = this.#twPicker;
     
     for (const theme of allThemes) {
       if (this.#theme.indexOf(theme) != -1) {
@@ -149,20 +147,6 @@ export default class BaseTimeWindowPicker extends HTMLElement {
       } else {
         classList.remove(theme);
       }
-    }
-  }
-
-  #setSizeClasses() {
-    if (this.#size === 'big') {
-      this.#button.classList.add('size_big');
-    } else {
-      this.#button.classList.remove('size_big');
-    }
-
-    if (this.#size === 'small') {
-      this.#button.classList.add('size_small');
-    } else {
-      this.#button.classList.remove('size_small');
     }
   }
 }

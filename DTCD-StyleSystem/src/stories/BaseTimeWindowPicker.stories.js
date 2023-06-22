@@ -11,25 +11,37 @@ export default {
 };
 
 const Template = args => {
-  const { visible, value, label, size, disabled, required } = args;
+  const {
+    theme = [],
+    label,
+    value,
+    size,
+    opened,
+    disabled,
+    required,
+    invalid,
+  } = args;
 
   const picker = document.createElement('time-window-picker');
-  picker.visible = visible;
+  picker.theme = theme.length ? theme : [];
+  picker.label = label;
   picker.value = value;
+  picker.size = size;
+  picker.opened = opened;
   picker.disabled = disabled;
   picker.required = required;
-  picker.label = label;
-  picker.size = size;
+  picker.invalid = invalid;
 
   return picker;
 };
 
 export const DefaultTimeWindowPicker = Template.bind({});
 DefaultTimeWindowPicker.args = {
-  visible: false,
-  value: 1653489867960,
-  label: 'Label',
-  size: '',
+  label: 'Выбрать временное окно',
+  theme: [],
+  value: 'all',
+  opened: false,
   disabled: false,
   required: false,
+  invalid: false,
 };
