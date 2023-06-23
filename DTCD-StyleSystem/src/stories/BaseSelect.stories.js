@@ -37,6 +37,7 @@ const Template = (args) => {
     required,
     labelSlot,
     invalid,
+    autoClose,
   } = args;
 
   const select = document.createElement('base-select');
@@ -56,6 +57,7 @@ const Template = (args) => {
   select.disabled = disabled;
   select.required = required;
   select.invalid = invalid;
+  select.autoClose = autoClose;
 
   select.innerHTML += labelSlot;
 
@@ -79,4 +81,5 @@ DefaultSelect.args = {
   required: false,
   invalid: false,
   labelSlot: '<span slot="label">Default dropdown</span>',
+  autoClose: true,
 };
