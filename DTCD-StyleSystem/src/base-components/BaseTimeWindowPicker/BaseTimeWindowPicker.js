@@ -7,7 +7,6 @@ export default class BaseTimeWindowPicker extends HTMLElement {
 
   #twPicker;
   #selectContainer;
-  #customDateBtn;
 
   static get observedAttributes() {
     return [
