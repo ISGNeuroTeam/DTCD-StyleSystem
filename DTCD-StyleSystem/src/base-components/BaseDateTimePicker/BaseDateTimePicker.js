@@ -11,6 +11,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   #use12HourClock = false;
   #disabled = false;
   #toggleWithContext;
+  #datePickerContainer;
 
   constructor() {
     super();
@@ -22,6 +23,7 @@ export default class BaseDateTimePicker extends HTMLElement {
 
     this.render();
 
+    this.#datePickerContainer = this.shadow.querySelector('.BaseDateTimePicker');
     this.toggleButton = this.shadow.querySelector('.date-toggle');
     this.calendarDropDown = this.shadow.querySelector('.calendar-dropdown');
     this.dateInput = this.shadow.querySelector('.date-input');
@@ -76,10 +78,13 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.toggleButton.addEventListener('click', this.#toggleWithContext);
     prevBtn.addEventListener('click', () => this.prevMonth());
     nextButton.addEventListener('click', () => this.nextMonth());
-    document.addEventListener('click', e => this.handleClickOut(e));
 
     this.renderCalendarDays();
     this.setTime();
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('click', this.#handleClickOut);
   }
 
   get visible() {
@@ -192,14 +197,21 @@ export default class BaseDateTimePicker extends HTMLElement {
 
     this.#visible = this.calendarDropDown.className.includes('visible');
 
+    if (this.#visible) document.addEventListener('click', this.#handleClickOut);
+    else document.removeEventListener('click', this.#handleClickOut);
+
     if (!this.#visible && !this.isCurrentCalendarMonth()) {
       this.calendar.goToDate(this.#date.monthNumber, this.#date.year);
       this.renderCalendarDays();
     }
   }
 
-  handleClickOut(e) {
-    if (this.#visible && this !== e.target) {
+  #handleClickOut = (event) => {
+    const eventPath = event.composedPath();
+    const originalTarget = eventPath[0];
+    const isSelectContainsOriginalTarget = this.#datePickerContainer.contains(originalTarget);
+    const isComponentContainsTarget = this.contains(event.target);
+    if (!isSelectContainsOriginalTarget && !isComponentContainsTarget) {
       this.toggleCalendar(false);
     }
   }
