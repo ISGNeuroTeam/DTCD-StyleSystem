@@ -1,15 +1,19 @@
-import styles from './BaseDateTimePicker.scss';
-import html from './BaseDateTimePicker.html';
 import moment from 'moment';
 
-import Day from './Day';
+import styles from './BaseDateTimePicker.scss';
+import html from './BaseDateTimePicker.html';
 import Calendar from './Calendar';
+import Day from './Day';
 
 export default class BaseDateTimePicker extends HTMLElement {
-  #date = null;
   #visible = false;
-  #use12HourClock = false;
   #disabled = false;
+  #range = false;
+  
+  #selectedDates = [];
+  #use12HourClock = false;
+  #selectedDayElement = [];
+
   #toggleWithContext;
   #datePickerContainer;
 
@@ -17,8 +21,8 @@ export default class BaseDateTimePicker extends HTMLElement {
     super();
 
     const date = new Date(Date.now());
-    this.#date = new Day(date, 'ru-RU');
-    this.calendar = new Calendar(this.#date.year, this.#date.monthNumber, 'ru-RU');
+    this.#selectedDates[0] = new Day(date, 'ru-RU');
+    this.calendar = new Calendar(this.#selectedDates[0].year, this.#selectedDates[0].monthNumber, 'ru-RU');
     this.shadow = this.attachShadow({ mode: 'open' });
 
     this.render();
@@ -57,12 +61,12 @@ export default class BaseDateTimePicker extends HTMLElement {
         /^(0[1-9]|[12]\d|3[01])[.](0[1-9]|1[0-2])[.]\d{4}\s(0\d|1\d|2[0-3])[:]([0-5]\d)$/;
       let date = moment(this.dateInput.value, 'DD-MM-YYYY hh:mm');
       if (!date.isValid() || this.dateInput.value.match(regexp) === null) {
-        this.#date = new Day(new Date(Date.now()), 'ru-RU');
+        this.#selectedDates[0] = new Day(new Date(Date.now()), 'ru-RU');
         this.updateToggleText();
         return;
       }
-      this.#date = new Day(date.toDate(), 'ru-RU');
-      this.calendar = new Calendar(this.#date.year, this.#date.monthNumber, 'ru-RU');
+      this.#selectedDates[0] = new Day(date.toDate(), 'ru-RU');
+      this.calendar = new Calendar(this.#selectedDates[0].year, this.#selectedDates[0].monthNumber, 'ru-RU');
       this.renderCalendarDays();
       this.setTime();
       this.dispatchEvent(new Event('input'));
@@ -106,7 +110,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   get value() {
-    return this.#date.timestamp;
+    return this.#selectedDates[0].timestamp;
   }
 
   set value(newValue) {
@@ -137,8 +141,24 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.dateInput.required = newValue;
   }
 
+  get range() {
+    return this.#range;
+  }
+
+  set range(value) {
+    this.#range = Boolean(value);
+  }
+
   static get observedAttributes() {
-    return ['value', 'visible', 'label', 'size', 'disabled', 'required'];
+    return [
+      'value',
+      'visible',
+      'label',
+      'size',
+      'disabled',
+      'required',
+      'data-range',
+    ];
   }
 
   onTimeInputFocus(event) {
@@ -146,7 +166,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   updateHours() {
-    const currentDate = this.#date;
+    const currentDate = this.#selectedDates[0];
     const targetValue = parseInt(this.vdpHoursInput.value, 10) || 0;
     const minHours = this.#use12HourClock ? 1 : 0;
     const maxHours = this.#use12HourClock ? 12 : 23;
@@ -158,7 +178,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   updateMinutes() {
-    const currentDate = this.#date;
+    const currentDate = this.#selectedDates[0];
     const targetValue = parseInt(this.vdpMinutesInput.value, 10) || 0;
     const numValue = boundNumber(targetValue, 0, 59);
     currentDate.setMinutes(numValue);
@@ -168,11 +188,11 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   setTime() {
-    this.vdpHoursInput.value = this.#date.hours;
-    this.vdpMinutesInput.value = this.#date.minutes.toString().padStart(2, '0');
+    this.vdpHoursInput.value = this.#selectedDates[0].hours;
+    this.vdpMinutesInput.value = this.#selectedDates[0].minutes.toString().padStart(2, '0');
 
-    this.shadow.querySelector('#hoursSpan').innerHTML = this.#date.hours;
-    this.shadow.querySelector('#minutesSpan').innerHTML = this.#date.minutes
+    this.shadow.querySelector('#hoursSpan').innerHTML = this.#selectedDates[0].hours;
+    this.shadow.querySelector('#minutesSpan').innerHTML = this.#selectedDates[0].minutes
       .toString()
       .padStart(2, '0');
   }
@@ -201,7 +221,7 @@ export default class BaseDateTimePicker extends HTMLElement {
     else document.removeEventListener('click', this.#handleClickOut);
 
     if (!this.#visible && !this.isCurrentCalendarMonth()) {
-      this.calendar.goToDate(this.#date.monthNumber, this.#date.year);
+      this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
       this.renderCalendarDays();
     }
   }
@@ -217,15 +237,15 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   selectDay(el, day) {
-    if (day.isEqualTo(this.#date)) return;
-    this.#date = day;
+    if (day.isEqualTo(this.#selectedDates[0])) return;
+    this.#selectedDates[0] = day;
 
     if (day.monthNumber < this.calendar.month.number) this.prevMonth();
     else if (day.monthNumber > this.calendar.month.number) this.nextMonth();
     else {
       el.classList.add('selected');
-      this.selectedDayElement.classList.remove('selected');
-      this.selectedDayElement = el;
+      this.#selectedDayElement[0].classList.remove('selected');
+      this.#selectedDayElement[0] = el;
     }
 
     this.vdpHoursInput.value = day.hours;
@@ -235,21 +255,21 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   updateToggleText() {
-    this.dateInput.value = `${this.#date.format('DD.MM.YYYY H:m')}`;
+    this.dateInput.value = `${this.#selectedDates[0].format('DD.MM.YYYY H:m')}`;
   }
 
   isSelectedDate(date) {
     return (
-      date.date === this.#date.date &&
-      date.monthNumber === this.#date.monthNumber &&
-      date.year === this.#date.year
+      date.date === this.#selectedDates[0].date &&
+      date.monthNumber === this.#selectedDates[0].monthNumber &&
+      date.year === this.#selectedDates[0].year
     );
   }
 
   isCurrentCalendarMonth() {
     return (
-      this.calendar.month.number === this.#date.monthNumber &&
-      this.calendar.year === this.#date.year
+      this.calendar.month.number === this.#selectedDates[0].monthNumber &&
+      this.calendar.year === this.#selectedDates[0].year
     );
   }
 
@@ -311,7 +331,7 @@ export default class BaseDateTimePicker extends HTMLElement {
 
       if (this.isSelectedDate(day)) {
         el.classList.add('selected');
-        this.selectedDayElement = el;
+        this.#selectedDayElement[0] = el;
       }
 
       this.calendarDaysContainer.appendChild(el);
@@ -326,21 +346,24 @@ export default class BaseDateTimePicker extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case 'value':
-        this.#date = new Day(new Date(parseInt(newValue)));
-        this.calendar.goToDate(this.#date.monthNumber, this.#date.year);
+        this.#selectedDates[0] = new Day(new Date(parseInt(newValue)));
+        this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
         this.renderCalendarDays();
         this.setTime();
         setTimeout(() => {
           this.updateToggleText();
         }, 0);
         break;
+
       case 'visible':
         this.#visible = newValue === 'true' ? true : false;
         this.toggleCalendar(this.#visible);
         break;
+
       case 'label':
         this.dateInput.setAttribute('label', newValue);
         break;
+
       case 'disabled':
         this.#disabled = newValue === 'true' ? true : false;
         if (this.#disabled) {
@@ -352,6 +375,11 @@ export default class BaseDateTimePicker extends HTMLElement {
           this.toggleButton.addEventListener('click', this.#toggleWithContext);
           this.toggleButton.classList.remove('disabled');
         }
+        break;
+
+      case 'data-range':
+        this.range = newValue;
+        break
     }
   }
 

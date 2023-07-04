@@ -11,7 +11,15 @@ export default {
 };
 
 const Template = args => {
-  const { visible, value, label, size, disabled, required } = args;
+  const {
+    visible,
+    value,
+    label,
+    size,
+    disabled,
+    required,
+    range,
+  } = args;
 
   const picker = document.createElement('date-time-picker');
   picker.visible = visible;
@@ -20,6 +28,7 @@ const Template = args => {
   picker.required = required;
   picker.label = label;
   picker.size = size;
+  picker.range = range;
 
   return picker;
 };
@@ -32,4 +41,5 @@ DefaultDateTimePicker.args = {
   size: '',
   disabled: false,
   required: false,
+  range: false,
 };
