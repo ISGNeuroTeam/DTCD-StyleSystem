@@ -237,15 +237,37 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   selectDay(el, day) {
-    if (day.isEqualTo(this.#selectedDates[0])) return;
-    this.#selectedDates[0] = day;
+    if (this.range) {
+      if (!this.#selectedDates?.length || this.#selectedDates.length == 2) {
+        this.#selectedDates = [];
+        this.#selectedDates[0] = day;
 
-    if (day.monthNumber < this.calendar.month.number) this.prevMonth();
-    else if (day.monthNumber > this.calendar.month.number) this.nextMonth();
-    else {
-      el.classList.add('selected');
+        this.#selectedDayElement[0].classList.remove('selected');
+        el.classList.add('selected');
+        this.#selectedDayElement[0] = el;
+        if (this.#selectedDayElement[1] !== el) {
+          this.#selectedDayElement[1]?.classList.remove('selected');
+        }
+      } else if (this.#selectedDates.length == 1) {
+        this.#selectedDates[1] = day;
+
+        el.classList.add('selected');
+        this.#selectedDayElement[1] = el;
+      }
+    } else {
+      if (day.isEqualTo(this.#selectedDates[0])) return;
+      this.#selectedDates = [];
+      this.#selectedDates[0] = day;
+
       this.#selectedDayElement[0].classList.remove('selected');
+      el.classList.add('selected');
       this.#selectedDayElement[0] = el;
+    }
+
+    if (day.monthNumber < this.calendar.month.number) {
+      this.prevMonth();
+    } else if (day.monthNumber > this.calendar.month.number) {
+      this.nextMonth();
     }
 
     this.vdpHoursInput.value = day.hours;
@@ -255,15 +277,36 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   updateToggleText() {
-    this.dateInput.value = `${this.#selectedDates[0].format('DD.MM.YYYY H:m')}`;
+    const selectedDates = [...this.#selectedDates].sort((a, b) => {
+      if (a.timestamp > b.timestamp) return 1;
+      if (a.timestamp == b.timestamp) return 0;
+      if (a.timestamp < b.timestamp) return -1;
+    });
+    
+    if (selectedDates.length == 2) {
+      this.dateInput.value = `${selectedDates[0].format('DD.MM.YYYY H:m')} - ${selectedDates[1].format('DD.MM.YYYY H:m')}`;
+    } else if (selectedDates.length > 2) {
+      let dateInputValue = '';
+      selectedDates.forEach((dateItem, index) => {
+        if (index > 0) dateInputValue += ' | ';
+        dateInputValue += dateItem.format('DD.MM.YYYY H:m');
+      });
+      this.dateInput.value = dateInputValue;
+    } else {
+      this.dateInput.value = `${selectedDates[0].format('DD.MM.YYYY H:m')}`;
+    }
   }
 
   isSelectedDate(date) {
-    return (
-      date.date === this.#selectedDates[0].date &&
-      date.monthNumber === this.#selectedDates[0].monthNumber &&
-      date.year === this.#selectedDates[0].year
-    );
+    const searchResult = this.#selectedDates.find(dateItem => {
+      return (
+        date.date === dateItem.date &&
+        date.monthNumber === dateItem.monthNumber &&
+        date.year === dateItem.year
+      );
+    });
+
+    return searchResult;
   }
 
   isCurrentCalendarMonth() {
@@ -317,6 +360,7 @@ export default class BaseDateTimePicker extends HTMLElement {
 
   updateMonthDays() {
     this.calendarDaysContainer.innerHTML = '';
+    this.#selectedDayElement = [];
 
     this.getMonthDaysGrid().forEach(day => {
       const el = document.createElement('button');
@@ -331,7 +375,7 @@ export default class BaseDateTimePicker extends HTMLElement {
 
       if (this.isSelectedDate(day)) {
         el.classList.add('selected');
-        this.#selectedDayElement[0] = el;
+        this.#selectedDayElement.push(el);
       }
 
       this.calendarDaysContainer.appendChild(el);
