@@ -134,6 +134,10 @@
       color: var(--danger);
     }
 
+    &.inRange {
+      background: var(--button_primary_24);
+    }
+    
     &.selected {
       background: var(--button_primary);
       color: var(--background_main);

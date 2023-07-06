@@ -13,6 +13,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   #selectedDates = [];
   #use12HourClock = false;
   #selectedDayElement = [];
+  #dayBtns;
 
   #toggleWithContext;
   #datePickerContainer;
@@ -239,6 +240,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   selectDay(el, day) {
     if (this.range) {
       if (!this.#selectedDates?.length || this.#selectedDates.length == 2) {
+        // выбор первой даты из двух
         this.#selectedDates = [];
         this.#selectedDates[0] = day;
 
@@ -249,6 +251,7 @@ export default class BaseDateTimePicker extends HTMLElement {
           this.#selectedDayElement[1]?.classList.remove('selected');
         }
       } else if (this.#selectedDates.length == 1) {
+        // выбор второй даты из двух
         this.#selectedDates[1] = day;
 
         el.classList.add('selected');
@@ -268,6 +271,8 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.prevMonth();
     } else if (day.monthNumber > this.calendar.month.number) {
       this.nextMonth();
+    } else {
+      this.#highlightBtnsInRange();
     }
 
     this.vdpHoursInput.value = day.hours;
@@ -277,11 +282,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   updateToggleText() {
-    const selectedDates = [...this.#selectedDates].sort((a, b) => {
-      if (a.timestamp > b.timestamp) return 1;
-      if (a.timestamp == b.timestamp) return 0;
-      if (a.timestamp < b.timestamp) return -1;
-    });
+    const selectedDates = [...this.#selectedDates].sort(this.#compareDates);
     
     if (selectedDates.length == 2) {
       this.dateInput.value = `${selectedDates[0].format('DD.MM.YYYY H:m')} - ${selectedDates[1].format('DD.MM.YYYY H:m')}`;
@@ -310,10 +311,14 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   isCurrentCalendarMonth() {
-    return (
-      this.calendar.month.number === this.#selectedDates[0].monthNumber &&
-      this.calendar.year === this.#selectedDates[0].year
-    );
+    const searchResult = this.#selectedDates.find(dateItem => {
+      return (
+        this.calendar.month.number === dateItem.monthNumber &&
+        this.calendar.year === dateItem.year
+      );
+    });
+
+    return searchResult;
   }
 
   updateHeaderText() {
@@ -361,6 +366,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   updateMonthDays() {
     this.calendarDaysContainer.innerHTML = '';
     this.#selectedDayElement = [];
+    this.#dayBtns = new Map();
 
     this.getMonthDaysGrid().forEach(day => {
       const el = document.createElement('button');
@@ -379,7 +385,10 @@ export default class BaseDateTimePicker extends HTMLElement {
       }
 
       this.calendarDaysContainer.appendChild(el);
+      this.#dayBtns.set(day.timestamp, el);
     });
+
+    this.#highlightBtnsInRange();
   }
 
   getWeekDaysElementStrings() {
@@ -432,6 +441,32 @@ export default class BaseDateTimePicker extends HTMLElement {
     template.innerHTML = `<style>${styles}</style>${html}`;
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.shadow.querySelector('.week-days').innerHTML = this.getWeekDaysElementStrings();
+  }
+
+  #highlightBtnsInRange() {
+    if (this.#selectedDates.length == 2) {
+      const selectedDates = [...this.#selectedDates].sort(this.#compareDates);
+      const minDate = selectedDates[0].timestamp;
+      const maxDate = selectedDates[1].timestamp;
+  
+      this.#dayBtns.forEach((dayBtn, timestamp) => {
+        if (timestamp > minDate && timestamp < maxDate) {
+          dayBtn.classList.add('inRange');
+        } else {
+          dayBtn.classList.remove('inRange');
+        }
+      });
+    } else {
+      this.#dayBtns.forEach((dayBtn, timestamp) => {
+        dayBtn.classList.remove('inRange');
+      });
+    }
+  }
+
+  #compareDates(a, b) {
+    if (a.timestamp > b.timestamp) return 1;
+    if (a.timestamp == b.timestamp) return 0;
+    if (a.timestamp < b.timestamp) return -1;
   }
 }
 
