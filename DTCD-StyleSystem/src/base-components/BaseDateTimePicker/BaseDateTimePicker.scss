@@ -4,7 +4,19 @@
 }
 
 .BaseDateTimePicker {
+  .input-wrapper {
+    position: relative;
+  }
+  
   .date-toggle {
+    display: inline-flex;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    width: 12px;
+    height: 12px;
     position: absolute;
     bottom: 8px;
     right: 8px;
