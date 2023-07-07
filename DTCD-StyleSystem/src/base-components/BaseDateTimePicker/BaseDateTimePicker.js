@@ -57,21 +57,7 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.toggleCalendar();
     });
 
-    this.dateInput.addEventListener('change', () => {
-      const regexp =
-        /^(0[1-9]|[12]\d|3[01])[.](0[1-9]|1[0-2])[.]\d{4}\s(0\d|1\d|2[0-3])[:]([0-5]\d)$/;
-      let date = moment(this.dateInput.value, 'DD-MM-YYYY hh:mm');
-      if (!date.isValid() || this.dateInput.value.match(regexp) === null) {
-        this.#selectedDates[0] = new Day(new Date(Date.now()), 'ru-RU');
-        this.updateToggleText();
-        return;
-      }
-      this.#selectedDates[0] = new Day(date.toDate(), 'ru-RU');
-      this.calendar = new Calendar(this.#selectedDates[0].year, this.#selectedDates[0].monthNumber, 'ru-RU');
-      this.renderCalendarDays();
-      this.setTime();
-      this.dispatchEvent(new Event('input'));
-    });
+    this.dateInput.addEventListener('change', this.#handlerDateInputChange);
 
     this.addEventListener('input', event => {
       if (event.isTrusted) {
@@ -467,6 +453,22 @@ export default class BaseDateTimePicker extends HTMLElement {
     if (a.timestamp > b.timestamp) return 1;
     if (a.timestamp == b.timestamp) return 0;
     if (a.timestamp < b.timestamp) return -1;
+  }
+
+  #handlerDateInputChange = () => {
+    const regexp =
+      /^(0[1-9]|[12]\d|3[01])[.](0[1-9]|1[0-2])[.]\d{4}\s(0\d|1\d|2[0-3])[:]([0-5]\d)$/;
+    let date = moment(this.dateInput.value, 'DD-MM-YYYY hh:mm');
+    if (!date.isValid() || this.dateInput.value.match(regexp) === null) {
+      this.#selectedDates[0] = new Day(new Date(Date.now()), 'ru-RU');
+      this.updateToggleText();
+      return;
+    }
+    this.#selectedDates[0] = new Day(date.toDate(), 'ru-RU');
+    this.calendar = new Calendar(this.#selectedDates[0].year, this.#selectedDates[0].monthNumber, 'ru-RU');
+    this.renderCalendarDays();
+    this.setTime();
+    this.dispatchEvent(new Event('input'));
   }
 }
 
