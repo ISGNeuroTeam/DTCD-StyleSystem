@@ -19,6 +19,7 @@ const Template = args => {
     disabled,
     required,
     range,
+    timepicker,
   } = args;
 
   const picker = document.createElement('date-time-picker');
@@ -29,6 +30,7 @@ const Template = args => {
   picker.label = label;
   picker.size = size;
   picker.range = range;
+  picker.timepicker = timepicker;
 
   return picker;
 };
@@ -42,4 +44,5 @@ DefaultDateTimePicker.args = {
   disabled: false,
   required: false,
   range: false,
+  timepicker: false,
 };

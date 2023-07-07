@@ -9,6 +9,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   #visible = false;
   #disabled = false;
   #range = false;
+  #timepicker = false;
   
   #selectedDates = [];
   #use12HourClock = false;
@@ -17,6 +18,7 @@ export default class BaseDateTimePicker extends HTMLElement {
 
   #toggleWithContext;
   #datePickerContainer;
+  #timePickerContainer;
 
   constructor() {
     super();
@@ -36,14 +38,13 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.calendarDropDown.querySelector('.header').children;
     this.calendarDateElement = calendarDateElement;
     this.calendarDaysContainer = this.calendarDropDown.querySelector('.month-days');
+    this.#timePickerContainer = this.shadow.querySelector('.time-input-wrapper');
 
     this.vdpHoursInput = this.shadow.querySelector('.vdpHoursInput');
-
     this.vdpHoursInput.addEventListener('input', () => this.updateHours());
     this.vdpHoursInput.addEventListener('focus', this.onTimeInputFocus);
 
     this.vdpMinutesInput = this.shadow.querySelector('.vdpMinutesInput');
-
     this.vdpMinutesInput.addEventListener('input', () => this.updateMinutes());
     this.vdpMinutesInput.addEventListener('focus', this.onTimeInputFocus);
 
@@ -136,6 +137,19 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.#range = Boolean(value);
   }
 
+  get timepicker() {
+    return this.#timepicker;
+  }
+
+  set timepicker(value) {
+    this.#timepicker = Boolean(value);
+    if (this.#timepicker) {
+      this.#timePickerContainer.style.display = 'none';
+    } else {
+      this.#timePickerContainer.style.display = '';
+    }
+  }
+
   static get observedAttributes() {
     return [
       'value',
@@ -145,6 +159,7 @@ export default class BaseDateTimePicker extends HTMLElement {
       'disabled',
       'required',
       'data-range',
+      'data-timepicker',
     ];
   }
 
@@ -418,7 +433,11 @@ export default class BaseDateTimePicker extends HTMLElement {
 
       case 'data-range':
         this.range = newValue;
-        break
+        break;
+
+      case 'data-timepicker':
+        this.timepicker = newValue;
+        break;
     }
   }
 
