@@ -38,7 +38,7 @@ const Template = args => {
 export const DefaultDateTimePicker = Template.bind({});
 DefaultDateTimePicker.args = {
   visible: false,
-  value: 1653489867960,
+  value: '1653489867960',
   label: 'Label',
   size: '',
   disabled: false,

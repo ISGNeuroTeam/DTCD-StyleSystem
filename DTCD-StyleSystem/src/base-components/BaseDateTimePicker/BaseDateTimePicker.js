@@ -116,7 +116,23 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   set value(newValue) {
-    if (newValue) this.setAttribute('value', newValue);
+    if (typeof newValue?.includes == 'function' && newValue.includes(';')) {
+      this.#selectedDates = newValue.split(';')
+                        .map((value, i) => value = new Day(new Date(parseInt(value))))
+                        .sort(this.#compareDates);
+      console.log(this.#selectedDates);
+    } else {
+      this.#selectedDates[0] = newValue
+                              ? new Day(new Date(parseInt(newValue)))
+                              : new Day();
+    }
+
+    this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
+    this.renderCalendarDays();
+    this.setTime();
+    setTimeout(() => {
+      this.updateToggleText();
+    }, 0);
   }
 
   get size() {
@@ -235,15 +251,17 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   setTime() {
-    this.vdpHoursInputStart.value = this.#selectedDates[0].hours;
+    const selectedDates = [...this.#selectedDates].sort(this.#compareDates);
+
+    this.vdpHoursInputStart.value = selectedDates[0].hours;
     this.#hoursSpanStart.innerHTML = this.vdpHoursInputStart.value;
 
-    this.vdpMinutesInputStart.value = this.#selectedDates[0].minutes.toString().padStart(2, '0');
+    this.vdpMinutesInputStart.value = selectedDates[0].minutes.toString().padStart(2, '0');
     this.#minutesSpanStart.innerHTML = this.vdpMinutesInputStart.value;
 
-    if (this.#selectedDates.length == 2) {
-      this.vdpHoursInputFinish.value = this.#selectedDates[1].hours;
-      this.vdpMinutesInputFinish.value = this.#selectedDates[1].minutes.toString().padStart(2, '0');
+    if (selectedDates.length == 2) {
+      this.vdpHoursInputFinish.value = selectedDates[1].hours;
+      this.vdpMinutesInputFinish.value = selectedDates[1].minutes.toString().padStart(2, '0');
     } else {
       this.vdpHoursInputFinish.value = this.vdpHoursInputStart.value;
       this.vdpMinutesInputFinish.value = this.vdpMinutesInputStart.value;
@@ -460,13 +478,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case 'value':
-        this.#selectedDates[0] = new Day(new Date(parseInt(newValue)));
-        this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
-        this.renderCalendarDays();
-        this.setTime();
-        setTimeout(() => {
-          this.updateToggleText();
-        }, 0);
+        this.value = newValue;
         break;
 
       case 'visible':
