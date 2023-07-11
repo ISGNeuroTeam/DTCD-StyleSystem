@@ -14,11 +14,14 @@ export default class BaseDateTimePicker extends HTMLElement {
   #selectedDates = [];
   #use12HourClock = false;
   #selectedDayElement = [];
-  #dayBtns;
-
+  
   #toggleWithContext;
   #datePickerContainer;
-  #timePickerContainer;
+  #dayBtns;
+  #hoursSpanStart;
+  #minutesSpanStart;
+  #hoursSpanFinish;
+  #minutesSpanFinish;
 
   constructor() {
     super();
@@ -38,15 +41,26 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.calendarDropDown.querySelector('.header').children;
     this.calendarDateElement = calendarDateElement;
     this.calendarDaysContainer = this.calendarDropDown.querySelector('.month-days');
-    this.#timePickerContainer = this.shadow.querySelector('.time-input-wrapper');
 
-    this.vdpHoursInput = this.shadow.querySelector('.vdpHoursInput');
-    this.vdpHoursInput.addEventListener('input', () => this.updateHours());
-    this.vdpHoursInput.addEventListener('focus', this.onTimeInputFocus);
+    this.vdpHoursInputStart = this.shadow.querySelector('.time-input-wrapper.first .vdpHoursInput');
+    this.vdpHoursInputStart.addEventListener('input', () => this.updateHours());
+    this.vdpHoursInputStart.addEventListener('focus', this.onTimeInputFocus);
+    this.#hoursSpanStart = this.shadow.querySelector('.time-input-wrapper.first .hoursSpan');
+    
+    this.vdpMinutesInputStart = this.shadow.querySelector('.time-input-wrapper.first .vdpMinutesInput');
+    this.vdpMinutesInputStart.addEventListener('input', () => this.updateMinutes());
+    this.vdpMinutesInputStart.addEventListener('focus', this.onTimeInputFocus);
+    this.#minutesSpanStart = this.shadow.querySelector('.time-input-wrapper.first .minutesSpan');
 
-    this.vdpMinutesInput = this.shadow.querySelector('.vdpMinutesInput');
-    this.vdpMinutesInput.addEventListener('input', () => this.updateMinutes());
-    this.vdpMinutesInput.addEventListener('focus', this.onTimeInputFocus);
+    this.vdpHoursInputFinish = this.shadow.querySelector('.time-input-wrapper.second .vdpHoursInput');
+    this.vdpHoursInputFinish.addEventListener('input', () => this.updateHours(2));
+    this.vdpHoursInputFinish.addEventListener('focus', this.onTimeInputFocus);
+    this.#hoursSpanFinish = this.shadow.querySelector('.time-input-wrapper.second .hoursSpan');
+    
+    this.vdpMinutesInputFinish = this.shadow.querySelector('.time-input-wrapper.second .vdpMinutesInput');
+    this.vdpMinutesInputFinish.addEventListener('input', () => this.updateMinutes(2));
+    this.vdpMinutesInputFinish.addEventListener('focus', this.onTimeInputFocus);
+    this.#minutesSpanFinish = this.shadow.querySelector('.time-input-wrapper.second .minutesSpan');
 
     this.shadow.querySelector('.submitButton').addEventListener('click', () => {
       this.updateToggleText();
@@ -135,6 +149,10 @@ export default class BaseDateTimePicker extends HTMLElement {
 
   set range(value) {
     this.#range = Boolean(value);
+    const {
+      classList,
+    } = this.#datePickerContainer;
+    this.#range ? classList.add('type-range') : classList.remove('type-range');
   }
 
   get timepicker() {
@@ -143,11 +161,10 @@ export default class BaseDateTimePicker extends HTMLElement {
 
   set timepicker(value) {
     this.#timepicker = Boolean(value);
-    if (this.#timepicker) {
-      this.#timePickerContainer.style.display = 'none';
-    } else {
-      this.#timePickerContainer.style.display = '';
-    }
+    const {
+      classList,
+    } = this.#datePickerContainer;
+    this.#timepicker ? classList.add('with-timepicker') : classList.remove('with-timepicker');
   }
 
   static get observedAttributes() {
@@ -167,36 +184,72 @@ export default class BaseDateTimePicker extends HTMLElement {
     event.target.select && event.target.select();
   }
 
-  updateHours() {
-    const currentDate = this.#selectedDates[0];
-    const targetValue = parseInt(this.vdpHoursInput.value, 10) || 0;
+  updateHours(numberOfClock) {
+    const isSecondDateBigger = this.#selectedDates[1] && this.#compareDates(this.#selectedDates[1], this.#selectedDates[0]) == 1;
     const minHours = this.#use12HourClock ? 1 : 0;
     const maxHours = this.#use12HourClock ? 12 : 23;
-    const numValue = boundNumber(targetValue, minHours, maxHours);
-    currentDate.setHours(numValue);
 
-    this.vdpHoursInput.value = numValue;
-    this.shadow.querySelector('#hoursSpan').innerHTML = numValue;
+    if (numberOfClock == 2) {
+      if (!this.#selectedDates[1]) return;
+
+      const targetValue = parseInt(this.vdpHoursInputFinish.value, 10) || 0;
+      const numValue = boundNumber(targetValue, minHours, maxHours);
+      const targetDate = isSecondDateBigger ? this.#selectedDates[1] : this.#selectedDates[0];
+            targetDate.setHours(numValue);
+  
+      this.vdpHoursInputFinish.value = numValue;
+      this.#hoursSpanFinish.innerHTML = numValue;
+    } else {
+      const targetValue = parseInt(this.vdpHoursInputStart.value, 10) || 0;
+      const numValue = boundNumber(targetValue, minHours, maxHours);
+      const targetDate = isSecondDateBigger ? this.#selectedDates[0] : this.#selectedDates[1];
+            targetDate.setHours(numValue);
+  
+      this.vdpHoursInputStart.value = numValue;
+      this.#hoursSpanStart.innerHTML = numValue;
+    }
   }
 
-  updateMinutes() {
-    const currentDate = this.#selectedDates[0];
-    const targetValue = parseInt(this.vdpMinutesInput.value, 10) || 0;
-    const numValue = boundNumber(targetValue, 0, 59);
-    currentDate.setMinutes(numValue);
+  updateMinutes(numberOfClock) {
+    const isSecondDateBigger = this.#selectedDates[1] && this.#compareDates(this.#selectedDates[1], this.#selectedDates[0]) == 1;
+    
+    if (numberOfClock == 2) {
+      if (!this.#selectedDates[1]) return;
 
-    this.vdpMinutesInput.value = numValue.toString().padStart(2, '0');
-    this.shadow.querySelector('#minutesSpan').innerHTML = numValue.toString().padStart(2, '0');
+      const targetValue = parseInt(this.vdpMinutesInputFinish.value, 10) || 0;
+      const numValue = boundNumber(targetValue, 0, 59);
+      const targetDate = isSecondDateBigger ? this.#selectedDates[1] : this.#selectedDates[0];
+            targetDate.setMinutes(numValue);
+      
+      this.vdpMinutesInputFinish.value = numValue.toString().padStart(2, '0');
+      this.#minutesSpanFinish.innerHTML = numValue.toString().padStart(2, '0');
+    } else {
+      const targetValue = parseInt(this.vdpMinutesInputStart.value, 10) || 0;
+      const numValue = boundNumber(targetValue, 0, 59);
+      const targetDate = !isSecondDateBigger ? this.#selectedDates[0] : this.#selectedDates[1];
+            targetDate.setMinutes(numValue);
+  
+      this.vdpMinutesInputStart.value = numValue.toString().padStart(2, '0');
+      this.#minutesSpanStart.innerHTML = numValue.toString().padStart(2, '0');
+    }
   }
 
   setTime() {
-    this.vdpHoursInput.value = this.#selectedDates[0].hours;
-    this.vdpMinutesInput.value = this.#selectedDates[0].minutes.toString().padStart(2, '0');
+    this.vdpHoursInputStart.value = this.#selectedDates[0].hours;
+    this.#hoursSpanStart.innerHTML = this.vdpHoursInputStart.value;
 
-    this.shadow.querySelector('#hoursSpan').innerHTML = this.#selectedDates[0].hours;
-    this.shadow.querySelector('#minutesSpan').innerHTML = this.#selectedDates[0].minutes
-      .toString()
-      .padStart(2, '0');
+    this.vdpMinutesInputStart.value = this.#selectedDates[0].minutes.toString().padStart(2, '0');
+    this.#minutesSpanStart.innerHTML = this.vdpMinutesInputStart.value;
+
+    if (this.#selectedDates.length == 2) {
+      this.vdpHoursInputFinish.value = this.#selectedDates[1].hours;
+      this.vdpMinutesInputFinish.value = this.#selectedDates[1].minutes.toString().padStart(2, '0');
+    } else {
+      this.vdpHoursInputFinish.value = this.vdpHoursInputStart.value;
+      this.vdpMinutesInputFinish.value = this.vdpMinutesInputStart.value;
+    }
+    this.#hoursSpanFinish.innerHTML = this.vdpHoursInputFinish.value;
+    this.#minutesSpanFinish.innerHTML = this.vdpMinutesInputFinish.value;
   }
 
   renderCalendarDays() {
@@ -276,10 +329,17 @@ export default class BaseDateTimePicker extends HTMLElement {
       this.#highlightBtnsInRange();
     }
 
-    this.vdpHoursInput.value = day.hours;
-    this.shadow.querySelector('#hoursSpan').innerHTML = day.hours;
-    this.vdpMinutesInput.value = day.minutes.toString().padStart(2, '0');
-    this.shadow.querySelector('#minutesSpan').innerHTML = day.minutes.toString().padStart(2, '0');
+    if (this.#selectedDates.length == 1) {
+      this.vdpHoursInputFinish.value = day.hours;
+      this.#hoursSpanFinish.innerHTML = day.hours;
+      this.vdpMinutesInputFinish.value = day.minutes.toString().padStart(2, '0');
+      this.#minutesSpanFinish.innerHTML = day.minutes.toString().padStart(2, '0');
+    } else {
+      this.vdpHoursInputStart.value = day.hours;
+      this.#hoursSpanStart.innerHTML = day.hours;
+      this.vdpMinutesInputStart.value = day.minutes.toString().padStart(2, '0');
+      this.#minutesSpanStart.innerHTML = day.minutes.toString().padStart(2, '0');
+    }
   }
 
   updateToggleText() {

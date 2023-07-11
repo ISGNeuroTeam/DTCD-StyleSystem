@@ -7,7 +7,7 @@
   .input-wrapper {
     position: relative;
   }
-  
+
   .date-toggle {
     display: inline-flex;
     background: none;
@@ -155,9 +155,23 @@
     }
   }
 
+  .time-input-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+
   .time-input-wrapper {
     display: flex;
     justify-content: center;
+
+    &.second {
+      display: none;
+    }
+  }
+
+  .time-separator {
+    display: none;
   }
 
   .vdpTimeUnit {
@@ -225,5 +239,23 @@
 
   .vdpTimeCaption {
     margin-right: 0.5em;
+  }
+
+  &.with-timepicker {
+    .time-input-container {
+      display: flex;
+    }
+  }
+
+  &.type-range {
+    .time-input-wrapper {
+      &.second {
+        display: flex;
+      }
+    }
+
+    .time-separator {
+      display: block;
+    }
   }
 }

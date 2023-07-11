@@ -15,7 +15,7 @@
       </svg>
     </button>
   </div>
-  
+
   <div class="calendar-dropdown">
     <div class="calendar-wrapper">
       <div class="header">
@@ -39,23 +39,40 @@
           />
         </svg>
       </div>
+
       <div class="week-days"></div>
       <div class="month-days"></div>
-      <div class="time-input-wrapper">
-        <div class="vdpTimeUnit">
-          <pre><span id="hoursSpan"></span><br></pre>
-          <input type="number" pattern="\d*" class="vdpHoursInput" />
+
+      <div class="time-input-container">
+        <div class="time-input-wrapper first">
+          <div class="vdpTimeUnit">
+            <pre><span class="hoursSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpHoursInput" />
+          </div>
+          <span class="vdpTimeSeparator">:</span>
+          <div class="vdpTimeUnit">
+            <pre><span class="minutesSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpMinutesInput" />
+          </div>
         </div>
-        <span class="vdpTimeSeparator">:</span>
-        <div class="vdpTimeUnit">
-          <pre><span id="minutesSpan"></span><br></pre>
-          <input type="number" pattern="\d*" class="vdpMinutesInput" />
+
+        <div class="time-separator">—</div>
+
+        <div class="time-input-wrapper second">
+          <div class="vdpTimeUnit">
+            <pre><span class="hoursSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpHoursInput" />
+          </div>
+          <span class="vdpTimeSeparator">:</span>
+          <div class="vdpTimeUnit">
+            <pre><span class="minutesSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpMinutesInput" />
+          </div>
         </div>
       </div>
+
       <div class="button-wrapper">
-        <base-button class="cancelButton" theme="theme_secondary" size="small"
-          >Отменить</base-button
-        >
+        <base-button class="cancelButton" theme="theme_secondary" size="small">Отменить</base-button>
         <base-button class="submitButton" size="small">Выбрать</base-button>
       </div>
     </div>
