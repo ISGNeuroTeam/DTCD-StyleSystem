@@ -380,18 +380,19 @@ export default class BaseDateTimePicker extends HTMLElement {
 
   updateToggleText() {
     const selectedDates = [...this.#selectedDates].sort(this.#compareDates);
+    const dateFormat = 'DD.MM.YYYY H:m';
     
     if (selectedDates.length == 2) {
-      this.dateInput.value = `${selectedDates[0].format('DD.MM.YYYY H:m')} - ${selectedDates[1].format('DD.MM.YYYY H:m')}`;
+      this.dateInput.value = `${selectedDates[0].format(dateFormat)} - ${selectedDates[1].format(dateFormat)}`;
     } else if (selectedDates.length > 2) {
       let dateInputValue = '';
       selectedDates.forEach((dateItem, index) => {
         if (index > 0) dateInputValue += ' | ';
-        dateInputValue += dateItem.format('DD.MM.YYYY H:m');
+        dateInputValue += dateItem.format(dateFormat);
       });
       this.dateInput.value = dateInputValue;
     } else {
-      this.dateInput.value = `${selectedDates[0].format('DD.MM.YYYY H:m')}`;
+      this.dateInput.value = `${selectedDates[0].format(dateFormat)}`;
     }
   }
 
