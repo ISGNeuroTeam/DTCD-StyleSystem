@@ -20,6 +20,7 @@ const Template = args => {
     required,
     range,
     timepicker,
+    timewindows,
   } = args;
 
   const picker = document.createElement('date-time-picker');
@@ -31,6 +32,7 @@ const Template = args => {
   picker.size = size;
   picker.range = range;
   picker.timepicker = timepicker;
+  picker.timewindows = timewindows;
 
   return picker;
 };
@@ -38,11 +40,12 @@ const Template = args => {
 export const DefaultDateTimePicker = Template.bind({});
 DefaultDateTimePicker.args = {
   visible: false,
-  value: '1653489867960',
+  value: String(Date.now()),
   label: 'Label',
   size: '',
   disabled: false,
   required: false,
   range: false,
   timepicker: false,
+  timewindows: false,
 };

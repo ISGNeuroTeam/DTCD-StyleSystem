@@ -11,11 +11,69 @@ export default class BaseDateTimePicker extends HTMLElement {
   #disabled = false;
   #range = false;
   #timepicker = false;
+  #timewindows = false;
   
   // private properties
   #selectedDates = [];
   #use12HourClock = false;
   #selectedDayElement = [];
+  #twBtnsConfig = [
+    {
+      text: 'Последние 60 минут',
+      value: 'last_hours',
+      timeAmount: 1,
+    },
+    {
+      text: 'Последние 12 часов',
+      value: 'last_hours',
+      timeAmount: 12,
+    },
+    {
+      text: 'Последние сутки',
+      value: 'last_days',
+      timeAmount: 1,
+    },
+    {
+      text: 'Последние 3 дня',
+      value: 'last_days',
+      timeAmount: 3,
+    },
+    {
+      text: 'Текущая неделя',
+      value: 'week',
+      timeAmount: 1,
+    },
+    {
+      text: 'Предыдущая неделя',
+      value: '-week',
+    },
+    {
+      text: 'Последние 7 дней',
+      value: 'last_days',
+      timeAmount: 7,
+    },
+    {
+      text: 'Последние 30 дней',
+      value: 'last_days',
+      timeAmount: 30,
+    },
+    {
+      text: 'Текущий месяц',
+      value: 'month',
+    },
+    {
+      text: 'Предыдущий месяц',
+      value: '-month',
+    },
+    {
+      text: 'Текущий год',
+      value: 'year',
+    },
+    {
+      text: 'Предыдущий год',
+      value: '-year',
+    },
+  ];
   
   // HTML-elements
   #toggleWithContext;
@@ -29,10 +87,12 @@ export default class BaseDateTimePicker extends HTMLElement {
   #hoursSpanFinish;
   #vdpMinutesInputFinish
   #minutesSpanFinish;
+  #timeWindowsBtns;
 
   constructor() {
     super();
 
+    moment.locale('ru-RU');
     const date = new Date(Date.now());
     this.#selectedDates[0] = new Day(date, 'ru-RU');
     this.calendar = new Calendar(this.#selectedDates[0].year, this.#selectedDates[0].monthNumber, 'ru-RU');
@@ -91,6 +151,8 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.toggleButton.addEventListener('click', this.#toggleWithContext);
     prevBtn.addEventListener('click', () => this.prevMonth());
     nextButton.addEventListener('click', () => this.nextMonth());
+
+    this.#timeWindowsBtns = this.shadow.querySelector('.TimeWindows-js');
 
     this.renderCalendarDays();
     this.setTime();
@@ -201,6 +263,25 @@ export default class BaseDateTimePicker extends HTMLElement {
     return selectedDates;
   }
 
+  get timewindows () {
+    return this.#timewindows;
+  }
+
+  set timewindows(newValue) {
+    this.#timewindows = Boolean(newValue);
+    const {
+      classList,
+    } = this.#datePickerContainer;
+    
+    if (this.#timewindows) {
+      classList.add('with-timewindows')
+      this.#renderTWBtns();
+    } else {
+      classList.remove('with-timewindows');
+      this.#timeWindowsBtns.innerHTML = '';
+    }
+  }
+
   static get observedAttributes() {
     return [
       'value',
@@ -211,6 +292,7 @@ export default class BaseDateTimePicker extends HTMLElement {
       'required',
       'data-range',
       'data-timepicker',
+      'data-timewindows',
     ];
   }
 
@@ -529,6 +611,10 @@ export default class BaseDateTimePicker extends HTMLElement {
       case 'data-timepicker':
         this.timepicker = newValue;
         break;
+      
+      case 'data-timewindows':
+        this.timewindows = newValue;
+        break;
     }
   }
 
@@ -537,6 +623,23 @@ export default class BaseDateTimePicker extends HTMLElement {
     template.innerHTML = `<style>${styles}</style>${html}`;
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.shadow.querySelector('.week-days').innerHTML = this.getWeekDaysElementStrings();
+  }
+
+  #renderTWBtns() {
+    this.#timeWindowsBtns.innerHTML = '';
+
+    this.#twBtnsConfig.forEach((config) => {
+      const btn = document.createElement('base-button');
+            btn.theme = ['theme_blueSec'];
+            btn.width = 'full';
+            btn.size = 'small';
+            btn.type = 'button';
+            btn.value = config.value;
+            btn.textContent = config.text;
+            btn.setAttribute('data-time-amount', config.timeAmount || 1);
+            btn.addEventListener('click', this.#handleTWBtnsClick);
+      this.#timeWindowsBtns.appendChild(btn);
+    });
   }
 
   #highlightBtnsInRange() {
@@ -586,6 +689,60 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.setTime();
     this.updateToggleText();
     this.dispatchEvent(new Event('input'));
+  }
+
+  #handleTWBtnsClick = (event) => {
+    const btnValue = event.target.value;
+    const timeAmount = event.target.getAttribute('data-time-amount') ?? 1;
+    let resultDates = [];
+    
+    switch (btnValue) {
+      // a few hours ago
+      case 'last_hours': {
+        const now = new Date();
+        resultDates.push(new Date(now - (1000 * 60 * 60 * timeAmount)));
+        resultDates.push(now);
+        break;
+      }
+
+      // a few days ago
+      case 'last_days': {
+        const period = 'day';
+        const startDate = moment().subtract(timeAmount, `${period}s`).startOf(period).toDate();
+        const endDate = moment().subtract(1, `${period}s`).endOf(period).toDate();
+        resultDates.push(startDate);
+        resultDates.push(endDate);
+        break;
+      }
+
+      // current period
+      case 'day':
+      case 'week':
+      case 'month':
+      case 'year': {
+        resultDates.push(moment().startOf(btnValue).toDate());
+        resultDates.push(moment().endOf(btnValue).toDate());
+        break;
+      }
+
+      // previous period
+      case '-day':
+      case '-week':
+      case '-month':
+      case '-year': {
+        const period = btnValue.slice(1);
+        const startDate = moment().subtract(timeAmount, `${period}s`).startOf(period).toDate();
+        const endDate = moment().subtract(timeAmount, `${period}s`).endOf(period).toDate();
+        resultDates.push(startDate);
+        resultDates.push(endDate);
+        break;
+      }
+    
+      default:
+        break;
+    }
+
+    this.value = resultDates[0].getTime() + ';' + resultDates[1].getTime()
   }
 }
 
