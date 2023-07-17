@@ -1,5 +1,12 @@
+import BaseDateTimePickerDoc from './docs/BaseDateTimePickerDoc.mdx';
+
 export default {
   title: 'Example/BaseComponents/BaseDateTimePicker',
+  parameters: {
+    docs: {
+      page: BaseDateTimePickerDoc,
+    },
+  },
   argTypes: {
     size: {
       control: {
