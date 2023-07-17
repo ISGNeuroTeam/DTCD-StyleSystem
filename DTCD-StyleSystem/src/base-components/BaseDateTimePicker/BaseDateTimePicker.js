@@ -14,6 +14,7 @@ export default class BaseDateTimePicker extends HTMLElement {
   #timewindows = false;
   
   // private properties
+  #datepickerValue = [];
   #selectedDates = [];
   #use12HourClock = false;
   #selectedDayElement = [];
@@ -181,24 +182,25 @@ export default class BaseDateTimePicker extends HTMLElement {
   }
 
   get value() {
-    if (this.#selectedDates[1]) {
-      return this.#selectedDates[0].timestamp + ';' + this.#selectedDates[1].timestamp;
+    if (this.#datepickerValue[1]) {
+      return this.#datepickerValue[0].timestamp + ';' + this.#datepickerValue[1].timestamp;
     } else {
-      return this.#selectedDates[0].timestamp;
+      return this.#datepickerValue[0].timestamp;
     }
   }
 
   set value(newValue) {
     if (typeof newValue?.includes == 'function' && newValue.includes(';')) {
-      this.#selectedDates = newValue.split(';')
+      this.#datepickerValue = newValue.split(';')
                         .map((value, i) => value = new Day(new Date(parseInt(value))))
                         .sort(this.#compareDates);
     } else {
-      this.#selectedDates[0] = newValue
+      this.#datepickerValue[0] = newValue
                               ? new Day(new Date(parseInt(newValue)))
                               : new Day();
     }
 
+    this.#selectedDates = this.#datepickerValue;
     this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
     this.renderCalendarDays();
     this.setTime();
@@ -742,7 +744,10 @@ export default class BaseDateTimePicker extends HTMLElement {
         break;
     }
 
-    this.value = resultDates[0].getTime() + ';' + resultDates[1].getTime()
+    this.#selectedDates = resultDates.map((value, i) => value = new Day(value));
+    this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
+    this.renderCalendarDays();
+    this.setTime();
   }
 }
 
