@@ -63,6 +63,8 @@
   }
 
   .calendar-wrapper {
+    display: flex;
+    flex-direction: column;
     width: 214px;
     background: var(--background_main);
     border-radius: 4px;
@@ -121,6 +123,7 @@
     display: flex;
     justify-content: space-evenly;
     padding-bottom: 9px;
+    margin-top: auto;
   }
 
   .month-day {
@@ -161,6 +164,7 @@
     display: none;
     justify-content: center;
     align-items: center;
+    margin-top: auto;
   }
 
   .time-input-wrapper {
@@ -265,6 +269,10 @@
   &.with-timepicker {
     .time-input-container {
       display: flex;
+    }
+
+    .button-wrapper {
+      margin-top: 0;
     }
   }
 
