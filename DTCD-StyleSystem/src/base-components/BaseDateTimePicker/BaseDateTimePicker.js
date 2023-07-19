@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment/locale/ru.js';
 
 import styles from './BaseDateTimePicker.scss';
 import html from './BaseDateTimePicker.html';
