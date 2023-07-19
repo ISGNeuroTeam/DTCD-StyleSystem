@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - 'autoCLose' parameter of BaseSelect
+- date range in BaseDateTimePicker
+- buttons for select of time windows in BaseDateTimePicker
+- BaseDateTimePicker documentation
 
 ## [0.14.0]
 
