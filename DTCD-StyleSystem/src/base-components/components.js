@@ -22,7 +22,6 @@ import BaseHeading from './BaseHeading/BaseHeading';
 import BaseFileLoader from './BaseFileLoader/BaseFileLoader';
 import BaseDropdown from './BaseDropdown/BaseDropdown';
 import BaseDateTimePicker from './BaseDateTimePicker/BaseDateTimePicker';
-import BaseTimeWindowPicker from './BaseTimeWindowPicker/BaseTimeWindowPicker';
 
 export default [
   { name: 'base-button', baseClass: BaseButton },
@@ -49,5 +48,4 @@ export default [
   { name: 'gauge-segment-builder', baseClass: GaugeSegmentBuilder },
   { name: 'base-dropdown', baseClass: BaseDropdown },
   { name: 'date-time-picker', baseClass: BaseDateTimePicker },
-  { name: 'time-window-picker', baseClass: BaseTimeWindowPicker },
 ];
