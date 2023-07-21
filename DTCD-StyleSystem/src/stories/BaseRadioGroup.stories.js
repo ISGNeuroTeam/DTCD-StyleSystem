@@ -1,5 +1,3 @@
-import BaseRadioGroup from '../base-components/BaseRadioGroup/BaseRadioGroup';
-
 import BaseRadioGroupDoc from './docs/BaseRadioGroupDoc.mdx';
 
 export default {
@@ -16,17 +14,13 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-radio-group';
-
-window.customElements.define(NAME_COMPONENT, BaseRadioGroup);
-
 const Template = (args) => {
   const {
     defaultSlot,
     value,
   } = args;
 
-  const radioGroup = document.createElement(NAME_COMPONENT);
+  const radioGroup = document.createElement('base-radio-group');
 
   radioGroup.innerHTML += defaultSlot;
   radioGroup.value = value;

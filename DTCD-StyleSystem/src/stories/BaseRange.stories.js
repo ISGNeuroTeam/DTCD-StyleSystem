@@ -1,5 +1,3 @@
-import BaseRange from '../base-components/BaseRange/BaseRange';
-
 import BaseRangeDoc from './docs/BaseRangeDoc.mdx';
 
 export default {
@@ -11,10 +9,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-range';
-
-window.customElements.define(NAME_COMPONENT, BaseRange);
-
 const Template = (args) => {
   const {
     min,
@@ -23,7 +17,7 @@ const Template = (args) => {
     value,
   } = args;
 
-  const range = document.createElement(NAME_COMPONENT);
+  const range = document.createElement('base-range');
 
   range.min = min;
   range.max = max;

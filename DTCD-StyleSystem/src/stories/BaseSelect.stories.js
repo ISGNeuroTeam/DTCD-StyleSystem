@@ -1,5 +1,3 @@
-import BaseSelect from '../base-components/BaseSelect/BaseSelect';
-
 import BaseSelectDoc from './docs/BaseSelectDoc.mdx';
 
 export default {
@@ -26,10 +24,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-select';
-
-window.customElements.define(NAME_COMPONENT, BaseSelect);
-
 const Template = (args) => {
   const {
     theme = [],
@@ -43,9 +37,10 @@ const Template = (args) => {
     required,
     labelSlot,
     invalid,
+    autoClose,
   } = args;
 
-  const select = document.createElement(NAME_COMPONENT);
+  const select = document.createElement('base-select');
   
   if (Array.isArray(itemSlot)) {
     itemSlot.forEach((item) => {
@@ -62,6 +57,7 @@ const Template = (args) => {
   select.disabled = disabled;
   select.required = required;
   select.invalid = invalid;
+  select.autoClose = autoClose;
 
   select.innerHTML += labelSlot;
 
@@ -85,4 +81,5 @@ DefaultSelect.args = {
   required: false,
   invalid: false,
   labelSlot: '<span slot="label">Default dropdown</span>',
+  autoClose: true,
 };

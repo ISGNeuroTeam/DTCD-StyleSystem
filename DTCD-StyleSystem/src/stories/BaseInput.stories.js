@@ -1,5 +1,3 @@
-import BaseInput from '../base-components/BaseInput/BaseInput';
-
 import BaseInputDoc from './docs/BaseInputDoc.mdx';
 
 export default {
@@ -60,10 +58,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-input';
-
-window.customElements.define(NAME_COMPONENT, BaseInput);
-
 const Template = args => {
   const {
     theme = [],
@@ -81,7 +75,7 @@ const Template = args => {
     minlength,
   } = args;
 
-  const input = document.createElement(NAME_COMPONENT);
+  const input = document.createElement('base-input');
 
   if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
     input.theme = [];

@@ -1,5 +1,3 @@
-import BaseSwitch from '../base-components/BaseSwitch/BaseSwitch';
-
 import BaseSwitchDoc from './docs/BaseSwitchDoc.mdx';
 
 export default {
@@ -11,10 +9,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-switch';
-
-window.customElements.define(NAME_COMPONENT, BaseSwitch);
-
 const Template = (args) => {
   const {
     disabled,
@@ -24,7 +18,7 @@ const Template = (args) => {
     labelSlot,
   } = args;
 
-  const switchInput = document.createElement(NAME_COMPONENT);
+  const switchInput = document.createElement('base-switch');
 
   switchInput.checked = checked;
   switchInput.disabled = disabled;

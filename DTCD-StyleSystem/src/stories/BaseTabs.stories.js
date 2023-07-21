@@ -1,5 +1,3 @@
-import BaseTabs from '../base-components/BaseTabs/BaseTabs';
-
 import BaseTabsDoc from './docs/BaseTabsDoc.mdx';
 
 export default {
@@ -16,17 +14,13 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-tabs';
-
-window.customElements.define(NAME_COMPONENT, BaseTabs);
-
 const Template = (args) => {
   const {
     tabSlot = [],
     activeTab,
   } = args;
 
-  const tabs = document.createElement(NAME_COMPONENT);
+  const tabs = document.createElement('base-tabs');
   tabs.activeTab = activeTab;
 
   tabSlot.forEach((slot) => {

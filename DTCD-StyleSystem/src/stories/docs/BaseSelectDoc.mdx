@@ -21,12 +21,14 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | opened       | Открыт или раскрыт выпадающий список.                                                                                              | Логическое                     |
 | disabled     | Флаг обозначающий возможность ввода значения в поле.                                                                               | Логическое                     |
 | invalid      | Является ли значение поля ввода валидным, если false - то валидное, если true - невалидное.                                        | Логическое                     |
+| autoClose    | Отключение автоматического закрытия после клика по одному из пунков выпадающиего списка. По умолчанию "true".                      | "false"                        |
 
 ## Атрибуты
 
-| Название | Описание                    | Значение                    |
-|----------|-----------------------------|-----------------------------|
-| theme    | Варианты отображения кнопки | Название тем через запятую. |
+| Название        | Описание                     | Значение                    |
+|-----------------|------------------------------|-----------------------------|
+| theme           | Варианты отображения кнопки  | Название тем через запятую. |
+| data-auto-close | Атрибут свойства "autoClose" |
 
 ## Слоты
 
@@ -50,6 +52,10 @@ import { Canvas, Source } from '@storybook/addon-docs';
     <div slot="item">Вариант 1</div>
     <div slot="item">Вариант 2</div>
   </base-select>
+  <base-select data-auto-close="false">
+    <div slot="item">Вариант 1</div>
+    <div slot="item">Вариант 2</div>
+  </base-select>
 </Canvas>
 
 <Source
@@ -58,6 +64,10 @@ format={true}
 dark
 code={`
 <base-select>
+  <div slot="item">Вариант 1</div>
+  <div slot="item">Вариант 2</div>
+</base-select>
+<base-select data-auto-close="false">
   <div slot="item">Вариант 1</div>
   <div slot="item">Вариант 2</div>
 </base-select>

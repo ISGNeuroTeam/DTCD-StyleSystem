@@ -1,5 +1,3 @@
-import BaseLink from '../base-components/BaseLink/BaseLink';
-
 import BaseLinkDoc from './docs/BaseLinkDoc.mdx';
 
 export default {
@@ -16,16 +14,12 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-link';
-
-window.customElements.define(NAME_COMPONENT, BaseLink);
-
 const Template = (args) => {
   const {
     defaultSlot,
   } = args;
 
-  const link = document.createElement(NAME_COMPONENT);
+  const link = document.createElement('base-link');
   link.innerHTML += defaultSlot;
 
   return link;

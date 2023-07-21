@@ -1,5 +1,3 @@
-import BaseIconButton from '../base-components/BaseIconButton/BaseIconButton';
-
 import BaseIconButtonDoc from './docs/BaseIconButtonDoc.mdx';
 
 export default {
@@ -50,10 +48,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-icon-button';
-
-window.customElements.define(NAME_COMPONENT, BaseIconButton);
-
 const Template = (args) => {
   const {
     theme = [],
@@ -63,7 +57,7 @@ const Template = (args) => {
     size,
   } = args;
 
-  const button = document.createElement(NAME_COMPONENT);
+  const button = document.createElement('base-icon-button');
 
   if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
     button.theme = [];

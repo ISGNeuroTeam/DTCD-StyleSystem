@@ -1,5 +1,3 @@
-import BaseRadio from '../base-components/BaseRadio/BaseRadio';
-
 import BaseRadioDoc from './docs/BaseRadioDoc.mdx';
 
 export default {
@@ -16,10 +14,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-radio';
-
-window.customElements.define(NAME_COMPONENT, BaseRadio);
-
 const Template = (args) => {
   const {
     disabled,
@@ -28,7 +22,7 @@ const Template = (args) => {
     value,
   } = args;
 
-  const radio = document.createElement(NAME_COMPONENT);
+  const radio = document.createElement('base-radio');
 
   radio.innerHTML += defaultSlot;
   radio.checked = checked;
