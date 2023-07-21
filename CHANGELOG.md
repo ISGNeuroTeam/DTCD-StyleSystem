@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - buttons for select of time windows in BaseDateTimePicker
 - BaseDateTimePicker documentation
 
+### Changed
+
+- how `invalid` property works. Edited BaseInput, BaseSelect, BaseTextarea
+
 ## [0.14.0]
 
 ### Added

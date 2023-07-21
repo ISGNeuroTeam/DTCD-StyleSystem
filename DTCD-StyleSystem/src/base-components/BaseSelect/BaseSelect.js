@@ -8,15 +8,18 @@ export default class BaseSelect extends HTMLElement {
   #searchInput;
   #label;
   #message;
-  #messageText;
-  #invalid = false;
-  #value;
   #itemSlot;
+
+  #invalid = null;
+  #value;
   #opened = false;
-  #doValidation = false;
   #disabled = false;
   #required = false;
+
   #autoClose = true;
+  #messageText;
+  #doValidation = false;
+  #resultValidation = false;
 
   static get observedAttributes() {
     return [
@@ -81,7 +84,7 @@ export default class BaseSelect extends HTMLElement {
     this.#header.innerHTML = selectedOption?.visibleValue || '';
     this.#searchInput.setAttribute('placeholder', selectedOption?.visibleValue || '');
 
-    this.#doValidation && this.validate();
+    if (this.#invalid == null && this.#doValidation) this.validate();
 
     this.dispatchEvent(new Event('input'));
     if (oldValue !== this.value) {
@@ -160,21 +163,21 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get invalid() {
-    return this.#invalid;
+    if (this.#invalid == true) return true;
+    if (this.#resultValidation == true) return true;
+    return false;
   }
 
   set invalid(newVal) {
-    this.#invalid = Boolean(newVal);
-
-    if (this.#invalid) {
-      this.#selectContainer.classList.remove('withSuccessFill');
-      this.#selectContainer.classList.add('withError');
+    if (newVal == 'false' || newVal == false || newVal == 0 || newVal == '0') {
+      this.#invalid = false;
+    } else if (newVal == 'true' || newVal == true || newVal == 1 || newVal == '1') {
+      this.#invalid = true;
     } else {
-      this.#selectContainer.classList.remove('withError');
+      this.#invalid = null;
     }
 
-    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+    this.#setInvalidStatus(this.#invalid);
   }
 
   get autoClose() {
@@ -189,11 +192,14 @@ export default class BaseSelect extends HTMLElement {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.value === '') {
       this.#messageText = 'Это обязательное поле*';
-      return (this.invalid = true);
+      this.#resultValidation = true;
     } else {
       this.#messageText = '';
-      return (this.invalid = false);
+      this.#resultValidation = false;
     }
+
+    this.#setInvalidStatus(this.#resultValidation);
+    return this.#resultValidation;
   }
 
   #optionClickCallback = (e) => {
@@ -246,7 +252,7 @@ export default class BaseSelect extends HTMLElement {
         this.#searchInput.value = '';
       }
 
-      this.#doValidation && this.validate();
+      if (this.#invalid == null && this.#doValidation) this.validate();
     }
 
     return this.#opened;
@@ -316,7 +322,7 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'invalid':
-        this.invalid = this.hasAttribute('invalid');
+        this.invalid = newValue;
         break;
 
       case 'required':
@@ -379,5 +385,19 @@ export default class BaseSelect extends HTMLElement {
       const value = isValueExist ? item.value.toLowerCase() : item.textContent.toLowerCase();
       item.style.display = value.includes(subString) ? '' : 'none';
     });
+  }
+
+  #setInvalidStatus (status) {
+    const { classList } = this.#selectContainer;
+
+    if (status) {
+      classList.remove('withSuccessFill');
+      classList.add('withError');
+    } else {
+      classList.remove('withError');
+    }
+
+    this.#message.innerHTML = status && this.#messageText ? this.#messageText : '';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
   }
 }

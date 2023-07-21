@@ -16,6 +16,17 @@ export default {
         'big',
       ],
     },
+    invalid: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        'true',
+        'false',
+        'undefined',
+      ],
+      value: 'undefined',
+    },
   },
   parameters: {
     docs: {
@@ -79,7 +90,7 @@ DefaultSelect.args = {
   value: '',
   disabled: false,
   required: false,
-  invalid: false,
+  invalid: undefined,
   labelSlot: '<span slot="label">Default dropdown</span>',
   autoClose: true,
 };

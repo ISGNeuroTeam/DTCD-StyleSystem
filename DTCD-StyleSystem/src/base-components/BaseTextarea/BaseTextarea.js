@@ -9,13 +9,16 @@ export default class BaseTextarea extends HTMLElement {
   #label;
   #textarea;
   #message;
-  #messageText;
-  #invalid = false;
+
+  #invalid = null;
   #theme = [];
   #size;
-  #doValidation = false;
-  #minHeightTA;
   #autoheight = false;
+  
+  #messageText;
+  #doValidation = false;
+  #resultValidation = false;
+  #minHeightTA;
 
   static get observedAttributes() {
     return [
@@ -53,6 +56,7 @@ export default class BaseTextarea extends HTMLElement {
     this.#textarea = this.shadowRoot.querySelector('.Field');
     this.#message = this.shadowRoot.querySelector('.Message');
 
+    this.#textarea.addEventListener('input', this.#handleTextareaInput);
     this.#textarea.addEventListener('change', this.#handleTextareaChange);
   }
 
@@ -60,14 +64,16 @@ export default class BaseTextarea extends HTMLElement {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.#textarea.value === '') {
       this.#messageText = 'Обязательное поле*';
-      this.invalid = true;
+      this.#resultValidation = true;
     } else if (typeof this.validation !== 'undefined') {
       const { isValid, message } = this.validation(this.#textarea.value);
       this.#messageText = message;
-      this.invalid = !isValid;
+      this.#resultValidation = !isValid;
     } else {
-      this.invalid = false;
+      this.#resultValidation = false;
     }
+
+    this.#setInvalidStatus(this.#resultValidation);
   }
 
   connectedCallback() {
@@ -146,21 +152,21 @@ export default class BaseTextarea extends HTMLElement {
   }
 
   get invalid() {
-    return this.#invalid;
+    if (this.#invalid == true) return true;
+    if (this.#resultValidation == true) return true;
+    return false;
   }
 
   set invalid(newVal) {
-    this.#invalid = Boolean(newVal);
-
-    if (this.#invalid) {
-      this.#block.classList.remove('withSuccessFill');
-      this.#block.classList.add('withError');
+    if (newVal == 'false' || newVal == false || newVal == 0 || newVal == '0') {
+      this.#invalid = false;
+    } else if (newVal == 'true' || newVal == true || newVal == 1 || newVal == '1') {
+      this.#invalid = true;
     } else {
-      this.#block.classList.remove('withError');
+      this.#invalid = null;
     }
 
-    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+    this.#setInvalidStatus(this.#invalid);
   }
 
   get value() {
@@ -169,8 +175,8 @@ export default class BaseTextarea extends HTMLElement {
 
   set value(val) {
     this.#textarea.value = val;
-    this.#doValidation && this.validate();
-    if (this.#autoheight) this.#handleTextareaInput();
+    if (this.#invalid == null && this.#doValidation) this.validate();
+    if (this.#autoheight) this.#calcTextareaHeight();
     this.dispatchEvent(new Event('input'));
   }
 
@@ -297,11 +303,11 @@ export default class BaseTextarea extends HTMLElement {
       this.#textarea.style.height = this.#minHeightTA > this.#textarea.scrollHeight
                                   ? this.#minHeightTA + 'px'
                                   : this.#textarea.scrollHeight + 'px';
-      this.#textarea.addEventListener('input', this.#handleTextareaInput);
+      this.#textarea.addEventListener('input', this.#calcTextareaHeight);
     } else {
       this.#textarea.style['overflow-y'] = '';
       this.#textarea.style.height = '';
-      this.#textarea.removeEventListener('input', this.#handleTextareaInput);
+      this.#textarea.removeEventListener('input', this.#calcTextareaHeight);
     }
   }
 
@@ -329,11 +335,16 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
+  #handleTextareaInput = (event) => {
+    event.stopPropagation();
+    this.value = event.target.value;
+  }
+
   #handleTextareaChange = () => {
     this.dispatchEvent(new Event('change'));
   }
 
-  #handleTextareaInput = () => {
+  #calcTextareaHeight = () => {
     this.#textarea.style.height = 0;
     this.#textarea.style.height = this.#minHeightTA > this.#textarea.scrollHeight
                                 ? this.#minHeightTA + 'px'
@@ -372,4 +383,17 @@ export default class BaseTextarea extends HTMLElement {
     }
   }
 
+  #setInvalidStatus (status) {
+    const { classList } = this.#block;
+
+    if (status) {
+      classList.remove('withSuccessFill');
+      classList.add('withError');
+    } else {
+      classList.remove('withError');
+    }
+
+    this.#message.innerHTML = status && this.#messageText ? this.#messageText : '';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+  }
 }

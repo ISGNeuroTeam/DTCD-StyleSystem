@@ -11,7 +11,8 @@ export default {
         '<no modification>',
         'withSuccessFill',
         'withLeftIcon',
-        'withRightIcon'
+        'withRightIcon',
+        'withError',
       ],
     },
     type: {
@@ -49,6 +50,17 @@ export default {
         type: 'select',
       },
       options: ['<no-modification>', 'small', 'big'],
+    },
+    invalid: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        'true',
+        'false',
+        'undefined',
+      ],
+      value: 'undefined',
     },
   },
   parameters: {
@@ -111,7 +123,7 @@ DefaultInput.args = {
   label: '',
   size: '',
   required: false,
-  invalid: false,
+  invalid: undefined,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
@@ -130,7 +142,7 @@ InputWithIcons.args = {
   label: '',
   size: '',
   required: false,
-  invalid: false,
+  invalid: undefined,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',

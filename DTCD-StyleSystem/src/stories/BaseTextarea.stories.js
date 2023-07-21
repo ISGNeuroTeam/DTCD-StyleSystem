@@ -23,6 +23,17 @@ export default {
         'big',
       ],
     },
+    invalid: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        'true',
+        'false',
+        'undefined',
+      ],
+      value: 'undefined',
+    },
   },
   parameters: {
     docs: {
@@ -82,7 +93,7 @@ DefaultTextarea.args = {
   label: '',
   labelSlot: '<span slot="label">Label slot</span>',
   required: false,
-  invalid: false,
+  invalid: undefined,
   value: '',
   readonly: false,
   rows: 4,
