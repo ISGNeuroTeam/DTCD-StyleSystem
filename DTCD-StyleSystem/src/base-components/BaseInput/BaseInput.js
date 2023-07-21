@@ -9,11 +9,14 @@ export default class BaseInput extends HTMLElement {
   #internalInput;
   #label;
   #message;
-  #messageText;
-  #invalid = false;
+
+  #invalid = null;
   #theme = [];
   #size;
+  
+  #messageText;
   #doValidation = false;
+  #resultValidation = false;
 
   #iconSlots = [
     { id: 'iconLeft', theme: 'withLeftIcon', el: null },
@@ -72,14 +75,16 @@ export default class BaseInput extends HTMLElement {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.#internalInput.value === '') {
       this.#messageText = 'Обязательное поле*';
-      this.invalid = true;
+      this.#resultValidation = true;
     } else if (typeof this.validation !== 'undefined') {
       const { isValid, message } = this.validation(this.#internalInput.value);
       this.#messageText = message;
-      this.invalid = !isValid;
+      this.#resultValidation = !isValid;
     } else {
-      this.invalid = false;
+      this.#resultValidation = false;
     }
+
+    this.#setInvalidStatus(this.#resultValidation);
   }
 
   connectedCallback() {
@@ -152,21 +157,21 @@ export default class BaseInput extends HTMLElement {
   }
 
   get invalid() {
-    return this.#invalid;
+    if (this.#invalid == true) return true;
+    if (this.#resultValidation == true) return true;
+    return false;
   }
 
   set invalid(newVal) {
-    this.#invalid = Boolean(newVal);
-
-    if (this.#invalid) {
-      this.#baseInput.classList.remove('withSuccessFill');
-      this.#baseInput.classList.add('withError');
+    if (newVal == 'false' || newVal == false || newVal == 0 || newVal == '0') {
+      this.#invalid = false;
+    } else if (newVal == 'true' || newVal == true || newVal == 1 || newVal == '1') {
+      this.#invalid = true;
     } else {
-      this.#baseInput.classList.remove('withError');
+      this.#invalid = null;
     }
 
-    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+    this.#setInvalidStatus(this.#invalid);
   }
 
   get value() {
@@ -175,7 +180,7 @@ export default class BaseInput extends HTMLElement {
 
   set value(val) {
     this.#internalInput.value = val;
-    this.#doValidation && this.validate();
+    if (this.#invalid == null && this.#doValidation) this.validate();
     this.dispatchEvent(new Event('input'));
   }
 
@@ -310,9 +315,9 @@ export default class BaseInput extends HTMLElement {
     }
   }
 
-  #inputHandler = (e) => {
-    e.stopPropagation();
-    this.value = e.target.value;
+  #inputHandler = (event) => {
+    event.stopPropagation();
+    this.value = event.target.value;
   };
 
   #handleInputChange = () => {
@@ -348,5 +353,19 @@ export default class BaseInput extends HTMLElement {
     } else {
       this.#baseInput.classList.remove('size_small');
     }
+  }
+
+  #setInvalidStatus (status) {
+    const { classList } = this.#baseInput;
+
+    if (status) {
+      classList.remove('withSuccessFill');
+      classList.add('withError');
+    } else {
+      classList.remove('withError');
+    }
+
+    this.#message.innerHTML = status && this.#messageText ? this.#messageText : '';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
   }
 }
