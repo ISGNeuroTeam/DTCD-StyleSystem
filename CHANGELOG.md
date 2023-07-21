@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### Added
+
+- 'autoCLose' parameter of BaseSelect
+- date range in BaseDateTimePicker
+- buttons for select of time windows in BaseDateTimePicker
+- BaseDateTimePicker documentation
+
 ### Changed
 
 - how `invalid` property works. Edited BaseInput, BaseSelect, BaseTextarea

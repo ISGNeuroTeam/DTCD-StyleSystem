@@ -15,7 +15,8 @@ export default class BaseSelect extends HTMLElement {
   #opened = false;
   #disabled = false;
   #required = false;
-  
+
+  #autoClose = true;
   #messageText;
   #doValidation = false;
   #resultValidation = false;
@@ -31,6 +32,7 @@ export default class BaseSelect extends HTMLElement {
       'search',
       'opened',
       'invalid',
+      'data-auto-close',
     ];
   }
 
@@ -178,6 +180,14 @@ export default class BaseSelect extends HTMLElement {
     this.#setInvalidStatus(this.#invalid);
   }
 
+  get autoClose() {
+    return this.#autoClose;
+  }
+
+  set autoClose(newValue) {
+    newValue == false ? this.#autoClose = false : this.#autoClose = true;
+  }
+
   validate() {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.value === '') {
@@ -194,8 +204,8 @@ export default class BaseSelect extends HTMLElement {
 
   #optionClickCallback = (e) => {
     e.stopPropagation();
-    const selectedOption = e.target.closest('[slot="item"]');
 
+    const selectedOption = e.target.closest('[slot="item"]');
     const optionValues = this.#getAllOptionValues();
     const findedOption = optionValues.find((optionItem) => {
       return optionItem.nodeOption === selectedOption;
@@ -319,6 +329,10 @@ export default class BaseSelect extends HTMLElement {
         this.required = this.hasAttribute('required');
         break;
 
+      case 'data-auto-close':
+        this.autoClose = newValue == 'false' ? false : true;
+        break;
+
       default:
         break;
     }
@@ -347,9 +361,15 @@ export default class BaseSelect extends HTMLElement {
     return optionValues;
   };
 
-  #handleFieldWrapperClick = (e) => {
-    e.preventDefault();
+  #handleFieldWrapperClick = (event) => {
+    event.preventDefault();
     if (this.#disabled) return;
+
+    // костыль для отключения автоматического закрытия BaseSelect,
+    // если установлен параметр "autoClose" в значение "false".
+    if (this.#autoClose === false && event.target.classList.contains('SearchInput')) {
+      return;
+    }
 
     const action = this.toggle() ? 'add' : 'remove';
     const method = action + 'EventListener';

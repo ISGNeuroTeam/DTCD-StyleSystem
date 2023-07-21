@@ -28,16 +28,12 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'gauge-segment-builder';
-
-window.customElements.define(NAME_COMPONENT, GaugeSegmentBuilder);
-
 const Template = (args) => {
   const {
     value,
   } = args;
 
-  const gaugeSegment = document.createElement(NAME_COMPONENT);
+  const gaugeSegment = document.createElement('gauge-segment-builder');
   gaugeSegment.value = value;
 
   return gaugeSegment;

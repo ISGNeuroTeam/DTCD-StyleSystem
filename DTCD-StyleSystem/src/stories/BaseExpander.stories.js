@@ -1,5 +1,3 @@
-import BaseExpander from '../base-components/BaseExpander/BaseExpander';
-
 import BaseExpanderDoc from './docs/BaseExpanderDoc.mdx';
 
 // More on default export: https://storybook.js.org/docs/web-components/writing-stories/introduction#default-export
@@ -46,10 +44,6 @@ export default {
   }
 };
 
-const NAME_COMPONENT = 'base-expander';
-
-window.customElements.define(NAME_COMPONENT, BaseExpander);
-
 // More on component templates: https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args
 const Template = (args) => {
   const {
@@ -58,7 +52,7 @@ const Template = (args) => {
     defaultSlot,
   } = args;
 
-  const expander = document.createElement(NAME_COMPONENT);
+  const expander = document.createElement('base-expander');
   expander.innerHTML += args['summary(slot)'];
   expander.innerHTML += args['icon(slot)'];
   expander.innerHTML += args['icon-arrow(slot)'];

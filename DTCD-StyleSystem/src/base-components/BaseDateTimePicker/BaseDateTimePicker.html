@@ -1,17 +1,24 @@
 <div class="BaseDateTimePicker">
-  <base-input class="date-input"> </base-input>
-  <svg class="date-toggle" width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path
-      d="M9.5 2H2.5C1.94772 2 1.5 2.44772 1.5 3V10C1.5 10.5523 1.94772 11 2.5 11H9.5C10.0523 11 10.5 10.5523 10.5 10V3C10.5 2.44772 10.0523 2 9.5 2Z"
-      stroke="var(--accent)"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <path d="M8 1V3" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M4 1V3" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M1.5 5H10.5" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>
+  <div class="input-wrapper">
+    <base-input class="date-input"></base-input>
+    <button class="date-toggle" type="button">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path
+          d="M9.5 2H2.5C1.94772 2 1.5 2.44772 1.5 3V10C1.5 10.5523 1.94772 11 2.5 11H9.5C10.0523 11 10.5 10.5523 10.5 10V3C10.5 2.44772 10.0523 2 9.5 2Z"
+          stroke="var(--accent)"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path d="M8 1V3" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M4 1V3" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M1.5 5H10.5" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+
   <div class="calendar-dropdown">
+    <div class="TimeWindows TimeWindows-js"></div>
+
     <div class="calendar-wrapper">
       <div class="header">
         <svg class="prev-month" width="20" height="20" fill="none" viewBox="0 0 20 20">
@@ -34,23 +41,40 @@
           />
         </svg>
       </div>
+
       <div class="week-days"></div>
       <div class="month-days"></div>
-      <div class="time-input-wrapper">
-        <div class="vdpTimeUnit">
-          <pre><span id="hoursSpan"></span><br></pre>
-          <input type="number" pattern="\d*" class="vdpHoursInput" />
+
+      <div class="time-input-container">
+        <div class="time-input-wrapper first">
+          <div class="vdpTimeUnit">
+            <pre><span class="hoursSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpHoursInput" />
+          </div>
+          <span class="vdpTimeSeparator">:</span>
+          <div class="vdpTimeUnit">
+            <pre><span class="minutesSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpMinutesInput" />
+          </div>
         </div>
-        <span class="vdpTimeSeparator">:</span>
-        <div class="vdpTimeUnit">
-          <pre><span id="minutesSpan"></span><br></pre>
-          <input type="number" pattern="\d*" class="vdpMinutesInput" />
+
+        <div class="time-separator">—</div>
+
+        <div class="time-input-wrapper second">
+          <div class="vdpTimeUnit">
+            <pre><span class="hoursSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpHoursInput" />
+          </div>
+          <span class="vdpTimeSeparator">:</span>
+          <div class="vdpTimeUnit">
+            <pre><span class="minutesSpan"></span><br></pre>
+            <input type="number" pattern="\d*" class="vdpMinutesInput" />
+          </div>
         </div>
       </div>
+
       <div class="button-wrapper">
-        <base-button class="cancelButton" theme="theme_secondary" size="small"
-          >Отменить</base-button
-        >
+        <base-button class="cancelButton" theme="theme_secondary" size="small">Отменить</base-button>
         <base-button class="submitButton" size="small">Выбрать</base-button>
       </div>
     </div>

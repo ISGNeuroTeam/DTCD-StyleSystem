@@ -1,5 +1,3 @@
-import BaseCheckbox from '../base-components/BaseCheckbox/BaseCheckbox';
-
 import BaseCheckboxDoc from './docs/BaseCheckboxDoc.mdx';
 
 export default {
@@ -16,10 +14,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-checkbox';
-
-window.customElements.define(NAME_COMPONENT, BaseCheckbox);
-
 const Template = (args) => {
   const {
     type,
@@ -29,7 +23,7 @@ const Template = (args) => {
     label,
   } = args;
 
-  const checkbox = document.createElement(NAME_COMPONENT);
+  const checkbox = document.createElement('base-checkbox');
 
   checkbox.innerHTML += defaultSlot;
   checkbox.checked = checked;

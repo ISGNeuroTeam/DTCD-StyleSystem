@@ -1,5 +1,3 @@
-import BaseColorPicker from '../base-components/BaseColorPicker/BaseColorPicker';
-
 import BaseColorPickerDoc from './docs/BaseColorPickerDoc.mdx';
 
 export default {
@@ -11,10 +9,6 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-color-picker';
-
-window.customElements.define(NAME_COMPONENT, BaseColorPicker);
-
 const Template = (args) => {
   const {
     disabled,
@@ -23,7 +17,7 @@ const Template = (args) => {
     labelSlot,
   } = args;
 
-  const picker = document.createElement(NAME_COMPONENT);
+  const picker = document.createElement('base-color-picker');
   picker.disabled = disabled;
   picker.value = value;
   picker.label = label;

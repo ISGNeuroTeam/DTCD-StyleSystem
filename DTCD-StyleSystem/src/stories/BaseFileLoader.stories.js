@@ -1,4 +1,3 @@
-import BaseFileLoader from '../base-components/BaseFileLoader/BaseFileLoader';
 import BaseFileLoaderDocs from './docs/BaseFileLoaderDocs.mdx';
 
 export default {
@@ -9,10 +8,6 @@ export default {
     },
   },
 };
-
-const NAME_COMPONENT = 'base-file-loader';
-
-window.customElements.define(NAME_COMPONENT, BaseFileLoader);
 
 const Template = (args) => {
   const {
@@ -26,7 +21,7 @@ const Template = (args) => {
     labelSlot,
   } = args;
 
-  const fileLoader = document.createElement(NAME_COMPONENT);
+  const fileLoader = document.createElement('base-file-loader');
   fileLoader.description = description;
   fileLoader.disabled = disabled;
   fileLoader.multiple = multiple;
