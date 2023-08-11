@@ -1,7 +1,10 @@
 import html from './BaseSwitch.html';
 import styles from './BaseSwitch.scss';
+import BaseCheckbox from '../BaseCheckbox/BaseCheckbox';
 
-export default class BaseSwitch extends HTMLElement {
+export default class BaseSwitch extends BaseCheckbox {}
+
+class _BaseSwitch extends HTMLElement {
 
   #label;
   #checkbox;
@@ -27,7 +30,7 @@ export default class BaseSwitch extends HTMLElement {
     this.#checkbox = this.shadowRoot.querySelector('.Input');
 
     this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
-    
+
   }
 
   get value() {

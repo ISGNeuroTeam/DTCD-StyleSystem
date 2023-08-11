@@ -1,5 +1,8 @@
-import html from './BaseCheckbox.html';
-import styles from './BaseCheckbox.scss';
+import htmlOfCheckbox from './BaseCheckbox.html';
+import stylesOfCheckbox from './BaseCheckbox.scss';
+
+import htmOflSwitcher from '../BaseSwitch/BaseSwitch.html';
+import stylesOfSwitcher from '../BaseSwitch/BaseSwitch.scss';
 
 export default class BaseCheckbox extends HTMLElement {
 
@@ -13,15 +16,20 @@ export default class BaseCheckbox extends HTMLElement {
   constructor() {
     super();
 
+    const { tagName } = this;
+    console.log(tagName);
+
     const template = document.createElement('template');
-    template.innerHTML = html;
+    if (tagName == 'BASE-CHECKBOX') template.innerHTML = htmlOfCheckbox;
+    if (tagName == 'BASE-SWITCH') template.innerHTML = htmOflSwitcher; 
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
-    style.appendChild(document.createTextNode(styles));
+    if (tagName == 'BASE-CHECKBOX') style.appendChild(document.createTextNode(stylesOfCheckbox));
+    if (tagName == 'BASE-SWITCH') style.appendChild(document.createTextNode(stylesOfSwitcher)); 
     
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#checkbox = this.shadowRoot.querySelector('.Input');
@@ -34,6 +42,7 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   set value(newValue) {
+    console.log(newValue);
     const oldValue = this.value;
     this.#checkbox.checked = Boolean(newValue);
 
