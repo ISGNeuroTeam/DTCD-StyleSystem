@@ -84,6 +84,7 @@
     display: none;
     flex-direction: column;
     position: absolute;
+    position: fixed;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -233,6 +234,15 @@
     .Field {
       background-color: var(--border_24);
       border-color: var(--border_24);
+    }
+  }
+
+  &.placement {
+    &_top {
+      .OptionList {
+        border-bottom: none;
+        border-radius: 4.44px 4.44px 0 0;
+      }
     }
   }
 }

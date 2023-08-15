@@ -51,13 +51,22 @@ const Template = (args) => {
     autoClose,
   } = args;
 
+  const divWrapper = document.createElement('div');
   const select = document.createElement('base-select');
+  divWrapper.append(select);
   
+  let paddingBottomDivWrapper = 0;
   if (Array.isArray(itemSlot)) {
     itemSlot.forEach((item) => {
       select.innerHTML += item;
+      paddingBottomDivWrapper += 30;
     });
   }
+
+  Object.assign(divWrapper.style, {
+    'overflow': 'hidden',
+    'padding-bottom': `${paddingBottomDivWrapper}px`,
+  });
 
   select.theme = theme.length ? theme : [];
   select.label = label;
@@ -72,7 +81,7 @@ const Template = (args) => {
 
   select.innerHTML += labelSlot;
 
-  return select;
+  return divWrapper;
 };
 
 export const DefaultSelect = Template.bind({});
