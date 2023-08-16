@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - how `invalid` property works. Edited BaseInput, BaseSelect, BaseTextarea
+- BaseSelect rendering so that it doesn't get cut off
 
 ## [0.14.0]
 
