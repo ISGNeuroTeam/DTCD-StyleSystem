@@ -246,8 +246,8 @@ export default class BaseSelect extends HTMLElement {
       if (this.hasAttribute('search')) {
         this.#searchInput.focus();
       }
-      this.#setPosition();
 
+      this.#setPosition();
       this.#intervalCheckingCoords = setInterval(() => {
         this.#setPosition();
       }, 100);
@@ -423,12 +423,12 @@ export default class BaseSelect extends HTMLElement {
     const render = (hintPos) => {
       const {
         style,
-        classList,
       } = this.#dropdownContainer;
 
       this.#selectContainer.classList.remove('placement_top', 'placement_bottom');
       this.#selectContainer.classList.add(`placement_${hintPos}`);
       
+      style.position = 'fixed';
       style.width = (width - 6) + 'px';
       style.left = (left + width / 2) + 'px';
       
