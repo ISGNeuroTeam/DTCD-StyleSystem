@@ -9,6 +9,7 @@ export default class BaseSelect extends HTMLElement {
   #label;
   #message;
   #itemSlot;
+  #dropdownContainer;
 
   #invalid = null;
   #value;
@@ -20,6 +21,7 @@ export default class BaseSelect extends HTMLElement {
   #messageText;
   #doValidation = false;
   #resultValidation = false;
+  #intervalCheckingCoords;
 
   static get observedAttributes() {
     return [
@@ -54,6 +56,7 @@ export default class BaseSelect extends HTMLElement {
     this.#header = this.shadowRoot.querySelector('.SelectedValue');
     this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
     this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
+    this.#dropdownContainer = this.shadowRoot.querySelector('.OptionList');
     this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
 
     this.#label = this.shadowRoot.querySelector('.Label');
@@ -243,9 +246,16 @@ export default class BaseSelect extends HTMLElement {
       if (this.hasAttribute('search')) {
         this.#searchInput.focus();
       }
+
+      this.#setPosition();
+      this.#intervalCheckingCoords = setInterval(() => {
+        this.#setPosition();
+      }, 100);
     } else {
       this.#selectContainer.classList.remove('opened');
       document.removeEventListener('click', this.#documentClickCallback);
+
+      clearInterval(this.#intervalCheckingCoords);
 
       if (this.hasAttribute('search')) {
         this.#searchInput.blur();
@@ -268,6 +278,7 @@ export default class BaseSelect extends HTMLElement {
   disconnectedCallback() {
     this.#fieldWrapper.removeEventListener('click', this.#handleFieldWrapperClick);
     this.#searchInput.removeEventListener('input', this.#handleSearchFieldInput);
+    clearInterval(this.#intervalCheckingCoords);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -399,5 +410,58 @@ export default class BaseSelect extends HTMLElement {
 
     this.#message.innerHTML = status && this.#messageText ? this.#messageText : '';
     this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+  }
+
+  #setPosition() {
+    const {
+      height,
+      width,
+      left,
+      top,
+    } = this.#fieldWrapper.getBoundingClientRect();
+
+    const render = (hintPos) => {
+      const {
+        style,
+      } = this.#dropdownContainer;
+
+      this.#selectContainer.classList.remove('placement_top', 'placement_bottom');
+      this.#selectContainer.classList.add(`placement_${hintPos}`);
+      
+      style.position = 'fixed';
+      style.width = (width - 6) + 'px';
+      style.left = (left + width / 2) + 'px';
+      
+      switch (hintPos) {
+        case 'bottom':
+          style.top = (top + height) + 'px';
+          style.transform = '';
+          break;
+  
+        case 'top':
+          style.top = top + 'px';
+          style.transform = 'translateX(-50%) translateY(-100%)';
+          break;
+      }
+    }
+
+    const placement = 'bottom';
+    render(placement);
+
+    const {
+      offsetHeight: windowHeight,
+    } = document.body;
+    const {
+      top: hintTop,
+      bottom: hintBottom,
+    } = this.#dropdownContainer.getBoundingClientRect();
+
+    let posAwayFromScreen = placement;
+    if (hintTop < 0) posAwayFromScreen = 'bottom';
+    if (hintBottom > windowHeight) posAwayFromScreen = 'top';
+
+    if (placement !== posAwayFromScreen) {
+      render(posAwayFromScreen);
+    }
   }
 }
