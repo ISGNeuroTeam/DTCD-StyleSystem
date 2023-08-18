@@ -2,6 +2,20 @@ import BaseSwitchDoc from './docs/BaseSwitchDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseSwitch',
+  argTypes: {
+    defaultSlot: { 
+      type: 'string',
+    },
+    type: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        'checkbox',
+        'radio',
+      ],
+    },
+  },
   parameters: {
     docs: {
       page: BaseSwitchDoc,
@@ -11,18 +25,18 @@ export default {
 
 const Template = (args) => {
   const {
+    type,
     disabled,
     checked,
-    value,
     label,
     labelSlot,
   } = args;
 
   const switchInput = document.createElement('base-switch');
-
+  
   switchInput.checked = checked;
+  switchInput.type = type;
   switchInput.disabled = disabled;
-  switchInput.value = value;
   switchInput.label = label;
   
   switchInput.innerHTML += labelSlot;
@@ -37,4 +51,5 @@ DefaultSwitch.args = {
   checked: false,
   value: '',
   labelSlot: '<span slot="label">Label slot</span>',
+  type: 'checkbox',
 };

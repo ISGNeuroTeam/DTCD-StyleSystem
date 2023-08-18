@@ -17,7 +17,6 @@ export default class BaseCheckbox extends HTMLElement {
     super();
 
     const { tagName } = this;
-    console.log(tagName);
 
     const template = document.createElement('template');
     if (tagName == 'BASE-CHECKBOX') template.innerHTML = htmlOfCheckbox;
@@ -38,26 +37,24 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   get value() {
-    return this.#checkbox.checked;
+    return this.#checkbox.value;
   }
 
   set value(newValue) {
-    console.log(newValue);
-    const oldValue = this.value;
+    this.#checkbox.value = newValue;
+  }
+
+  get checked() {
+    return this.#checkbox.checked;
+  }
+
+  set checked(newValue) {
+    const oldValue = this.checked;
     this.#checkbox.checked = Boolean(newValue);
 
     if (oldValue !== Boolean(newValue)) {
       this.dispatchEvent(new Event('change'));
     }
-  }
-
-  get checked() {
-    return this.hasAttribute('checked');
-  }
-
-  set checked(value) {
-    if (value) this.setAttribute('checked', true);
-    else this.removeAttribute('checked');
   }
 
   get disabled() {
@@ -73,20 +70,35 @@ export default class BaseCheckbox extends HTMLElement {
     return this.#label.innerHTML;
   }
 
-  set label(value) {
-    if (value) this.setAttribute('label', value);
-    else this.removeAttribute('label');
+  set label(newValue) {
+    if (this.tagName === 'BASE-CHECKBOX') {
+      this.innerHTML = newValue ? newValue : '';
+    }
+    if (this.tagName === 'BASE-SWITCH') {
+      this.querySelectorAll('[slot="label"]').forEach((label) => {
+        label.remove();
+      });
+  
+      if (newValue) {
+        this.innerHTML += `<span slot="label">${newValue}</span>`;
+      }
+    }
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'label': {
-        this.#label.innerHTML = newValue ? newValue : '';
+        this.label = newValue;
         break;
       }
   
       case 'checked': {
-        this.value = newValue ? true : false;
+        this.checked = newValue;
+        break;
+      }
+
+      case 'value': {
+        this.value = newValue;
         break;
       }
   
@@ -102,7 +114,6 @@ export default class BaseCheckbox extends HTMLElement {
 
   #handleCheckboxChange = (event) => {
     event.stopPropagation();
-    this.checked = event.target.checked;
     this.dispatchEvent(new Event('change'));
   }
 }

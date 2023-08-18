@@ -6,6 +6,15 @@ export default {
     defaultSlot: { 
       type: 'string',
     },
+    type: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        'checkbox',
+        'radio',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -19,25 +28,28 @@ const Template = (args) => {
     type,
     disabled,
     checked,
-    defaultSlot,
     label,
+    defaultSlot,
   } = args;
 
   const checkbox = document.createElement('base-checkbox');
 
-  checkbox.innerHTML += defaultSlot;
   checkbox.checked = checked;
   checkbox.type = type;
   checkbox.disabled = disabled;
   checkbox.label = label;
+  
+  checkbox.innerHTML += defaultSlot;
 
   return checkbox;
 };
 
 export const DefaultCheckbox = Template.bind({});
 DefaultCheckbox.args = {
-  disabled: false,
   label: '',
+  disabled: false,
+  checked: false,
+  value: '',
   defaultSlot: '',
-  checked: true,
+  type: 'checkbox',
 };
