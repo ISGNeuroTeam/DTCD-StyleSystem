@@ -1,0 +1,68 @@
+:host {
+  display: inline-block;
+}
+
+.Radio {
+  display: flex;
+  align-items: center;
+
+  .Input, .Label {
+    cursor: pointer;
+  }
+  
+  .Input {
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: var(--background_main);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--button_primary);
+      transform: scale(0);
+      transition: transform .3s;
+    }
+    
+    &:checked {
+      border: 2px solid var(--button_primary);
+    }
+    
+    &:checked::after {
+      transform: scale(1);
+    }
+
+    &:disabled {
+      opacity: .5;
+    
+      &:not(:checked) {
+        background-color: var(--border);
+      }
+      
+      &,
+      & ~ .Label {
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .Label {
+    color: var(--text_main);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Proxima Nova';
+    letter-spacing: .25px;
+    padding-left: 8px;
+  }
+}
+

@@ -1,4 +1,5 @@
 import html from './BaseRadio.html';
+import styles from './BaseRadio.scss';
 
 export default class BaseRadio extends HTMLElement {
 
@@ -18,8 +19,12 @@ export default class BaseRadio extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
+    const style = document.createElement('style');
+    this.shadowRoot.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
+
     this.value = '';
-    this.#radio = this.shadowRoot.querySelector('#radio');
+    this.#radio = this.shadowRoot.querySelector('.Input');
 
     this.#radio.addEventListener('input', event => {
       event.stopPropagation();
