@@ -29,6 +29,7 @@ const Template = (args) => {
     disabled,
     checked,
     label,
+    value,
     defaultSlot,
   } = args;
 
@@ -38,6 +39,7 @@ const Template = (args) => {
   checkbox.type = type;
   checkbox.disabled = disabled;
   checkbox.label = label;
+  checkbox.value = value;
   
   checkbox.innerHTML += defaultSlot;
 
@@ -50,6 +52,6 @@ DefaultCheckbox.args = {
   disabled: false,
   checked: false,
   value: '',
-  defaultSlot: '',
   type: 'checkbox',
+  defaultSlot: '',
 };

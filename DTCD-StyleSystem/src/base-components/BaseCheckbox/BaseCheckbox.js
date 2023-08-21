@@ -4,13 +4,22 @@ import stylesOfCheckbox from './BaseCheckbox.scss';
 import htmOflSwitcher from '../BaseSwitch/BaseSwitch.html';
 import stylesOfSwitcher from '../BaseSwitch/BaseSwitch.scss';
 
+import htmOflRadio from '../BaseRadio/BaseRadio.html';
+import stylesOfRadio from '../BaseRadio/BaseRadio.scss';
+
 export default class BaseCheckbox extends HTMLElement {
 
   #label;
   #checkbox;
 
   static get observedAttributes() {
-    return ['label', 'checked', 'disabled'];
+    return [
+      'label',
+      'checked',
+      'disabled',
+      'type',
+      'value',
+    ];
   }
 
   constructor() {
@@ -20,7 +29,8 @@ export default class BaseCheckbox extends HTMLElement {
 
     const template = document.createElement('template');
     if (tagName == 'BASE-CHECKBOX') template.innerHTML = htmlOfCheckbox;
-    if (tagName == 'BASE-SWITCH') template.innerHTML = htmOflSwitcher; 
+    if (tagName == 'BASE-SWITCH') template.innerHTML = htmOflSwitcher;
+    if (tagName == 'BASE-RADIO') template.innerHTML = htmOflRadio;
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
@@ -28,11 +38,13 @@ export default class BaseCheckbox extends HTMLElement {
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
     if (tagName == 'BASE-CHECKBOX') style.appendChild(document.createTextNode(stylesOfCheckbox));
-    if (tagName == 'BASE-SWITCH') style.appendChild(document.createTextNode(stylesOfSwitcher)); 
+    if (tagName == 'BASE-SWITCH') style.appendChild(document.createTextNode(stylesOfSwitcher));
+    if (tagName == 'BASE-RADIO') style.appendChild(document.createTextNode(stylesOfRadio));
     
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#checkbox = this.shadowRoot.querySelector('.Input');
     
+    this.#checkbox.addEventListener('input', this.#handleCheckboxInput);
     this.#checkbox.addEventListener('change', this.#handleCheckboxChange);
   }
 
@@ -71,10 +83,12 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   set label(newValue) {
-    if (this.tagName === 'BASE-CHECKBOX') {
+    const { tagName } = this;
+
+    if (tagName === 'BASE-CHECKBOX' || tagName === 'BASE-RADIO') {
       this.innerHTML = newValue ? newValue : '';
     }
-    if (this.tagName === 'BASE-SWITCH') {
+    if (tagName === 'BASE-SWITCH') {
       this.querySelectorAll('[slot="label"]').forEach((label) => {
         label.remove();
       });
@@ -83,6 +97,14 @@ export default class BaseCheckbox extends HTMLElement {
         this.innerHTML += `<span slot="label">${newValue}</span>`;
       }
     }
+  }
+
+  get type() {
+    return this.#checkbox.type;
+  }
+
+  set type(newValue) {
+    this.#checkbox.type = newValue == 'radio' ? 'radio' : 'checkbox';
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -101,6 +123,11 @@ export default class BaseCheckbox extends HTMLElement {
         this.value = newValue;
         break;
       }
+
+      case 'type': {
+        this.type = newValue;
+        break;
+      }
   
       case 'disabled': {
         this.#checkbox.disabled = this.disabled;
@@ -110,6 +137,11 @@ export default class BaseCheckbox extends HTMLElement {
       default:
         break;
     }
+  }
+
+  #handleCheckboxInput = (event) => {
+    event.stopPropagation();
+    this.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   #handleCheckboxChange = (event) => {
