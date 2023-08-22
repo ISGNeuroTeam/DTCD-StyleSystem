@@ -6,6 +6,15 @@ export default {
     defaultSlot: { 
       type: 'string',
     },
+    type: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        'checkbox',
+        'radio',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -16,26 +25,33 @@ export default {
 
 const Template = (args) => {
   const {
+    type,
     disabled,
     checked,
-    defaultSlot,
+    label,
     value,
+    defaultSlot,
   } = args;
 
   const radio = document.createElement('base-radio');
 
-  radio.innerHTML += defaultSlot;
-  radio.checked = checked;
+  radio.type = type;
   radio.disabled = disabled;
+  radio.checked = checked;
+  radio.label = label;
   radio.value = value;
+
+  radio.innerHTML += defaultSlot;
 
   return radio;
 };
 
 export const DefaultRadio = Template.bind({});
 DefaultRadio.args = {
+  label: '',
   disabled: false,
-  defaultSlot: '',
   checked: false,
   value: '',
+  type: 'radio',
+  defaultSlot: '',
 };
