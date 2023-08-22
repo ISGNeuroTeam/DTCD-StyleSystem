@@ -3,6 +3,8 @@
 }
 
 .BaseSelect {
+  $border-radius: 5px;
+
   display: block;
   position: relative;
 
@@ -91,15 +93,12 @@
     max-height: 250px;
     width: calc(100% - 6px);
     border: 1px solid var(--border);
-    border-top: none;
-    border-radius: 0 0 4.44px 4.44px;
+    border-radius: 0 0 $border-radius $border-radius;
 
     ::slotted([slot="item"]) {
       width: 100%;
       cursor: pointer;
       background-color: var(--background_main);
-      border-top: 1px solid var(--border);
-      border-bottom: none;
       box-sizing: border-box;
       outline: none;
       color: var(--text_secondary);
@@ -233,6 +232,30 @@
     .Field {
       background-color: var(--border_24);
       border-color: var(--border_24);
+    }
+  }
+
+  &.placement {
+    &_top {
+      .OptionList {
+        border-bottom: none;
+        border-radius: $border-radius $border-radius 0 0;
+
+
+        ::slotted([slot="item"]) {
+          border-bottom: 1px solid var(--border);
+        }
+      }
+    }
+
+    &_bottom {
+      .OptionList {
+        border-top: none;
+
+        ::slotted([slot="item"]) {
+          border-top: 1px solid var(--border);
+        }
+      }
     }
   }
 }

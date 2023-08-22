@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - how `invalid` property works. Edited BaseInput, BaseSelect, BaseTextarea
-- joined JS-code of BaseCheckbox, BaseRadio and BaseSwitch
+- BaseSelect rendering so that it doesn't get cut off
+- definition of custom html-elements in Storybook (added try-catch statement)
+- joined JS-code of BaseCheckbox, BaseRadio and BaseSwitc
 
 ## [0.14.0]
 
