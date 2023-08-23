@@ -1,7 +1,7 @@
 import html from './BaseColorPicker.html';
 import styles from './BaseColorPicker.scss';
 
-const colors = [
+const COLORS = [
   { name: 'title', val: 'rgba(37, 34, 48, 1)' },
   { name: 'text_main', val: 'rgba(81, 81, 92, 1)' },
   { name: 'text_secondary', val: 'rgba(147, 143, 160, 1)' },
@@ -31,9 +31,11 @@ export default class BaseColorPicker extends HTMLElement {
   #colorList;
   #selectedPreview;
   #colorListClickHandler;
-  #value;
   #label;
+
+  #value;
   #opened = false;
+  #intervalCheckingCoords;
 
   static get observedAttributes() {
     return ['value', 'disabled', 'label'];
@@ -131,20 +133,27 @@ export default class BaseColorPicker extends HTMLElement {
     if (this.#opened) {
       this.#picker.classList.add('opened');
       document.addEventListener('click', this.#handleDocumentClick);
+      
+      this.#setPosition();
+      this.#intervalCheckingCoords = setInterval(() => {
+        this.#setPosition();
+      }, 100);
     } else {
       this.#picker.classList.remove('opened');
       document.removeEventListener('click', this.#handleDocumentClick);
+      clearInterval(this.#intervalCheckingCoords);
     }
   };
 
   connectedCallback() {
-    colors.forEach(color => this.#addColorSelected(color));
+    COLORS.forEach(color => this.#addColorSelected(color));
   }
 
   disconnectedCallback() {
     this.#colorList.removeEventListener('click', this.#colorListClickHandler);
     this.#selectedPreview.removeEventListener('click', this.#selectedPreviewClickHandler);
     document.removeEventListener('click', this.#handleDocumentClick);
+    clearInterval(this.#intervalCheckingCoords);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -208,5 +217,58 @@ export default class BaseColorPicker extends HTMLElement {
 
     selected.appendChild(preview);
     this.#colorList.appendChild(selected);
+  }
+
+  #setPosition() {
+    const {
+      height,
+      width,
+      left,
+      top,
+    } = this.#selectedPreview.getBoundingClientRect();
+
+    const render = (hintPos) => {
+      const {
+        style,
+      } = this.#colorList;
+
+      this.#picker.classList.remove('placement_top', 'placement_bottom');
+      this.#picker.classList.add(`placement_${hintPos}`);
+      
+      style.position = 'fixed';
+      style.width = width + 'px';
+      style.left = left + 'px';
+      
+      switch (hintPos) {
+        case 'bottom':
+          style.top = (top + height) + 'px';
+          style.transform = '';
+          break;
+  
+        case 'top':
+          style.top = top + 'px';
+          style.transform = 'translateY(-100%)';
+          break;
+      }
+    }
+
+    const placement = 'bottom';
+    render(placement);
+
+    const {
+      offsetHeight: windowHeight,
+    } = document.body;
+    const {
+      top: hintTop,
+      bottom: hintBottom,
+    } = this.#colorList.getBoundingClientRect();
+
+    let posAwayFromScreen = placement;
+    if (hintTop < 0) posAwayFromScreen = 'bottom';
+    if (hintBottom > windowHeight) posAwayFromScreen = 'top';
+
+    if (placement !== posAwayFromScreen) {
+      render(posAwayFromScreen);
+    }
   }
 }

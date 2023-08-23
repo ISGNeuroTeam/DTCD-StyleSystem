@@ -17,14 +17,18 @@ const Template = (args) => {
     labelSlot,
   } = args;
 
+  const divWrapper = document.createElement('div');
+        divWrapper.style.paddingBottom = '130px';
   const picker = document.createElement('base-color-picker');
+  divWrapper.append(picker);
+
   picker.disabled = disabled;
   picker.value = value;
   picker.label = label;
 
   picker.innerHTML += labelSlot;
 
-  return picker;
+  return divWrapper;
 };
 
 export const DefaultColorPicker = Template.bind({});
