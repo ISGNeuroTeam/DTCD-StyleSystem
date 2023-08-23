@@ -80,10 +80,21 @@
   }
 
   &.opened {
-    .Field {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    &:not(.placement_top) {
+      .Field {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
 
+    &.placement_top {
+      .Field {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+
+    .Field {
       .Arrow {
         transform: rotate(180deg);
       }
@@ -96,5 +107,15 @@
 
   &.disabled {
     cursor: not-allowed;
+  }
+
+  &.placement {
+    &_top {
+      .ColorList {
+        border-top: 1px solid var(--border);
+        border-bottom: none;
+        border-radius: var(--border_radius) var(--border_radius) 0 0;
+      }
+    }
   }
 }
