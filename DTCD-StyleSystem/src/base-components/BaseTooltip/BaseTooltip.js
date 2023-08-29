@@ -57,30 +57,6 @@ export default class BaseTooltip extends HTMLElement {
     this.addEventListener('mouseenter', this.#handlerHoverStart);
     this.addEventListener('mouseleave', this.#handlerHoverEnd);
 
-    const options = {
-      root: document.body,
-      rootMargin: "0px",
-      threshold: 1.0,
-    };
-
-    const callback = (entries, observer) => {
-      entries.forEach((entry) => {
-        // console.log(entry.boundingClientRect);
-        // Each entry describes an intersection change for one observed
-        // target element:
-        //   entry.boundingClientRect
-        //   entry.intersectionRatio
-        //   entry.intersectionRect
-        //   entry.isIntersecting
-        //   entry.rootBounds
-        //   entry.target
-        //   entry.time
-      });
-    };
-    
-    const observer = new IntersectionObserver(callback, options);
-          observer.observe(this);
-
     if (!this.hasAttribute('placement')) {
       this.#setPlacement('top');
     }
