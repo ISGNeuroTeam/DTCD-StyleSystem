@@ -2,15 +2,24 @@ import html from './BaseDropdown.html';
 import styles from './BaseDropdown.scss';
 
 export default class BaseDropdown extends HTMLElement {
-  #dropdown;
-  #toggleBtn;
   #theme = [];
   #opened = false;
   #alignment;
   #placement;
+  #placements = ['top', 'bottom', 'left', 'right'];
+  #intervalCheckingCoords;
+
+  #dropdown;
+  #toggleBtn;
+  #dropdownContent;
 
   static get observedAttributes() {
-    return ['theme', 'alignment', 'opened', 'placement'];
+    return [
+      'theme',
+      'alignment',
+      'opened',
+      'placement',
+    ];
   }
 
   constructor() {
@@ -27,6 +36,8 @@ export default class BaseDropdown extends HTMLElement {
     style.appendChild(document.createTextNode(styles));
 
     this.#dropdown = this.shadowRoot.querySelector('.BaseDropdown');
+    this.#dropdownContent = this.shadowRoot.querySelector('.DropdownContent');
+
     this.#toggleBtn = this.#dropdown.querySelector('.ToggleBtn');
     this.#toggleBtn.addEventListener('click', this.#handleToggleBtnClick);
   }
@@ -59,12 +70,13 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
+  get placement() {
+    return this.#placement;
+  }
+
   set placement(newValue) {
-    if (newValue) {
-      this.setAttribute('placement', newValue);
-    } else {
-      this.removeAttribute('placement');
-    }
+    this.#placement = this.#placements.includes(newValue) ? newValue : 'bottom';
+    this.#setPlacementClasses();
   }
 
   get opened() {
@@ -96,8 +108,7 @@ export default class BaseDropdown extends HTMLElement {
         break;
 
       case 'placement':
-        this.#placement = newValue ? newValue : undefined;
-        this.#setPlacementClasses();
+        this.placement = newValue;
         break;
 
       case 'opened':
@@ -122,9 +133,16 @@ export default class BaseDropdown extends HTMLElement {
     if (this.#opened) {
       this.#dropdown.classList.add('opened');
       document.addEventListener('click', this.#handleDocumentClick);
+
+      this.#setPosition();
+      this.#intervalCheckingCoords = setInterval(() => {
+        this.#setPosition();
+      }, 100);
     } else {
       this.#dropdown.classList.remove('opened');
       document.removeEventListener('click', this.#handleDocumentClick);
+
+      clearInterval(this.#intervalCheckingCoords);
     }
 
     this.dispatchEvent(
@@ -137,6 +155,10 @@ export default class BaseDropdown extends HTMLElement {
       })
     );
   };
+
+  disconnectedCallback() {
+    clearInterval(this.#intervalCheckingCoords);
+  }
 
   #setThemeClasses() {
     const allThemes = [];
@@ -152,41 +174,47 @@ export default class BaseDropdown extends HTMLElement {
     }
   }
 
-  #setAlignmentClasses() {
+  #setAlignmentClasses(newValue = this.#alignment) {
     const { classList } = this.#dropdown;
 
-    if (this.#alignment === 'right') {
+    if (newValue === 'right') {
       classList.add('alignment_right');
     } else {
       classList.remove('alignment_right');
     }
 
-    if (this.#alignment === 'center') {
+    if (newValue === 'center') {
       classList.add('alignment_center');
     } else {
       classList.remove('alignment_center');
     }
   }
 
-  #setPlacementClasses() {
+  #setPlacementClasses(newPlacement = this.#placement) {
     const { classList } = this.#dropdown;
 
-    if (this.#placement === 'rightStart') {
-      classList.add('placement_rightStart');
+    if (newPlacement === 'right' || newPlacement === 'rightStart') {
+      classList.add('placement_right');
     } else {
-      classList.remove('placement_rightStart');
+      classList.remove('placement_right');
     }
 
-    if (this.#placement === 'leftStart') {
-      classList.add('placement_leftStart');
+    if (newPlacement === 'left' || newPlacement === 'leftStart') {
+      classList.add('placement_left');
     } else {
-      classList.remove('placement_leftStart');
+      classList.remove('placement_left');
     }
 
-    if (this.#placement === 'top') {
+    if (newPlacement === 'top') {
       classList.add('placement_top');
     } else {
       classList.remove('placement_top');
+    }
+
+    if (newPlacement === 'bottom') {
+      classList.add('placement_bottom');
+    } else {
+      classList.remove('placement_bottom');
     }
   }
 
@@ -202,11 +230,145 @@ export default class BaseDropdown extends HTMLElement {
     if (resultCondition) {
       this.toggle(false);
     }
-  };
+  }
 
   #handleToggleBtnClick = () => {
     if (!this.disabled) {
       this.toggle();
     }
-  };
+  }
+
+  #setPosition() {
+    const {
+      height,
+      width,
+      left,
+      top,
+      right,
+    } = this.getBoundingClientRect();
+
+    const render = (hintPos, alignment = this.#alignment) => {
+      const {
+        style,
+      } = this.#dropdownContent;
+
+      this.#setPlacementClasses(hintPos);
+        
+      style.position = 'fixed';
+      style.top = 'auto';
+      style.bottom = 'auto';
+      style.left = 'auto';
+      style.right = 'auto';
+      style.transform = '';
+  
+      switch (hintPos) {
+        case 'bottom':
+          style.top = (top + height) + 'px';
+          this.#setAlignmentClasses(alignment);
+          switch (alignment) {
+            case 'center':
+              style.left = (left + width / 2) + 'px';
+              style.transform = 'translateX(-50%)';
+              break;
+
+            case 'right':
+              style.left = right + 'px';
+              style.transform = 'translateX(-100%)';
+              break;
+          
+            default:
+              style.left = left + 'px';
+              break;
+          }
+          break;
+  
+        case 'top':
+          style.top = top + 'px';
+          this.#setAlignmentClasses(alignment);
+          switch (alignment) {
+            case 'center':
+              style.left = (left + width / 2) + 'px';
+              style.transform = 'translateX(-50%) translateY(-100%)';
+              break;
+
+            case 'right':
+              style.left = right + 'px';
+              style.transform = 'translateX(-100%) translateY(-100%)';
+              break;
+          
+            default:
+              style.left = left + 'px';
+              style.transform = 'translateY(-100%)';
+              break;
+          }
+          break;
+  
+        case 'left':
+          style.top = top + 'px';
+          style.left = left + 'px';
+          style.transform = 'translateX(-100%)';
+          this.#setAlignmentClasses('');
+          break;
+  
+        case 'right':
+          style.top = top + 'px';
+          style.left = (left + width) + 'px';
+          this.#setAlignmentClasses('');
+          break;
+      
+        default:
+          break;
+      }
+    }
+
+    if (!this.placement) {
+      this.placement = 'bottom';
+    }
+    render(this.placement);
+
+    const {
+      offsetHeight: windowHeight,
+      offsetWidth: windowWidth,
+    } = document.body;
+
+    const checkPosByAligment = () => {
+      const {
+        top: hintTop,
+        bottom: hintBottom,
+        left: hintLeft,
+        right: hintRight,
+      } = this.#dropdownContent.getBoundingClientRect();
+  
+      let alignmentAwayFromScreen = this.#alignment;
+      if (hintLeft < 0) alignmentAwayFromScreen = 'left';
+      if (hintRight > windowWidth) alignmentAwayFromScreen = 'right';
+  
+      if (this.#alignment !== alignmentAwayFromScreen) {
+        render(this.placement, alignmentAwayFromScreen);
+      }
+    }
+
+    checkPosByAligment();
+
+    const checkPosByPlacement = () => {
+      const {
+        top: hintTop,
+        bottom: hintBottom,
+        left: hintLeft,
+        right: hintRight,
+      } = this.#dropdownContent.getBoundingClientRect();
+
+      let posAwayFromScreen = this.placement;
+      if (hintTop < 0) posAwayFromScreen = 'bottom';
+      if (hintBottom > windowHeight) posAwayFromScreen = 'top';
+      if (hintLeft < 0) posAwayFromScreen = 'right';
+      if (hintRight > windowWidth) posAwayFromScreen = 'left';
+  
+      if (this.placement !== posAwayFromScreen) {
+        render(posAwayFromScreen);
+      }
+    }
+
+    checkPosByPlacement();
+  }
 }
