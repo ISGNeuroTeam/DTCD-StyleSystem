@@ -1,5 +1,8 @@
-import html from './BaseButton.html';
-import styles from './BaseButton.scss';
+import htmlOfButton from './BaseButton.html';
+import stylesOfButton from './BaseButton.scss';
+
+import htmlOfIconButton from '../BaseIconButton/BaseIconButton.html';
+import stylesOfIconButton from '../BaseIconButton/BaseIconButton.scss';
 
 export default class BaseButton extends HTMLElement {
 
@@ -14,8 +17,11 @@ export default class BaseButton extends HTMLElement {
   constructor() {
     super();
 
+    const { tagName } = this;
+
     const template = document.createElement('template');
-    template.innerHTML = html;
+    if (tagName == 'BASE-BUTTON') template.innerHTML = htmlOfButton;
+    if (tagName == 'BASE-ICON-BUTTON') template.innerHTML = htmlOfIconButton;
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
@@ -24,7 +30,8 @@ export default class BaseButton extends HTMLElement {
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
-    style.appendChild(document.createTextNode(styles));
+    if (tagName == 'BASE-BUTTON') style.appendChild(document.createTextNode(stylesOfButton));
+    if (tagName == 'BASE-ICON-BUTTON') style.appendChild(document.createTextNode(stylesOfIconButton));
 
     this.addEventListener('click', this.#clickHandler);
   }
@@ -134,10 +141,11 @@ export default class BaseButton extends HTMLElement {
 
   #setThemeClasses() {
     const allThemes = [
+      'theme_primary',
       'theme_secondary',
       'theme_green',
-      'theme_blueSec',
       'theme_red',
+      'theme_blueSec',
       'theme_alfa',
     ];
 
