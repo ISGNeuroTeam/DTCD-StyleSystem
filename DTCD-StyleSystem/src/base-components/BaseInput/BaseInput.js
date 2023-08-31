@@ -1,7 +1,10 @@
 import { getBoolFromAttrVal } from '../../utils/functions';
 
-import html from './BaseInput.html';
-import styles from './BaseInput.scss';
+import htmlOfInput from './BaseInput.html';
+import stylesOfInput from './BaseInput.scss';
+
+import htmlOfTextarea from '../BaseTextarea/BaseTextarea.html';
+import stylesOfTextarea from '../BaseTextarea/BaseTextarea.scss';
 
 export default class BaseInput extends HTMLElement {
 
@@ -17,6 +20,8 @@ export default class BaseInput extends HTMLElement {
   #messageText;
   #doValidation = false;
   #resultValidation = false;
+  #autoheight = false;
+  #minHeightTA;
 
   #iconSlots = [
     { id: 'iconLeft', theme: 'withLeftIcon', el: null },
@@ -37,21 +42,27 @@ export default class BaseInput extends HTMLElement {
       'invalid',
       'maxlength',
       'minlength',
+      'rows',
+      'data-autoheight',
     ];
   }
 
   constructor() {
     super();
 
+    const { tagName } = this;
+
     const template = document.createElement('template');
-    template.innerHTML = html;
+    if (tagName == 'BASE-INPUT') template.innerHTML = htmlOfInput;
+    if (tagName == 'BASE-TEXTAREA') template.innerHTML = htmlOfTextarea;
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     const style = document.createElement('style');
     this.shadowRoot.appendChild(style);
-    style.appendChild(document.createTextNode(styles));
+    if (tagName == 'BASE-INPUT') style.appendChild(document.createTextNode(stylesOfInput));
+    if (tagName == 'BASE-TEXTAREA') style.appendChild(document.createTextNode(stylesOfTextarea));
 
     this.#baseInput = this.shadowRoot.querySelector('.BaseInput');
     this.#internalInput = this.shadowRoot.querySelector('.Field');
@@ -63,7 +74,7 @@ export default class BaseInput extends HTMLElement {
 
     this.#iconSlots.forEach(slot => {
       slot.el = this.shadowRoot.getElementById(slot.id);
-      slot.el.addEventListener('slotchange', () => {
+      slot.el && slot.el.addEventListener('slotchange', () => {
         const nodes = slot.el.assignedNodes();
         const action = nodes.length > 0 ? 'add' : 'remove';
         this.#baseInput.classList[action](slot.theme);
@@ -89,6 +100,10 @@ export default class BaseInput extends HTMLElement {
 
   connectedCallback() {
     this.#doValidation = true;
+    this.#minHeightTA = this.#internalInput.offsetHeight;
+
+    // For right inizialization throw attribute 'data-autoheight'
+    this.autoheight = this.#autoheight;
   }
 
   disconnectedCallback() {
@@ -151,6 +166,16 @@ export default class BaseInput extends HTMLElement {
         this.maxlength = newValue;
         break;
 
+      case 'rows':
+        if (oldValue !== newValue) {
+          this.rows = newValue;
+        }
+        break;
+
+      case 'data-autoheight':
+        this.autoheight = this.hasAttribute('data-autoheight');
+        break;
+
       default:
         break;
     }
@@ -181,6 +206,7 @@ export default class BaseInput extends HTMLElement {
   set value(val) {
     this.#internalInput.value = val;
     if (this.#invalid == null && this.#doValidation) this.validate();
+    if (this.#autoheight) this.#calcTextareaHeight();
     this.dispatchEvent(new Event('input'));
   }
 
@@ -291,6 +317,28 @@ export default class BaseInput extends HTMLElement {
     }
   }
 
+  get autoheight() {
+    return this.#autoheight;
+  }
+
+  set autoheight(value) {
+    this.#autoheight = Boolean(value);
+
+    if (!this.#internalInput.isConnected || this.tagName !== 'BASE-TEXTAREA') return;
+
+    if (this.#autoheight) {
+      this.#internalInput.style['overflow-y'] = 'hidden';
+      this.#internalInput.style.height = this.#minHeightTA > this.#internalInput.scrollHeight
+                                  ? this.#minHeightTA + 'px'
+                                  : this.#internalInput.scrollHeight + 'px';
+      this.#internalInput.addEventListener('input', this.#calcTextareaHeight);
+    } else {
+      this.#internalInput.style['overflow-y'] = '';
+      this.#internalInput.style.height = '';
+      this.#internalInput.removeEventListener('input', this.#calcTextareaHeight);
+    }
+  }
+
   get maxlength() {
     return this.#internalInput.getAttribute('maxlength');
   }
@@ -324,10 +372,18 @@ export default class BaseInput extends HTMLElement {
     this.dispatchEvent(new Event('change'));
   }
 
+  #calcTextareaHeight = () => {
+    this.#internalInput.style.height = 0;
+    this.#internalInput.style.height = this.#minHeightTA > this.#internalInput.scrollHeight
+                                ? this.#minHeightTA + 'px'
+                                : this.#internalInput.scrollHeight + 'px';
+  }
+
   #setThemeClasses() {
     const allThemes = [
       'withSuccessFill',
       'withError',
+      'resize_off',
     ];
 
     const { classList } = this.#baseInput;
