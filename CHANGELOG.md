@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - definition of custom html-elements in Storybook (added try-catch statement)
 - joined JS-code of BaseCheckbox, BaseRadio and BaseSwitch
 - joined JS-code of BaseButton and BaseIconButton
+- joined JS-code of BaseInput and BaseTextarea
 
 ## [0.14.0]
 
