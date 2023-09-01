@@ -245,7 +245,7 @@ export default class BaseDropdown extends HTMLElement {
       left,
       top,
       right,
-    } = this.getBoundingClientRect();
+    } = this.#dropdown.getBoundingClientRect();
 
     const render = (hintPos, alignment = this.#alignment) => {
       const {
