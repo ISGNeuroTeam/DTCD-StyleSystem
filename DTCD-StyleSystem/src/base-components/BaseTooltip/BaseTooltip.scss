@@ -1,6 +1,5 @@
 :host {
   display: inline-block;
-  align-self: flex-start;
   --t-size: 6px;
   --t-width: 13px;
   --t-offset: 4px;
@@ -16,6 +15,10 @@
     &::before {
       box-sizing: border-box;
     }
+  }
+
+  .Trigger {
+    display: flex;
   }
 
   .Tooltip {

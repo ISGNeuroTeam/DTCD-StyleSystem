@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - joined JS-code of BaseInput and BaseTextarea
 - text align center in BaseTooltip
 
+### Fixed
+
+- small mistakes in styles of BaseTooltip and BaseSwitch
+
 ## [0.14.0]
 
 ### Added
