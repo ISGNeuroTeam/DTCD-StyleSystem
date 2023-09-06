@@ -4,6 +4,7 @@
 :root {
   --background_main: #FEFEFE;
   --aero: #6290C3;
+  --aero_32: rgba(98, 144, 195, .32);
   --background_secondary: #F4F4FA;
   --navi: #454372;
   --border: #C6C6D4;
@@ -82,9 +83,10 @@
   --button-selected-hover-border: #2196f3;
 }
 
-/* :root {
+:root {
   --background_main: #353542;
   --aero: #749CCA;
+  --aero_32: rgba(116, 156, 202, .32);
   --background_secondary: #232323;
   --navi: #454372;
   --border: #A8A8BB;
