@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - date range in BaseDateTimePicker
 - buttons for select of time windows in BaseDateTimePicker
 - BaseDateTimePicker documentation
+- color "aero_32"
 
 ### Changed
 
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - joined JS-code of BaseCheckbox, BaseRadio and BaseSwitch
 - joined JS-code of BaseButton and BaseIconButton
 - joined JS-code of BaseInput and BaseTextarea
+- text align center in BaseTooltip
 
 ## [0.14.0]
 
