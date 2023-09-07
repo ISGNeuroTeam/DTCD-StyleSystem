@@ -8,6 +8,7 @@
     
 .Container {
   position: relative;
+  display: inline-flex;
 
   &,
   * {
@@ -18,7 +19,7 @@
   }
 
   .Trigger {
-    display: flex;
+    display: inline-flex;
   }
 
   .Tooltip {
