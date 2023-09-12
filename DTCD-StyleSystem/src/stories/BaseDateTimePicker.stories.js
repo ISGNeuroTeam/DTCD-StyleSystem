@@ -30,7 +30,12 @@ const Template = args => {
     timewindows,
   } = args;
 
+  const divWrapper = document.createElement('div');
+        divWrapper.style.paddingBottom = '300px';
+
   const picker = document.createElement('date-time-picker');
+  divWrapper.append(picker);
+
   picker.visible = visible;
   picker.value = value;
   picker.disabled = disabled;
@@ -41,7 +46,7 @@ const Template = args => {
   picker.timepicker = timepicker;
   picker.timewindows = timewindows;
 
-  return picker;
+  return divWrapper;
 };
 
 export const DefaultDateTimePicker = Template.bind({});

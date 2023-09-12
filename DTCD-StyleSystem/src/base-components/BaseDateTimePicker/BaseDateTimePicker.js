@@ -76,6 +76,7 @@ export default class BaseDateTimePicker extends HTMLElement {
       value: '-year',
     },
   ];
+  #intervalCheckingCoords;
   
   // HTML-elements
   #toggleWithContext;
@@ -162,6 +163,7 @@ export default class BaseDateTimePicker extends HTMLElement {
 
   disconnectedCallback() {
     document.removeEventListener('click', this.#handleClickOut);
+    clearInterval(this.#intervalCheckingCoords);
   }
 
   get visible() {
@@ -393,8 +395,17 @@ export default class BaseDateTimePicker extends HTMLElement {
 
     this.#visible = this.calendarDropDown.className.includes('visible');
 
-    if (this.#visible) document.addEventListener('click', this.#handleClickOut);
-    else document.removeEventListener('click', this.#handleClickOut);
+    if (this.#visible) {
+      document.addEventListener('click', this.#handleClickOut);
+      
+      this.#setPosition();
+      this.#intervalCheckingCoords = setInterval(() => {
+        this.#setPosition();
+      }, 100);
+    } else {
+      document.removeEventListener('click', this.#handleClickOut);
+      clearInterval(this.#intervalCheckingCoords);
+    }
 
     if (!this.#visible && !this.isCurrentCalendarMonth()) {
       this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
@@ -749,6 +760,56 @@ export default class BaseDateTimePicker extends HTMLElement {
     this.calendar.goToDate(this.#selectedDates[0].monthNumber, this.#selectedDates[0].year);
     this.renderCalendarDays();
     this.setTime();
+  }
+
+  #setPosition() {
+    const {
+      height,
+      width,
+      left,
+      top,
+    } = this.#datePickerContainer.getBoundingClientRect();
+
+    const render = (hintPos) => {
+      const {
+        style,
+      } = this.calendarDropDown;
+      
+      style.position = 'fixed';
+      style.left = (left + width) + 'px';
+      style.right = 'auto';
+      
+      switch (hintPos) {
+        case 'bottom':
+          style.top = (top + height + 9) + 'px';
+          style.transform = 'translateX(-100%)';
+          break;
+  
+        case 'top':
+          style.top = top + 'px';
+          style.transform = 'translateX(-100%) translateY(-100%)';
+          break;
+      }
+    }
+
+    const placement = 'bottom';
+    render(placement);
+
+    const {
+      offsetHeight: windowHeight,
+    } = document.body;
+    const {
+      top: hintTop,
+      bottom: hintBottom,
+    } = this.calendarDropDown.getBoundingClientRect();
+
+    let posAwayFromScreen = placement;
+    if (hintTop < 0) posAwayFromScreen = 'bottom';
+    if (hintBottom > windowHeight) posAwayFromScreen = 'top';
+
+    if (placement !== posAwayFromScreen) {
+      render(posAwayFromScreen);
+    }
   }
 }
 
