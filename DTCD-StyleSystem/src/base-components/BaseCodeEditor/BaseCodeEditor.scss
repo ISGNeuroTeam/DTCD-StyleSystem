@@ -1,0 +1,63 @@
+@import '../BaseInput/BaseInput.scss';
+
+.BaseInput {
+  .cm-editor {
+    background-color: var(--border_12);
+    border: 1px solid var(--border);
+    border-radius: 4.44px;
+    font-size: 13px;
+    line-height: 1.23;
+    color: var(--text_main);
+    transition: border-color .3s, background-color .3s;
+
+    &::placeholder {
+      color: var(--text_secondary);
+    }
+
+    .ͼb {
+      color: var(--purple);
+    }
+    .ͼd {
+      color: var(--mint);
+    }
+    .ͼe {
+      color: var(--pink);
+    }
+    .ͼg {
+      color: var(--button_primary);
+    }
+    .ͼj {
+      color: var(--accent);
+    }
+
+    .cm-line {
+      &.cm-activeLine {
+        background-color: var(--button_primary_18);
+      }
+    }
+
+    .cm-gutterElement {
+      &.cm-activeLineGutter {
+        background-color: var(--button_primary_18);
+      }
+    }
+
+    .cm-gutters {
+      background-color: var(--border_12);
+      border-color: var(--border);
+      color: var(--text_main);
+    }
+  }
+
+  &.withSuccessFill {
+    .cm-editor {
+      border-color: var(--success);
+    }
+  }
+
+  &.withError {
+    .cm-editor {
+      border-color: var(--danger);
+    }
+  }
+}

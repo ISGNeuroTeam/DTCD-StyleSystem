@@ -46,6 +46,8 @@
     "storybook-dark-mode": "3.0.0"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.1",
+    "codemirror": "^6.0.1",
     "moment": "2.29.3"
   }
 }
