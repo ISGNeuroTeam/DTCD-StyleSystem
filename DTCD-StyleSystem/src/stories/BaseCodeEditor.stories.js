@@ -53,6 +53,7 @@ const Template = (args) => {
     labelSlot,
     rows,
     invalid,
+    autoheight,
   } = args;
 
   const codeEditor = document.createElement('base-code-editor');
@@ -71,6 +72,7 @@ const Template = (args) => {
   codeEditor.readonly = readonly;
   codeEditor.rows = rows;
   codeEditor.invalid = invalid;
+  codeEditor.autoheight = autoheight;
   
   codeEditor.innerHTML += labelSlot;
   
@@ -87,4 +89,5 @@ DefaultCodeEditor.args = {
   value: '',
   readonly: false,
   rows: 4,
+  autoheight: false,
 };

@@ -47,6 +47,17 @@
       border-color: var(--border);
       color: var(--text_main);
     }
+
+    &.ͼ1.cm-focused {
+      outline: none;
+    }
+
+    &.ͼ1 {
+      .cm-cursor,
+      .cm-dropCursor {
+        border-color: var(--text_main);
+      }
+    }
   }
 
   &.withSuccessFill {

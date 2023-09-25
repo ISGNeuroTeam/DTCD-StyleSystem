@@ -2,7 +2,10 @@ import {
   EditorView,
   basicSetup,
 } from 'codemirror';
-import { EditorState } from '@codemirror/state';
+import {
+  EditorState,
+  Compartment,
+} from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
 
 import htmlOfCodeEditor from './BaseCodeEditor.html';
@@ -23,11 +26,13 @@ export default class BaseCodeEditor extends HTMLElement {
   #messageText;
   #doValidation = false;
   #resultValidation = false;
+  #autoheight = false;
+  #rows;
   #required = false;
+  #readonly = false;
 
   #codeMirrorView;
 
-  #value;
   #docAfterFocusString;
 
   static get observedAttributes() {
@@ -42,8 +47,11 @@ export default class BaseCodeEditor extends HTMLElement {
       'readonly',
       'invalid',
       'rows',
+      'data-autoheight',
     ];
   }
+
+  #readonlyCompartment;
 
   constructor() {
     super();
@@ -63,6 +71,11 @@ export default class BaseCodeEditor extends HTMLElement {
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
 
+    this.#init();
+  }
+
+  #init() {
+    this.#readonlyCompartment = new Compartment();
     const codeMirrorState = EditorState.create({
       extensions: [
         basicSetup,
@@ -83,7 +96,9 @@ export default class BaseCodeEditor extends HTMLElement {
               }
             }
           }
-        })
+        }),
+        // EditorState.readOnly.of(this.readonly),
+        // this.#readonlyCompartment.of(this.readonly),
       ],
     });
 
@@ -105,7 +120,33 @@ export default class BaseCodeEditor extends HTMLElement {
     });
 
     this.#cmEditor = this.#baseCodeEditor.querySelector('.cm-editor');
-    this.#cmEditor && this.#cmEditor.addEventListener('input', this.#handleCMEditorInput);
+    this.#cmEditor && this.#cmEditor.addEventListener('input', (event) => {
+      event.stopPropagation();
+    });
+
+    this.addEventListener('input', () => {
+      if (this.#invalid == null && this.#doValidation) this.validate();
+    });
+  }
+
+  validate() {
+    // TODO: HERE ADD VALIDATIONS
+    if (this.required && this.value === '') {
+      this.#messageText = 'Обязательное поле*';
+      this.#resultValidation = true;
+    } else if (typeof this.validation !== 'undefined') {
+      const { isValid, message } = this.validation(this.value);
+      this.#messageText = message;
+      this.#resultValidation = !isValid;
+    } else {
+      this.#resultValidation = false;
+    }
+
+    this.#setInvalidStatus(this.#resultValidation);
+  }
+
+  connectedCallback() {
+    this.#codeMirrorView && (this.#doValidation = true);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -162,9 +203,31 @@ export default class BaseCodeEditor extends HTMLElement {
         }
         break;
 
+      case 'data-autoheight':
+        this.autoheight = this.hasAttribute('data-autoheight');
+        break;
+
       default:
         break;
     }
+  }
+
+  get invalid() {
+    if (this.#invalid == true) return true;
+    if (this.#resultValidation == true) return true;
+    return false;
+  }
+
+  set invalid(newVal) {
+    if (newVal == 'false' || newVal == false || newVal == 0 || newVal == '0') {
+      this.#invalid = false;
+    } else if (newVal == 'true' || newVal == true || newVal == 1 || newVal == '1') {
+      this.#invalid = true;
+    } else {
+      this.#invalid = null;
+    }
+
+    this.#setInvalidStatus(this.#invalid);
   }
 
   get value() {
@@ -207,6 +270,17 @@ export default class BaseCodeEditor extends HTMLElement {
     }
   }
 
+  get readonly() {
+    return this.#readonly;
+  }
+
+  set readonly(newValue) {
+    this.#readonly = Boolean(newValue);
+    // this.#codeMirrorView.dispatch({
+    //   effects: this.#readonlyCompartment.reconfigure(EditorState.readOnly.of(this.#readonly)),
+    // })
+  }
+
   get theme() {
     return this.#theme;
   }
@@ -235,16 +309,33 @@ export default class BaseCodeEditor extends HTMLElement {
     }
   }
 
-  set rows(newValue) {
-    if (newValue && Number.isInteger(newValue)) {
-      this.#cmEditor.style.height = `calc(19px * ${newValue} + 4px + 4px)`;
-    } else {
-      this.#cmEditor.style.height = '';
-    }
+  get autoheight() {
+    return this.#autoheight;
   }
 
-  #handleCMEditorInput(event) {
-    event.stopPropagation();
+  set autoheight(value) {
+    console.log('set autoheight: ', value);
+    this.#autoheight = Boolean(value);
+    this.rows = this.#rows;
+  }
+
+  get rows() {
+    return this.#rows;
+  }
+
+  set rows(newValue) {
+    console.log('set rows: ', newValue);
+    if (this.#cmEditor) {
+      this.#cmEditor.style.height = '';
+      this.#cmEditor.style['min-height'] = '';
+  
+      if (newValue && Number.isInteger(newValue)) {
+        this.#rows = newValue;
+        this.#cmEditor.style[this.autoheight ? 'min-height' : 'height'] = `calc(19px * ${newValue} + 4px + 4px)`;
+      } else {
+        this.#rows = null;
+      }
+    }
   }
 
   #setThemeClasses() {
