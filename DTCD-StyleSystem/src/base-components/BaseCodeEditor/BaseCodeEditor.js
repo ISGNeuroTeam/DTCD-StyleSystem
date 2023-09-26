@@ -30,6 +30,7 @@ export default class BaseCodeEditor extends HTMLElement {
   #rows;
   #required = false;
   #readonly = false;
+  #disabled = false;
 
   #codeMirrorView;
 
@@ -98,7 +99,7 @@ export default class BaseCodeEditor extends HTMLElement {
           }
         }),
         // EditorState.readOnly.of(this.readonly),
-        // this.#readonlyCompartment.of(this.readonly),
+        this.#readonlyCompartment.of(EditorState.readOnly.of(this.readonly)),
       ],
     });
 
@@ -270,15 +271,29 @@ export default class BaseCodeEditor extends HTMLElement {
     }
   }
 
+  get disabled() {
+    return this.#disabled;
+  }
+
+  set disabled(newValue) {
+    this.#disabled = Boolean(newValue);
+    this.#baseCodeEditor.classList[this.#disabled ? 'add' : 'remove']('disabled');
+  }
+
   get readonly() {
     return this.#readonly;
   }
 
   set readonly(newValue) {
     this.#readonly = Boolean(newValue);
-    // this.#codeMirrorView.dispatch({
-    //   effects: this.#readonlyCompartment.reconfigure(EditorState.readOnly.of(this.#readonly)),
-    // })
+    
+    this.#codeMirrorView.dispatch({
+      effects: this.#readonlyCompartment.reconfigure(EditorState.readOnly.of(this.#readonly)),
+    });
+
+    const {classList } = this.#baseCodeEditor;
+    if (this.#readonly) classList.add('disabled');
+    else if ( ! this.disabled) classList.remove('disabled');
   }
 
   get theme() {

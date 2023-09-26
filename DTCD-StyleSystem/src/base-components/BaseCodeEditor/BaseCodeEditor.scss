@@ -71,4 +71,12 @@
       border-color: var(--danger);
     }
   }
+
+  &.disabled {
+    .cm-editor {
+      background-color: var(--border_24);
+      border-color: var(--border_24);
+      cursor: not-allowed;
+    }
+  }
 }
