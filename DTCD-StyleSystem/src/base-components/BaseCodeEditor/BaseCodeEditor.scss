@@ -58,6 +58,12 @@
         border-color: var(--text_main);
       }
     }
+
+    &.ͼ2 {
+      .cm-selectionBackground {
+        background: var(--button_primary_12);
+      }
+    } 
   }
 
   &.withSuccessFill {
