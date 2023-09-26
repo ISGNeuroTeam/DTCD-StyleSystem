@@ -314,7 +314,6 @@ export default class BaseCodeEditor extends HTMLElement {
   }
 
   set autoheight(value) {
-    console.log('set autoheight: ', value);
     this.#autoheight = Boolean(value);
     this.rows = this.#rows;
   }
@@ -324,16 +323,14 @@ export default class BaseCodeEditor extends HTMLElement {
   }
 
   set rows(newValue) {
-    console.log('set rows: ', newValue);
+    this.#rows = Math.round(newValue) || 0;
+
     if (this.#cmEditor) {
       this.#cmEditor.style.height = '';
       this.#cmEditor.style['min-height'] = '';
   
-      if (newValue && Number.isInteger(newValue)) {
-        this.#rows = newValue;
-        this.#cmEditor.style[this.autoheight ? 'min-height' : 'height'] = `calc(19px * ${newValue} + 4px + 4px)`;
-      } else {
-        this.#rows = null;
+      if (this.#rows) {
+        this.#cmEditor.style[this.autoheight ? 'min-height' : 'height'] = `calc(19px * ${this.#rows} + 4px + 4px)`;
       }
     }
   }
