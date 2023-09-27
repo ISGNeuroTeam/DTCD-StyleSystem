@@ -289,6 +289,18 @@ export default class BaseInput extends HTMLElement {
     }
   }
 
+  get rows() {
+    return this.#internalInput.getAttribute('rows');
+  }
+
+  set rows(value) {
+    if (value) {
+      this.#internalInput.setAttribute('rows', value);
+    } else {
+      this.#internalInput.removeAttribute('rows');
+    }
+  }
+
   get theme() {
     return this.#theme;
   }
