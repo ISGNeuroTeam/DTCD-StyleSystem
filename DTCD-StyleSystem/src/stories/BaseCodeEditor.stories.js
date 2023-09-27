@@ -1,4 +1,4 @@
-import BaseTextareaDoc from './docs/BaseTextareaDoc.mdx';
+import BaseCodeEditorDoc from './docs/BaseCodeEditorDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseCodeEditor',
@@ -36,7 +36,7 @@ export default {
   },
   parameters: {
     docs: {
-      page: BaseTextareaDoc,
+      page: BaseCodeEditorDoc,
     },
   },
 };
