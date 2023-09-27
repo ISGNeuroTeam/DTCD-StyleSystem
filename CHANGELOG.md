@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - buttons for select of time windows in BaseDateTimePicker
 - BaseDateTimePicker documentation
 - color "aero_32"
+- BaseCodeEditor component
 
 ### Changed
 
