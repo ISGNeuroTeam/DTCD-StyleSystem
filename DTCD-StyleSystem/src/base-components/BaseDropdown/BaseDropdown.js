@@ -75,6 +75,15 @@ export default class BaseDropdown extends HTMLElement {
   }
 
   set placement(newValue) {
+    // @deprecated
+    if (newValue == 'rightStart') {
+      newValue = 'right';
+    }
+    // @deprecated
+    if (newValue == 'leftStart') {
+      newValue = 'left';
+    }
+    
     this.#placement = this.#placements.includes(newValue) ? newValue : 'bottom';
     this.#setPlacementClasses();
   }
@@ -154,6 +163,8 @@ export default class BaseDropdown extends HTMLElement {
         },
       })
     );
+
+    console.log(this.placement);
   };
 
   disconnectedCallback() {
