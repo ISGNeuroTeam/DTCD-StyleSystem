@@ -47,6 +47,8 @@
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.1",
+    "@codemirror/language": "^6.9.1",
+    "@codemirror/legacy-modes": "^6.3.3",
     "codemirror": "^6.0.1",
     "moment": "2.29.3"
   }

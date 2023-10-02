@@ -7,6 +7,8 @@ import {
   Compartment,
 } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
+import { StreamLanguage } from "@codemirror/language";
+import { simpleMode } from "@codemirror/legacy-modes/mode/simple-mode";
 
 import htmlOfCodeEditor from './BaseCodeEditor.html';
 import stylesOfCodeEditor from './BaseCodeEditor.scss';
@@ -77,10 +79,108 @@ export default class BaseCodeEditor extends HTMLElement {
 
   #init() {
     this.#readonlyCompartment = new Compartment();
+
+    const streamParser = StreamLanguage.define(simpleMode({
+      start: [
+        {
+          token: 'string.quoted.double',
+          regex: /"/,
+          next: 'string',
+        },
+        {
+          token: 'string.quoted.single',
+          regex: /(')/,
+          next: 'qstring',
+        },
+        {
+          token: 'constant.numeric',
+          regex: /[+-]?\d+\b/,
+        },
+        {
+          token: 'keyword.operator',
+          regex: /[-+%=<>*]|![><=]/,
+        },
+        {
+          token: 'lparen',
+          regex: /[{([]/,
+        },
+        {
+          token: 'rparen',
+          regex: /[)\]}]/,
+        },
+        {
+          token: 'variable.token',
+          regex: /\|?\s?\$/,
+          next: 'token',
+        },
+        {
+          token: 'entity.name.function',
+          regex: /\|\s\w+/,
+        },
+        {
+          token: 'support.parameter',
+          regex: /\w+\s?=/,
+        },
+        {
+          token: 'keyword',
+          regex: /\b(?:or|and|by|as)\b/,
+        },
+        {
+          token: 'support.function',
+          regex: /\b(?:count|sum|round|int|rand|max|p50|avg|dc|case|values|locate|ctime|sin|sqrt|min)\b/,
+        },
+        {
+          regex: /[{[(]/,
+          indent: true,
+        },
+        {
+          regex: /[}\])]/,
+          dedent: true,
+        },
+      ],
+      qstring: [
+        {
+          regex: /'/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^']+/,
+          token: 'string',
+        },
+      ],
+      string: [
+        {
+          regex: /"/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^"]+/,
+          token: 'string.big',
+        },
+      ],
+      token: [
+        {
+          regex: /\$/,
+          token: 'variable.token',
+          next: 'start',
+        },
+        {
+          regex: /[^$]+/,
+          token: 'variable.token',
+        },
+      ],
+      meta: {
+        fold: 'indent',
+      },
+    }));
+    streamParser.name = 'otl';
+
     const codeMirrorState = EditorState.create({
       extensions: [
         basicSetup,
-        javascript(),
+        // javascript(),
         EditorView.updateListener.of((viewUpdate) => {
           // doc changed
           if (viewUpdate.docChanged) {
@@ -98,8 +198,10 @@ export default class BaseCodeEditor extends HTMLElement {
             }
           }
         }),
-        // EditorState.readOnly.of(this.readonly),
+        
         this.#readonlyCompartment.of(EditorState.readOnly.of(this.readonly)),
+
+        streamParser,
       ],
     });
 
@@ -113,10 +215,6 @@ export default class BaseCodeEditor extends HTMLElement {
       ],
       lineWrapping: true,
       lineNumbers: true,
-      mode: {
-        name: 'javascript',
-        json: true,
-      },
       lint: true,
     });
 
