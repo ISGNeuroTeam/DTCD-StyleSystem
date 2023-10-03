@@ -1,5 +1,60 @@
+@import 'codemirror/lib/codemirror.css';
+@import 'codemirror/addon/fold/foldgutter.css';
+
 @import '../BaseInput/BaseInput.scss';
 
+.BaseInput {
+  .CodeMirror {
+    background-color: var(--border_12);
+    border: 1px solid var(--border);
+    border-radius: 4.44px;
+    padding: 6px var(--padding-field-x) 6px 0;
+    font-size: 13px;
+    line-height: 1.23;
+    color: var(--text_main);
+    font-family: inherit;
+    height: auto;
+  }
+
+  &.withSuccessFill {
+    .CodeMirror {
+      border-color: var(--success);
+    }
+  }
+
+  &.withError {
+    .CodeMirror {
+      border-color: var(--danger);
+    }
+  }
+
+  &.disabled {
+    .CodeMirror {
+      background-color: var(--border_24);
+      border-color: var(--border_24);
+      cursor: not-allowed;
+    }
+  }
+
+  &.size_big {
+    --padding-field-x: 16px;
+
+    .CodeMirror {
+      padding: 8px var(--padding-field-x) 8px 0;
+      font-size: 15px;
+      line-height: 1.218;
+    }
+  }
+
+  &.size_small {
+    .CodeMirror {
+      padding: 2px var(--padding-field-x) 2px 0;
+    }
+  }
+}
+
+// styles for CodeMirror 6
+/*
 .BaseInput {
   .cm-editor {
     background-color: var(--border_12);
@@ -86,3 +141,4 @@
     }
   }
 }
+*/
