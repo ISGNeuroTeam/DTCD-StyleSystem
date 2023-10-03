@@ -7,6 +7,7 @@ import 'codemirror/addon/fold/foldgutter.js';
 import 'codemirror/addon/fold/foldcode.js';
 import 'codemirror/addon/fold/indent-fold.js';
 import 'codemirror/addon/merge/merge.js';
+import 'codemirror/addon/mode/simple';
 
 import htmlOfCodeEditor from './BaseCodeEditor.html';
 import stylesOfCodeEditor from './BaseCodeEditor.scss';
@@ -31,6 +32,7 @@ export default class BaseCodeEditor extends HTMLElement {
   #required = false;
   #disabled = false;
   #valueAfterFocus;
+  #languageMode = 'javascript';
 
   #codeMirrorView;
 
@@ -47,6 +49,7 @@ export default class BaseCodeEditor extends HTMLElement {
       'invalid',
       'rows',
       'data-autoheight',
+      'data-language-mode',
     ];
   }
 
@@ -72,6 +75,105 @@ export default class BaseCodeEditor extends HTMLElement {
   }
 
   #init() {
+    CodeMirror.defineSimpleMode('otl', {
+      start: [
+        {
+          token: 'string.quoted.double',
+          regex: /"/,
+          next: 'string',
+        },
+        {
+          token: 'string.quoted.single',
+          regex: /(')/,
+          next: 'qstring',
+        },
+        {
+          token: 'constant.numeric',
+          regex: /[+-]?\d+\b/,
+        },
+        {
+          token: 'keyword.operator',
+          regex: /[-+%=<>*]|![><=]/,
+        },
+        {
+          token: 'lparen',
+          regex: /[{([]/,
+        },
+        {
+          token: 'rparen',
+          regex: /[)\]}]/,
+        },
+        {
+          token: 'variable.token',
+          regex: /\|?\s?\$/,
+          next: 'token',
+        },
+        {
+          token: 'entity.name.function',
+          regex: /\|\s\w+/,
+        },
+        {
+          token: 'support.parameter',
+          regex: /\w+\s?=/,
+        },
+        {
+          token: 'keyword',
+          regex: /\b(?:or|and|by|as)\b/,
+        },
+        {
+          token: 'support.function',
+          regex: /\b(?:count|sum|round|int|rand|max|p50|avg|dc|case|values|locate|ctime|sin|sqrt|min)\b/,
+        },
+        {
+          regex: /[{[(]/,
+          indent: true,
+        },
+        {
+          regex: /[}\])]/,
+          dedent: true,
+        },
+      ],
+  
+      qstring: [
+        {
+          regex: /'/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^']+/,
+          token: 'string',
+        },
+      ],
+      string: [
+        {
+          regex: /"/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^"]+/,
+          token: 'string.big',
+        },
+      ],
+      token: [
+        {
+          regex: /\$/,
+          token: 'variable.token',
+          next: 'start',
+        },
+        {
+          regex: /[^$]+/,
+          token: 'variable.token',
+        },
+      ],
+      meta: {
+        fold: 'indent',
+      },
+    });
+  
+    CodeMirror.defineMIME('text/x-otl', 'otl');
+
     this.#codeMirrorView = CodeMirror.fromTextArea(this.#internalInput, {
       ttabSize: 4,
       styleActiveLine: false,
@@ -79,9 +181,11 @@ export default class BaseCodeEditor extends HTMLElement {
       styleSelectedText: false,
       line: true,
       foldGutter: true,
-      gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-      // mode: 'text/x-otl',
-      mode: {
+      gutters: [
+        'CodeMirror-linenumbers',
+        'CodeMirror-foldgutter',
+      ],
+      mode: this.languageMode == 'otl' ? 'text/x-otl' : {
         name: 'javascript',
         json: true,
       },
@@ -90,7 +194,6 @@ export default class BaseCodeEditor extends HTMLElement {
       },
       matchBrackets: true,
       showCursorWhenSelecting: true,
-      // theme: 'eva-dark',
       lineWrapping: false,
       textHover: {
         delay: 400,
@@ -181,6 +284,10 @@ export default class BaseCodeEditor extends HTMLElement {
 
       case 'data-autoheight':
         this.autoheight = this.hasAttribute('data-autoheight');
+        break;
+
+      case 'data-language-mode':
+        this.languageMode = newValue;
         break;
 
       default:
@@ -309,6 +416,23 @@ export default class BaseCodeEditor extends HTMLElement {
       if (this.#rows) {
         this.#cmEditor.style[this.autoheight ? 'min-height' : 'height'] = `calc(19px * ${this.#rows} + 4px + 4px)`;
       }
+    }
+  }
+
+  get languageMode () {
+    return this.#languageMode;
+  }
+
+  set languageMode(newValue) {
+    if (newValue == 'otl') {
+      this.#languageMode = 'otl';
+      this.#codeMirrorView.setOption('mode', 'text/x-otl');
+    } else {
+      this.#languageMode = 'javascript';
+      this.#codeMirrorView.setOption('mode', {
+        name: 'javascript',
+        json: true,
+      });
     }
   }
 

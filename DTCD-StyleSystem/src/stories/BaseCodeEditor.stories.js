@@ -33,6 +33,16 @@ export default {
       ],
       value: 'undefined',
     },
+    languageMode: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no-modification>',
+        'javascript',
+        'otl',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -54,6 +64,7 @@ const Template = (args) => {
     rows,
     invalid,
     autoheight,
+    languageMode,
   } = args;
 
   const codeEditor = document.createElement('base-code-editor');
@@ -75,6 +86,7 @@ const Template = (args) => {
   codeEditor.autoheight = autoheight;
   
   codeEditor.innerHTML += labelSlot;
+  codeEditor.languageMode = languageMode;
   
   return codeEditor;
 };
@@ -90,4 +102,5 @@ DefaultCodeEditor.args = {
   readonly: false,
   rows: 4,
   autoheight: false,
+  languageMode: '',
 };
