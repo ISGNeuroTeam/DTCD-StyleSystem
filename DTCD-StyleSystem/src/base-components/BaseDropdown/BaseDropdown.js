@@ -163,8 +163,6 @@ export default class BaseDropdown extends HTMLElement {
         },
       })
     );
-
-    console.log(this.placement);
   };
 
   disconnectedCallback() {
