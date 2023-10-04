@@ -205,8 +205,11 @@ export default class BaseCodeEditor extends HTMLElement {
       },
     });
 
+    
     this.#cmEditor = this.shadowRoot.querySelector('.CodeMirror');
     this.#cmEditor.addEventListener('input', (event) => { event.stopPropagation(); });
+    this.#cmEditor.addEventListener('keyup', this.#handleCMEditorKeyup);
+
     this.#codeMirrorView.on('change', this.#handleEditorChange);
     this.#codeMirrorView.on('focus', this.#handleEditorFocus);
     this.#codeMirrorView.on('blur', this.#handleEditorBlur);
@@ -498,6 +501,42 @@ export default class BaseCodeEditor extends HTMLElement {
   #handleEditorBlur = () => {
     if (this.#valueAfterFocus !== this.value) {
       this.dispatchEvent(new Event('change'));
+    }
+  }
+
+  #addLineBreaks() {
+    if (this.value.indexOf(`${/\s*\|/g}`)) {
+      this.value = this.value.replaceAll(
+        /\s*\|/g,
+        '\n|',
+      );
+    } else {
+      this.value = this.value.replaceAll(
+        '|',
+        '\n|',
+      );
+    }
+    if (this.value[0] === '\n') {
+      this.value = this.value.substring(1);
+    }
+    this.value = this.value.replaceAll(
+      '\n\n|',
+      '\n|',
+    );
+    this.value = this.value.replaceAll(
+      '|\n',
+      '| ',
+    );
+    this.value = this.value.replaceAll(
+      '| \n',
+      '| ',
+    );
+  }
+
+  #handleCMEditorKeyup = (event) => {
+    if (this.languageMode !== 'otl') return;
+    if (event.key == '\\' && (event.ctrlKey || event.metaKey)) {
+      this.#addLineBreaks();
     }
   }
 }
