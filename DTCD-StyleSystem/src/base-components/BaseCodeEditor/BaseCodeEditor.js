@@ -10,7 +10,8 @@ import 'codemirror/addon/merge/merge.js';
 import 'codemirror/addon/mode/simple';
 
 import htmlOfCodeEditor from './BaseCodeEditor.html';
-import stylesOfCodeEditor from './BaseCodeEditor.scss';
+import stylesOfCodeEditor from './BaseCodeEditor.scss';;
+import addTextHover from './text-hover';
 
 export default class BaseCodeEditor extends HTMLElement {
 
@@ -73,8 +74,9 @@ export default class BaseCodeEditor extends HTMLElement {
 
     this.#init();
   }
-
+  
   #init() {
+    // OTL support
     CodeMirror.defineSimpleMode('otl', {
       start: [
         {
@@ -171,11 +173,14 @@ export default class BaseCodeEditor extends HTMLElement {
         fold: 'indent',
       },
     });
-  
     CodeMirror.defineMIME('text/x-otl', 'otl');
 
+    // custom text hover
+    // addTextHover(CodeMirror);
+
+    // creation code editor
     this.#codeMirrorView = CodeMirror.fromTextArea(this.#internalInput, {
-      ttabSize: 4,
+      tabSize: 4,
       styleActiveLine: false,
       lineNumbers: true,
       styleSelectedText: false,
