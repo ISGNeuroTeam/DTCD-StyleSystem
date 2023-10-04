@@ -14,6 +14,60 @@
     color: var(--text_main);
     font-family: inherit;
     height: auto;
+
+    .CodeMirror-gutters {
+      border-right-color: var(--border);
+      background-color: var(--border_12);
+    }
+
+    .CodeMirror-cursor {
+      border-left-color: var(--text_main);
+    }
+
+    span.cm-keyword,
+    span.cm-operator,
+    span.cm-command {
+      color: var(--button-primary);
+    }
+
+    span.cm-function.cm-entity {
+      color: var(--button-primary);
+    }
+
+    span.cm-function,
+    span.cm-lparen,
+    span.cm-rparen {
+      color: var(--indigo);
+    }
+
+    span.cm-string,
+    span.cm-quoted {
+      color: var(--danger);
+    }
+
+    span.cm-constant,
+    span.cm-numeric,
+    span.cm-parameter {
+      color: var(--orange);
+    }
+
+    span.cm-language,
+    span.cm-variable {
+      color: var(--success);
+    }
+
+    span.cm-token {
+      font-weight: bolder;
+    }
+
+    .CodeMirror-activeline-background {
+      background: var(--text-secondary);
+    }
+
+    .CodeMirror-matchingbracket {
+      outline: 1px solid var(--text-secondary);
+      color: var(--text-color-dark) !important;
+    }
   }
 
   &.withSuccessFill {
