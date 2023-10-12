@@ -1,45 +1,33 @@
-import docs from './docs';
+
 
 // eslint-disable-next-line func-names
-const addTextHover = function (CodeMirror) {
-  CodeMirror.registerHelper('textHover', 'otl', (cm, data, node) => {
-    let html = '';
-
-    if (node && data) {
-      const { token } = data;
-      if (token.string) {
-        if (token.string[0] === '|') {
-          html = docs.entityFunctions[token.string.split(' ')[1]];
-        }
-      }
-      if (html) {
-        const result = document.createElement('div');
-        result.innerHTML = html;
-        return result;
-      }
-    }
-    return null;
-  });
-
+(function () {
   // When the mouseover fires, the cursor might not actually be over
   // the character itself yet. These pairs of x,y offsets are used to
   // probe a few nearby points when no suitable marked range is found.
   const nearby = [0, 0, 0, 5, 0, -5, 5, 0, -5, 0];
 
+  const { CodeMirror } = window;
   const HOVER_CLASS = ' CodeMirror-hover';
 
   function showTooltip(e, content) {
+    let node = e.target || e.srcElement || e.explicitOriginalTarget;
+    if (node.nodeName == '#text') node = node.parentElement;
+    const blockContainer = node.closest('.BaseInput');
+
     const tt = document.createElement('div');
     tt.className = 'CodeMirror-hover-tooltip';
     if (typeof content === 'string') {
       content = document.createTextNode(content);
     }
     tt.appendChild(content);
-    document.body.appendChild(tt);
+    blockContainer.appendChild(tt);
 
     function position() {
-      const { target } = e;
-      const targetRect = target.getBoundingClientRect();
+      let node = e.target || e.srcElement || e.explicitOriginalTarget;
+      if (node.nodeName == '#text') node = node.parentElement;
+
+      const targetRect = node.getBoundingClientRect();
       tt.style.top = `${targetRect.bottom}px`;
       if (targetRect.left > document.body.scrollWidth / 2) {
         tt.style.right = `${document.body.scrollWidth - targetRect.left - targetRect.width}px`;
@@ -106,8 +94,11 @@ const addTextHover = function (CodeMirror) {
 
   // eslint-disable-next-line consistent-return
   function getTokenAndPosAt(cm, e) {
-    const node = e.target || e.srcElement;
+    let node = e.target || e.srcElement || e.explicitOriginalTarget;
+    if (node.nodeName == '#text') node = node.parentElement;
+    
     const text = node.innerText || node.textContent;
+    
     for (let i = 0; i < nearby.length; i += 2) {
       const pos = cm.coordsChar({
         left: e.clientX,
@@ -129,8 +120,9 @@ const addTextHover = function (CodeMirror) {
   }
 
   function onMouseOver(cm, e) {
-    const node = e.target;
-    if (node && !node.classList.contains('CodeMirror-line')) {
+    const node = e.target || e.explicitOriginalTarget;
+
+    if (node && !node.classList?.contains('CodeMirror-line')) {
       if (/\bCodeMirror-lint-mark-/.test(node.className)) return;
       const state = cm.state.textHover;
       const data = getTokenAndPosAt(cm, e);
@@ -209,6 +201,4 @@ const addTextHover = function (CodeMirror) {
   }
 
   CodeMirror.defineOption('textHover', false, optionHandler); // deprecated
-};
-
-export default addTextHover;
+}());
