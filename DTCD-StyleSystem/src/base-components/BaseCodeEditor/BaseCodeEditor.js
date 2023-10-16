@@ -1,21 +1,15 @@
-import _CodeMirror from 'codemirror';
-// Linter
+import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/addon/lint/lint.js';
-
 import 'codemirror/addon/fold/foldgutter.js';
 import 'codemirror/addon/fold/foldcode.js';
 import 'codemirror/addon/fold/indent-fold.js';
 import 'codemirror/addon/merge/merge.js';
-// import 'codemirror/addon/mode/simple';
+import 'codemirror/addon/mode/simple';
 
 import htmlOfCodeEditor from './BaseCodeEditor.html';
 import stylesOfCodeEditor from './BaseCodeEditor.scss';
-
-window.CodeMirror = _CodeMirror;
-import './codeHighlight.js';
-import './token-hover.js';
-import './text-hover.js';
+import createTextHover from './text-hover.js';
 
 export default class BaseCodeEditor extends HTMLElement {
 
@@ -40,6 +34,7 @@ export default class BaseCodeEditor extends HTMLElement {
   #languageMode = 'javascript';
 
   #codeMirrorView;
+  #activateTextHover;
 
   static get observedAttributes() {
     return [
@@ -80,110 +75,10 @@ export default class BaseCodeEditor extends HTMLElement {
   }
   
   #init() {
-    // OTL support
-    // CodeMirror.defineSimpleMode('otl', {
-    //   start: [
-    //     {
-    //       token: 'string.quoted.double',
-    //       regex: /"/,
-    //       next: 'string',
-    //     },
-    //     {
-    //       token: 'string.quoted.single',
-    //       regex: /(')/,
-    //       next: 'qstring',
-    //     },
-    //     {
-    //       token: 'constant.numeric',
-    //       regex: /[+-]?\d+\b/,
-    //     },
-    //     {
-    //       token: 'keyword.operator',
-    //       regex: /[-+%=<>*]|![><=]/,
-    //     },
-    //     {
-    //       token: 'lparen',
-    //       regex: /[{([]/,
-    //     },
-    //     {
-    //       token: 'rparen',
-    //       regex: /[)\]}]/,
-    //     },
-    //     {
-    //       token: 'variable.token',
-    //       regex: /\|?\s?\$/,
-    //       next: 'token',
-    //     },
-    //     {
-    //       token: 'entity.name.function',
-    //       regex: /\|\s\w+/,
-    //     },
-    //     {
-    //       token: 'support.parameter',
-    //       regex: /\w+\s?=/,
-    //     },
-    //     {
-    //       token: 'keyword',
-    //       regex: /\b(?:or|and|by|as)\b/,
-    //     },
-    //     {
-    //       token: 'support.function',
-    //       regex: /\b(?:count|sum|round|int|rand|max|p50|avg|dc|case|values|locate|ctime|sin|sqrt|min)\b/,
-    //     },
-    //     {
-    //       regex: /[{[(]/,
-    //       indent: true,
-    //     },
-    //     {
-    //       regex: /[}\])]/,
-    //       dedent: true,
-    //     },
-    //   ],
-  
-    //   qstring: [
-    //     {
-    //       regex: /'/,
-    //       token: 'string',
-    //       next: 'start',
-    //     },
-    //     {
-    //       regex: /[^']+/,
-    //       token: 'string',
-    //     },
-    //   ],
-    //   string: [
-    //     {
-    //       regex: /"/,
-    //       token: 'string',
-    //       next: 'start',
-    //     },
-    //     {
-    //       regex: /[^"]+/,
-    //       token: 'string.big',
-    //     },
-    //   ],
-    //   token: [
-    //     {
-    //       regex: /\$/,
-    //       token: 'variable.token',
-    //       next: 'start',
-    //     },
-    //     {
-    //       regex: /[^$]+/,
-    //       token: 'variable.token',
-    //     },
-    //   ],
-    //   meta: {
-    //     fold: 'indent',
-    //   },
-    // });
-    // CodeMirror.defineMIME('text/x-otl', 'otl');
+    this.#addOTLCodeHighlight();
 
-    // custom text hover
-    // addTextHover(CodeMirror);
+    this.#activateTextHover = createTextHover(CodeMirror);
 
-    // creation code editor
-    const { CodeMirror } = window;
     this.#codeMirrorView = CodeMirror.fromTextArea(this.#internalInput, {
       tabSize: 4,
       styleActiveLine: false,
@@ -195,11 +90,10 @@ export default class BaseCodeEditor extends HTMLElement {
         'CodeMirror-linenumbers',
         'CodeMirror-foldgutter',
       ],
-      // mode: this.languageMode == 'otl' ? 'text/x-otl' : {
-      //   name: 'javascript',
-      //   json: true,
-      // },
-      mode: 'text/x-otl',
+      mode: this.languageMode == 'otl' ? 'text/x-otl' : {
+        name: 'javascript',
+        json: true,
+      },
       hintOptions: {
         completeSingle: false,
       },
@@ -210,12 +104,6 @@ export default class BaseCodeEditor extends HTMLElement {
         delay: 400,
       },
     });
-
-    // console.log(CodeMirror.helpers);
-    // console.log(CodeMirror.textHover.otl);
-    // console.log(this.#codeMirrorView.getModeAt(CodeMirror.Pos(0, 0)));
-    // console.log(this.#codeMirrorView.getHelper(CodeMirror.Pos(0, 0), 'textHover'));
-    console.log(this.#codeMirrorView.getWrapperElement())
     
     this.#cmEditor = this.shadowRoot.querySelector('.CodeMirror');
     this.#cmEditor.addEventListener('input', (event) => { event.stopPropagation(); });
@@ -245,10 +133,6 @@ export default class BaseCodeEditor extends HTMLElement {
   connectedCallback() {
     this.#codeMirrorView.refresh();
     this.#codeMirrorView && (this.#doValidation = true);
-
-    // this.#cmEditor.addEventListener('click', () => {
-    //   console.log(this.#codeMirrorView.getModeAt(CodeMirror.Pos(0, 0)));
-    // })
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -448,14 +332,16 @@ export default class BaseCodeEditor extends HTMLElement {
 
   set languageMode(newValue) {
     if (newValue == 'otl') {
-      this.#languageMode = 'otl';
       this.#codeMirrorView.setOption('mode', 'text/x-otl');
+      this.#activateTextHover(this.#codeMirrorView, true);
+      this.#languageMode = 'otl';
     } else {
-      this.#languageMode = 'javascript';
       this.#codeMirrorView.setOption('mode', {
         name: 'javascript',
         json: true,
       });
+      this.#activateTextHover(this.#codeMirrorView, false);
+      this.#languageMode = 'javascript';
     }
   }
 
@@ -553,5 +439,106 @@ export default class BaseCodeEditor extends HTMLElement {
     if (event.key == '\\' && (event.ctrlKey || event.metaKey)) {
       this.#addLineBreaks();
     }
+  }
+
+  #addOTLCodeHighlight() {
+    CodeMirror.defineSimpleMode('otl', {
+      start: [
+        {
+          token: 'string.quoted.double',
+          regex: /"/,
+          next: 'string',
+        },
+        {
+          token: 'string.quoted.single',
+          regex: /(')/,
+          next: 'qstring',
+        },
+        {
+          token: 'constant.numeric',
+          regex: /[+-]?\d+\b/,
+        },
+        {
+          token: 'keyword.operator',
+          regex: /[-+%=<>*]|![><=]/,
+        },
+        {
+          token: 'lparen',
+          regex: /[{([]/,
+        },
+        {
+          token: 'rparen',
+          regex: /[)\]}]/,
+        },
+        {
+          token: 'variable.token',
+          regex: /\|?\s?\$/,
+          next: 'token',
+        },
+        {
+          token: 'entity.name.function',
+          regex: /\|\s\w+/,
+        },
+        {
+          token: 'support.parameter',
+          regex: /\w+\s?=/,
+        },
+        {
+          token: 'keyword',
+          regex: /\b(?:or|and|by|as)\b/,
+        },
+        {
+          token: 'support.function',
+          regex: /\b(?:count|sum|round|int|rand|max|p50|avg|dc|case|values|locate|ctime|sin|sqrt|min)\b/,
+        },
+        {
+          regex: /[{[(]/,
+          indent: true,
+        },
+        {
+          regex: /[}\])]/,
+          dedent: true,
+        },
+      ],
+  
+      qstring: [
+        {
+          regex: /'/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^']+/,
+          token: 'string',
+        },
+      ],
+      string: [
+        {
+          regex: /"/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^"]+/,
+          token: 'string.big',
+        },
+      ],
+      token: [
+        {
+          regex: /\$/,
+          token: 'variable.token',
+          next: 'start',
+        },
+        {
+          regex: /[^$]+/,
+          token: 'variable.token',
+        },
+      ],
+      meta: {
+        fold: 'indent',
+      },
+    });
+  
+    CodeMirror.defineMIME('text/x-otl', 'otl');
   }
 }

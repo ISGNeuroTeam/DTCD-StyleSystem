@@ -1,13 +1,29 @@
+import docs from './docs';
 
+const createTextHover = function (CodeMirror) {
+  CodeMirror.registerHelper('textHover', 'otl', (cm, data, node) => {
+    let html = '';
 
-// eslint-disable-next-line func-names
-(function () {
+    if (node && data) {
+      const { token } = data;
+      if (token.string) {
+        if (token.string[0] === '|') {
+          html = docs.entityFunctions[token.string.split(' ')[1]];
+        }
+      }
+      if (html) {
+        const result = document.createElement('div');
+        result.innerHTML = html;
+        return result;
+      }
+    }
+    return null;
+  });
+  
   // When the mouseover fires, the cursor might not actually be over
   // the character itself yet. These pairs of x,y offsets are used to
   // probe a few nearby points when no suitable marked range is found.
   const nearby = [0, 0, 0, 5, 0, -5, 5, 0, -5, 0];
-
-  const { CodeMirror } = window;
   const HOVER_CLASS = ' CodeMirror-hover';
 
   function showTooltip(e, content) {
@@ -191,14 +207,34 @@
     }
 
     if (val) {
-      // eslint-disable-next-line no-multi-assign
       const state = cm.state.textHover = new TextHoverState(cm, parseOptions(
         cm,
-        val,
+        textHoverOptions,
       ));
       CodeMirror.on(cm.getWrapperElement(), 'mouseover', state.onMouseOver);
     }
   }
 
-  CodeMirror.defineOption('textHover', false, optionHandler); // deprecated
-}());
+  // CodeMirror.defineOption('textHover', false, optionHandler); // deprecated
+
+  function activateTextHover(cm, turnOn = true) {
+    if (turnOn) {
+      const state = cm.state.textHover = new TextHoverState(cm, parseOptions(
+        cm,
+        cm.options.textHover,
+      ));
+      CodeMirror.on(cm.getWrapperElement(), 'mouseover', state.onMouseOver);
+    } else {
+      cm.state.textHover && CodeMirror.off(
+        cm.getWrapperElement(),
+        'mouseover',
+        cm.state.textHover.onMouseOver,
+      );
+      delete cm.state.textHover;
+    }
+  }
+
+  return activateTextHover;
+};
+
+export default createTextHover;
