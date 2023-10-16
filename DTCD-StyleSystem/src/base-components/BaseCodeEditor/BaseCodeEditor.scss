@@ -1,88 +1,127 @@
+@import 'codemirror/lib/codemirror.css';
+@import 'codemirror/addon/fold/foldgutter.css';
+
 @import '../BaseInput/BaseInput.scss';
 
 .BaseInput {
-  .cm-editor {
+  .CodeMirror {
     background-color: var(--border_12);
     border: 1px solid var(--border);
     border-radius: 4.44px;
+    padding: 6px var(--padding-field-x) 6px 0;
     font-size: 13px;
     line-height: 1.23;
     color: var(--text_main);
-    transition: border-color .3s, background-color .3s;
+    font-family: inherit;
+    height: auto;
 
-    &::placeholder {
-      color: var(--text_secondary);
-    }
-
-    .ͼb {
-      color: var(--purple);
-    }
-    .ͼd {
-      color: var(--mint);
-    }
-    .ͼe {
-      color: var(--pink);
-    }
-    .ͼg {
-      color: var(--button_primary);
-    }
-    .ͼj {
-      color: var(--accent);
-    }
-
-    .cm-line {
-      &.cm-activeLine {
-        background-color: var(--button_primary_18);
-      }
-    }
-
-    .cm-gutterElement {
-      &.cm-activeLineGutter {
-        background-color: var(--button_primary_18);
-      }
-    }
-
-    .cm-gutters {
+    .CodeMirror-gutters {
+      border-right-color: var(--border);
       background-color: var(--border_12);
-      border-color: var(--border);
-      color: var(--text_main);
     }
 
-    &.ͼ1.cm-focused {
-      outline: none;
+    .CodeMirror-cursor {
+      border-left-color: var(--text_main);
     }
 
-    &.ͼ1 {
-      .cm-cursor,
-      .cm-dropCursor {
-        border-color: var(--text_main);
-      }
+    span.cm-keyword,
+    span.cm-operator,
+    span.cm-command {
+      color: var(--button-primary);
     }
 
-    &.ͼ2 {
-      .cm-selectionBackground {
-        background: var(--button_primary_12);
-      }
-    } 
+    span.cm-function.cm-entity {
+      color: var(--button-primary);
+    }
+
+    span.cm-function,
+    span.cm-lparen,
+    span.cm-rparen {
+      color: var(--indigo);
+    }
+
+    span.cm-string,
+    span.cm-quoted {
+      color: var(--danger);
+    }
+
+    span.cm-constant,
+    span.cm-numeric,
+    span.cm-parameter {
+      color: var(--orange);
+    }
+
+    span.cm-language,
+    span.cm-variable {
+      color: var(--success);
+    }
+
+    span.cm-token {
+      font-weight: bolder;
+    }
+
+    .CodeMirror-activeline-background {
+      background: var(--text-secondary);
+    }
+
+    .CodeMirror-matchingbracket {
+      outline: 1px solid var(--text-secondary);
+      color: var(--text-color-dark) !important;
+    }
   }
 
   &.withSuccessFill {
-    .cm-editor {
+    .CodeMirror {
       border-color: var(--success);
     }
   }
 
   &.withError {
-    .cm-editor {
+    .CodeMirror {
       border-color: var(--danger);
     }
   }
 
   &.disabled {
-    .cm-editor {
+    .CodeMirror {
       background-color: var(--border_24);
       border-color: var(--border_24);
       cursor: not-allowed;
     }
+  }
+
+  &.size_big {
+    --padding-field-x: 16px;
+
+    .CodeMirror {
+      padding: 8px var(--padding-field-x) 8px 0;
+      font-size: 15px;
+      line-height: 1.218;
+    }
+  }
+
+  &.size_small {
+    .CodeMirror {
+      padding: 2px var(--padding-field-x) 2px 0;
+    }
+  }
+}
+
+.CodeMirror-hover-tooltip {
+  background-color: infobackground;
+  border: 1px solid black;
+  border-radius: 4px 4px 4px 4px;
+  color: infotext;
+  overflow-y: auto;
+  max-height: 200px;
+  padding: 2px 5px;
+  position: fixed;
+  z-index: 100;
+  max-width: 600px;
+  opacity: 0.1;
+  transition: opacity .2s;
+
+  ul {
+    padding-left: 20px;
   }
 }

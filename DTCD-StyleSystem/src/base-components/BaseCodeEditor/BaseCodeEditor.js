@@ -1,22 +1,22 @@
-import {
-  EditorView,
-  basicSetup,
-} from 'codemirror';
-import {
-  EditorState,
-  Compartment,
-} from '@codemirror/state';
-import { javascript } from '@codemirror/lang-javascript';
+import CodeMirror from 'codemirror';
+import 'codemirror/mode/javascript/javascript.js';
+import 'codemirror/addon/lint/lint.js';
+import 'codemirror/addon/fold/foldgutter.js';
+import 'codemirror/addon/fold/foldcode.js';
+import 'codemirror/addon/fold/indent-fold.js';
+import 'codemirror/addon/merge/merge.js';
+import 'codemirror/addon/mode/simple';
 
 import htmlOfCodeEditor from './BaseCodeEditor.html';
 import stylesOfCodeEditor from './BaseCodeEditor.scss';
+import createTextHover from './text-hover.js';
 
 export default class BaseCodeEditor extends HTMLElement {
 
   #baseCodeEditor;
+  #internalInput;
   #label;
   #message;
-  #fieldWrapper;
   #cmEditor;
 
   #invalid = null;
@@ -29,12 +29,12 @@ export default class BaseCodeEditor extends HTMLElement {
   #autoheight = false;
   #rows;
   #required = false;
-  #readonly = false;
   #disabled = false;
+  #valueAfterFocus;
+  #languageMode = 'javascript';
 
   #codeMirrorView;
-
-  #docAfterFocusString;
+  #activateTextHover;
 
   static get observedAttributes() {
     return [
@@ -49,10 +49,9 @@ export default class BaseCodeEditor extends HTMLElement {
       'invalid',
       'rows',
       'data-autoheight',
+      'data-language-mode',
     ];
   }
-
-  #readonlyCompartment;
 
   constructor() {
     super();
@@ -68,66 +67,51 @@ export default class BaseCodeEditor extends HTMLElement {
     style.appendChild(document.createTextNode(stylesOfCodeEditor));
     
     this.#baseCodeEditor = this.shadowRoot.querySelector('.BaseInput');
-    this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
+    this.#internalInput = this.shadowRoot.querySelector('.Field');
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
 
     this.#init();
   }
-
+  
   #init() {
-    this.#readonlyCompartment = new Compartment();
-    const codeMirrorState = EditorState.create({
-      extensions: [
-        basicSetup,
-        javascript(),
-        EditorView.updateListener.of((viewUpdate) => {
-          // doc changed
-          if (viewUpdate.docChanged) {
-            this.dispatchEvent(new Event('input'));
-          }
-          if (viewUpdate.focusChanged) {
-            if (viewUpdate.view.hasFocus) {
-              // focus event
-              this.#docAfterFocusString = viewUpdate.state.doc.toString();
-            } else {
-              // blur event
-              if (viewUpdate.state.doc.toString() !== this.#docAfterFocusString) {
-                this.dispatchEvent(new Event('change'));
-              }
-            }
-          }
-        }),
-        // EditorState.readOnly.of(this.readonly),
-        this.#readonlyCompartment.of(EditorState.readOnly.of(this.readonly)),
-      ],
-    });
+    this.#addOTLCodeHighlight();
 
-    this.#codeMirrorView = new EditorView({
-      state: codeMirrorState,
-      parent: this.#fieldWrapper,
+    this.#activateTextHover = createTextHover(CodeMirror);
+
+    this.#codeMirrorView = CodeMirror.fromTextArea(this.#internalInput, {
       tabSize: 4,
+      styleActiveLine: false,
+      lineNumbers: true,
+      styleSelectedText: false,
+      line: true,
+      foldGutter: true,
       gutters: [
         'CodeMirror-linenumbers',
-        'CodeMirror-lint-markers',
+        'CodeMirror-foldgutter',
       ],
-      lineWrapping: true,
-      lineNumbers: true,
-      mode: {
+      mode: this.languageMode == 'otl' ? 'text/x-otl' : {
         name: 'javascript',
         json: true,
       },
-      lint: true,
+      hintOptions: {
+        completeSingle: false,
+      },
+      matchBrackets: true,
+      showCursorWhenSelecting: true,
+      lineWrapping: false,
+      textHover: {
+        delay: 400,
+      },
     });
+    
+    this.#cmEditor = this.shadowRoot.querySelector('.CodeMirror');
+    this.#cmEditor.addEventListener('input', (event) => { event.stopPropagation(); });
+    this.#cmEditor.addEventListener('keyup', this.#handleCMEditorKeyup);
 
-    this.#cmEditor = this.#baseCodeEditor.querySelector('.cm-editor');
-    this.#cmEditor && this.#cmEditor.addEventListener('input', (event) => {
-      event.stopPropagation();
-    });
-
-    this.addEventListener('input', () => {
-      if (this.#invalid == null && this.#doValidation) this.validate();
-    });
+    this.#codeMirrorView.on('change', this.#handleEditorChange);
+    this.#codeMirrorView.on('focus', this.#handleEditorFocus);
+    this.#codeMirrorView.on('blur', this.#handleEditorBlur);
   }
 
   validate() {
@@ -147,6 +131,7 @@ export default class BaseCodeEditor extends HTMLElement {
   }
 
   connectedCallback() {
+    this.#codeMirrorView.refresh();
     this.#codeMirrorView && (this.#doValidation = true);
   }
 
@@ -208,6 +193,10 @@ export default class BaseCodeEditor extends HTMLElement {
         this.autoheight = this.hasAttribute('data-autoheight');
         break;
 
+      case 'data-language-mode':
+        this.languageMode = newValue;
+        break;
+
       default:
         break;
     }
@@ -232,21 +221,12 @@ export default class BaseCodeEditor extends HTMLElement {
   }
 
   get value() {
-    return this.#codeMirrorView.state.doc.toString();
+    return this.#codeMirrorView.doc.getValue();
   }
 
   set value(newValue) {
-    if (this.#codeMirrorView) {
-      const transaction = this.#codeMirrorView.state.update({
-        startState: this.#codeMirrorView.state,
-        changes: {
-          from: 0,
-          to: this.#codeMirrorView.state.doc.length,
-          insert: newValue,
-        },
-      });
-      this.#codeMirrorView.dispatchTransactions([transaction]);
-    }
+    this.#codeMirrorView && this.#codeMirrorView.doc.setValue(newValue);
+    if (this.#invalid == null && this.#doValidation) this.validate();
   }
 
   get required() {
@@ -277,23 +257,19 @@ export default class BaseCodeEditor extends HTMLElement {
 
   set disabled(newValue) {
     this.#disabled = Boolean(newValue);
-    this.#baseCodeEditor.classList[this.#disabled ? 'add' : 'remove']('disabled');
+    this.#codeMirrorView.setOption('readOnly', this.disabled ? 'nocursor' : false);
+    this.#baseCodeEditor.classList[this.disabled ? 'add' : 'remove']('disabled');
   }
 
   get readonly() {
-    return this.#readonly;
+    return this.#codeMirrorView.getOption('readOnly');
   }
 
   set readonly(newValue) {
-    this.#readonly = Boolean(newValue);
+    if ( this.disabled) return;
     
-    this.#codeMirrorView.dispatch({
-      effects: this.#readonlyCompartment.reconfigure(EditorState.readOnly.of(this.#readonly)),
-    });
-
-    const {classList } = this.#baseCodeEditor;
-    if (this.#readonly) classList.add('disabled');
-    else if ( ! this.disabled) classList.remove('disabled');
+    this.#codeMirrorView.setOption('readOnly', Boolean(newValue));
+    this.#baseCodeEditor.classList[this.readonly ? 'add' : 'remove']('disabled');
   }
 
   get theme() {
@@ -350,6 +326,25 @@ export default class BaseCodeEditor extends HTMLElement {
     }
   }
 
+  get languageMode () {
+    return this.#languageMode;
+  }
+
+  set languageMode(newValue) {
+    if (newValue == 'otl') {
+      this.#codeMirrorView.setOption('mode', 'text/x-otl');
+      this.#activateTextHover(this.#codeMirrorView, true);
+      this.#languageMode = 'otl';
+    } else {
+      this.#codeMirrorView.setOption('mode', {
+        name: 'javascript',
+        json: true,
+      });
+      this.#activateTextHover(this.#codeMirrorView, false);
+      this.#languageMode = 'javascript';
+    }
+  }
+
   #setThemeClasses() {
     const allThemes = [
       'withSuccessFill',
@@ -393,5 +388,157 @@ export default class BaseCodeEditor extends HTMLElement {
 
     this.#message.innerHTML = status && this.#messageText ? this.#messageText : '';
     this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+  }
+
+  #handleEditorChange = () => {
+    if (this.#invalid == null && this.#doValidation) this.validate();
+    this.dispatchEvent(new Event('input'));
+  }
+
+  #handleEditorFocus = () => {
+    this.#valueAfterFocus = this.value;
+  }
+
+  #handleEditorBlur = () => {
+    if (this.#valueAfterFocus !== this.value) {
+      this.dispatchEvent(new Event('change'));
+    }
+  }
+
+  #addLineBreaks() {
+    if (this.value.indexOf(`${/\s*\|/g}`)) {
+      this.value = this.value.replaceAll(
+        /\s*\|/g,
+        '\n|',
+      );
+    } else {
+      this.value = this.value.replaceAll(
+        '|',
+        '\n|',
+      );
+    }
+    if (this.value[0] === '\n') {
+      this.value = this.value.substring(1);
+    }
+    this.value = this.value.replaceAll(
+      '\n\n|',
+      '\n|',
+    );
+    this.value = this.value.replaceAll(
+      '|\n',
+      '| ',
+    );
+    this.value = this.value.replaceAll(
+      '| \n',
+      '| ',
+    );
+  }
+
+  #handleCMEditorKeyup = (event) => {
+    if (this.languageMode !== 'otl') return;
+    if (event.key == '\\' && (event.ctrlKey || event.metaKey)) {
+      this.#addLineBreaks();
+    }
+  }
+
+  #addOTLCodeHighlight() {
+    CodeMirror.defineSimpleMode('otl', {
+      start: [
+        {
+          token: 'string.quoted.double',
+          regex: /"/,
+          next: 'string',
+        },
+        {
+          token: 'string.quoted.single',
+          regex: /(')/,
+          next: 'qstring',
+        },
+        {
+          token: 'constant.numeric',
+          regex: /[+-]?\d+\b/,
+        },
+        {
+          token: 'keyword.operator',
+          regex: /[-+%=<>*]|![><=]/,
+        },
+        {
+          token: 'lparen',
+          regex: /[{([]/,
+        },
+        {
+          token: 'rparen',
+          regex: /[)\]}]/,
+        },
+        {
+          token: 'variable.token',
+          regex: /\|?\s?\$/,
+          next: 'token',
+        },
+        {
+          token: 'entity.name.function',
+          regex: /\|\s\w+/,
+        },
+        {
+          token: 'support.parameter',
+          regex: /\w+\s?=/,
+        },
+        {
+          token: 'keyword',
+          regex: /\b(?:or|and|by|as)\b/,
+        },
+        {
+          token: 'support.function',
+          regex: /\b(?:count|sum|round|int|rand|max|p50|avg|dc|case|values|locate|ctime|sin|sqrt|min)\b/,
+        },
+        {
+          regex: /[{[(]/,
+          indent: true,
+        },
+        {
+          regex: /[}\])]/,
+          dedent: true,
+        },
+      ],
+  
+      qstring: [
+        {
+          regex: /'/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^']+/,
+          token: 'string',
+        },
+      ],
+      string: [
+        {
+          regex: /"/,
+          token: 'string',
+          next: 'start',
+        },
+        {
+          regex: /[^"]+/,
+          token: 'string.big',
+        },
+      ],
+      token: [
+        {
+          regex: /\$/,
+          token: 'variable.token',
+          next: 'start',
+        },
+        {
+          regex: /[^$]+/,
+          token: 'variable.token',
+        },
+      ],
+      meta: {
+        fold: 'indent',
+      },
+    });
+  
+    CodeMirror.defineMIME('text/x-otl', 'otl');
   }
 }
