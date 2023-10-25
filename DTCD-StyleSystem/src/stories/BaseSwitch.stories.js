@@ -29,7 +29,6 @@ const Template = (args) => {
     disabled,
     checked,
     label,
-    value,
     labelSlot,
   } = args;
 
@@ -39,7 +38,6 @@ const Template = (args) => {
   switchInput.type = type;
   switchInput.disabled = disabled;
   switchInput.label = label;
-  switchInput.value = value;
   
   switchInput.innerHTML += labelSlot;
 
@@ -51,7 +49,6 @@ DefaultSwitch.args = {
   label: '',
   disabled: false,
   checked: false,
-  value: '',
   type: 'checkbox',
   labelSlot: '<span slot="label">Label slot</span>',
 };

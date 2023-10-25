@@ -12,6 +12,8 @@ export default class BaseCheckbox extends HTMLElement {
   #label;
   #checkbox;
 
+  #value;
+
   static get observedAttributes() {
     return [
       'label',
@@ -49,11 +51,13 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   get value() {
-    return this.#checkbox.value;
+    if (this.tagName == 'BASE-RADIO') return this.#value;
+    else return this.checked;
   }
 
   set value(newValue) {
-    this.#checkbox.value = newValue;
+    if (this.tagName == 'BASE-RADIO') return this.#value = newValue !== null ? newValue : '';
+    else return this.checked = newValue;
   }
 
   get checked() {
