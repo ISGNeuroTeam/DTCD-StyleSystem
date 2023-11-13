@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - small mistakes in styles of BaseTooltip and BaseSwitch
+- added 'block' to BaseHeading host element
 
 ## [0.14.0]
 
