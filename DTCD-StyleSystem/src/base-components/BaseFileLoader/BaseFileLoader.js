@@ -59,14 +59,11 @@ export default class BaseFileLoader extends HTMLElement {
 
   constructor() {
     super();
-
-    const template = document.createElement('template');
-    const style = document.createElement('style');
-    template.innerHTML = html;
-    style.textContent = styles;
-
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.append(style, template.content.cloneNode(true));
+    this.shadowRoot.innerHTML = `
+      <style>${styles}</style>
+      ${html}
+    `;
 
     this.#input = this.shadowRoot.getElementById('input');
     this.#label = this.shadowRoot.getElementById('label');
@@ -183,15 +180,24 @@ export default class BaseFileLoader extends HTMLElement {
 
   #handleFilesUpload(fileList) {
     if (fileList.length <= 0) return;
-
-    const info = fileList.length === 1
-      ? fileList[0].name
-      : `Выбрано файлов: ${fileList.length}`
-
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const outputDiv = this.shadowRoot.getElementById('output');
+      outputDiv.style.backgroundImage = `url(${e.target.result})`;
+      outputDiv.style.display = 'block';
+      this.shadowRoot.getElementById('icon').style.display = 'none';
+    };
+    reader.readAsDataURL(fileList[0]);
+  
+    const info = fileList.length === 1 
+      ? fileList[0].name 
+      : `Выбрано файлов: ${fileList.length}`;
+  
     this.#files = fileList;
     this.#infoEl.textContent = info;
     this.#descriptionEl.hidden = true;
-
+    
     this.dispatchEvent(new Event('input'));
   }
 
