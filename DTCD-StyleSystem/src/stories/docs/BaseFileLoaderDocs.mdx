@@ -9,6 +9,7 @@ import { Canvas, Source } from '@storybook/addon-docs';
 | Название       | Описание                             | Тип       |
 |:---------------|:-------------------------------------|:----------|
 | `value` *      | Список выбранных файлов              | `Array`   |
+| `theme`        | Варианты отображения изображений     | Массив с названиями тем: ['theme_imageLoad'].|
 | `disabled`     | Отключает компонент                  | `Boolean` |
 | `multiple`     | Режим выбора нескольких файлов       | `Boolean` |
 | `droppable`    | Режим Drag & Drop                    | `Boolean` |
@@ -22,6 +23,7 @@ import { Canvas, Source } from '@storybook/addon-docs';
 
 | Название       | Описание                             | Тип       |
 |:---------------|:-------------------------------------|:----------|
+| `theme`        | Варианты отображения изображений     | Название тем через запятую: 'theme_imageLoad'|
 | `disabled`     | Отключает компонент                  | `Boolean` |
 | `multiple`     | Режим выбора нескольких файлов       | `Boolean` |
 | `droppable`    | Режим Drag & Drop                    | `Boolean` |
@@ -279,5 +281,22 @@ code={`
     },
   };
 </script>
+`}
+/>
+
+### Установка вариантов отображения (тем) через атрибут `theme`:
+
+<Canvas>
+  <base-file-loader theme="theme_imageLoad">
+  </base-file-loader>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-file-loader theme="theme_imageLoad">
+</base-file-loader>
 `}
 />

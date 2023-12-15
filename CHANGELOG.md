@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseCodeEditor component
 - new icons in storybook
 - ability to display downloaded images
+- special for image displaying theme
 
 ### Changed
 
