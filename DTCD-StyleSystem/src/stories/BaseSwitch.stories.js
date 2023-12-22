@@ -15,6 +15,16 @@ export default {
         'radio',
       ],
     },
+    placement: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -30,6 +40,7 @@ const Template = (args) => {
     checked,
     label,
     labelSlot,
+    placement,
   } = args;
 
   const switchInput = document.createElement('base-switch');
@@ -38,6 +49,7 @@ const Template = (args) => {
   switchInput.type = type;
   switchInput.disabled = disabled;
   switchInput.label = label;
+  switchInput.placement = placement;
   
   switchInput.innerHTML += labelSlot;
 
@@ -51,4 +63,5 @@ DefaultSwitch.args = {
   checked: false,
   type: 'checkbox',
   labelSlot: '<span slot="label">Label slot</span>',
+  placement: undefined,
 };
