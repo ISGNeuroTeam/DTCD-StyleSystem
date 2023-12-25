@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - color "aero_32"
 - BaseCodeEditor component
 - new icons in storybook
-- ability to display labels on the left and right side
+- ability to display labels on the left and right side in BaseSwitch and BaseCheckbox
 
 ### Changed
 

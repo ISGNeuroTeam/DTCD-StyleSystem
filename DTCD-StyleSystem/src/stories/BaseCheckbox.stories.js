@@ -15,6 +15,16 @@ export default {
         'radio',
       ],
     },
+    placement: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -30,6 +40,7 @@ const Template = (args) => {
     checked,
     label,
     defaultSlot,
+    placement,
   } = args;
 
   const checkbox = document.createElement('base-checkbox');
@@ -38,6 +49,7 @@ const Template = (args) => {
   checkbox.type = type;
   checkbox.disabled = disabled;
   checkbox.label = label;
+  checkbox.placement = placement;
   
   checkbox.innerHTML += defaultSlot;
 
@@ -51,4 +63,5 @@ DefaultCheckbox.args = {
   checked: false,
   type: 'checkbox',
   defaultSlot: '',
+  placement: undefined,
 };

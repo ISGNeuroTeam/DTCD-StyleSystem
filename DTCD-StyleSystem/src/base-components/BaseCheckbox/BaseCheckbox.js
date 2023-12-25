@@ -168,15 +168,6 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   connectedCallback() {
-    const placement = this.getAttribute('placement');
-    const parentContainer = this.shadowRoot.querySelector('.BaseSwitch');
-
-    if (!placement || placement === 'right' || placement === 'left') {
-      parentContainer.style.marginTop = '0';
-    } else {
-      parentContainer.style.marginTop = '10px';
-    }
-
     this.#setPosition();
   }
 
@@ -192,53 +183,46 @@ export default class BaseCheckbox extends HTMLElement {
 
   #setPlacementClasses(newPlacement = this.#placement) {
     const { classList } = this.#checkbox;
-  
-    classList.remove('placement_right', 'placement_left', 'placement_rightStart', 'placement_leftStart');
-  
-    if (newPlacement === 'right' || newPlacement === 'rightStart') {
-      classList.add('placement_right');
-    } else {
-      classList.remove('placement_right');
-    }
-
-    if (newPlacement === 'left' || newPlacement === 'leftStart') {
-      classList.add('placement_left');
-    } else {
-      classList.remove('placement_left');
-    }
+    classList.toggle('placement_right', newPlacement === 'right' || newPlacement === 'rightStart');
+    classList.toggle('placement_left', newPlacement === 'left' || newPlacement === 'leftStart');
   }
-
+  
   #setPosition() {
     const { style } = this.#label;
-    const switchElement = this.shadowRoot.querySelector('.Switch'); 
-    const parentContainer = this.shadowRoot.querySelector('.BaseSwitch');
+    const checkboxElement = this.shadowRoot.querySelector('.Сheckbox') || this.shadowRoot.querySelector('.Switch');
+    const parentContainer = this.shadowRoot.querySelector('.BaseCheckbox') || this.shadowRoot.querySelector('.BaseSwitch');
   
-    switch (this.placement) {
+    if (checkboxElement) {
   
-      case 'left':
-        style.top = '25%';
-        style.left = '0';
-        style.transform = 'translateY(-25%)';
-        parentContainer.style.marginTop = '0';
-
-        const labelWidth = this.#label.clientWidth;
-        switchElement.style.marginLeft = `calc(${labelWidth}px + 10px)`;
-
-        break;
+      switch (this.placement) {
+        case 'left':
+          style.top = '25%';
+          style.left = '0';
+          style.transform = 'translateY(-25%)';
+          parentContainer.style.marginTop = '0';
   
-      case 'right':
-        style.top = '25%';
-        style.left = '100%';
-        style.transform = 'translateY(-25%)';
-        style.marginLeft = '10px';
-        parentContainer.style.marginTop = '0';
-
-        break;
+          if (checkboxElement) {
+            const labelWidth = this.#label.clientWidth;
+            const checkboxContainer = this.shadowRoot.querySelector('.Сheckbox') || this.shadowRoot.querySelector('.Switch');
+            checkboxContainer.style.marginLeft = `calc(${labelWidth}px + 10px)`;
+          }
   
-      default:
-        parentContainer.style.marginTop = '10px';
-
-        break;
+          break;
+  
+        case 'right':
+          style.top = '25%';
+          style.left = '100%';
+          style.transform = 'translateY(-25%)';
+          style.marginLeft = '10px';
+          parentContainer.style.marginTop = '0';
+  
+          break;
+  
+        default:
+          parentContainer.style.marginTop = '10px';
+  
+          break;
+      }
     }
-  } 
+  }
 }
