@@ -53,9 +53,8 @@ const Template = args => {
 
 export const DefaultBaseModalWindow = Template.bind({});
 DefaultBaseModalWindow.args = {
-  slot: '<div>lorem qwe ad qwd zxd weg dxc qwa das</div>',
+  slot: '<div>Title here</div>',
   'toggle-btn': '<span slot="toggle-btn">open modal</span>',
   opened: false,
   opacity: '',
-};
-  
+}

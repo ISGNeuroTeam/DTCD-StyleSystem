@@ -5,6 +5,7 @@ export default class BaseModalWindow extends HTMLElement {
   #modal;
   #toggleBtn;
   #backdrop;
+  #closeIcon;
   #opacity;
   #opened = false;
 
@@ -31,8 +32,11 @@ export default class BaseModalWindow extends HTMLElement {
     this.#modal = this.shadowRoot.querySelector('.BaseModalWindow');
     this.#toggleBtn = this.#modal.querySelector('.ToggleBtn');
     this.#backdrop = this.#modal.querySelector('.ModalBackdrop');
+    this.#closeIcon = this.#modal.querySelector('.CloseIcon');
+
     this.#toggleBtn.addEventListener('click', this.#handleToggleBtnClick);
-    
+    this.#backdrop.addEventListener('click', this.#handleBackdropClick);
+    this.#closeIcon.addEventListener('click', this.#handleCloseIconClick);
   }
 
   get opacity() {
@@ -125,18 +129,17 @@ export default class BaseModalWindow extends HTMLElement {
     }
   };
 
+  #handleBackdropClick = () => {
+    this.toggle(false);
+  };
+
+  #handleCloseIconClick = () => {
+    this.toggle(false);
+  };
+
   #setOpacity() {
-    if (this.#opacity === 'light') {
-      this.#backdrop.classList.add('opacity_light');
-    } else {
-      this.#backdrop.classList.remove('opacity_light');
-    }
-      
-    if (this.#opacity === 'dark') {
-      this.#backdrop.classList.add('opacity_dark');
-    } else {
-      this.#backdrop.classList.remove('opacity_dark');
-    }
+    this.#backdrop.classList.toggle('opacity_light', this.#opacity === 'light');
+    this.#backdrop.classList.toggle('opacity_dark', this.#opacity === 'dark');
   }
 }
   

@@ -3,24 +3,23 @@
 }
 
 .BaseModalWindow{
-  position: relative;
+  display: block;
 
   &,
   *,
   *::after,
   *::before {
     box-sizing: border-box;
+    margin: 0;
   }
 
   .ModalBackdrop {
+    display: none;
     position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    height: 100%;
     z-index: 5;
     font-family: 'Proxima Nova';
     background-color: rgba(0, 0, 0, .5);
@@ -32,6 +31,12 @@
     &.opacity_dark {
       background-color: rgba(0, 0, 0, .7);
     } 
+  }
+
+  &.opened {
+    .ModalBackdrop {
+      display: block;
+    }
   }
 
   .ModalWindow {
@@ -50,13 +55,7 @@
     padding: 15px 30px;
   }
 
-  &,
   .ToggleBtn {
-    height: 100%;
-  }
-
-  .ToggleBtn {
-    padding: 0;
     background: none;
     border: none;
     display: flex;
@@ -69,19 +68,24 @@
   }
 
   .WindowContent {
+    z-index: 100;
     display: none;
     position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 100;
     max-width: 100vw;
     width: max-content;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
   }
 
-  &.opened {
+  &.opened .WindowContent {
+    display: block;
+  }
 
-    .WindowContent {
-      display: block;
-    }
+  .CloseIcon {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    cursor: pointer;
   }
 }

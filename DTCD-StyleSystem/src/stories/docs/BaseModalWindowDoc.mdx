@@ -31,7 +31,8 @@ import {Canvas, Source} from '@storybook/addon-docs';
 
 <Canvas>
   <base-modal-window>
-    lorem ipsum
+    <span slot="toggle-btn">toggle button</span>
+    <div>Inner content</div>
   </base-modal-window>
 </Canvas>
 
@@ -42,7 +43,7 @@ dark
 code={`
 <base-modal-window>
     <span slot="toggle-btn">toggle button</span>
-    <span>lorem ipsum</span>
+    <div>Inner content</div>
 </base-modal-window>
 `}
 />
