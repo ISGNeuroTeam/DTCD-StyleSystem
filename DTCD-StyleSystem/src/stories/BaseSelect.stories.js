@@ -49,6 +49,7 @@ const Template = (args) => {
     labelSlot,
     invalid,
     autoClose,
+    multiple,
   } = args;
 
   const divWrapper = document.createElement('div');
@@ -78,6 +79,7 @@ const Template = (args) => {
   select.required = required;
   select.invalid = invalid;
   select.autoClose = autoClose;
+  select.multiple = multiple;
 
   select.innerHTML += labelSlot;
 
@@ -88,9 +90,24 @@ export const DefaultSelect = Template.bind({});
 DefaultSelect.args = {
   label: '',
   itemSlot: [
-    '<div slot="item" value="1" data-visible-value="Alfa">Alfa (1)</div>',
-    '<div slot="item" value="2" data-visible-value="Bravo">Bravo (2)</div>',
-    '<div slot="item" value="3" data-visible-value="Charlie">Charlie (3)</div>',
+    '<div slot="item" value="1" data-visible-value="Alfa">Alfa</div>',
+    '<div slot="item" value="2" data-visible-value="Bravo">Bravo</div>',
+    '<div slot="item" value="3" data-visible-value="Charlie">Charlie</div>',
+    '<div slot="item" value="4" data-visible-value="Delta">Delta</div>',
+    '<div slot="item" value="5" data-visible-value="Echo">Echo</div>',
+    '<div slot="item" value="6" data-visible-value="Foxtrot">Foxtrot</div>',
+    '<div slot="item" value="7" data-visible-value="Golf">Golf</div>',
+    '<div slot="item" value="8" data-visible-value="Hotel">Hotel</div>',
+    '<div slot="item" value="9" data-visible-value="India">India</div>',
+    '<div slot="item" value="10" data-visible-value="Juliett">Juliett</div>',
+    '<div slot="item" value="11" data-visible-value="Kilo">Kilo</div>',
+    '<div slot="item" value="12" data-visible-value="Lima">Lima</div>',
+    '<div slot="item" value="13" data-visible-value="Mike">Mike</div>',
+    '<div slot="item" value="14" data-visible-value="November">November</div>',
+    '<div slot="item" value="15" data-visible-value="Oscar">Oscar</div>',
+    '<div slot="item" value="16" data-visible-value="Papa">Papa</div>',
+    '<div slot="item" value="17" data-visible-value="Quebec">Quebec</div>',
+    '<div slot="item" value="18" data-visible-value="Romeo">Romeo</div>',
   ],
   theme: [],
   value: '',
@@ -102,4 +119,5 @@ DefaultSelect.args = {
   invalid: undefined,
   labelSlot: '<span slot="label">Default dropdown</span>',
   autoClose: true,
+  multiple: false,
 };
