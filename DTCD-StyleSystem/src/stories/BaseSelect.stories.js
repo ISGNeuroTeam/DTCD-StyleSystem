@@ -68,8 +68,9 @@ const Template = (args) => {
     'overflow': 'hidden',
     'padding-bottom': `${paddingBottomDivWrapper}px`,
   });
-
+  
   select.theme = theme.length ? theme : [];
+  select.multiple = multiple;
   select.label = label;
   select.value = value;
   select.search = search;
@@ -79,10 +80,9 @@ const Template = (args) => {
   select.required = required;
   select.invalid = invalid;
   select.autoClose = autoClose;
-  select.multiple = multiple;
-
+  
   select.innerHTML += labelSlot;
-
+  
   return divWrapper;
 };
 
@@ -93,10 +93,30 @@ DefaultSelect.args = {
     '<div slot="item" value="1" data-visible-value="Alfa">Alfa</div>',
     '<div slot="item" value="2" data-visible-value="Bravo">Bravo</div>',
     '<div slot="item" value="3" data-visible-value="Charlie">Charlie</div>',
+  ],
+  theme: [],
+  search: false,
+  opened: false,
+  value: '',
+  disabled: false,
+  required: false,
+  invalid: undefined,
+  labelSlot: '<span slot="label">Default dropdown</span>',
+  autoClose: true,
+  multiple: false,
+};
+
+export const MultipleSelect = Template.bind({});
+MultipleSelect.args = {
+  label: 'Multiple Select',
+  itemSlot: [
+    '<div slot="item" value="1" data-visible-value="Alfa">Alfa</div>',
+    '<div slot="item" value="2" data-visible-value="Bravo">Bravo</div>',
+    '<div slot="item" value="3" data-visible-value="Charlie">Charlie</div>',
     '<div slot="item" value="4" data-visible-value="Delta">Delta</div>',
     '<div slot="item" value="5" data-visible-value="Echo">Echo</div>',
-    '<div slot="item" value="6" data-visible-value="Foxtrot">Foxtrot</div>',
-    '<div slot="item" value="7" data-visible-value="Golf">Golf</div>',
+    '<div slot="item" value="6" data-visible-value="Foxtrot" selected>Foxtrot</div>',
+    '<div slot="item" value="7" data-visible-value="Golf" selected>Golf</div>',
     '<div slot="item" value="8" data-visible-value="Hotel">Hotel</div>',
     '<div slot="item" value="9" data-visible-value="India">India</div>',
     '<div slot="item" value="10" data-visible-value="Juliett">Juliett</div>',
@@ -110,14 +130,13 @@ DefaultSelect.args = {
     '<div slot="item" value="18" data-visible-value="Romeo">Romeo</div>',
   ],
   theme: [],
-  value: '',
   search: false,
   opened: false,
-  value: '',
+  value: [],
   disabled: false,
   required: false,
   invalid: undefined,
-  labelSlot: '<span slot="label">Default dropdown</span>',
-  autoClose: true,
-  multiple: false,
+  labelSlot: '',
+  autoClose: false,
+  multiple: true,
 };

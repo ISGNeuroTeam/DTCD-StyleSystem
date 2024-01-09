@@ -59,10 +59,21 @@ export default class BaseSelect extends HTMLElement {
     this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
     this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
     this.#dropdownContainer = this.shadowRoot.querySelector('.OptionList');
-    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
-
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
+    
+    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
+
+    this.#itemSlot.addEventListener('slotchange', () => {
+      const optionValues = this.#getAllOptionValues();
+      const arrayValues = [];
+      optionValues.forEach((optionItem) => {
+        if (optionItem.nodeOption.hasAttribute('selected')) {
+          arrayValues.push(optionItem.value);
+        }
+      });
+      this.value = arrayValues;
+    });
   }
 
   get required() {
@@ -74,8 +85,8 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get value() {
-    const arrayValues = new Array(this.#value);
-    if (this.multiple) arrayValues;
+    const arrayValues = Array.from(this.#value);
+    if (this.multiple) return arrayValues;
     else return arrayValues[0];
   }
 
@@ -229,11 +240,14 @@ export default class BaseSelect extends HTMLElement {
 
     if (!this.multiple) this.#value.clear();
 
-    if (this.#value.has(findedOption?.value)) {
+    if (this.#value.has(findedOption?.value) || this.#value.has(Number(findedOption.value))) {
       this.#value.delete(findedOption?.value);
     } else {
       this.#value.add(findedOption?.value);
     }
+    
+    this.dispatchEvent(new Event('input'));
+    this.dispatchEvent(new Event('change'));
 
     this.#renderVisibleValue();
   }
@@ -493,8 +507,10 @@ export default class BaseSelect extends HTMLElement {
     let visibleValueString = '';
 
     optionValues.forEach((optionItem) => {
-      if (this.#value.has(optionItem.value)) {
-        if (visibleValueString) visibleValueString += '; ';
+      if (this.#value.has(optionItem.value) || this.#value.has(Number(optionItem.value))) {
+        if (visibleValueString) {
+          visibleValueString += '; ';
+        }
         visibleValueString += optionItem.visibleValue;
         optionItem.nodeOption.setAttribute('selected', '');
       } else {
