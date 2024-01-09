@@ -92,10 +92,7 @@ export default class BaseCheckbox extends HTMLElement {
   set label(newValue) {
     const { tagName } = this;
 
-    if (tagName === 'BASE-CHECKBOX' || tagName === 'BASE-RADIO') {
-      this.innerHTML = newValue ? newValue : '';
-    }
-    if (tagName === 'BASE-SWITCH') {
+    if (tagName === 'BASE-CHECKBOX' || tagName === 'BASE-RADIO' || tagName === 'BASE-SWITCH') {
       this.querySelectorAll('[slot="label"]').forEach((label) => {
         label.remove();
       });
@@ -186,43 +183,26 @@ export default class BaseCheckbox extends HTMLElement {
     classList.toggle('placement_right', newPlacement === 'right' || newPlacement === 'rightStart');
     classList.toggle('placement_left', newPlacement === 'left' || newPlacement === 'leftStart');
   }
-  
+
   #setPosition() {
-    const { style } = this.#label;
-    const checkboxElement = this.shadowRoot.querySelector('.Сheckbox') || this.shadowRoot.querySelector('.Switch');
-    const parentContainer = this.shadowRoot.querySelector('.BaseCheckbox') || this.shadowRoot.querySelector('.BaseSwitch');
+    const checkboxElement = this.shadowRoot.querySelector('.BaseCheckbox') || this.shadowRoot.querySelector('.BaseSwitch');
   
     if (checkboxElement) {
+      checkboxElement.classList.remove('placement_left', 'placement_right');
   
       switch (this.placement) {
         case 'left':
-          style.top = '25%';
-          style.left = '0';
-          style.transform = 'translateY(-25%)';
-          parentContainer.style.marginTop = '0';
-  
-          if (checkboxElement) {
-            const labelWidth = this.#label.clientWidth;
-            const checkboxContainer = this.shadowRoot.querySelector('.Сheckbox') || this.shadowRoot.querySelector('.Switch');
-            checkboxContainer.style.marginLeft = `calc(${labelWidth}px + 10px)`;
-          }
-  
+          checkboxElement.classList.add('placement_left');
           break;
   
         case 'right':
-          style.top = '25%';
-          style.left = '100%';
-          style.transform = 'translateY(-25%)';
-          style.marginLeft = '10px';
-          parentContainer.style.marginTop = '0';
-  
+          checkboxElement.classList.add('placement_right');
           break;
   
         default:
-          parentContainer.style.marginTop = '10px';
-  
+          checkboxElement.classList.remove('placement_left', 'placement_right');
           break;
       }
     }
-  }
+  } 
 }
