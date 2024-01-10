@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - new icons in storybook
 - ability to display downloaded images
 - special for image displaying theme
+- multiple selection mode in BaseSelect
 
 ### Changed
 

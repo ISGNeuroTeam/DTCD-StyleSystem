@@ -110,6 +110,10 @@
       user-select: none;
       padding: 6px 12px;
     }
+
+    ::slotted([slot="item"][selected]) {
+      background-color: var(--button_primary_24);
+    }
   }
 
   .Message {
