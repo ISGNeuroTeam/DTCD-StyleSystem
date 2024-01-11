@@ -15,6 +15,10 @@
 
     .Label {
       margin: auto;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
     }
   }
 
@@ -27,6 +31,10 @@
 
     .Label {
       margin: auto;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
     }
   }
 
@@ -45,7 +53,11 @@
     line-height: 1.18;
     color: var(--text_main);
     letter-spacing: .25px;
-    margin-bottom: 4px;
+
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
+    }
   }
 
   .Input {
