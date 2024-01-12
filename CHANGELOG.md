@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BaseCodeEditor component
 - new icons in storybook
 - ability to display labels on the left and right side in BaseSwitch and BaseCheckbox
+- ability to display downloaded images
+- special for image displaying theme
+- multiple selection mode in BaseSelect
 
 ### Changed
 
@@ -30,10 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - joined JS-code of BaseButton and BaseIconButton
 - joined JS-code of BaseInput and BaseTextarea
 - text align center in BaseTooltip
+- styles for input type color in BaseInput
 
 ### Fixed
 
 - small mistakes in styles of BaseTooltip and BaseSwitch
+- added 'block' to BaseHeading host element
 
 ## [0.14.0]
 

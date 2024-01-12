@@ -12,10 +12,11 @@ export default class BaseSelect extends HTMLElement {
   #dropdownContainer;
 
   #invalid = null;
-  #value;
+  #value = new Set();
   #opened = false;
   #disabled = false;
   #required = false;
+  #multiple = false;
 
   #autoClose = true;
   #messageText;
@@ -35,6 +36,7 @@ export default class BaseSelect extends HTMLElement {
       'opened',
       'invalid',
       'data-auto-close',
+      'multiple',
     ];
   }
 
@@ -57,10 +59,21 @@ export default class BaseSelect extends HTMLElement {
     this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
     this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
     this.#dropdownContainer = this.shadowRoot.querySelector('.OptionList');
-    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
-
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
+    
+    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
+
+    this.#itemSlot.addEventListener('slotchange', () => {
+      const optionValues = this.#getAllOptionValues();
+      const arrayValues = [];
+      optionValues.forEach((optionItem) => {
+        if (optionItem.nodeOption.hasAttribute('selected')) {
+          arrayValues.push(optionItem.value);
+        }
+      });
+      this.value = arrayValues;
+    });
   }
 
   get required() {
@@ -72,27 +85,30 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get value() {
-    return this.#value;
+    const arrayValues = Array.from(this.#value);
+    if (this.multiple) return arrayValues;
+    else return arrayValues[0];
   }
 
   set value(newValue) {
-    const oldValue = this.value;
-    
-    const optionValues = this.#getAllOptionValues();
-    const selectedOption = optionValues.find((optionItem) => {
-      return optionItem.value === newValue;
-    });
+    if (Array.isArray(newValue)) {
+      this.#value = new Set(newValue);
+      this.dispatchEvent(new Event('input'));
+      this.dispatchEvent(new Event('change'));
+    } else {
+      const oldValue = this.value;
+      this.#value = new Set();
+      this.#value.add(newValue);
 
-    this.#value = selectedOption?.value || '';
-    this.#header.innerHTML = selectedOption?.visibleValue || '';
-    this.#searchInput.setAttribute('placeholder', selectedOption?.visibleValue || '');
+      this.dispatchEvent(new Event('input'));
+      if (oldValue !== newValue) {
+        this.dispatchEvent(new Event('change'));
+      }
+    }
+
+    this.#renderVisibleValue();
 
     if (this.#invalid == null && this.#doValidation) this.validate();
-
-    this.dispatchEvent(new Event('input'));
-    if (oldValue !== this.value) {
-      this.dispatchEvent(new Event('change'));
-    }
   }
 
   get search() {
@@ -191,6 +207,14 @@ export default class BaseSelect extends HTMLElement {
     newValue == false ? this.#autoClose = false : this.#autoClose = true;
   }
 
+  get multiple() {
+    return this.#multiple;
+  }
+
+  set multiple(newValue) {
+    this.#multiple = Boolean(newValue);
+  }
+
   validate() {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.value === '') {
@@ -214,9 +238,18 @@ export default class BaseSelect extends HTMLElement {
       return optionItem.nodeOption === selectedOption;
     });
 
-    this.value = findedOption?.value || '';
-    this.#header.innerHTML = findedOption?.visibleValue || '';
-    this.#searchInput.setAttribute('placeholder', findedOption?.visibleValue || '');
+    if (!this.multiple) this.#value.clear();
+
+    if (this.#value.has(findedOption?.value) || this.#value.has(Number(findedOption.value))) {
+      this.#value.delete(findedOption?.value);
+    } else {
+      this.#value.add(findedOption?.value);
+    }
+    
+    this.dispatchEvent(new Event('input'));
+    this.dispatchEvent(new Event('change'));
+
+    this.#renderVisibleValue();
   }
 
   #documentClickCallback = (event) => {
@@ -344,6 +377,10 @@ export default class BaseSelect extends HTMLElement {
         this.autoClose = newValue == 'false' ? false : true;
         break;
 
+      case 'multiple':
+        this.multiple = this.hasAttribute('multiple');
+        break;
+
       default:
         break;
     }
@@ -463,5 +500,25 @@ export default class BaseSelect extends HTMLElement {
     if (placement !== posAwayFromScreen) {
       render(posAwayFromScreen);
     }
+  }
+
+  #renderVisibleValue() {
+    const optionValues = this.#getAllOptionValues();
+    let visibleValueString = '';
+
+    optionValues.forEach((optionItem) => {
+      if (this.#value.has(optionItem.value) || this.#value.has(Number(optionItem.value))) {
+        if (visibleValueString) {
+          visibleValueString += '; ';
+        }
+        visibleValueString += optionItem.visibleValue;
+        optionItem.nodeOption.setAttribute('selected', '');
+      } else {
+        optionItem.nodeOption.removeAttribute('selected');
+      }
+    });
+
+    this.#header.innerHTML = visibleValueString;
+    this.#searchInput.setAttribute('placeholder', visibleValueString);
   }
 }
