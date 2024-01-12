@@ -3,7 +3,40 @@
 }
 
 .BaseSwitch {
-  display: block;
+  display: flex;
+  flex-direction: column;
+
+  &.placement_right {
+    flex-direction: row-reverse;
+
+    .Switch {
+      margin-right: 10px;
+    }
+
+    .Label {
+      margin: auto;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
+    }
+  }
+
+  &.placement_left {
+    flex-direction: row;
+
+    .Switch {
+      margin-left: 10px;
+    }
+
+    .Label {
+      margin: auto;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
+    }
+  }
 
   &,
   *,
@@ -13,13 +46,14 @@
   }
 
   .Label {
-    display: block;
+    display: flex;
+    align-items: center;
     font-weight: 600;
     font-size: 11px;
     line-height: 1.18;
     color: var(--text_main);
     letter-spacing: .25px;
-  
+
     ::slotted([slot="label"]) {
       display: block;
       padding-bottom: 4px;
@@ -38,7 +72,6 @@
           transform: translateX(14px);
         }
       }
-      
     }
 
     &:disabled {
@@ -62,6 +95,7 @@
     height: 20px;
     cursor: pointer;
     position: relative;
+    flex: none;
 
     .Slider {
       position: absolute;

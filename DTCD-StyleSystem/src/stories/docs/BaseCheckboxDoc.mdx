@@ -6,13 +6,14 @@ import { Canvas, Source } from '@storybook/addon-docs';
 
 ## Свойства/Атрибуты
 
-| Название | Описание                                                                 | Значение              |
-|----------|--------------------------------------------------------------------------|-----------------------|
-| checked  | Активирует / дезактивирует чекбокс.                                      | Логическое            |
-| value    | @deprecated. Тоже самое, что и `checked`.                                |
-| disabled | Отлкючает чекбокс.                                                       | Логическое            |
-| type     | Тип поля ввода (`<input/>`).                                             | `checkbox` \| `radio` |
-| label    | Подпись чекбокса.                                                        | Строка                |
+| Название | Описание                                                                 | Значение                    |
+|----------|--------------------------------------------------------------------------|-----------------------------|
+| checked  | Активирует / дезактивирует чекбокс.                                      | Логическое                  |
+| value    | @deprecated. Тоже самое, что и `checked`.                                |                             |
+| disabled | Отлкючает чекбокс.                                                       | Логическое                  |
+| type     | Тип поля ввода (`<input/>`).                                             | `checkbox` \| `radio`       |
+| label    | Подпись чекбокса.                                                        | Строка                      |
+| placement | Расположение скрытого содержимого относительно родительского контейнера.| 'rightStart' \| 'leftStart' |
 
 ## События
 
@@ -86,5 +87,20 @@ methods: {
     console.log(e.target.value);
   },
 },
+`}
+/>
+
+Чтобы расположить контейнер со скрытым содержимым справа, нужно добавить атрибут/свойство `placement="right"`:
+
+<Canvas>
+  <base-checkbox label="defaultSlot" placement="right"></base-checkbox>
+</Canvas>
+
+<Source
+language='html'
+format={true}
+dark
+code={`
+<base-checkbox label="defaultSlot" placement="right"></base-checkbox>
 `}
 />

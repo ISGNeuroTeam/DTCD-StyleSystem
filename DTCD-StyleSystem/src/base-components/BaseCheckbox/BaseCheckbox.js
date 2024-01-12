@@ -11,6 +11,8 @@ export default class BaseCheckbox extends HTMLElement {
 
   #label;
   #checkbox;
+  #placement;
+  #placements = ['right', 'left'];
 
   #value;
 
@@ -21,6 +23,7 @@ export default class BaseCheckbox extends HTMLElement {
       'disabled',
       'type',
       'value',
+      'placement',
     ];
   }
 
@@ -89,10 +92,7 @@ export default class BaseCheckbox extends HTMLElement {
   set label(newValue) {
     const { tagName } = this;
 
-    if (tagName === 'BASE-CHECKBOX' || tagName === 'BASE-RADIO') {
-      this.innerHTML = newValue ? newValue : '';
-    }
-    if (tagName === 'BASE-SWITCH') {
+    if (tagName === 'BASE-CHECKBOX' || tagName === 'BASE-RADIO' || tagName === 'BASE-SWITCH') {
       this.querySelectorAll('[slot="label"]').forEach((label) => {
         label.remove();
       });
@@ -109,6 +109,22 @@ export default class BaseCheckbox extends HTMLElement {
 
   set type(newValue) {
     this.#checkbox.type = newValue == 'radio' ? 'radio' : 'checkbox';
+  }
+
+  get placement() {
+    return this.#placement;
+  }
+
+  set placement(newValue) {
+    if (newValue == 'rightStart') {
+      newValue = 'right';
+    }
+    if (newValue == 'leftStart') {
+      newValue = 'left';
+    }
+    
+    this.#placement = this.#placements.includes(newValue) ? newValue : 'bottom';
+    this.#setPlacementClasses();
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -138,9 +154,18 @@ export default class BaseCheckbox extends HTMLElement {
         break;
       }
 
+      case 'placement': {
+        this.placement = newValue;
+        break;
+      }
+
       default:
         break;
     }
+  }
+
+  connectedCallback() {
+    this.#setPosition();
   }
 
   #handleCheckboxInput = (event) => {
@@ -152,4 +177,32 @@ export default class BaseCheckbox extends HTMLElement {
     event.stopPropagation();
     this.dispatchEvent(new Event('change'));
   }
+
+  #setPlacementClasses(newPlacement = this.#placement) {
+    const { classList } = this.#checkbox;
+    classList.toggle('placement_right', newPlacement === 'right' || newPlacement === 'rightStart');
+    classList.toggle('placement_left', newPlacement === 'left' || newPlacement === 'leftStart');
+  }
+
+  #setPosition() {
+    const checkboxElement = this.shadowRoot.querySelector('.BaseCheckbox') || this.shadowRoot.querySelector('.BaseSwitch');
+  
+    if (checkboxElement) {
+      checkboxElement.classList.remove('placement_left', 'placement_right');
+  
+      switch (this.placement) {
+        case 'left':
+          checkboxElement.classList.add('placement_left');
+          break;
+  
+        case 'right':
+          checkboxElement.classList.add('placement_right');
+          break;
+  
+        default:
+          checkboxElement.classList.remove('placement_left', 'placement_right');
+          break;
+      }
+    }
+  } 
 }
