@@ -53,6 +53,14 @@
     box-shadow: 1px 1px 2px rgba(8, 18, 55, 0.12), 0px 4px 12px rgba(8, 18, 55, 0.12);
     min-height: 200px;
     padding: 15px 30px;
+    transition: width 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .ModalWindow {
+      width: calc(100% - 20px); 
+      max-width: none;
+    }
   }
 
   .ToggleBtn {
