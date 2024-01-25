@@ -46,6 +46,8 @@
     "storybook-dark-mode": "3.0.0"
   },
   "dependencies": {
+    "@jaames/iro": "^5.5.2", 
+    "@popperjs/core": "^2.11.8",
     "codemirror": "5.65.15",
     "jsonlint": "1.6.3",
     "moment": "2.29.3"
