@@ -64,7 +64,7 @@
     }
 
     .Label {
-      margin: auto;
+      margin-right: auto;
 
       ::slotted([slot="label"]) {
         padding-bottom: 0px;
@@ -80,7 +80,6 @@
     }
 
     .Label {
-      margin: auto;
 
       ::slotted([slot="label"]) {
         padding-bottom: 0px;
