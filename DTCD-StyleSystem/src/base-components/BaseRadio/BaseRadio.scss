@@ -59,12 +59,9 @@
   &.placement_right {
     flex-direction: row-reverse;
 
-    .Input {
-      margin-right: 10px;
-    }
-
     .Label {
-      margin: auto;
+      margin-left: 10px;
+      margin-right: auto;
 
       ::slotted([slot="label"]) {
         padding-bottom: 0px;
@@ -75,12 +72,8 @@
   &.placement_left {
     flex-direction: row;
 
-    .Input {
-      margin-left: 10px;
-    }
-
     .Label {
-      margin: auto;
+      margin-right: 10px;
 
       ::slotted([slot="label"]) {
         padding-bottom: 0px;
