@@ -34,6 +34,8 @@ const Template = args => {
     slot, 
     opened, 
     opacity,
+    header,
+    headerSlot,
   } = args;
 
   const modal = document.createElement(NAME_COMPONENT);
@@ -47,14 +49,19 @@ const Template = args => {
   modal.opened = opened;
   modal.innerHTML += slot;
   modal.innerHTML += args['toggle-btn'];
+  modal.header = header;
+  
+  modal.innerHTML += headerSlot;
   
   return modal;
 };
 
 export const DefaultBaseModalWindow = Template.bind({});
 DefaultBaseModalWindow.args = {
-  slot: '<div>Title here</div>',
   'toggle-btn': '<span slot="toggle-btn">open modal</span>',
+  header: '',
+  headerSlot: '<span slot="header">Header slot</span>',
+  slot: '<div>Other content</div>',
   opened: false,
   opacity: '',
 }

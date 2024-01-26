@@ -46,7 +46,6 @@
     max-height: 700px;
     width: 520px;
     min-width: 360px;
-    margin: 10px;
     background-color: var(--background_main);
     border: 1px solid var(--border);
     border-radius: 20px;
@@ -69,9 +68,24 @@
     display: flex;
     align-items: center;
     width: 100%;
+    cursor: pointer;
 
     ::slotted([slot="toggle-btn"]) {
       margin-right: auto;
+    }
+  }
+
+  .Label {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1.18;
+    color: var(--text_main);
+    letter-spacing: .25px;
+  
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
     }
   }
 
@@ -86,14 +100,25 @@
     left: 50%;
   }
 
+  .ModalInner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+  }
+
   &.opened .WindowContent {
     display: block;
   }
 
   .CloseIcon {
-    position: absolute;
-    top: 15px;
-    right: 30px;
+    display: flex;
+    align-self: start;
+    border: none;
     cursor: pointer;
+    background: transparent;
+    padding: 0;
+    color: var(--border);
   }
 }

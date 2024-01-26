@@ -8,11 +8,13 @@ export default class BaseModalWindow extends HTMLElement {
   #closeIcon;
   #opacity;
   #opened = false;
+  #header;
 
   static get observedAttributes() {
     return [
       'opened', 
       'opacity',
+      'header'
     ];
   }
 
@@ -33,6 +35,7 @@ export default class BaseModalWindow extends HTMLElement {
     this.#toggleBtn = this.#modal.querySelector('.ToggleBtn');
     this.#backdrop = this.#modal.querySelector('.ModalBackdrop');
     this.#closeIcon = this.#modal.querySelector('.CloseIcon');
+    this.#header = this.shadowRoot.querySelector('.Header');
 
     this.#toggleBtn.addEventListener('click', this.#handleToggleBtnClick);
     this.#backdrop.addEventListener('click', this.#handleBackdropClick);
@@ -63,6 +66,20 @@ export default class BaseModalWindow extends HTMLElement {
     }
   }
 
+  get header() {
+    return this.#header.innerHTML;
+  }
+
+  set header(value) {
+    this.querySelectorAll('[slot="header"]').forEach((header) => {
+      header.remove();
+    });
+
+    if (value) {
+      this.innerHTML += `<span slot="header">${value}</span>`;
+    }
+  }
+
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
 
@@ -71,9 +88,13 @@ export default class BaseModalWindow extends HTMLElement {
         break;
 
       case 'opacity': 
-          this.#opacity = newValue ? newValue : undefined;
-          this.#setOpacity();
-          break;
+        this.#opacity = newValue ? newValue : undefined;
+        this.#setOpacity();
+        break;
+
+      case 'header':
+        this.header = newValue;
+        break;
 
       default:
         break;
