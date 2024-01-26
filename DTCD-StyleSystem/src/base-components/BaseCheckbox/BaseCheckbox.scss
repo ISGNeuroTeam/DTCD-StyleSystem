@@ -1,17 +1,56 @@
 :host {
   display: inline-block;
-  align-self: flex-start;
 }
 
 .BaseCheckbox {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+
+  &.placement_right {
+    flex-direction: row-reverse;
+
+    .Label {
+      margin-left: 10px;
+      margin-right: auto;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
+    }
+  }
+
+  &.placement_left {
+    flex-direction: row;
+
+    .Label {
+      margin-right: 10px;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
+    }
+  }
 
   &,
   *,
   *::after,
   *::before {
     box-sizing: border-box;
+  }
+
+  .Label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1.18;
+    color: var(--text_main);
+    letter-spacing: .25px;
+
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
+    }
   }
 
   .Input {
@@ -43,31 +82,19 @@
   }
 
   .Сheckbox {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
     justify-content: center;
     width: 20px;
     height: 20px;
-    cursor: pointer;
     border: 1px solid var(--border);
     border-radius: 4.44px;
-    transition: .3s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
     position: relative;
   
     .Icon {
       fill: #FEFEFE;
       opacity: 0;
     }
-  }
-  
-  .Label {
-    display: inline-block;
-    padding-left: 8px;
-    cursor: pointer;
-    color: var(--text_main);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .25px;
   }
 }

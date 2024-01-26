@@ -10,6 +10,7 @@ export default class BaseFileLoader extends HTMLElement {
   #descriptionEl;
   #infoEl;
   #label;
+  #theme = [];
 
   #dropEvents = [
     {
@@ -54,19 +55,16 @@ export default class BaseFileLoader extends HTMLElement {
   ]
 
   static get observedAttributes() {
-    return ['disabled', 'multiple', 'droppable', 'accept', 'description', 'label'];
+    return ['disabled', 'multiple', 'droppable', 'accept', 'description', 'label', 'theme'];
   }
 
   constructor() {
     super();
-
-    const template = document.createElement('template');
-    const style = document.createElement('style');
-    template.innerHTML = html;
-    style.textContent = styles;
-
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.append(style, template.content.cloneNode(true));
+    this.shadowRoot.innerHTML = `
+      <style>${styles}</style>
+      ${html}
+    `;
 
     this.#input = this.shadowRoot.getElementById('input');
     this.#label = this.shadowRoot.getElementById('label');
@@ -145,6 +143,22 @@ export default class BaseFileLoader extends HTMLElement {
     }
   }
 
+  get theme() {
+    return this.#theme;
+  }
+
+  set theme(value) {
+    if (value) {
+      if (Array.isArray(value)) {
+        this.setAttribute('theme', value.join(','));
+      } else {
+        this.setAttribute('theme', value);
+      }
+    } else {
+      this.removeAttribute('theme');
+    }
+  }
+
   attributeChangedCallback(attrName, oldValue, newValue) {
     switch (attrName) {
       case 'disabled': {
@@ -175,23 +189,70 @@ export default class BaseFileLoader extends HTMLElement {
         break;
       }
 
-      case 'label':
+      case 'theme': {
+        if (newValue) {
+          this.#theme = newValue.split(',');
+        } else {
+          this.#theme = [];
+        }
+        this.#setThemeClasses();
+        break;
+      }
+
+      case 'label': {
         this.label = newValue;
         break;
+      }
     }
+  }
+
+  #setThemeClasses() {
+    const allThemes = [
+      'theme_imageLoad',
+    ];
+
+    const { classList } = this.#dropzone;
+    
+    for (const theme of allThemes) {
+      if (this.#theme.indexOf(theme) != -1) {
+        classList.add(theme);
+      } else {
+        classList.remove(theme);
+      }
+    }
+
+    const hideCaption = classList.contains('theme_imageLoad');
+    this.#descriptionEl.classList.toggle('hidden', hideCaption);
+    this.#infoEl.classList.toggle('hidden', hideCaption);
   }
 
   #handleFilesUpload(fileList) {
     if (fileList.length <= 0) return;
-
+  
+    if (this.#theme.includes('theme_imageLoad')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const outputDiv = this.shadowRoot.getElementById('output');
+  
+        outputDiv.innerHTML = '';
+        const img = new Image();
+        img.src = e.target.result;
+  
+        outputDiv.appendChild(img);
+        this.shadowRoot.getElementById('icon').style.display = 'none';
+      };
+  
+      reader.readAsDataURL(fileList[0]);
+    }
+  
     const info = fileList.length === 1
       ? fileList[0].name
-      : `Выбрано файлов: ${fileList.length}`
-
+      : `Выбрано файлов: ${fileList.length}`;
+  
     this.#files = fileList;
     this.#infoEl.textContent = info;
     this.#descriptionEl.hidden = true;
-
+  
     this.dispatchEvent(new Event('input'));
   }
 

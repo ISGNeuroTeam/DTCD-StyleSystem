@@ -1,5 +1,3 @@
-import BaseDropdown from '../base-components/BaseDropdown/BaseDropdown';
-
 import BaseDropdownDoc from './docs/BaseDropdownDoc.mdx';
 
 export default {
@@ -15,13 +13,23 @@ export default {
       control: {
         type: 'select',
       },
-      options: ['<no modification>', 'right', 'center'],
+      options: [
+        '<no modification>', 
+        'right',
+        'center',
+      ],
     },
     placement: {
       control: {
         type: 'select',
       },
-      options: ['<no modification>', 'rightStart', 'leftStart', 'top'],
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+        'top',
+        'bottom',
+      ],
     },
   },
   parameters: {
@@ -34,14 +42,16 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-dropdown';
-
-window.customElements.define(NAME_COMPONENT, BaseDropdown);
-
 const Template = args => {
   const { theme = [], slot, alignment, placement, opened } = args;
 
-  const dropdown = document.createElement(NAME_COMPONENT);
+  const divWrapper = document.createElement('div');
+        divWrapper.style.padding = '50px';
+        divWrapper.style.display = 'flex';
+        divWrapper.style.justifyContent = 'center';
+  const dropdown = document.createElement('base-dropdown');
+  divWrapper.appendChild(dropdown);
+
   dropdown.theme = theme;
   dropdown.alignment = alignment;
   dropdown.placement = placement;
@@ -50,7 +60,7 @@ const Template = args => {
   dropdown.innerHTML += args['toggle-btn'];
   dropdown.innerHTML += args['icon-arrow'];
 
-  return dropdown;
+  return divWrapper;
 };
 
 export const DefaultDropdown = Template.bind({});

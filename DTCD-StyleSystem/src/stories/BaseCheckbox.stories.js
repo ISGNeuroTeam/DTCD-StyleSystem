@@ -1,5 +1,3 @@
-import BaseCheckbox from '../base-components/BaseCheckbox/BaseCheckbox';
-
 import BaseCheckboxDoc from './docs/BaseCheckboxDoc.mdx';
 
 export default {
@@ -7,6 +5,25 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
+    },
+    type: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        'checkbox',
+        'radio',
+      ],
+    },
+    placement: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+      ],
     },
   },
   parameters: {
@@ -16,34 +33,35 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-checkbox';
-
-window.customElements.define(NAME_COMPONENT, BaseCheckbox);
-
 const Template = (args) => {
   const {
     type,
     disabled,
     checked,
-    defaultSlot,
     label,
+    labelSlot,
+    placement,
   } = args;
 
-  const checkbox = document.createElement(NAME_COMPONENT);
+  const checkbox = document.createElement('base-checkbox');
 
-  checkbox.innerHTML += defaultSlot;
   checkbox.checked = checked;
   checkbox.type = type;
   checkbox.disabled = disabled;
   checkbox.label = label;
+  checkbox.placement = placement;
+  
+  checkbox.innerHTML += labelSlot;
 
   return checkbox;
 };
 
 export const DefaultCheckbox = Template.bind({});
 DefaultCheckbox.args = {
-  disabled: false,
   label: '',
-  defaultSlot: '',
-  checked: true,
+  disabled: false,
+  checked: false,
+  type: 'checkbox',
+  labelSlot: '<span slot="label">Label slot</span>',
+  placement: undefined,
 };

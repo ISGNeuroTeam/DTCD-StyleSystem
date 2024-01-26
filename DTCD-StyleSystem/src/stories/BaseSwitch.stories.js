@@ -1,9 +1,31 @@
-import BaseSwitch from '../base-components/BaseSwitch/BaseSwitch';
-
 import BaseSwitchDoc from './docs/BaseSwitchDoc.mdx';
 
 export default {
   title: 'Example/BaseComponents/BaseSwitch',
+  argTypes: {
+    defaultSlot: { 
+      type: 'string',
+    },
+    type: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        'checkbox',
+        'radio',
+      ],
+    },
+    placement: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+      ],
+    },
+  },
   parameters: {
     docs: {
       page: BaseSwitchDoc,
@@ -11,25 +33,23 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-switch';
-
-window.customElements.define(NAME_COMPONENT, BaseSwitch);
-
 const Template = (args) => {
   const {
+    type,
     disabled,
     checked,
-    value,
     label,
     labelSlot,
+    placement,
   } = args;
 
-  const switchInput = document.createElement(NAME_COMPONENT);
-
+  const switchInput = document.createElement('base-switch');
+  
   switchInput.checked = checked;
+  switchInput.type = type;
   switchInput.disabled = disabled;
-  switchInput.value = value;
   switchInput.label = label;
+  switchInput.placement = placement;
   
   switchInput.innerHTML += labelSlot;
 
@@ -41,6 +61,7 @@ DefaultSwitch.args = {
   label: '',
   disabled: false,
   checked: false,
-  value: '',
+  type: 'checkbox',
   labelSlot: '<span slot="label">Label slot</span>',
+  placement: undefined,
 };

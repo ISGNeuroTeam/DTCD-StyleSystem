@@ -9,7 +9,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- 'autoCLose' parameter of BaseSelect
+- date range in BaseDateTimePicker
+- buttons for select of time windows in BaseDateTimePicker
+- BaseDateTimePicker documentation
+- color "aero_32"
+- BaseCodeEditor component
+- new icons in storybook
+- ability to display labels on the left and right side in BaseSwitch and BaseCheckbox
+- ability to display downloaded images
+- special for image displaying theme
+- multiple selection mode in BaseSelect
+- BaseColorPicker with more color choices, transparency changes and color model changes
+- label displaying in BaseRadio 
+- support 'max' and 'min' attributes for BaseInput
+- ability to change placement in BaseRadio
 - new component BaseModalWindow
+
+### Changed
+
+- how `invalid` property works. Edited BaseInput, BaseSelect, BaseTextarea
+- BaseSelect rendering so that it doesn't get cut off
+- BaseColorPicker rendering so that it doesn't get cut off
+- BaseDropdown rendering so that it doesn't get cut off
+- BaseDateTimePicker rendering so that it doesn't get cut off
+- definition of custom html-elements in Storybook (added try-catch statement)
+- joined JS-code of BaseCheckbox, BaseRadio and BaseSwitch
+- joined JS-code of BaseButton and BaseIconButton
+- joined JS-code of BaseInput and BaseTextarea
+- text align center in BaseTooltip
+- styles for input type color in BaseInput
+
+### Fixed
+
+- small mistakes in styles of BaseTooltip and BaseSwitch
+- added 'block' to BaseHeading host element
 
 ## [0.14.0]
 

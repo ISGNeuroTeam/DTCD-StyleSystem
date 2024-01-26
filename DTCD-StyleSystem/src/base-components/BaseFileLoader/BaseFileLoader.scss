@@ -69,6 +69,23 @@ input {
     @include border-offset($inner-offset);
   }
 
+  &.theme_imageLoad {
+    height: 50px;
+    width: 50px;
+    padding: 0px;
+
+    &::after {
+      border: none;
+      height: 50px;
+      width: 50px;
+    }
+
+    .Content {
+      height: 50px;
+      width: 50px;
+    }
+  } 
+
   &.dragover {
     &::after {
       @include border-offset($inner-offset + 3px);
@@ -85,10 +102,11 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
 
     .IconSlot {
       display: flex;
+      align-items: center; 
+      justify-content: center;
 
       .DefaultIcon {
         fill: var(--text_secondary);
@@ -109,6 +127,26 @@ input {
       &:empty {
         margin-top: 0;
       }
+    }
+
+    .outputImage {
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .hidden {
+      display: none;
     }
   }
 }

@@ -1,3 +1,7 @@
+/**
+ * Этот скрипт нужно подключать в файлах документации,
+ * в которых есть всплывающие элементы для их корректной работы.
+ */
 setTimeout(() => {
   document.querySelectorAll('.sbdocs-preview [scale="1"]').forEach((element) => {
     const { style } = element;

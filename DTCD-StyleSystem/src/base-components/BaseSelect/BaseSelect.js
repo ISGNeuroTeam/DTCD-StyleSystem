@@ -8,14 +8,21 @@ export default class BaseSelect extends HTMLElement {
   #searchInput;
   #label;
   #message;
-  #messageText;
-  #invalid = false;
-  #value;
   #itemSlot;
+  #dropdownContainer;
+
+  #invalid = null;
+  #value = new Set();
   #opened = false;
-  #doValidation = false;
   #disabled = false;
   #required = false;
+  #multiple = false;
+
+  #autoClose = true;
+  #messageText;
+  #doValidation = false;
+  #resultValidation = false;
+  #intervalCheckingCoords;
 
   static get observedAttributes() {
     return [
@@ -28,6 +35,8 @@ export default class BaseSelect extends HTMLElement {
       'search',
       'opened',
       'invalid',
+      'data-auto-close',
+      'multiple',
     ];
   }
 
@@ -49,10 +58,22 @@ export default class BaseSelect extends HTMLElement {
     this.#header = this.shadowRoot.querySelector('.SelectedValue');
     this.#fieldWrapper = this.shadowRoot.querySelector('.FieldWrapper');
     this.#searchInput = this.shadowRoot.querySelector('.SearchInput');
-    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
-
+    this.#dropdownContainer = this.shadowRoot.querySelector('.OptionList');
     this.#label = this.shadowRoot.querySelector('.Label');
     this.#message = this.shadowRoot.querySelector('.Message');
+    
+    this.#itemSlot = this.shadowRoot.querySelector('slot[name="item"]');
+
+    this.#itemSlot.addEventListener('slotchange', () => {
+      const optionValues = this.#getAllOptionValues();
+      const arrayValues = [];
+      optionValues.forEach((optionItem) => {
+        if (optionItem.nodeOption.hasAttribute('selected')) {
+          arrayValues.push(optionItem.value);
+        }
+      });
+      this.value = arrayValues;
+    });
   }
 
   get required() {
@@ -64,27 +85,30 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get value() {
-    return this.#value;
+    const arrayValues = Array.from(this.#value);
+    if (this.multiple) return arrayValues;
+    else return arrayValues[0];
   }
 
   set value(newValue) {
-    const oldValue = this.value;
-    
-    const optionValues = this.#getAllOptionValues();
-    const selectedOption = optionValues.find((optionItem) => {
-      return optionItem.value === newValue;
-    });
-
-    this.#value = selectedOption?.value || '';
-    this.#header.innerHTML = selectedOption?.visibleValue || '';
-    this.#searchInput.setAttribute('placeholder', selectedOption?.visibleValue || '');
-
-    this.#doValidation && this.validate();
-
-    this.dispatchEvent(new Event('input'));
-    if (oldValue !== this.value) {
+    if (Array.isArray(newValue)) {
+      this.#value = new Set(newValue);
+      this.dispatchEvent(new Event('input'));
       this.dispatchEvent(new Event('change'));
+    } else {
+      const oldValue = this.value;
+      this.#value = new Set();
+      this.#value.add(newValue);
+
+      this.dispatchEvent(new Event('input'));
+      if (oldValue !== newValue) {
+        this.dispatchEvent(new Event('change'));
+      }
     }
+
+    this.#renderVisibleValue();
+
+    if (this.#invalid == null && this.#doValidation) this.validate();
   }
 
   get search() {
@@ -158,46 +182,74 @@ export default class BaseSelect extends HTMLElement {
   }
 
   get invalid() {
-    return this.#invalid;
+    if (this.#invalid == true) return true;
+    if (this.#resultValidation == true) return true;
+    return false;
   }
 
   set invalid(newVal) {
-    this.#invalid = Boolean(newVal);
-
-    if (this.#invalid) {
-      this.#selectContainer.classList.remove('withSuccessFill');
-      this.#selectContainer.classList.add('withError');
+    if (newVal == 'false' || newVal == false || newVal == 0 || newVal == '0') {
+      this.#invalid = false;
+    } else if (newVal == 'true' || newVal == true || newVal == 1 || newVal == '1') {
+      this.#invalid = true;
     } else {
-      this.#selectContainer.classList.remove('withError');
+      this.#invalid = null;
     }
 
-    this.#message.innerHTML = this.#invalid && this.#messageText ? this.#messageText : '';
-    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+    this.#setInvalidStatus(this.#invalid);
+  }
+
+  get autoClose() {
+    return this.#autoClose;
+  }
+
+  set autoClose(newValue) {
+    newValue == false ? this.#autoClose = false : this.#autoClose = true;
+  }
+
+  get multiple() {
+    return this.#multiple;
+  }
+
+  set multiple(newValue) {
+    this.#multiple = Boolean(newValue);
   }
 
   validate() {
     // TODO: HERE ADD VALIDATIONS
     if (this.required && this.value === '') {
       this.#messageText = 'Это обязательное поле*';
-      return (this.invalid = true);
+      this.#resultValidation = true;
     } else {
       this.#messageText = '';
-      return (this.invalid = false);
+      this.#resultValidation = false;
     }
+
+    this.#setInvalidStatus(this.#resultValidation);
+    return this.#resultValidation;
   }
 
   #optionClickCallback = (e) => {
     e.stopPropagation();
-    const selectedOption = e.target.closest('[slot="item"]');
 
+    const selectedOption = e.target.closest('[slot="item"]');
     const optionValues = this.#getAllOptionValues();
     const findedOption = optionValues.find((optionItem) => {
       return optionItem.nodeOption === selectedOption;
     });
 
-    this.value = findedOption?.value || '';
-    this.#header.innerHTML = findedOption?.visibleValue || '';
-    this.#searchInput.setAttribute('placeholder', findedOption?.visibleValue || '');
+    if (!this.multiple) this.#value.clear();
+
+    if (this.#value.has(findedOption?.value) || this.#value.has(Number(findedOption.value))) {
+      this.#value.delete(findedOption?.value);
+    } else {
+      this.#value.add(findedOption?.value);
+    }
+    
+    this.dispatchEvent(new Event('input'));
+    this.dispatchEvent(new Event('change'));
+
+    this.#renderVisibleValue();
   }
 
   #documentClickCallback = (event) => {
@@ -227,16 +279,23 @@ export default class BaseSelect extends HTMLElement {
       if (this.hasAttribute('search')) {
         this.#searchInput.focus();
       }
+
+      this.#setPosition();
+      this.#intervalCheckingCoords = setInterval(() => {
+        this.#setPosition();
+      }, 100);
     } else {
       this.#selectContainer.classList.remove('opened');
       document.removeEventListener('click', this.#documentClickCallback);
+
+      clearInterval(this.#intervalCheckingCoords);
 
       if (this.hasAttribute('search')) {
         this.#searchInput.blur();
         this.#searchInput.value = '';
       }
 
-      this.#doValidation && this.validate();
+      if (this.#invalid == null && this.#doValidation) this.validate();
     }
 
     return this.#opened;
@@ -252,6 +311,7 @@ export default class BaseSelect extends HTMLElement {
   disconnectedCallback() {
     this.#fieldWrapper.removeEventListener('click', this.#handleFieldWrapperClick);
     this.#searchInput.removeEventListener('input', this.#handleSearchFieldInput);
+    clearInterval(this.#intervalCheckingCoords);
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -306,11 +366,19 @@ export default class BaseSelect extends HTMLElement {
         break;
 
       case 'invalid':
-        this.invalid = this.hasAttribute('invalid');
+        this.invalid = newValue;
         break;
 
       case 'required':
         this.required = this.hasAttribute('required');
+        break;
+
+      case 'data-auto-close':
+        this.autoClose = newValue == 'false' ? false : true;
+        break;
+
+      case 'multiple':
+        this.multiple = this.hasAttribute('multiple');
         break;
 
       default:
@@ -341,9 +409,15 @@ export default class BaseSelect extends HTMLElement {
     return optionValues;
   };
 
-  #handleFieldWrapperClick = (e) => {
-    e.preventDefault();
+  #handleFieldWrapperClick = (event) => {
+    event.preventDefault();
     if (this.#disabled) return;
+
+    // костыль для отключения автоматического закрытия BaseSelect,
+    // если установлен параметр "autoClose" в значение "false".
+    if (this.#autoClose === false && event.target.classList.contains('SearchInput')) {
+      return;
+    }
 
     const action = this.toggle() ? 'add' : 'remove';
     const method = action + 'EventListener';
@@ -359,5 +433,92 @@ export default class BaseSelect extends HTMLElement {
       const value = isValueExist ? item.value.toLowerCase() : item.textContent.toLowerCase();
       item.style.display = value.includes(subString) ? '' : 'none';
     });
+  }
+
+  #setInvalidStatus (status) {
+    const { classList } = this.#selectContainer;
+
+    if (status) {
+      classList.remove('withSuccessFill');
+      classList.add('withError');
+    } else {
+      classList.remove('withError');
+    }
+
+    this.#message.innerHTML = status && this.#messageText ? this.#messageText : '';
+    this.#message.style.padding = this.#message.textContent.length ? '' : '0';
+  }
+
+  #setPosition() {
+    const {
+      height,
+      width,
+      left,
+      top,
+    } = this.#fieldWrapper.getBoundingClientRect();
+
+    const render = (hintPos) => {
+      const {
+        style,
+      } = this.#dropdownContainer;
+
+      this.#selectContainer.classList.remove('placement_top', 'placement_bottom');
+      this.#selectContainer.classList.add(`placement_${hintPos}`);
+      
+      style.position = 'fixed';
+      style.width = (width - 6) + 'px';
+      style.left = (left + width / 2) + 'px';
+      
+      switch (hintPos) {
+        case 'bottom':
+          style.top = (top + height) + 'px';
+          style.transform = '';
+          break;
+  
+        case 'top':
+          style.top = top + 'px';
+          style.transform = 'translateX(-50%) translateY(-100%)';
+          break;
+      }
+    }
+
+    const placement = 'bottom';
+    render(placement);
+
+    const {
+      offsetHeight: windowHeight,
+    } = document.body;
+    const {
+      top: hintTop,
+      bottom: hintBottom,
+    } = this.#dropdownContainer.getBoundingClientRect();
+
+    let posAwayFromScreen = placement;
+    if (hintTop < 0) posAwayFromScreen = 'bottom';
+    if (hintBottom > windowHeight) posAwayFromScreen = 'top';
+
+    if (placement !== posAwayFromScreen) {
+      render(posAwayFromScreen);
+    }
+  }
+
+  #renderVisibleValue() {
+    const optionValues = this.#getAllOptionValues();
+    let visibleValueString = '';
+
+    optionValues.forEach((optionItem) => {
+      if (this.#value.has(optionItem.value) || this.#value.has(Number(optionItem.value))) {
+        if (visibleValueString) {
+          visibleValueString += '; ';
+        }
+        visibleValueString += optionItem.visibleValue;
+        optionItem.nodeOption.setAttribute('selected', '');
+      } else {
+        optionItem.nodeOption.removeAttribute('selected');
+      }
+    });
+
+    this.#header.innerHTML = visibleValueString;
+    this.#searchInput.setAttribute('placeholder', visibleValueString);
   }
 }

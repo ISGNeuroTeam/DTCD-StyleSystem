@@ -1,5 +1,3 @@
-import BaseRadio from '../base-components/BaseRadio/BaseRadio';
-
 import BaseRadioDoc from './docs/BaseRadioDoc.mdx';
 
 export default {
@@ -7,6 +5,25 @@ export default {
   argTypes: {
     defaultSlot: { 
       type: 'string',
+    },
+    type: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        'checkbox',
+        'radio',
+      ],
+    },
+    placement: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+      ],
     },
   },
   parameters: {
@@ -16,32 +33,38 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-radio';
-
-window.customElements.define(NAME_COMPONENT, BaseRadio);
-
 const Template = (args) => {
   const {
+    type,
     disabled,
     checked,
-    defaultSlot,
+    label,
     value,
+    labelSlot,
+    placement,
   } = args;
 
-  const radio = document.createElement(NAME_COMPONENT);
+  const radio = document.createElement('base-radio');
 
-  radio.innerHTML += defaultSlot;
-  radio.checked = checked;
+  radio.type = type;
   radio.disabled = disabled;
+  radio.checked = checked;
+  radio.label = label;
   radio.value = value;
+  radio.placement = placement;
+
+  radio.innerHTML += labelSlot;
 
   return radio;
 };
 
 export const DefaultRadio = Template.bind({});
 DefaultRadio.args = {
+  label: '',
   disabled: false,
-  defaultSlot: '',
   checked: false,
   value: '',
+  type: 'radio',
+  labelSlot: '<span slot="label">Label slot</span>',
+  placement: undefined,
 };

@@ -1,7 +1,7 @@
-import BaseTextareaDoc from './docs/BaseTextareaDoc.mdx';
+import BaseCodeEditorDoc from './docs/BaseCodeEditorDoc.mdx';
 
 export default {
-  title: 'Example/BaseComponents/BaseTextarea',
+  title: 'Example/BaseComponents/BaseCodeEditor',
   argTypes: {
     theme: {
       control: {
@@ -10,7 +10,6 @@ export default {
       options: [
         '<no modification>',
         'withSuccessFill',
-        'resize_off',
       ],
     },
     size: { 
@@ -34,10 +33,20 @@ export default {
       ],
       value: 'undefined',
     },
+    languageMode: { 
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no-modification>',
+        'javascript',
+        'otl',
+      ],
+    },
   },
   parameters: {
     docs: {
-      page: BaseTextareaDoc,
+      page: BaseCodeEditorDoc,
     },
   },
 };
@@ -45,7 +54,6 @@ export default {
 const Template = (args) => {
   const {
     theme = [],
-    placeholder,
     disabled,
     label,
     size,
@@ -56,39 +64,35 @@ const Template = (args) => {
     rows,
     invalid,
     autoheight,
-    maxlength,
-    minlength,
+    languageMode,
   } = args;
 
-  const textarea = document.createElement('base-textarea');
+  const codeEditor = document.createElement('base-code-editor');
 
   if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
-    textarea.theme = [];
+    codeEditor.theme = [];
   } else {
-    textarea.theme = theme.length ? theme : [];
+    codeEditor.theme = theme.length ? theme : [];
   }
 
-  textarea.placeholder = placeholder;
-  textarea.disabled = disabled;
-  textarea.label = label;
-  textarea.size = size;
-  textarea.required = required;
-  textarea.value = value;
-  textarea.readonly = readonly;
-  textarea.rows = rows;
-  textarea.invalid = invalid;
-  textarea.autoheight = autoheight;
-  textarea.maxlength = maxlength;
-  textarea.minlength = minlength;
+  codeEditor.disabled = disabled;
+  codeEditor.label = label;
+  codeEditor.size = size;
+  codeEditor.required = required;
+  codeEditor.value = value;
+  codeEditor.readonly = readonly;
+  codeEditor.rows = rows;
+  codeEditor.invalid = invalid;
+  codeEditor.autoheight = autoheight;
   
-  textarea.innerHTML += labelSlot;
+  codeEditor.innerHTML += labelSlot;
+  codeEditor.languageMode = languageMode;
   
-  return textarea;
+  return codeEditor;
 };
 
-export const DefaultTextarea = Template.bind({});
-DefaultTextarea.args = {
-  placeholder: 'placeholder',
+export const DefaultCodeEditor = Template.bind({});
+DefaultCodeEditor.args = {
   disabled: false,
   label: '',
   labelSlot: '<span slot="label">Label slot</span>',
@@ -98,6 +102,5 @@ DefaultTextarea.args = {
   readonly: false,
   rows: 4,
   autoheight: false,
-  maxlength: '',
-  minlength: '',
+  languageMode: '',
 };

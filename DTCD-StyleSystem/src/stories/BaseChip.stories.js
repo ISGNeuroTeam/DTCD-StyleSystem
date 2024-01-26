@@ -1,5 +1,3 @@
-import BaseChip from '../base-components/BaseChip/BaseChip';
-
 import BaseChipDoc from './docs/BaseChipDoc.mdx';
 
 export default {
@@ -19,17 +17,13 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-chip';
-
-window.customElements.define(NAME_COMPONENT, BaseChip);
-
 const Template = (args) => {
   const {
     close,
     defaultSlot,
   } = args;
 
-  const chip = document.createElement(NAME_COMPONENT);
+  const chip = document.createElement('base-chip');
   chip.close = close;
   chip.innerHTML += defaultSlot;
 

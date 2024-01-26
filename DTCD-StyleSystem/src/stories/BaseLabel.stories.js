@@ -1,5 +1,3 @@
-import BaseLabel from '../base-components/BaseLabel/BaseLabel';
-
 import BaseLabelDoc from './docs/BaseLabelDoc.mdx';
 
 export default {
@@ -16,16 +14,12 @@ export default {
   },
 };
 
-const NAME_COMPONENT = 'base-label';
-
-window.customElements.define(NAME_COMPONENT, BaseLabel);
-
 const Template = (args) => {
   const {
     defaultSlot,
   } = args;
 
-  const label = document.createElement(NAME_COMPONENT);
+  const label = document.createElement('base-label');
   label.innerHTML += defaultSlot;
 
   return label;

@@ -1,6 +1,5 @@
 :host {
   display: inline-block;
-  align-self: flex-start;
   --t-size: 6px;
   --t-width: 13px;
   --t-offset: 4px;
@@ -9,6 +8,7 @@
     
 .Container {
   position: relative;
+  display: inline-flex;
 
   &,
   * {
@@ -16,6 +16,10 @@
     &::before {
       box-sizing: border-box;
     }
+  }
+
+  .Trigger {
+    display: inline-flex;
   }
 
   .Tooltip {
@@ -29,6 +33,7 @@
     font-size: 11px;
     font-weight: 600;
     font-family: 'Proxima Nova';
+    text-align: center;
     padding: 4px 8px;
     z-index: 1;
     animation: fade-in .2s;

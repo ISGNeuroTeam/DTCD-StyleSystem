@@ -60,14 +60,14 @@
     }
   }
 
-  &.placement_rightStart {
+  &.placement_right {
     .DropdownContent {
       top: 0;
       left: 100%;
     }
   }
 
-  &.placement_leftStart {
+  &.placement_left {
     .DropdownContent {
       top: 0;
       left: auto;

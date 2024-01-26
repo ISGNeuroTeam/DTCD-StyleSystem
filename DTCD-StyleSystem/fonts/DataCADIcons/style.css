@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'datacad-icons';
-  src:  url('fonts/datacad-icons.eot?3n5f5q');
-  src:  url('fonts/datacad-icons.eot?3n5f5q#iefix') format('embedded-opentype'),
-    url('fonts/datacad-icons.ttf?3n5f5q') format('truetype'),
-    url('fonts/datacad-icons.woff?3n5f5q') format('woff'),
-    url('fonts/datacad-icons.svg?3n5f5q#datacad-icons') format('svg');
+  src:  url('fonts/datacad-icons.eot?c0ef6r');
+  src:  url('fonts/datacad-icons.eot?c0ef6r#iefix') format('embedded-opentype'),
+    url('fonts/datacad-icons.ttf?c0ef6r') format('truetype'),
+    url('fonts/datacad-icons.woff?c0ef6r') format('woff'),
+    url('fonts/datacad-icons.svg?c0ef6r#datacad-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.FontIcon.name_lockOpen:before {
+  content: "\ea48";
+}
+.FontIcon.name_shieldCheck:before {
+  content: "\ea47";
+}
+.FontIcon.name_process:before {
+  content: "\ea46";
+}
+.FontIcon.name_usersGroup:before {
+  content: "\ea49";
+}
 .FontIcon.name_gridSquare:before {
   content: "\ea45";
 }

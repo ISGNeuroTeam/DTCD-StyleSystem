@@ -1,5 +1,3 @@
-import BaseInput from '../base-components/BaseInput/BaseInput';
-
 import BaseInputDoc from './docs/BaseInputDoc.mdx';
 
 export default {
@@ -13,7 +11,8 @@ export default {
         '<no modification>',
         'withSuccessFill',
         'withLeftIcon',
-        'withRightIcon'
+        'withRightIcon',
+        'withError',
       ],
     },
     type: {
@@ -52,6 +51,17 @@ export default {
       },
       options: ['<no-modification>', 'small', 'big'],
     },
+    invalid: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        'true',
+        'false',
+        'undefined',
+      ],
+      value: 'undefined',
+    },
   },
   parameters: {
     docs: {
@@ -59,10 +69,6 @@ export default {
     },
   },
 };
-
-const NAME_COMPONENT = 'base-input';
-
-window.customElements.define(NAME_COMPONENT, BaseInput);
 
 const Template = args => {
   const {
@@ -77,11 +83,13 @@ const Template = args => {
     readonly,
     labelSlot,
     invalid,
-    maxlength,
     minlength,
+    maxlength,
+    min,
+    max,
   } = args;
 
-  const input = document.createElement(NAME_COMPONENT);
+  const input = document.createElement('base-input');
 
   if (theme.indexOf('<no modification>') !== -1 || theme === '<no modification>') {
     input.theme = [];
@@ -98,8 +106,10 @@ const Template = args => {
   input.value = value;
   input.readonly = readonly;
   input.invalid = invalid;
-  input.maxlength = maxlength;
   input.minlength = minlength;
+  input.maxlength = maxlength;
+  input.min = min;
+  input.max = max;
 
   input.innerHTML += labelSlot;
   input.innerHTML += args['icon-left'];
@@ -117,14 +127,16 @@ DefaultInput.args = {
   label: '',
   size: '',
   required: false,
-  invalid: false,
+  invalid: undefined,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
   'icon-left': '',
   'icon-right': '',
-  maxlength: '',
   minlength: '',
+  maxlength: '',
+  min: 0,
+  max: 0,
 };
 
 export const InputWithIcons = Template.bind({});
@@ -136,12 +148,14 @@ InputWithIcons.args = {
   label: '',
   size: '',
   required: false,
-  invalid: false,
+  invalid: undefined,
   value: '',
   readonly: false,
   labelSlot: '<span slot="label">Label slot</span>',
   'icon-left': '<span slot="icon-left" class="FontIcon name_searchSmall size_lg"></span>',
   'icon-right': '<span slot="icon-right" class="FontIcon name_show size_lg"></span>',
-  maxlength: '',
   minlength: '',
+  maxlength: '',
+  min: 0,
+  max: 0,
 };

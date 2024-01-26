@@ -1,0 +1,98 @@
+:host {
+  display: inline-block;
+}
+
+.BaseRadio {
+  display: flex;
+  flex-direction: column;
+
+  .Input, .Label {
+    cursor: pointer;
+  }
+  
+  .Input {
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: var(--background_main);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--button_primary);
+      transform: scale(0);
+      transition: transform .3s;
+    }
+    
+    &:checked {
+      border: 2px solid var(--button_primary);
+    }
+    
+    &:checked::after {
+      transform: scale(1);
+    }
+
+    &:disabled {
+      opacity: .5;
+    
+      &:not(:checked) {
+        background-color: var(--border);
+      }
+      
+      &,
+      & ~ .Label {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &.placement_right {
+    flex-direction: row-reverse;
+
+    .Label {
+      margin-left: 10px;
+      margin-right: auto;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
+    }
+  }
+
+  &.placement_left {
+    flex-direction: row;
+
+    .Label {
+      margin-right: 10px;
+
+      ::slotted([slot="label"]) {
+        padding-bottom: 0px;
+      }
+    }
+  }
+  
+  .Label {
+    display: flex;
+    align-items: center;
+    color: var(--text_main);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .25px;
+
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
+    }
+  }
+}
+
