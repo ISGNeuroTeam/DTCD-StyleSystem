@@ -9,11 +9,8 @@
   &.placement_right {
     flex-direction: row-reverse;
 
-    .Switch {
-      margin-right: 10px;
-    }
-
     .Label {
+      margin-left: 10px;
       margin-right: auto;
 
       ::slotted([slot="label"]) {
@@ -25,11 +22,8 @@
   &.placement_left {
     flex-direction: row;
 
-    .Switch {
-      margin-left: 10px;
-    }
-
     .Label {
+      margin-right: 10px;
 
       ::slotted([slot="label"]) {
         padding-bottom: 0px;
