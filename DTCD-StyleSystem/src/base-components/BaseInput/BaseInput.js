@@ -44,6 +44,8 @@ export default class BaseInput extends HTMLElement {
       'minlength',
       'rows',
       'data-autoheight',
+      'min',
+      'max',
     ];
   }
 
@@ -163,7 +165,15 @@ export default class BaseInput extends HTMLElement {
         break;
 
       case 'minlength':
-        this.maxlength = newValue;
+        this.minlength = newValue;
+        break;
+      
+      case 'min':
+        this.min = newValue;
+        break;
+
+      case 'max':
+        this.max = newValue;
         break;
 
       case 'rows':
@@ -372,6 +382,30 @@ export default class BaseInput extends HTMLElement {
       this.#internalInput.setAttribute('minlength', value);
     } else {
       this.#internalInput.removeAttribute('minlength');
+    }
+  }
+
+  get min() {
+    return this.#internalInput.getAttribute('min');
+  }
+
+  set min(value) {
+    if (!isNaN(value)) {
+      this.#internalInput.setAttribute('min', value);
+    } else {
+      this.#internalInput.removeAttribute('min');
+    }
+  }
+
+  get max() {
+    return this.#internalInput.getAttribute('max');
+  }
+
+  set max(value) {
+    if (!isNaN(value)) {
+      this.#internalInput.setAttribute('max', value);
+    } else {
+      this.#internalInput.removeAttribute('max');
     }
   }
 

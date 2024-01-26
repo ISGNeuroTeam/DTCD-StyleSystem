@@ -15,6 +15,16 @@ export default {
         'radio',
       ],
     },
+    placement: {
+      control: {
+        type: 'select',
+      },
+      options: [
+        '<no modification>',
+        'right',
+        'left',
+      ],
+    },
   },
   parameters: {
     docs: {
@@ -30,7 +40,8 @@ const Template = (args) => {
     checked,
     label,
     value,
-    defaultSlot,
+    labelSlot,
+    placement,
   } = args;
 
   const radio = document.createElement('base-radio');
@@ -40,8 +51,9 @@ const Template = (args) => {
   radio.checked = checked;
   radio.label = label;
   radio.value = value;
+  radio.placement = placement;
 
-  radio.innerHTML += defaultSlot;
+  radio.innerHTML += labelSlot;
 
   return radio;
 };
@@ -53,5 +65,6 @@ DefaultRadio.args = {
   checked: false,
   value: '',
   type: 'radio',
-  defaultSlot: '',
+  labelSlot: '<span slot="label">Label slot</span>',
+  placement: undefined,
 };

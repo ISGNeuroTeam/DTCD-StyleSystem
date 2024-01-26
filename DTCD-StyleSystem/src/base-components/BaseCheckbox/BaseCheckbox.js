@@ -185,7 +185,7 @@ export default class BaseCheckbox extends HTMLElement {
   }
 
   #setPosition() {
-    const checkboxElement = this.shadowRoot.querySelector('.BaseCheckbox') || this.shadowRoot.querySelector('.BaseSwitch');
+    const checkboxElement = this.shadowRoot.querySelector('.BaseCheckbox') || this.shadowRoot.querySelector('.BaseSwitch') || this.shadowRoot.querySelector('.BaseRadio');
   
     if (checkboxElement) {
       checkboxElement.classList.remove('placement_left', 'placement_right');
