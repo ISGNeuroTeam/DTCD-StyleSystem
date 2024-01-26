@@ -2,13 +2,45 @@
   <span class="Label">
     <slot name="label"></slot>
   </span>
-  <span class="Field">
-    <div class="ColorPreview"></div>
-    <svg class="Arrow" width="16" height="16" viewBox="0 0 16 16">
-      <path
-        d="M7.99983 10.4754L12.0065 6.46872L11.0645 5.52539L7.99983 8.59206L4.93583 5.52539L3.99316 6.46806L7.99983 10.4754Z"
-      />
-    </svg>
-  </span>
-  <div class="ColorList"></div>
+  
+  <div id="selectButton" aria-describedby="container"></div>
+
+  <div id="container" role="container">
+    <div class="Card">
+      <div class="CardPreview">
+  
+        <div id="colorPicker" class="colorPicker"></div>
+    
+        <div class="SystemColor"> 
+          <div>
+            <div class="SystemColorTitle">Системные цвета</div>         
+            <div id="colorBox"></div>
+          </div>
+          
+          <div>
+            <div class="ColorModel">
+              <label class="ModelName type_first">HEX:</label>
+              <div class="FieldWrapper">
+                <input type="text" id="hex-input" class="Field">
+              </div>
+            </div>
+          
+            <div class="ColorModel">
+              <label class="ModelName">RGBA:</label>
+              <div class="FieldWrapper">
+                <input type="text" id="rgba-input" class="Field">
+              </div>
+            </div>
+            
+            <div class="ColorModel">
+              <label class="ModelName">HSLA:</label>
+              <div class="FieldWrapper">
+                <input type="text" id="hsla-input" class="Field">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </label>

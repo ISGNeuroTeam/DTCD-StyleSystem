@@ -31,91 +31,107 @@
     }
   }
 
-  .Field,
-  .ColorList {
-    width: 44px;
-  }
-
-  .Field{
-    border: 1px solid var(--border);
-    border-radius: var(--border_radius);
-  }
-
-  .Field,
-  .SelectedColor {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--border_12);
-    height: 28px;
-    padding: 0 4px;
-
-    .ColorPreview {
-      width: 16px;
-      height: 16px;
-      border-radius: 2px;
-      background-color: var(--title);
-    }
-
-    .Arrow {
-      transition: all ease .3s;
-      fill: var(--text_main);
-    }
-  }
-
-  .ColorList {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    border: 1px solid var(--border);
-    border-top: none;
-    border-radius: 0 0 var(--border_radius) var(--border_radius);
-    max-height: 112px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    display: none;
-    z-index: 1;
-    background-color: var(--border_secondary)
-  }
-
-  &.opened {
-    &:not(.placement_top) {
-      .Field {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-    }
-
-    &.placement_top {
-      .Field {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
-    }
-
-    .Field {
-      .Arrow {
-        transform: rotate(180deg);
-      }
-    }
-
-    .ColorList {
-      display: block;
-    }
-  }
-
   &.disabled {
     cursor: not-allowed;
+    
+    #selectButton {
+      pointer-events: none; 
+    }
+  }
+  
+  .Card {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+  }
+  
+  .CardPreview {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--background_main);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 1px 1px 2px rgba(8, 18, 55, 0.12), 0px 4px 12px rgba(8, 18, 55, 0.12);
+  }
+  
+  .ColorModel {
+    padding-top: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
   }
 
-  &.placement {
-    &_top {
-      .ColorList {
-        border-top: 1px solid var(--border);
-        border-bottom: none;
-        border-radius: var(--border_radius) var(--border_radius) 0 0;
-      }
+  .SystemColor {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .ModelName {
+    font-size: 14px;
+    color: var(--title);
+    padding-right: 5px;
+
+    &.type_first {
+      padding-right: 14px;
     }
+  }
+  
+  .FieldWrapper {
+    border-radius: 4.44px;
+    text-align-last: start; 
+    max-width: 166px; 
+  }
+  
+  .Field {
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    color: var(--text_main);
+    outline-color: var(--border);
+  }
+
+  #colorBox {
+    max-width: 212px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .SystemColorTitle {
+    font-size: 14px;
+    color: var(--title);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .Swatch {
+    height: 25px;
+    width: 25px;
+    border-radius: 4.44px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  #selectButton {
+    display: inline-flex;
+    position: relative;
+    width: 70px;
+    height: 28px;
+    border: 2px solid var(--border);
+    border-radius: 4.44px;
+    cursor: pointer;
+    background-color: var(--button_primary);
+  }
+
+  #container[open] {
+    display: block;
+  }
+
+  #container {
+    display: none;
   }
 }
