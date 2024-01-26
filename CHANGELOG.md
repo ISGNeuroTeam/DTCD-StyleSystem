@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ability to display downloaded images
 - special for image displaying theme
 - multiple selection mode in BaseSelect
+- label displaying in BaseRadio
 
 ### Changed
 
