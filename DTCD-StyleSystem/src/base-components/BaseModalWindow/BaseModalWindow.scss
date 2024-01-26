@@ -1,0 +1,124 @@
+:host {
+  display: inline-block;
+}
+
+.BaseModalWindow{
+  display: block;
+
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .ModalBackdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    font-family: 'Proxima Nova';
+    background-color: rgba(0, 0, 0, .5);
+
+    &.opacity_light {
+      background-color: rgba(0, 0, 0, .2);
+    }
+
+    &.opacity_dark {
+      background-color: rgba(0, 0, 0, .7);
+    } 
+  }
+
+  &.opened {
+    .ModalBackdrop {
+      display: block;
+    }
+  }
+
+  .ModalWindow {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    max-height: 700px;
+    width: 520px;
+    min-width: 360px;
+    background-color: var(--background_main);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 1px 1px 2px rgba(8, 18, 55, 0.12), 0px 4px 12px rgba(8, 18, 55, 0.12);
+    min-height: 200px;
+    padding: 15px 30px;
+    transition: width 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .ModalWindow {
+      width: calc(100% - 20px); 
+      max-width: none;
+    }
+  }
+
+  .ToggleBtn {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+
+    ::slotted([slot="toggle-btn"]) {
+      margin-right: auto;
+    }
+  }
+
+  .Label {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1.18;
+    color: var(--text_main);
+    letter-spacing: .25px;
+  
+    ::slotted([slot="label"]) {
+      display: block;
+      padding-bottom: 4px;
+    }
+  }
+
+  .WindowContent {
+    z-index: 100;
+    display: none;
+    position: absolute;
+    max-width: 100vw;
+    width: max-content;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+
+  .ModalInner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+  }
+
+  &.opened .WindowContent {
+    display: block;
+  }
+
+  .CloseIcon {
+    display: flex;
+    align-self: start;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    color: var(--border);
+  }
+}
